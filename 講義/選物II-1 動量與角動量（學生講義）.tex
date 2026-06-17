@@ -1,0 +1,227 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\Huge\bfseries 選物II-1 動量與角動量}\\[3pt]
+{\sffamily\large 普通高中 選修物理II（力學二）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+牛頓第二定律我們熟悉的寫法是 $\vec F=m\vec a$。本章把它改寫成更基本的形式 $\vec F=\dfrac{d\vec p}{dt}$，也就是從「力 $\rightarrow$ 加速度」的觀點，改成「力 $\rightarrow$ \textbf{動量}變化」的觀點。由這個觀點會自然得到三個工具：\textbf{衝量}（力作用一段時間的累積效果）、\textbf{動量守恆}（不必知道碰撞瞬間的力，也能求出碰後速度）、以及處理「一群物體」的關鍵概念——\textbf{質心}。最後把同一套想法搬到轉動上，得到\textbf{角動量}與它的守恆律。
+
+動量守恆與角動量守恆是物理學最基本的守恆律，在牛頓力學失效的微觀世界中仍然成立。在高中階段，它們讓我們不必處理碰撞瞬間複雜的作用力，就能求解碰撞問題；與下一章「功與能量」的能量守恆，同為求解力學問題的兩大工具。
+
+\medskip
+本章主線：
+
+\begin{center}
+動量與衝量 $\rightarrow$ 動量守恆 $\rightarrow$ 碰撞 $\rightarrow$ 質心 $\rightarrow$ 角動量與力矩
+\end{center}
+
+\section*{\sffamily 1-1\quad 動量與衝量}
+
+\subsection*{\sffamily A.\ 第二定律的動量形式}
+
+選物I-4 所學的第二定律 $\vec F=m\vec a$ 其實是簡化版。牛頓原本表述的第二定律，談的是「運動的量（quantity of motion）」的改變，也就是\textbf{動量（momentum）}的改變。這個版本更基本，因為 $\vec F=m\vec a$ 隱含了「質量 $m$ 為定值」的假設；一旦質量會變（火箭一邊燃燒燃料一邊把它噴出、雨滴下落途中沾水變重），$\vec F=m\vec a$ 便不適用，須回到動量的形式。
+
+\textbf{動量}定義為質量乘以速度：
+$$\boxed{\,\vec p = m\vec v\,}$$
+動量是\textbf{向量}，方向與速度同向，單位為 kg·m/s。
+
+把第二定律寫成動量的語言：質點所受合力等於其動量的時間變化率，
+$$\boxed{\,\vec F_{\text{net}} = \frac{d\vec p}{dt}\,}$$
+質量不變時，$\dfrac{d\vec p}{dt}=\dfrac{d(m\vec v)}{dt}=m\dfrac{d\vec v}{dt}=m\vec a$，即退回熟悉的 $\vec F=m\vec a$。
+
+\begin{補充框}{動量與動能都由 $mv$ 構成，差別在哪？}
+動量 $p=mv$ 與動能 $K=\tfrac12 mv^2$ 都由質量與速度組成，但回答的是不同問題，兩者皆不可少。
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{動量是向量}，有方向；在碰撞中（外力可忽略時）\textbf{永遠守恆}。
+\item \textbf{動能是純量}，沒有方向；只在\textbf{彈性}碰撞或無摩擦過程才守恆。
+\end{itemize}
+最關鍵的差別在於向量與純量。考慮往左與往右、速率同為 $v$ 的兩個相同的球：兩者動量為 $+mv$ 與 $-mv$，相加\textbf{抵消為零}；兩者動能皆為 $+\tfrac12 mv^2$，相加\textbf{翻倍}，不會抵消。因此正面對撞、兩車黏住停下時，總動量本就為零（守恆），總動能卻從一大量變為零——損失的動能轉為熱、聲音與形變。動量守恆而動能不守恆，兩者並不矛盾，因為它們是兩本不同的帳。
+
+兩者對速度的依賴也不同：速度變兩倍，動量變兩倍（線性），動能變\textbf{四倍}（平方）。對應的定理也分工明確——力作用一段\textbf{時間}改變\textbf{動量}（衝量–動量定理）；力作用一段\textbf{距離}改變\textbf{動能}（功–動能定理，見「功與能量」）。
+
+\textbf{注意：}動能大不代表動量大。比較 $m=4$、$v=1$（$p=4$、$K=2$）與 $m=1$、$v=4$（$p=4$、$K=8$）：兩者動量相同，動能卻差四倍。動量偏重「質量」，動能偏重「速率」。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 衝量：力作用一段時間的累積}
+
+許多情況下，我們並不知道碰撞瞬間作用力的細節（球棒擊球的約 0.001 秒內，力先急增再驟減）。但可以問：這段力\textbf{總共}改變了多少動量？把 $\vec F=\dfrac{d\vec p}{dt}$ 兩邊乘上時間並累加（積分）：
+$$\vec F\,dt = d\vec p \;\Longrightarrow\; \int \vec F\,dt = \Delta\vec p.$$
+左邊「力對時間的累積」即\textbf{衝量（impulse）}。
+
+\textbf{衝量} $\vec J$ 定義為力對時間的累積，恰好等於動量的變化：
+$$\boxed{\,\vec J = \int_{t_1}^{t_2}\vec F\,dt = \Delta\vec p = \vec p_2-\vec p_1\,}$$
+若力為定值，或取\textbf{平均力} $\bar F$，則 $\vec J=\bar{\vec F}\,\Delta t$。單位為 N·s，與動量單位 kg·m/s 相同（兩者實為同一個量）。這條 $\vec J=\Delta\vec p$ 稱為\textbf{衝量–動量定理（impulse–momentum theorem）}。
+
+\fig{t1-impulse}{0.94}{圖 1-1：左——$F$–$t$ 圖曲線下的面積即衝量 $J$，等於動量變化 $\Delta p$；不需知道力的細節，只需面積。右——兩條曲線面積相同（$\Delta p$ 相同）：硬碰的力大且時間短；緩衝把同樣的 $\Delta p$ 拉長時間完成，峰值力因而大幅下降。}
+
+\begin{補充框}{衝量為何等於動量變化？緩衝為何能降低受力}
+衝量–動量定理 $J=\Delta p$ 並非新定律，而是 $\vec F=\dfrac{d\vec p}{dt}$ 的另一種寫法：把第二定律兩邊乘上 $dt$ 並對整段過程積分，即得
+$$\int\vec F\,dt=\int d\vec p \;\Longrightarrow\; \underbrace{\int\vec F\,dt}_{\text{衝量 }J}=\Delta\vec p.$$
+因此「力對時間的累積」必然等於「動量的改變」。
+
+碰撞中的力瞬息萬變，但通常只關心總效果。定義平均力 $\bar F$ 使 $\bar F\,\Delta t$ 等於真實力的累積（即 $F$–$t$ 圖下的面積），於是 $\bar F\,\Delta t=\Delta p$。只要知道動量改變多少、作用多久，就能反推平均力，不必知道力的細節。
+
+緩衝（安全氣囊、屈膝落地）的原理由此而來。把定理改寫成
+$$\bar F=\frac{\Delta p}{\Delta t}.$$
+從某速度撞到停下，動量變化 $\Delta p$ 由速度與質量決定，幾乎是固定的。緩衝無法改變 $\Delta p$，但能把「停下來」這件事\textbf{拖長時間}完成（$\Delta t$ 變大），於是平均力 $\bar F$ 大幅下降。例如同樣的 $\Delta p$，撞鋼板時 $\Delta t\approx0.001$ s，平均力極大；撞氣囊時 $\Delta t\approx0.1$ s（拉長約 100 倍），平均力僅約百分之一。可類比為從高處落下：落在水泥地（瞬間停止）與落在厚海綿墊（緩慢陷入後停止），最後速度都歸零、$\Delta p$ 相同，差別只在 $\Delta t$。
+
+\textbf{注意：}有三點容易誤解。其一，緩衝改變的是\textbf{作用時間}（從而降低平均力），\textbf{不是}把動量變小。其二，「彈回」並不比「黏住」溫和——彈回時動量\textbf{變號}，$\Delta p$ 比停住更大（撞牆反彈時 $\Delta p$ 接近兩倍），衝擊反而更大。其三，$\vec J=\bar F\Delta t$ 中的 $\bar F$ 是\textbf{平均力}，不是最大力；峰值力通常比平均力大不少。
+\end{補充框}
+
+\textbf{注意：}動量是\textbf{向量}，往左與往右的等大動量會\textbf{抵消}（總和為零），不是相加；計算一維動量必先標定正方向。此外，「速率沒變就沒有動量變化」並不正確——轉彎或反彈時速率不變但\textbf{方向}改變，動量隨之改變，必有衝量（即有力作用）。
+
+\section*{\sffamily 1-2\quad 動量守恆}
+
+\subsection*{\sffamily A.\ 從第三定律到守恆律}
+
+考慮兩個互相作用的物體 A、B（碰撞、磁鐵相吸、爆炸等），把它們視為一個\textbf{系統}。兩者之間的作用力 $\vec F_{A\to B}$ 與 $\vec F_{B\to A}$ 是一對作用力與反作用力（牛頓第三定律），\textbf{等大反向}：$\vec F_{A\to B}=-\vec F_{B\to A}$。
+
+對整個系統用動量形式的第二定律，系統總動量 $\vec p_{\text{總}}=\vec p_A+\vec p_B$ 的變化率為
+$$\frac{d\vec p_{\text{總}}}{dt}=\underbrace{\vec F_{B\to A}+\vec F_{A\to B}}_{\text{內力，成對抵消}=0}+\;\vec F_{\text{外}}=\vec F_{\text{外}}.$$
+內力兩兩抵消，剩下的只有來自系統外的力（外力）。
+
+由此得到\textbf{動量守恆}：一個系統所受\textbf{外力總和}等於系統總動量的時間變化率，
+$$\frac{d\vec p_{\text{總}}}{dt}=\sum\vec F_{\text{外}};$$
+若外力總和為零，則系統總動量守恆：
+$$\boxed{\,\sum\vec F_{\text{外}}=0 \;\Longrightarrow\; \vec p_{\text{總}}=\text{定值}\,}$$
+系統\textbf{內}的交互作用不論多複雜、多劇烈，都改變不了總動量。
+
+\begin{補充框}{內力為何「自己抵消」？「外力為零」何時成立？}
+內力成對抵消的依據是\textbf{牛頓第三定律}。對系統裡每個物體寫動量形式的第二定律並全部相加，把每個物體受的力分為「內力」（來自系統內其他物體）與「外力」（來自系統外）：
+$$\frac{d\vec p_{\text{總}}}{dt}=\underbrace{\sum_{\text{內力}}\vec F_{\text{內}}}_{\text{兩兩成對}=0}+\sum\vec F_{\text{外}}.$$
+內力因第三定律兩兩等大反向，全部加起來恰為零。因此內力再劇烈（碰撞的衝擊力、爆炸的爆震力）都不影響總動量——它再大也成對抵消。
+
+現實中很少「完全沒有外力」，但動量守恆常仍可用，依靠兩個技巧。其一，\textbf{挑方向}：重力（向下）與正向力（向上）在鉛直方向互相抵消，使\textbf{水平方向}外力總和為零，因此桌面上的碰撞、反衝在水平方向動量守恆。其二，\textbf{挑時段（碰撞近似）}：碰撞瞬間兩物間的衝擊力極大，相比之下重力、摩擦在那短暫時間內的衝量小到可忽略，因此「碰撞前後」可近似為動量守恆，即使有重力、摩擦亦然。
+
+\textbf{注意：}守恆的是\textbf{系統總動量}，不是每個物體各自的動量；單一物體的動量當然會被力改變。內力只改變系統內部各物體的動量分配（一者增、另者減），總和不變——人在船上行走，船退人進，總動量仍為零。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 反衝}
+
+「外力為零 $\rightarrow$ 總動量守恆」的典型應用是\textbf{反衝（recoil）}：系統一開始總動量為零，事件後也必為零，於是兩部分往\textbf{相反方向}運動。開槍時子彈快、槍慢，因為兩者動量大小相等、方向相反；火箭往後噴氣、氣體帶走負動量，火箭因而獲得正動量。火箭在真空中也能加速，原因正在於此，\textbf{並非靠推空氣}。
+
+\textbf{注意：}「外力總和為零」不必是「完全沒有外力」；重力與正向力常在鉛直方向互相抵消，使水平方向動量守恆。此外，動量守恆\textbf{不需要}動能守恆——爆炸時動能還會增加（化學能轉入），動量照樣守恆。
+
+\section*{\sffamily 1-3\quad 碰撞}
+
+碰撞的特點在於：碰撞瞬間兩物間的作用力\textbf{極大、時間極短}（衝擊力），相比之下重力、摩擦等外力的衝量小到可忽略。因此任何碰撞（無論彈性與否），只要碰撞時間極短、外力衝量可忽略，系統總動量守恆：
+$$\boxed{\,m_1v_1+m_2v_2=m_1v_1'+m_2v_2'\,}$$
+（一維，向右為正，撇號代表碰後。）
+
+但\textbf{動能不一定守恆}。依碰後動能保留多少，把碰撞分類。
+
+\fig{t1-collision}{0.92}{圖 1-2：一維碰撞前後的速度。上——彈性碰撞（此例為等質量、一動一靜，碰後交換速度，動量與動能皆守恆）；下——完全非彈性碰撞（碰後黏在一起共速，動量守恆但動能損失最多）。}
+
+\begin{補充框}{彈性碰撞與非彈性碰撞}
+依碰後動能保留多少，碰撞分為三類，三者\textbf{動量皆守恆}：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{彈性碰撞（elastic）}：動能\textbf{也守恆}。例如理想剛球、原子、撞球（近似）。
+\item \textbf{非彈性碰撞（inelastic）}：動能有損失。一般真實碰撞屬此類。
+\item \textbf{完全非彈性碰撞（perfectly inelastic）}：動能損失最多，碰後兩物\textbf{黏在一起}以共同速度前進，例如子彈嵌入木塊。
+\end{itemize}
+
+完全非彈性碰撞中，碰後兩物以\textbf{共同速度}前進，未知數只有一個，僅用動量守恆即可求解。彈性碰撞則同時要求動量守恆\textbf{與}動能守恆，兩式聯立可解出兩個碰後速度。一個等價的結論是：彈性碰撞中\textbf{接近速率等於分離速率}，即 $v_1-v_2=-(v_1'-v_2')$，常用以取代聯立。等質量的彈性碰撞有一個簡單結果——\textbf{兩者交換速度}（如撞球母球打正後自身停下、目標球帶走全部速度）。
+
+\textbf{注意：}「動量守恆即動能守恆」並不正確；動量在任何（外力可忽略的）碰撞都守恆，動能只有\textbf{彈性}碰撞才守恆。「黏在一起代表動量消失」也不正確——完全非彈性只是\textbf{動能}損失最多，\textbf{動量照常守恆}（由兩物一起帶走）。
+\end{補充框}
+
+\section*{\sffamily 1-4\quad 質心}
+
+\subsection*{\sffamily A.\ 質心的定義}
+
+丟出一根翻滾的扳手，其上各點的軌跡都很雜亂，但有\textbf{一個特別的點}畫出的是乾淨的拋物線，彷彿所有質量都集中於該點、只受重力。這個點即\textbf{質心（center of mass）}。質心使我們能把「一大群質點」當成「一個質點」處理。
+
+系統的\textbf{質心}位置是各質點位置以質量為權重的平均：
+$$\boxed{\,\vec r_{cm}=\frac{\sum_i m_i\vec r_i}{\sum_i m_i}=\frac{m_1\vec r_1+m_2\vec r_2+\cdots}{M}\,}$$
+其中 $M=\sum_i m_i$ 為系統總質量。一維時 $x_{cm}=\dfrac{\sum m_i x_i}{M}$；平面或空間則各分量分開計算。
+
+\fig{t1-com}{0.74}{圖 1-3：兩質點的質心。質心偏向質量大的一側——$m_2=3m_1$ 時，質心到兩質點的距離比為 $1:3$（離大質量近）。}
+
+\textbf{注意：}質心\textbf{不一定在物體上}（甜甜圈、回力鏢的質心在材料外的空缺處）；質心也不等於幾何中心，只有質量分布均勻且形狀對稱時兩者才重合。
+
+\subsection*{\sffamily B.\ 質心的運動：外力只決定質心}
+
+把質心定義對時間微分，得質心速度與質心加速度：
+$$\vec v_{cm}=\frac{\sum m_i\vec v_i}{M},\qquad \vec a_{cm}=\frac{\sum m_i\vec a_i}{M}.$$
+把第一式兩邊乘 $M$，左邊正是系統\textbf{總動量}：
+$$\boxed{\,\vec p_{\text{總}}=\sum m_i\vec v_i=M\vec v_{cm}\,}$$
+即系統的總動量等於「總質量集中在質心、以質心速度運動」的動量。再對時間微分並用 1-2 的結果：
+$$\boxed{\,\sum\vec F_{\text{外}}=M\vec a_{cm}\,}$$
+\textbf{外力總和只決定質心的運動}；內力（碰撞、爆炸）再劇烈也改變不了質心的運動。
+
+這把整章串連起來：1-2 的「外力為零 $\rightarrow$ 總動量守恆」，等價於「外力為零 $\rightarrow$ 質心作等速度運動或靜止」。例如空中飛行的物體爆炸後，碎片往各方向飛散，但它們的質心不受內力影響，仍沿原拋物線運動。
+
+\textbf{注意：}內力（碰撞、爆炸、人在船上走動）改變不了質心的運動狀態，只有外力能改變。
+
+\section*{\sffamily 1-5\quad 角動量與力矩}
+
+\subsection*{\sffamily A.\ 把守恆律搬到轉動上}
+
+行星繞太陽運行時近日點快、遠日點慢（克卜勒等面積定律）；溜冰選手收手後轉得更快。這些轉動現象背後，有一個與動量平行的守恆律。為描述它，須引入兩個用\textbf{外積（cross product）}定義的量。
+
+\begin{補充框}{外積 $\vec r\times\vec p$ 是什麼？}
+角動量與力矩都以外積定義。本章只需掌握外積的兩個性質：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{大小}為 $rp\sin\theta$（$\theta$ 為兩向量夾角）。
+\item \textbf{方向}垂直於兩向量所在的平面，由右手定則判定。
+\end{itemize}
+當運動限於一個平面內時，外積只有「出紙面」與「入紙面」兩種方向，可當作帶正負號的純量處理。外積的完整代數見「數A3-3 平面向量」，本章用到的僅是上述大小與方向。
+\end{補充框}
+
+質點對某參考點 $O$ 的\textbf{角動量（angular momentum）} $\vec L$，是位置向量 $\vec r$ 與動量 $\vec p$ 的外積：
+$$\boxed{\,\vec L=\vec r\times\vec p\,},\qquad |\vec L|=rp\sin\theta=mvr_\perp.$$
+力對 $O$ 的\textbf{力矩（torque）} $\vec\tau$，是位置向量與力的外積：
+$$\boxed{\,\vec\tau=\vec r\times\vec F\,},\qquad |\vec\tau|=rF\sin\theta.$$
+其中 $r_\perp=r\sin\theta$ 是 $O$ 到動量（或力）作用線的\textbf{垂直距離}（力臂）。
+
+\fig{t1-angular}{0.94}{圖 1-4：左——角動量 $\vec L=\vec r\times\vec p$，大小為 $rp\sin\theta$，方向由右手定則決定（此例出紙面）。右——溜冰選手收手：質量靠近轉軸使轉動慣量 $I$ 變小，由 $L=I\omega$ 守恆，角速度 $\omega$ 隨之變大。}
+
+\subsection*{\sffamily B.\ 角動量的「第二定律」與守恆}
+
+對 $\vec L=\vec r\times\vec p$ 取時間變化率（用乘積微分，並注意 $\vec v\times\vec p=\vec v\times m\vec v=0$）：
+$$\frac{d\vec L}{dt}=\frac{d\vec r}{dt}\times\vec p+\vec r\times\frac{d\vec p}{dt}=\underbrace{\vec v\times m\vec v}_{=0}+\vec r\times\vec F=\vec\tau.$$
+於是得到轉動版的第二定律，與 $\vec F=\dfrac{d\vec p}{dt}$ 對應：質點角動量的時間變化率等於它所受的力矩，
+$$\boxed{\,\vec\tau=\frac{d\vec L}{dt}\,};$$
+若所受合力矩為零，則角動量守恆：
+$$\boxed{\,\vec\tau=0\;\Longrightarrow\;\vec L=\text{定值}\,}$$
+對一個繞固定軸轉動的剛體，角動量可寫成 $L=I\omega$，其中 $I$ 為\textbf{轉動慣量}（量度質量離軸多遠、轉動的難易程度，$I=\sum m_i r_i^2$），$\omega$ 為角速度。力矩為零時 $I\omega$ 守恆。
+
+\begin{補充框}{溜冰選手收手為何轉更快？多出的動能從何而來？}
+溜冰選手繞鉛直軸旋轉，作用在她身上的外力是重力（過質心、沿軸）與冰面正向力（沿軸），這些力對鉛直軸的\textbf{力矩為零}（力臂為零），冰面摩擦力矩也很小。既然外力矩近似為零，角動量守恆：$I_1\omega_1=I_2\omega_2$。她收手時質量靠近轉軸，$I$ 變小，$\omega$ 按比例變大。她並未施加任何使自己轉快的\textbf{力矩}，轉快純粹是 $I$ 變小、$\omega$ 自動變大的結果。
+
+收手後轉動動能反而增加，能量來自她自己做的功。轉動動能 $K=\tfrac12 I\omega^2$；把 $\omega=L/I$ 代入（$L$ 守恆），得 $K=L^2/2I$，$I$ 變小則 $K$ 變大。手臂上的質量在旋轉時本有「往外甩」的趨勢（需向心力拉住），她要把手往內收，必須\textbf{對抗這個趨勢、向內施力並使手位移}，這就是做功——她的肌肉把化學能轉成轉動動能。因此能量守恆並未被違反，多出的動能是她出力收手換來的。張開手臂則相反：手被往外甩的過程對她做負功，轉動動能被搬走，$\omega$ 減小。
+
+\textbf{注意：}角動量守恆\textbf{不需要}動能守恆，$K=L^2/2I$ 會隨 $I$ 改變。此外，「有力就有力矩」並不正確——力的作用線\textbf{穿過參考點}時（$\sin\theta=0$，力臂為零）力矩為零；指向中心的力（向心的引力、繩張力）對中心都不產生力矩。例如行星受太陽引力始終指向太陽，與位置向量 $\vec r$ 共線，力矩為零，故角動量守恆——近日點 $r$ 小則 $v$ 大、遠日點 $r$ 大則 $v$ 小，這正是克卜勒等面積定律。
+\end{補充框}
+
+\textbf{注意：}角動量與力矩都是\textbf{對某個參考點（或軸）}才有意義，換了參考點數值會變；敘述角動量時須先講清楚「對誰」而言。
+
+\begin{延伸框}{守恆律來自對稱性：諾特定理}
+角動量守恆有一個比「力矩為零」更根本的來源。二十世紀初，數學家諾特（Emmy Noether）證明了一條定理：\textbf{每一個連續對稱性，對應一條守恆律}。
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 物理定律在\textbf{空間平移}下不變（各處規律相同）$\Rightarrow$ \textbf{動量守恆}。
+\item 物理定律在\textbf{時間平移}下不變（各時刻規律相同）$\Rightarrow$ \textbf{能量守恆}。
+\item 物理定律在\textbf{空間旋轉}下不變（空間沒有特殊方向）$\Rightarrow$ \textbf{角動量守恆}。
+\end{itemize}
+也就是說，角動量守恆的終極理由是\textbf{空間各向同性}（沒有哪個方向特別）。這比「力矩為零」更基本：即使在牛頓力學失效的量子世界，只要空間仍各向同性，角動量（量子化後）依然守恆。此處屬於已有定論的物理，並非開放問題，但通往一個極深的觀念。
+\end{延伸框}
+
+\section*{\sffamily 1-6\quad 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{動量}：$\vec p=m\vec v$（向量）。第二定律的基本形式為 $\vec F=\dfrac{d\vec p}{dt}$，質量不變時退回 $\vec F=m\vec a$。
+\item \textbf{衝量}：$\vec J=\displaystyle\int\vec F\,dt=\bar F\,\Delta t=\Delta\vec p$，等於 $F$–$t$ 圖面積。緩衝原理：同樣的 $\Delta p$ 拉長 $\Delta t$，平均力 $\bar F$ 減小。
+\item \textbf{動量守恆}：$\sum\vec F_{\text{外}}=0\Rightarrow\vec p_{\text{總}}$ 守恆（內力因第三定律成對抵消）。反衝、爆炸的主要工具。
+\item \textbf{碰撞}：任何碰撞動量皆守恆；\textbf{彈性}碰撞動能也守恆，\textbf{完全非彈性}碰後黏在一起、動能損失最多。等質量彈性碰撞即交換速度。
+\item \textbf{質心}：$\vec r_{cm}=\dfrac{\sum m_i\vec r_i}{M}$；$\vec p_{\text{總}}=M\vec v_{cm}$；$\sum\vec F_{\text{外}}=M\vec a_{cm}$。外力只決定質心運動。
+\item \textbf{角動量與力矩}：$\vec L=\vec r\times\vec p$、$\vec\tau=\vec r\times\vec F$、$\vec\tau=\dfrac{d\vec L}{dt}$；合力矩為零則 $L$（或 $I\omega$）守恆。收手轉快、等面積定律皆屬此。
+\end{itemize}
+\end{補充框}
+
+\end{document}

@@ -1,0 +1,256 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\Huge\bfseries 選物II-2 功與能量}\\[3pt]
+{\sffamily\large 普通高中 選修物理II（力學二）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+牛頓力學以 $\vec F=m\vec a$ 描述「力」與「運動」的關係。本章改用另一個量——\textbf{能量（energy）}——來處理同類問題。先給「功（work）」一個精確定義（與日常語言中的「工作」不同），再得到「對物體所做的淨功等於其\textbf{動能（kinetic energy）}的變化」，此即\textbf{功能定理}；接著用「功 $\div$ 時間」定義\textbf{功率（power）}；然後把某些力（重力、彈力）所做的功儲存為\textbf{位能（potential energy）}；最後得到\textbf{力學能守恆}：在沒有摩擦時，動能與位能此消彼長、總和不變。
+
+能量方法的特點是\textbf{只看始末狀態、不必追蹤過程}。許多用 $\vec F=m\vec a$ 須解微分方程才能處理的問題（變速、曲面、變力），改用能量方法可大幅簡化。本章是 [[必物-5 能量]] 定性內容的力學定量版：把「功、動能、位能、力學能守恆」具體算出來。全章一律使用 SI 單位，功與能量的單位都是\textbf{焦耳（joule, J）}。
+
+\medskip
+本章主線：
+
+\begin{center}
+功 $\rightarrow$ 動能與功能定理 $\rightarrow$ 功率 $\rightarrow$ 位能與保守力 $\rightarrow$ 力學能守恆（含摩擦耗散）
+\end{center}
+
+\section*{\sffamily 2-1\quad 功：力沿位移傳遞能量}
+
+\subsection*{\sffamily A.\ 功的定義}
+
+物理的「功」量度的是\textbf{力沿著物體實際移動的方向把它推了多遠}，也就是這個力對物體運動狀態起了多少作用。它\textbf{不是}量度施力的大小或持續的時間。
+
+\begin{補充框}{功的定義為什麼是 $W=Fd\cos\theta$？提重物站著為何不做功？}
+一個\textbf{定力} $\vec F$ 作用在物體上，使其產生\textbf{位移} $\vec d$，力與位移的夾角為 $\theta$，則此力對物體所做的\textbf{功}為
+$$\boxed{\;W=\vec F\cdot\vec d=Fd\cos\theta\;}$$
+功是\textbf{純量}（沒有方向），單位為\textbf{焦耳（J）}：$1\ \text{J}=1\ \text{N}\cdot\text{m}=1\ \text{kg}\cdot\text{m}^2/\text{s}^2$。
+
+\textbf{$\cos\theta$ 的來源：}把力分解成「沿位移」與「垂直位移」兩個分量。只有\textbf{沿位移方向}的分量 $F\cos\theta$ 在做功（它改變物體的快慢）；\textbf{垂直位移}的分量 $F\sin\theta$ 不做功（物體在該方向沒有移動，或被其他力平衡）。所以 $W=(F\cos\theta)\cdot d=Fd\cos\theta$，$\cos\theta$ 即「把力投影到位移方向」的數學寫法。
+
+\textbf{「提重物站著為何不做功」：}功只看「力 $\times$ 沿力方向走的位移」。提著重物站著不動，位移 $d=0$，故 $W=F\cdot0=0$；提著重物水平走，力（向上）與位移（水平）垂直，$\theta=90^\circ$，故 $W=Fd\cos90^\circ=0$。手會感到酸，是因為肌肉為維持張力而持續收縮、消耗生理能量——這是\textbf{身體在耗能}，與「對物體做功」是不同的兩件事。只有把重物往上搬（力與位移同向，$\theta=0^\circ$）時才對它做正功。
+\end{補充框}
+
+\fig{t2-work-definition}{0.66}{圖 2-1：力 $\vec F$ 與位移 $\vec d$ 夾角 $\theta$ 時，只有沿位移的分量 $F\cos\theta$ 做功；垂直位移的分量 $F\sin\theta$ 不做功。}
+
+由 $\cos\theta$ 的正負，功有三種情形：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{0.24\linewidth} p{0.10\linewidth} p{0.10\linewidth} p{0.42\linewidth}}
+\hline
+\textbf{夾角 $\theta$} & $\cos\theta$ & \textbf{功 $W$} & \textbf{物理意義與例子} \\
+\hline
+$0^\circ\le\theta<90^\circ$ & $>0$ & \textbf{正功} & 力順著運動，把能量傳入物體（推車前進、自由落體中的重力） \\
+$\theta=90^\circ$ & $0$ & \textbf{零功} & 力與運動垂直，不傳遞能量（圓周運動的向心力、水平走路時提物的拉力、正向力） \\
+$90^\circ<\theta\le180^\circ$ & $<0$ & \textbf{負功} & 力逆著運動，把能量從物體取走（摩擦力、上拋過程中的重力、煞車） \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 「有施力、感到累，就有做功」並不正確。功只看「力 $\times$ 沿力方向走的位移」。推牆不動（$d=0$）、平提物體水平走（$\theta=90^\circ$）所做的功都是 0。累與否取決於肌肉耗能，與物理的功是不同的量。
+\item 「正向力一定做功」並不正確。物體在水平面滑動時，正向力垂直於位移，做功為 0。只有當接觸面本身有沿正向力方向的位移（如電梯地板把人往上抬）時，正向力才做功。
+\item 功是\textbf{純量}，可以為負，但\textbf{沒有方向}。「負功」不是「方向相反的功」，而是「把能量從物體取走」。
+\end{itemize}
+
+\subsection*{\sffamily B.\ 多個力做的功、合力做的功}
+
+物體常同時受多個力。計算「總功」有兩條等價的途徑：
+\begin{enumerate}\setlength{\itemsep}{1pt}
+\item \textbf{先各算各的，再相加}：$W_{\text{總}}=W_1+W_2+\cdots$（功是純量，含正負號直接代數相加）。
+\item \textbf{先求合力，再算合力做的功}：$W_{\text{net}}=\vec F_{\text{net}}\cdot\vec d$。
+\end{enumerate}
+功是純量、可直接加減，這是能量方法便於計算的原因：不必像向量加法那樣分解、顧及方向，全程都在加減數字。
+
+\subsection*{\sffamily C.\ 變力作功：$F$–$x$ 圖下的面積}
+
+上述公式只對\textbf{定力}成立。許多力會隨位置改變，最典型的是\textbf{彈簧}：拉得越長，彈力越大（虎克定律 $F=kx$）。力持續改變，不能直接以一個固定值相乘。
+
+\begin{補充框}{變力作功＝$F$–$x$ 圖下的面積}
+回到功最原始的定義：把位移切成許多小段，每一小段內力近似不變，做的功為 $F\,\Delta x$；全部相加，即得\textbf{$F$–$x$ 圖（力對位置作圖）曲線下的面積}：
+$$W=\int_{x_1}^{x_2}F(x)\,dx \;=\; (F\text{–}x\ \text{圖下的面積}).$$
+高中不需實際計算積分，\textbf{會用幾何面積（三角形、梯形、矩形）去估算即可}。
+
+最重要的特例是\textbf{彈簧}。把彈簧從自然長度拉長（或壓縮）$x$，外力須克服彈力 $F=kx$（$k$ 為\textbf{彈力常數／勁度係數（spring constant）}）。在 $F$–$x$ 圖上這是一條過原點、斜率為 $k$ 的直線，從 $0$ 拉到 $x$ 圍出一個\textbf{三角形}，底為 $x$、高為 $kx$，面積為
+$$\boxed{\;W_{\text{外力}}=\frac{1}{2}\,x\cdot(kx)=\frac{1}{2}kx^2\;}$$
+這個 $\tfrac12kx^2$ 之後會儲存為\textbf{彈性位能}（見 2-4）。
+\end{補充框}
+
+\fig{t2-variable-force}{0.92}{圖 2-2：左——力隨位置變化時，所做的功等於 $F$–$x$ 圖曲線下的面積；右——彈簧的 $F=kx$ 為過原點的直線，從 $0$ 拉到 $x$ 圍出三角形，外力做功 $\tfrac12kx^2$。}
+
+\section*{\sffamily 2-2\quad 動能與功能定理}
+
+\subsection*{\sffamily A.\ 動能}
+
+運動中的物體能對外作用（撞凹物體、推動其他物體），它所帶的能量稱為\textbf{動能}。
+
+\begin{補充框}{動能（kinetic energy）}
+質量 $m$、速率 $v$ 的物體，其動能為
+$$\boxed{\;K=\frac{1}{2}mv^2\;}$$
+動能恆為\textbf{非負純量}，單位焦耳（J）。它只與\textbf{速率}有關，與運動方向無關。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 功能定理：淨功 = 動能變化}
+
+把功與動能連結起來的，是\textbf{功能定理（work–energy theorem）}。
+
+\begin{補充框}{功能定理 $W_{\text{net}}=\Delta K$ 是怎麼來的？它與牛頓定律的關係}
+作用在物體上\textbf{所有力的淨功}，等於物體\textbf{動能的變化}：
+$$\boxed{\;W_{\text{net}}=\Delta K=\frac{1}{2}mv^2-\frac{1}{2}mv_0^2\;}$$
+
+\textbf{推導（一維、定力）：}合力為定值 $\Rightarrow$ 加速度 $a$ 為定值。由運動學公式 $v^2=v_0^2+2ad$ 得 $ad=\dfrac{v^2-v_0^2}{2}$。兩邊乘 $m$，並用 $F_{\text{net}}=ma$：
+$$W_{\text{net}}=F_{\text{net}}\,d=ma\,d=m\cdot\frac{v^2-v_0^2}{2}=\frac{1}{2}mv^2-\frac{1}{2}mv_0^2=\Delta K.$$
+其中 $\tfrac12$ 來自運動學公式、$v^2$ 來自 $v^2=v_0^2+2ad$ 的平方，全部由牛頓定律與等加速運動學得出，沒有額外假設。變力的情形須用積分（$\int mv\,dv=\tfrac12mv^2$），但結論相同。
+
+\textbf{與牛頓定律的關係：}功能定理可由牛頓第二定律\textbf{推導}得出，並非獨立的新定律，而是把 $\vec F=m\vec a$ 沿\textbf{位移}積分一次的結果。（若改沿\textbf{時間}積分，得到的是另一條定理：衝量 $=$ 動量變化 $\int F\,dt=\Delta p$，見 [[選物II-1 動量與角動量]]。同一條 $\vec F=m\vec a$，沿空間積分生能量，沿時間積分生動量。）
+
+功能定理的用途在於：\textbf{只要算得出淨功，不必知道過程細節，即可求出末速率}（或反向求解），常可一步得到結果。
+\end{補充框}
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 動能不能為負，$K=\tfrac12mv^2\ge0$；但動能的\textbf{變化} $\Delta K$ 可正可負（負代表變慢）。
+\item 速率變為 2 倍時，動能變為 4 倍（$K\propto v^2$）。這是煞車、撞擊問題的關鍵。
+\item 功能定理中的是\textbf{淨功（所有力做功的總和）}，不是某單一個力的功。漏算摩擦或重力是最常見的錯誤。
+\item 功能定理\textbf{不限於無摩擦}。$W_{\text{net}}$ 是所有力做功的總和，摩擦的負功也計入，定理仍成立。
+\end{itemize}
+
+\section*{\sffamily 2-3\quad 功率：做功的快慢}
+
+做相同的功，電梯花 5 秒、人爬樓梯花 50 秒，「總功」相同，但快慢不同。衡量「做功的快慢」即\textbf{功率}。
+
+\begin{補充框}{功率（power）與 $P=Fv$}
+功率是\textbf{單位時間內所做的功}：
+$$\boxed{\;P_{\text{平均}}=\frac{W}{t}\;},\qquad P_{\text{瞬時}}=\lim_{\Delta t\to0}\frac{\Delta W}{\Delta t}$$
+單位為\textbf{瓦特（watt, W）}：$1\ \text{W}=1\ \text{J/s}$。
+
+\textbf{另一種形式 $P=Fv$：}當力 $F$ 沿運動方向、物體以速度 $v$ 前進時，極短時間 $\Delta t$ 內位移 $\Delta x=v\,\Delta t$，做的功 $\Delta W=F\,\Delta x=Fv\,\Delta t$，故
+$$\boxed{\;P=\frac{\Delta W}{\Delta t}=Fv\;}\qquad(\text{力沿運動方向時}).$$
+更一般地，$P=\vec F\cdot\vec v=Fv\cos\theta$。此式的用途：已知引擎的輸出功率與當下車速，即可算出此刻的牽引力。功率固定時，速度越快、牽引力越小，這也說明車輛在高速時加速漸趨無力，且存在「阻力 $=$ 牽引力」的最高速。
+\end{補充框}
+
+\textbf{注意：}瓦特（W）是\textbf{功率}（J/s），不是能量。電費所用的「\textbf{度（kWh，千瓦・小時）}」才是能量：$1\ \text{kWh}=1000\ \text{W}\times3600\ \text{s}=3.6\times10^6\ \text{J}$。例如「100 W 燈泡點 1 小時」用掉的能量為 $100\times3600=3.6\times10^5\ \text{J}=0.1\ \text{kWh}$。
+
+另一個常見的功率單位是\textbf{馬力（horsepower, hp）}：$1\ \text{hp}\approx746\ \text{W}$，以「一匹馬能持續輸出的功率」為基準而定。
+
+\section*{\sffamily 2-4\quad 位能與保守力}
+
+\subsection*{\sffamily A.\ 能把功儲存起來的力}
+
+把物體舉高時，外力做正功、重力做負功，動能可以不變；外力傳入的能量被儲存在「物體與地球的相對位置」裡，稱為\textbf{重力位能}。放手後，重力又會把這份能量釋放回來（變成落下的動能）。
+
+並非每種力都能如此「儲存後再釋放」。能做到的稱為\textbf{保守力}。
+
+\begin{補充框}{保守力（conservative force）與非保守力}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{保守力}：做功只與\textbf{起點和終點}有關，\textbf{與所走的路徑無關}；沿任意封閉路徑繞一圈做的總功為零。重力、彈力、靜電力都是保守力。其做的功可完整地儲存為位能、之後完整歸還。
+\item \textbf{非保守力（nonconservative force）}：做功與路徑有關。最典型的是\textbf{摩擦力}——走的路徑越長，摩擦做的負功越多，能量不會回到力學能。摩擦把力學能轉成熱散逸，無法收回。
+\end{itemize}
+\end{補充框}
+
+\fig{t2-conservative}{0.92}{圖 2-3：左——保守力（重力）做功與路徑無關，兩條不同路徑由 A 到 B 做的功相同，只取決於高度差；右——非保守力（摩擦）使力學能沿路徑遞減，遞減的部分轉成熱。}
+
+\subsection*{\sffamily B.\ 重力位能與位能差}
+
+\begin{補充框}{位能為什麼是相對的？零點為什麼可以自行選定？}
+在地表附近（$g$ 視為定值），物體在高度 $h$（相對於自選的\textbf{參考零點}）處的重力位能為
+$$\boxed{\;U_g=mgh\;}$$
+
+\textbf{位能沒有絕對數值，只有位能差才有物理意義。}例如以地面為零點時，桌面上物體的位能可能是 $100\ \text{J}$；改以桌面為零點時，同一物體的位能是 $0\ \text{J}$。兩個數值不同，但物體\textbf{從桌面落到地面}時位能的變化 $\Delta U$ 都是 $-100\ \text{J}$，這個差值與零點的選法無關。原因是：把所有 $U$ 同時加上一個常數（等於換一個零點），相減時常數會自行消去，$\Delta U$ 不變。（可類比為海拔高度：玉山的標高隨基準面而異，但「玉山比阿里山高多少」這個差與基準無關。）
+
+保守力做的功與位能差的關係，是本章的樞紐：
+$$\boxed{\;W_{\text{保守}}=-\Delta U=U_{\text{始}}-U_{\text{末}}\;}$$
+保守力做\textbf{正功}時位能\textbf{減少}（如落下時重力做正功、重力位能下降）；做\textbf{負功}時位能\textbf{增加}（如上升時）。例如物體下落 $h$，重力做功 $+mgh$，而位能由 $mgh$ 降為 0，$\Delta U=-mgh$，確實 $W=-\Delta U$。
+\end{補充框}
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 位能值可以為負，其正負完全取決於零點的選擇。零點選在物體上方時，物體的位能即為負，並無錯誤，因為只有位能差有意義。
+\item 解題時零點須\textbf{一題一個、全程不變}。計算 $U_{\text{始}}$ 與 $U_{\text{末}}$ 必須使用同一個零點，中途換基準會使位能差算錯。
+\end{itemize}
+
+\subsection*{\sffamily C.\ 彈性位能}
+
+彈簧被拉長或壓縮 $x$ 時，外力做了 $\tfrac12kx^2$ 的功（見 2-1C）；這些功儲存為\textbf{彈性位能}。
+
+\begin{補充框}{彈性位能（elastic potential energy）}
+彈力常數 $k$ 的彈簧，相對自然長度形變量為 $x$ 時，
+$$\boxed{\;U_s=\frac{1}{2}kx^2\;}$$
+不論拉長或壓縮，$x$ 取絕對值，$U_s$ 恆為非負。彈簧回到自然長度（$x=0$）時彈性位能為零，這是彈性位能的\textbf{天然零點}。
+\end{補充框}
+
+\section*{\sffamily 2-5\quad 力學能守恆}
+
+\subsection*{\sffamily A.\ 力學能與守恆律}
+
+把動能與位能相加，即得\textbf{力學能（mechanical energy）}。
+
+\begin{補充框}{力學能守恆}
+系統的力學能 $E$ 定義為動能與位能之和：$E=K+U$。
+
+若物體\textbf{只受保守力做功}（無摩擦、無外加非保守力做功），則力學能保持不變：
+$$\boxed{\;K_1+U_1=K_2+U_2\;}\quad\Longleftrightarrow\quad E=K+U=\text{定值}.$$
+
+\textbf{推導：}由功能定理 $W_{\text{net}}=\Delta K$。若淨功只來自保守力，則 $W_{\text{net}}=W_{\text{保守}}=-\Delta U$，於是
+$$-\Delta U=\Delta K \;\Rightarrow\; \Delta K+\Delta U=0 \;\Rightarrow\; K+U=\text{定值}.$$
+力學能守恆是功能定理在「淨力都是保守力」時的改寫。它的特點是\textbf{與軌道形狀無關}：光滑滑梯、擺、曲面一律適用，只看始末狀態的速率與高度。
+\end{補充框}
+
+\fig{t2-energy-conservation}{0.62}{圖 2-4：力學能守恆。高處位能大、動能小；谷底位能小、動能大；各處的總量 $K+U$ 相同。能量在 $K$ 與 $U$ 之間轉換，總和不變。}
+
+\subsection*{\sffamily B.\ 有摩擦時：力學能不守恆，總能量仍守恆}
+
+一旦有摩擦（或其他非保守力做功），力學能就\textbf{不再守恆}，而是沿路徑遞減。摩擦力對物體做的負功等於力學能的損失；這些「失去」的力學能並未消失，而是轉成\textbf{熱}（接觸面溫度上升）。這對應 [[必物-5 能量]] 的「能量守恆」：力學能不守恆，但\textbf{總能量（含熱）守恆}。
+
+\begin{補充框}{含摩擦的能量帳（廣義功能定理）}
+把保守力的功收進位能後，剩下的非保守力（典型為摩擦）做的功，等於\textbf{力學能的變化}：
+$$\boxed{\;W_{\text{非保守}}=\Delta E=(K_2+U_2)-(K_1+U_1)\;}$$
+摩擦做負功，故 $\Delta E<0$，力學能減少；減少的量為
+$$|W_f|=f\cdot s=(\text{摩擦力})\times(\text{滑行路徑長}),$$
+全部轉成熱 $Q$。\textbf{注意此處用的是「路徑長 $s$」，不是位移}——摩擦是非保守力，路徑越長耗散越多。
+\end{補充框}
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 有摩擦時仍可用能量方法。只要把摩擦的負功 $-f\cdot s$ 列入能量帳即可，能量方法不限於無摩擦。
+\item 摩擦熱用\textbf{路徑長}而非位移。來回滑、繞圈滑時摩擦持續耗能，位移可能為 0，但熱不為 0。
+\item 要使用「力學能守恆」$K_1+U_1=K_2+U_2$，須先確認沒有非保守力做功。一旦出現摩擦、空氣阻力或人推／拉等外力，就須改用 $W_{\text{非保守}}=\Delta E$。
+\end{itemize}
+
+\begin{延伸框}{力學能守恆與能量守恆是同一回事嗎？摩擦把力學能變成了什麼？}
+兩者是\textbf{不同層次}的敘述。
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{能量守恆（總能量守恆）}：\textbf{永遠成立}的定律。把所有形式（動能、位能、熱能、聲能等）的能量加起來，孤立系統的總量任何時候都不變。
+\item \textbf{力學能守恆（$K+U=$ 定值）}：上述定律的一個\textbf{特例}，只在「沒有非保守力做功」時才成立。
+\end{itemize}
+也就是說，力學能守恆 $\subset$ 能量守恆。能量守恆是母定律，力學能守恆是它在「無耗散力學系統」中的縮小版。一旦有摩擦，子定律失效，但母定律仍成立。
+
+\textbf{摩擦把力學能變成熱。}當物體被摩擦力做負功 $W_f=-f\cdot s$，力學能減少 $|W_f|$；這份能量轉成熱：接觸面的原子震動加劇，兩表面溫度升高。
+$$\underbrace{\Delta E_{\text{力學}}}_{<0}+\underbrace{Q_{\text{熱}}}_{>0}=0 \quad\Longleftrightarrow\quad |W_f|=f\cdot s=Q.$$
+因此「力學能守恆被破壞」與「總能量守恆」並不矛盾：力學能漏掉的那一份，等量進入熱能的帳。
+
+\textbf{這個轉換是單向的。}力學能變成熱很容易；但要把摩擦生的熱自動完整地變回整齊的力學能（使滑停的物體自行滑回），從未發生。能量守恆並不禁止此事（在能量帳上完全平衡），真正限制它的是\textbf{熱力學第二定律}：力學能是「有序」的能量（分子朝同一方向動），熱是「無序」的能量（分子朝各方向亂動）；有序自動變無序容易，無序自動變回有序的機率極低。衡量無序程度的量稱為\textbf{熵（entropy）}，孤立系統的熵只增不減，故「力學能 $\rightarrow$ 熱」是\textbf{不可逆}的單向過程。完整討論見 [[必物-5 能量]]。
+\end{延伸框}
+
+\section*{\sffamily 2-6\quad 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{功}：$W=\vec F\cdot\vec d=Fd\cos\theta$（純量，單位 J）。正功傳入能量、負功取走能量、垂直位移做零功。變力作功 $=$ $F$–$x$ 圖下的面積；彈簧外力做功 $=\tfrac12kx^2$。
+\item \textbf{動能}：$K=\tfrac12mv^2$（$\ge0$，$\propto v^2$）。
+\item \textbf{功能定理}：$W_{\text{net}}=\Delta K$（淨功 $=$ 動能變化；由牛頓定律沿位移積分而得）。$W_{\text{net}}$ 為所有力做功的總和。
+\item \textbf{功率}：$P=\dfrac{W}{t}=\vec F\cdot\vec v=Fv\cos\theta$；單位瓦特（$\text{W}=\text{J/s}$），$1\ \text{hp}\approx746\ \text{W}$，$1\ \text{kWh}=3.6\times10^6\ \text{J}$。
+\item \textbf{位能}：重力 $U_g=mgh$、彈性 $U_s=\tfrac12kx^2$；零點可自選，物理意義在於\textbf{位能差}。保守力：$W_{\text{保守}}=-\Delta U$，做功與路徑無關。
+\item \textbf{力學能}：$E=K+U$。\textbf{無非保守力做功時}，$K_1+U_1=K_2+U_2$（與軌道形狀無關）。
+\item \textbf{含摩擦}：$W_{\text{非保守}}=\Delta E$；損失的力學能 $|W_f|=f\cdot s$（路徑長）轉成熱，\textbf{總能量仍守恆}。
+\end{itemize}
+\end{補充框}
+
+\end{document}
