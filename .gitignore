@@ -22,3 +22,5 @@ __pycache__/
 
 # 圖片 PDF（給 LaTeX 用，可由 _tools 腳本重生）
 **/sources/*.pdf
+# 講義編譯時複製的 ASCII 圖（建置產物）
+講義/figs/
