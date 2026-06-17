@@ -10,3 +10,15 @@ __pycache__/
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
 .trash/
+
+# LaTeX 編譯中間檔
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# 圖片 PDF（給 LaTeX 用，可由 _tools 腳本重生）
+**/sources/*.pdf

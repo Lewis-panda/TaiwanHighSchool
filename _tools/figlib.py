@@ -118,9 +118,10 @@ def save_to(fig, chapter_dir, name):
     out = os.path.join(chapter_dir, "sources")
     os.makedirs(out, exist_ok=True)
     path = os.path.join(out, name + ".svg")
-    fig.savefig(path)
+    fig.savefig(path)                                 # 給 Obsidian
+    fig.savefig(os.path.join(out, name + ".pdf"))     # 給 LaTeX 學生講義
     plt.close(fig)
-    print("wrote", path)
+    print("wrote", path, "(+pdf)")
     return path
 
 

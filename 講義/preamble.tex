@@ -1,0 +1,58 @@
+% =========================================================
+%  學生講義 共用前言（以 XeLaTeX 編譯）
+%  需要套件：xeCJK, tcolorbox（其餘多在 BasicTeX 內）
+% =========================================================
+\usepackage[a4paper,margin=2.3cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+% ---- 中文字型（macOS 系統字型）----
+\usepackage{xeCJK}
+\setCJKmainfont{Songti TC}      % 內文：宋體
+\setCJKsansfont{Heiti TC}       % 標題/強調：黑體
+\xeCJKsetup{AutoFakeBold=2.2, AutoFakeSlant=0.2}
+
+% ---- 版面 ----
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\linespread{1.15}
+\renewcommand{\baselinestretch}{1.15}
+
+% ---- 顏色 ----
+\definecolor{cBlue}{HTML}{1f6feb}
+\definecolor{cGray}{HTML}{6b7280}
+\definecolor{cGrayBg}{HTML}{f3f4f6}
+\definecolor{cPurp}{HTML}{7a3ff2}
+\definecolor{cPurpBg}{HTML}{f5f1ff}
+
+% ---- 標註框 ----
+\usepackage[most]{tcolorbox}
+
+% 就地補充新概念（灰底）：\begin{補充框}{標題}
+\newtcolorbox{補充框}[1]{
+  enhanced, breakable, arc=2pt, boxrule=0.6pt,
+  colback=cGrayBg, colframe=cGray,
+  left=9pt,right=9pt,top=7pt,bottom=7pt,
+  before upper={\textbf{\sffamily #1}\par\vspace{3pt}},
+}
+
+% 延伸 / 開放問題（紫色左邊條）：\begin{延伸框}{標題}
+\newtcolorbox{延伸框}[1]{
+  enhanced, breakable, arc=2pt, boxrule=0pt,
+  colback=cPurpBg, colframe=cPurpBg,
+  borderline west={3pt}{0pt}{cPurp},
+  left=10pt,right=9pt,top=7pt,bottom=7pt,
+  before upper={\textbf{\sffamily 延伸閱讀｜#1}\par\vspace{3pt}},
+}
+
+% ---- 圖：置中、底下小字說明 ----
+% \fig{檔名}{寬度}{說明}
+\newcommand{\fig}[3]{%
+  \begin{center}
+  \includegraphics[width=#2\linewidth]{#1}\\[2pt]
+  {\small\color{cGray} #3}
+  \end{center}}
+
+% ---- 章節標題用黑體 ----
+\newcommand{\h}[1]{\sffamily #1}
