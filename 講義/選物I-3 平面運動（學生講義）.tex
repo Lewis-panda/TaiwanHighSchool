@@ -1,0 +1,219 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+% 讓羅馬數字 Ⅰ（U+2160）由中文字型（Noto CJK TC，含此字符）排印，避免 Latin sans 缺字
+\xeCJKDeclareCharClass{CJK}{"2160}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\Huge\bfseries 選物I-3 平面運動}\\[3pt]
+{\sffamily\large 普通高中 選修物理Ⅰ（力學一）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+直線運動只沿一條直線進行，位置用一個數字 $x$ 就能描述。但多數實際運動發生在平面上：被打出的棒球、轉彎的車、飛過操場的紙飛機，都同時具有「往前」與「往下（或往上）」的運動。要描述平面上的運動，一個數字不夠，須用兩個分量。
+
+本章的核心觀念只有一個：\textbf{運動可以拆成水平、鉛直兩個獨立的方向}，各自用一維公式處理，最後再用向量合起來。把這個觀念用在「拋出去的物體」上，就得到本章的主角——\textbf{拋體運動（projectile motion）}，其軌跡為一條拋物線。學會「分方向處理」之後，下一章把力也分成兩個分量解題，是同一方法的延伸。
+
+\medskip
+本章主線：
+
+\begin{center}
+向量分量與運動獨立性 $\rightarrow$ 平拋運動 $\rightarrow$ 斜向拋射 $\rightarrow$ 綜合分析
+\end{center}
+
+\section*{\sffamily 3-1\quad 平面運動與向量分量}
+
+\subsection*{\sffamily A.\ 從一條線到一個平面}
+
+要描述平面上的運動，最方便的做法是建立一組 $x$–$y$ 直角座標，把每個運動學量都寫成\textbf{向量}，再拆成沿 $x$、沿 $y$ 的兩個\textbf{分量（component）}。位移、速度、加速度都有兩個分量：
+$$\vec r=(x,\,y),\qquad \vec v=(v_x,\,v_y),\qquad \vec a=(a_x,\,a_y).$$
+速度大小（速率）為
+$$|\vec v|=\sqrt{v_x^2+v_y^2},\qquad \text{方向 } \tan\theta=\frac{v_y}{v_x}.$$
+向量的合成與分解在數學中已學過，這裡是把它用在運動上。
+
+\subsection*{\sffamily B.\ 本章的核心：運動的獨立性}
+
+本章最重要的性質是：\textbf{水平方向的運動和鉛直方向的運動，彼此互不影響}。$x$ 方向如何運動，不會影響 $y$ 方向如何運動，反之亦然。因此可以把一個平面運動拆成兩個各自獨立的一維運動，分別用等速度、等加速度公式計算，最後再把結果合起來。這個性質稱為\textbf{運動的獨立性（independence of motions）}。
+
+\begin{補充框}{為什麼水平和鉛直可以「分開算、互不影響」？}
+這並非理所當然，而是一個須說明的物理事實，其根源在於\textbf{重力只有鉛直分量，在水平方向上不施力}。
+
+\textbf{物理上：}拋體在空中（忽略空氣阻力）只受重力，而重力是純鉛直的，所以水平方向沒有任何力。沒有力，水平速度就不會改變，為等速度運動；而「往下掉」這件事，重力給每個物體同樣的加速度 $g$，與它水平方向的快慢無關。
+
+\textbf{數學上：}加速度是向量，兩個分量各自獨立相加。拋體只受純鉛直的重力，故
+$$a_x=0,\qquad a_y=-g.$$
+於是水平方向 $a_x=0\Rightarrow v_x$ 不變（等速度）；鉛直方向 $a_y=-g\Rightarrow$ 等加速度。兩條方程式中，$x$ 的式子不出現 $y$，$y$ 的式子不出現 $x$，這就是「獨立」的數學意思。（可類比為兩台互不相通的碼錶：一台只記水平位置、一台只記鉛直高度，重力只去動鉛直那台。）
+
+\textbf{注意：}「球往前飛得越快，就越能撐住、比較不容易掉下來」並不正確。水平的快慢與鉛直的下墜是兩回事。此性質的前提是\textbf{忽略空氣阻力}；空氣阻力的方向沿速度的反方向，會同時牽涉水平與鉛直分量，使兩方向不再獨立（見 3-4 的延伸閱讀）。
+\end{補充框}
+
+\fig{si3-independence}{0.62}{圖 3-1：把一顆球每隔相同時間拍一次的頻閃示意。水平方向每格間距相同（等速度）；鉛直方向每格落差越來越大（等加速度，自由落體）。兩者合起來即為一條拋物線。}
+
+\section*{\sffamily 3-2\quad 平拋運動}
+
+\subsection*{\sffamily A.\ 什麼是平拋}
+
+把物體\textbf{水平}拋出（初速只有水平分量、沒有鉛直分量），讓它在重力下落，這種運動稱為\textbf{平拋運動（horizontal projectile）}。例如桌邊滾出的球、水平射出的子彈、飛機水平投下的物資。
+
+依運動獨立性，分兩個方向處理。取拋出點為原點、水平向右為 $x$ 正向、鉛直向下為 $y$ 正向，初速為 $v_0$（水平）：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c c c c}
+\hline
+\textbf{方向} & \textbf{加速度} & \textbf{初速} & \textbf{運動類型} \\
+\hline
+水平 $x$ & $a_x=0$ & $v_0$ & 等速度 \\
+鉛直 $y$ & $a_y=g$ & $0$ & 自由落體（等加速度） \\
+\hline
+\end{tabular}
+\end{center}
+
+對應的位置與速度方程式為
+$$\boxed{\,x=v_0\,t,\qquad y=\tfrac12 g t^2\,}$$
+$$v_x=v_0\ (\text{不變}),\qquad v_y=g\,t,\qquad v=\sqrt{v_0^2+(gt)^2}.$$
+水平分量 $v_x$ 從頭到尾都等於 $v_0$，不會減少（沒有水平方向的力）；鉛直分量 $v_y$ 像自由落體一樣越來越大。因此合速度越來越偏向下方。
+
+\fig{si3-projectile}{0.74}{圖 3-2：平拋的速度分解。水平分量 $v_x=v_0$ 保持不變，鉛直分量 $v_y=gt$ 越來越大，合速度（紫色）越來越偏向下方。}
+
+\subsection*{\sffamily B.\ 軌跡是拋物線}
+
+由 $x=v_0 t$ 解出 $t=\dfrac{x}{v_0}$，代入 $y=\tfrac12 g t^2$：
+$$y=\frac12 g\left(\frac{x}{v_0}\right)^2=\frac{g}{2v_0^2}\,x^2.$$
+這是 $y=k x^2$ 的形式（$k$ 為常數），即一條標準的拋物線。
+
+\begin{補充框}{拋體的軌跡為什麼一定是拋物線？}
+「拋物線（parabola）」是數學上有嚴格定義的曲線。拋體之所以剛好走這條曲線，是\textbf{推導}出來的結果，而非直接宣布。
+
+關鍵在於\textbf{水平位置與時間成正比、鉛直位置與時間平方成正比}。把時間消去後，鉛直位置就與水平位置的平方成正比，而「$y$ 正比於 $x^2$」正是拋物線的定義式。以平拋為例，由 $x=v_0 t$ 得 $t=\dfrac{x}{v_0}$，代入 $y=\tfrac12 g t^2$ 即得 $y=\dfrac{g}{2v_0^2}x^2$。
+
+斜拋也相同，只是式子多一項。由 $x=(v_0\cos\theta)t$ 消去 $t$，代入 $y=(v_0\sin\theta)t-\tfrac12 g t^2$：
+$$y=(\tan\theta)\,x-\frac{g}{2v_0^2\cos^2\theta}\,x^2,$$
+仍是「一次項減去 $x^2$ 項」的形式，為開口向下的拋物線，只是頂點不在原點、整條被斜放。簡言之，「等速度 ＋ 等加速度」的疊加，在數學上必然是拋物線。
+
+\textbf{注意：}拋體軌跡\textbf{不是}圓弧。圓上每一點到圓心等距，拋物線沒有這個性質，兩者只是局部形狀相近。
+\end{補充框}
+
+\subsection*{\sffamily C.\ 落地時間與水平射程}
+
+從高 $H$ 處平拋：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{落地時間} $t$ 由鉛直方向決定：$H=\tfrac12 g t^2\Rightarrow t=\sqrt{\dfrac{2H}{g}}$。此時間與水平初速 $v_0$ 無關。
+\item \textbf{水平射程}（落地時的水平距離）：$R=v_0\,t=v_0\sqrt{\dfrac{2H}{g}}$。
+\end{itemize}
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 「拋得越快，飛在空中越久」並不正確。落地時間只由高度決定；拋得快只是飛得遠，不會飛得久。
+\item 「水平速度會慢慢變小」並不正確。忽略空氣阻力時 $v_x=v_0$ 永遠不變，變的是鉛直分量。
+\item 落地速率不是 $v_0$，須把 $v_x$、$v_y$ 合起來：$v=\sqrt{v_0^2+(gt)^2}$。
+\end{itemize}
+
+\begin{補充框}{平拋的球與直接放手落下的球，哪個先落地？}
+答案是\textbf{同時落地}。「多久落地」只由鉛直方向決定，而兩顆球的鉛直運動完全相同——都從靜止開始、以同一個 $g$ 自由下墜。水平方向跑多快，與「落地要多久」無關。
+
+只看鉛直方向：兩顆球的鉛直初速都是 $0$（平拋的初速為純水平，鉛直分量為零）、鉛直加速度都是 $g$、起始高度都是 $H$，故落地時間都是 $t=\sqrt{\dfrac{2H}{g}}$。平拋的球只是額外往水平方向跑了 $R=v_0 t$，這段水平位移不占用鉛直方向的時間。
+
+\textbf{注意：}「拋出去的球走斜線、路徑較長，所以較慢落地」並不正確。路徑長度與落地時間沒有直接關係，決定時間的是鉛直方向的運動。至於\textbf{落地速率}，平拋球的落地速率 $\sqrt{v_0^2+(gt)^2}$ 大於純落下的 $gt$；「較快」指的是速率，不是「較早到」。
+\end{補充框}
+
+\fig{si3-drop-compare}{0.50}{圖 3-3：水平拋出與直接放手的兩顆球，每隔相同時間並排畫出。它們在每一個時刻的高度都相同（灰色虛線等高），因此同時落地。}
+
+\section*{\sffamily 3-3\quad 斜向拋射}
+
+\subsection*{\sffamily A.\ 斜拋的初速分解}
+
+把物體以與水平成 $\theta$ 角、初速大小 $v_0$ 斜向上拋出，稱為\textbf{斜向拋射（斜拋，oblique projectile）}。處理的第一步是把初速分解成水平、鉛直兩個分量：
+$$v_{0x}=v_0\cos\theta\ (\text{水平}),\qquad v_{0y}=v_0\sin\theta\ (\text{鉛直，向上}).$$
+
+\fig{si3-oblique}{0.92}{圖 3-4：左——斜拋初速分解為水平 $v_0\cos\theta$ 與鉛直 $v_0\sin\theta$。右——相同初速、不同角度的軌跡；$45^\circ$ 射程最大，互補的兩角（如 $30^\circ$ 與 $60^\circ$）落點相同。}
+
+接著各方向獨立處理（取向上為正，$g$ 向下）：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c c c c}
+\hline
+\textbf{方向} & \textbf{加速度} & \textbf{初速} & \textbf{運動類型} \\
+\hline
+水平 $x$ & $0$ & $v_0\cos\theta$ & 等速度 \\
+鉛直 $y$ & $-g$ & $v_0\sin\theta$ & 鉛直上拋（等加速度） \\
+\hline
+\end{tabular}
+\end{center}
+
+對應的位置與速度方程式為
+$$x=(v_0\cos\theta)\,t,\qquad y=(v_0\sin\theta)\,t-\tfrac12 g t^2,$$
+$$v_x=v_0\cos\theta\ (\text{不變}),\qquad v_y=v_0\sin\theta-g\,t.$$
+斜拋即「水平等速度 ＋ 鉛直上拋」的疊加。鉛直方向與鉛直上拋相同，因此「最高點 $v_y=0$」「上升時間等於下降時間」等結論都能直接沿用。
+
+\subsection*{\sffamily B.\ 飛行時間與最高高度}
+
+\textbf{最高點}為鉛直速度為零的瞬間，$v_y=0$：
+$$v_0\sin\theta-g\,t_{\text{頂}}=0\Rightarrow t_{\text{頂}}=\frac{v_0\sin\theta}{g}.$$
+
+\textbf{總飛行時間}（回到同一水平高度，上升與下降對稱）：
+$$\boxed{\,T=2t_{\text{頂}}=\frac{2v_0\sin\theta}{g}\,}$$
+
+\textbf{最高高度} $H$（由鉛直方向 $v_y^2=v_{0y}^2-2gH$，頂點 $v_y=0$）：
+$$\boxed{\,H=\frac{v_0^2\sin^2\theta}{2g}\,}$$
+
+\subsection*{\sffamily C.\ 水平射程公式}
+
+\textbf{水平射程} $R$＝水平速度 $\times$ 總飛行時間：
+$$R=(v_0\cos\theta)\cdot T=(v_0\cos\theta)\cdot\frac{2v_0\sin\theta}{g}=\frac{2v_0^2\sin\theta\cos\theta}{g}.$$
+用二倍角公式 $2\sin\theta\cos\theta=\sin 2\theta$：
+$$\boxed{\,R=\frac{v_0^2\sin 2\theta}{g}\,}$$
+
+由此得到兩個推論：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{$45^\circ$ 射程最大}：$\sin 2\theta$ 在 $2\theta=90^\circ$（即 $\theta=45^\circ$）時最大（$=1$），此時 $R_{\max}=\dfrac{v_0^2}{g}$。
+\item \textbf{互補角射程相同}：$\theta$ 與 $90^\circ-\theta$ 的 $\sin 2\theta$ 相等（如 $30^\circ$ 與 $60^\circ$），故射程相同（但飛行時間、最高高度不同）。
+\end{itemize}
+
+\textbf{注意：}射程公式 $R=\dfrac{v_0^2\sin 2\theta}{g}$ 只在\textbf{落回原拋出高度}時成立。若落點低於或高於拋出點（如從崖上斜拋落到崖底），不能直接套用，須回到 $x$、$y$ 方程式求解（見 3-4）。另外，最高點時並非「速度為零」，而是只有鉛直分量 $v_y=0$；水平分量 $v_x=v_0\cos\theta$ 仍存在，故最高點的速率為 $v_0\cos\theta$。
+
+\begin{延伸框}{$45^\circ$ 射程最大的物理原因；有空氣阻力時是否成立}
+公式上「$45^\circ$ 最遠」來自 $\sin 2\theta$ 在 $45^\circ$ 達到最大值，其背後的物理是一場\textbf{「水平要快」與「滯空要久」的拉鋸}。把射程寫成
+$$R=\underbrace{(v_0\cos\theta)}_{\text{水平速度}}\times\underbrace{\frac{2v_0\sin\theta}{g}}_{\text{滯空時間}}.$$
+角度越小，水平速度越大，但鉛直初速越小、滯空時間越短；角度越大則相反。兩者乘積的最佳妥協點落在 $45^\circ$，此時固定的速率平均分配給水平與鉛直分量（$\cos45^\circ=\sin45^\circ$）。也可由對稱性直接看出：射程公式對 $\theta$ 與 $90^\circ-\theta$ 對稱，對稱函數的極值落在對稱中心 $\dfrac{0^\circ+90^\circ}{2}=45^\circ$。
+
+\textbf{有空氣阻力時，最佳角通常小於 $45^\circ$。}空氣阻力大致與速率有關、方向與運動方向相反；飛得越久、越高，被阻力消耗的能量越多。為減少阻力影響，較有利的方式是較低、較早地飛出，因此最佳角會降到 $45^\circ$ 以下，且阻力越大、初速越快，降得越多。實測的最佳發射角大致為：鉛球約 $42^\circ$（重、慢，阻力影響小），標槍、鏈球約 $30^\circ\!\sim\!40^\circ$，高爾夫球、棒球長打常更低，並牽涉旋轉產生的升力（馬格努斯效應）。
+
+\textbf{此外，出手高度也有影響。}即使沒有空氣阻力，若落點低於出手點，射程公式因「落回同高度」的前提不成立而不適用；此時最佳角同樣小於 $45^\circ$，因為站在高處相當於先賺得一段滯空時間。「$45^\circ$ 最遠」是\textbf{無阻力、落回同高度}的理想模型結論，標清前提即無矛盾。
+\end{延伸框}
+
+\section*{\sffamily 3-4\quad 拋體運動的綜合分析}
+
+前三節為基本題型。當條件改變、現成公式無法直接套用時，回到最原始的兩條方程式求解：
+$$x=(v_0\cos\theta)\,t,\qquad y=(v_0\sin\theta)\,t-\tfrac12 g t^2.$$
+把已知代入、解出時間 $t$，其餘各量隨之而得。例如從高處斜拋、落到較低地面時，落地點的 $y$ 為負值（在拋出點下方），代入鉛直方程式解出 $t$ 後，再由水平方程式得到水平距離；此情形不能使用射程公式 $R=\dfrac{v_0^2\sin2\theta}{g}$。
+
+\textbf{注意：}拋體在某一時刻的速度方向，是\textbf{合速度的方向}（沿軌跡切線），由 $\tan\alpha=\dfrac{v_y}{v_x}$ 決定，會隨時間改變；它與「位移方向」「初速方向」不同。最高點時 $v_y=0$，速度方向恰為水平。
+
+\medskip
+運動獨立性的一個直接結論是：兩個物體若在鉛直方向受到相同的重力，則它們的鉛直運動相同。據此，一顆\textbf{水平射出的子彈}與一個\textbf{同時自由落下的目標}，在任一時刻下墜的高度 $\tfrac12 g t^2$ 完全相同。若忽略重力，子彈會沿直線飛向目標原來的位置；加入重力後，子彈相對於該直線下墜多少，目標也正好下墜多少。因此只要子彈在目標落地前抵達其水平位置，兩者必在空中相遇。這說明子彈的鉛直下墜與其水平速度互不影響，是運動獨立性的典型應用。
+
+\section*{\sffamily 3-5\quad 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{運動獨立性}：水平、鉛直兩方向互不影響，分開用一維公式計算，再合成。根源是重力只有鉛直分量。前提為忽略空氣阻力。
+\item \textbf{平拋}（初速水平 $v_0$）：水平等速度 $x=v_0 t$、$v_x=v_0$；鉛直自由落體 $y=\tfrac12 g t^2$、$v_y=gt$。
+  \begin{itemize}\setlength{\itemsep}{1pt}
+  \item 從高 $H$ 落地：$t=\sqrt{\dfrac{2H}{g}}$（與 $v_0$ 無關）；射程 $R=v_0\sqrt{\dfrac{2H}{g}}$。
+  \item 軌跡 $y=\dfrac{g}{2v_0^2}x^2$（拋物線）。
+  \end{itemize}
+\item \textbf{斜拋}（初速 $v_0$、仰角 $\theta$）：先分解 $v_{0x}=v_0\cos\theta$、$v_{0y}=v_0\sin\theta$。
+  \begin{itemize}\setlength{\itemsep}{1pt}
+  \item 飛行時間 $T=\dfrac{2v_0\sin\theta}{g}$；最高高度 $H=\dfrac{v_0^2\sin^2\theta}{2g}$；射程 $R=\dfrac{v_0^2\sin 2\theta}{g}$。
+  \item $45^\circ$ 射程最大 $R_{\max}=\dfrac{v_0^2}{g}$；互補角（如 $30^\circ$ 與 $60^\circ$）射程相同。
+  \end{itemize}
+\item \textbf{通用法}（公式套不上時）：回到 $x=(v_0\cos\theta)t$、$y=(v_0\sin\theta)t-\tfrac12 gt^2$，解出 $t$。
+\item 落地速率為合速度 $v=\sqrt{v_x^2+v_y^2}$；最高點 $v_y=0$ 但 $v_x\ne0$。
+\end{itemize}
+\end{補充框}
+
+\end{document}

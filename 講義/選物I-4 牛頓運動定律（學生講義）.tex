@@ -1,0 +1,288 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\Huge\bfseries 選物I-4 牛頓運動定律}\\[3pt]
+{\sffamily\large 普通高中 選修物理I（力學一）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+必修物理已對牛頓三大運動定律作過\textbf{定性}介紹。本章把這些定律化為\textbf{可實際計算}的工具：先把「力是向量，可以合成與分解」說明清楚，再用 $\vec F_{\text{net}}=m\vec a$ 處理斜面、連接體、摩擦、張力與視重等問題。
+
+本章的核心技能只有一個：\textbf{畫出正確的自由體圖、選定合適的坐標軸、對每一根軸寫下 $\sum F=ma$}。後續的週期運動、萬有引力、動量等章節都建立在此處的受力分析之上。本章不處理圓周運動與簡諧運動本身，只練習一般情況下的受力分析。
+
+\medskip
+本章主線：
+
+\begin{center}
+力是向量（合成與分解）$\rightarrow$ 第一定律與慣性 $\rightarrow$ 第二定律 $\vec F_{\text{net}}=m\vec a$ $\rightarrow$ 第三定律（作用與反作用）$\rightarrow$ 應用：摩擦、張力、斜面與連接體
+\end{center}
+
+\section*{\sffamily 4-1\quad 力是向量：合成與分解}
+
+\subsection*{\sffamily A.\ 力為什麼是向量}
+
+力會改變物體的運動狀態，而「往哪個方向改變」會影響結果：同樣 $10$ N，往東推與往北推所得結果不同。因此\textbf{力（force）有大小也有方向，是向量}。兩個以上的力同時作用時，其總效果等於它們的\textbf{向量和}，稱為\textbf{合力（resultant force）}或\textbf{淨力（net force）}：
+$$\vec F_{\text{net}} = \vec F_1 + \vec F_2 + \cdots = \sum_i \vec F_i.$$
+牛頓第二定律中的「合力」即為此向量和——\textbf{不是把各力大小直接相加}，而是依方向作向量加法。
+
+\subsection*{\sffamily B.\ 合成：平行四邊形法}
+
+兩個力 $\vec F_1$、$\vec F_2$ 的合力，可用\textbf{平行四邊形法}作圖：以兩力為相鄰兩邊作平行四邊形，其對角線即為合力 $\vec R$。
+
+\fig{si4-compose}{0.78}{圖 4-1：平行四邊形法。以 $\vec F_1$、$\vec F_2$ 為相鄰兩邊作平行四邊形，對角線 $\vec R=\vec F_1+\vec F_2$ 即為合力。}
+
+當兩力夾角為 $\theta$ 時，合力大小由餘弦定理給出：
+$$\boxed{\;R = \sqrt{F_1^2 + F_2^2 + 2F_1F_2\cos\theta}\;}$$
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 兩力\textbf{同向}（$\theta=0^\circ$）：$R=F_1+F_2$（最大）。
+\item 兩力\textbf{反向}（$\theta=180^\circ$）：$R=|F_1-F_2|$（最小）。
+\item 兩力\textbf{垂直}（$\theta=90^\circ$）：$R=\sqrt{F_1^2+F_2^2}$。
+\end{itemize}
+
+由此可得兩力合成的範圍。設 $F_1\ge F_2$，則合力大小必落在
+$$F_1 - F_2 \;\le\; R \;\le\; F_1 + F_2,$$
+這對應於「三角形兩邊之和大於第三邊、兩邊之差小於第三邊」。
+
+\textbf{注意：}「合力一定比每個分力大」並不正確。反向的兩力，其合力可以比任一個分力都小，甚至為零。
+
+\subsection*{\sffamily C.\ 分解：把一個力拆成正交分量}
+
+作圖法直觀，但實際\textbf{計算}時更常用反向操作——把一個力\textbf{分解（resolve）}成兩個互相垂直的\textbf{分量（component）}。取一個與水平夾角 $\theta$、大小 $F$ 的力：
+
+\fig{si4-resolve}{0.62}{圖 4-2：把力 $\vec F$ 分解為水平分量 $F_x=F\cos\theta$ 與鉛直分量 $F_y=F\sin\theta$。}
+
+$$\boxed{\;F_x = F\cos\theta,\qquad F_y = F\sin\theta\;}$$
+選取\textbf{互相垂直}的方向，是因為這樣兩軸的方程式彼此獨立、互不影響，可以分開求解。\textbf{選對坐標軸}（讓盡量多的力剛好落在軸上）能使計算大幅簡化，這一點在斜面問題中作用最明顯（見 4-5）。
+
+\textbf{注意：}分解時把 $\sin$、$\cos$ 用反，是斜面問題最常見的錯誤。判斷方式：\textbf{夾角所「靠著」的那一邊配 $\cos$，「對著」的那一邊配 $\sin$}。
+
+\section*{\sffamily 4-2\quad 牛頓第一運動定律與慣性}
+
+\subsection*{\sffamily A.\ 第一定律（慣性定律）}
+
+物體若所受\textbf{合力為零}，則原本靜止者保持靜止，原本運動者保持\textbf{等速度直線運動}。物體抵抗其運動狀態被改變的性質，稱為\textbf{慣性（inertia）}，其量度即為\textbf{質量（mass）}。
+
+必修物理已透過伽利略的斜面論證介紹過第一定律。此處要補充一個必修未詳述、卻是第一定律核心的內容：\textbf{它在哪一類參考系中才成立？}
+
+\subsection*{\sffamily B.\ 慣性參考系}
+
+$\vec F=m\vec a$ 並非在任何參考系中都成立。在一台緊急煞車的公車內，未受外力的乘客會相對於車廂向前移動——以公車為參考系時，慣性定律看似不成立。
+
+\begin{補充框}{名詞：慣性參考系（inertial frame）}
+存在一類特殊的參考系，在其中「不受力的物體確實維持等速度」。這類參考系稱為\textbf{慣性參考系}。牛頓定律只在慣性參考系中成立。第一定律的功能，即用來\textbf{篩選出}這些參考系，而不只是第二定律在 $\vec F=0$ 時的特例。
+
+在加速（非慣性）的參考系中，須額外引入一個找不到施力者的\textbf{慣性力（假想力）}，才能讓帳面上的 $\vec F=m\vec a$ 平衡。
+\end{補充框}
+
+\textbf{注意：}「離心力、科氏力是真正的力」並不正確。它們是\textbf{選用非慣性參考系}後才出現的記帳項，沒有施力者，也沒有反作用力的對象。本章所有分析一律站在\textbf{地面（近似為慣性參考系）}上進行，因此不會用到慣性力。
+
+\section*{\sffamily 4-3\quad 牛頓第二運動定律：$\vec F_{\text{net}}=m\vec a$}
+
+\subsection*{\sffamily A.\ 力與加速度}
+
+物體所受\textbf{合力}等於其質量與加速度的乘積：
+$$\boxed{\;\vec F_{\text{net}} = m\vec a\;}$$
+力造成的不是「運動」本身，而是運動的\textbf{改變（加速度）}。加速度方向恆與合力同向，大小與合力成正比、與質量成反比。
+
+實際解題時使用其分量式：
+$$\sum F_x = ma_x,\qquad \sum F_y = ma_y.$$
+\textbf{每根軸各自獨立}地滿足此式，這正是「把力分解為正交分量」能簡化問題的根本原因。
+
+\begin{補充框}{$\vec F_{\text{net}}=m\vec a$ 是定義還是定律？}
+單獨看 $\vec F=m\vec a$，會產生一個疑問：若測量力的唯一方法就是量 $ma$，那這條式子豈不是恆等式（定義），無法被實驗推翻？
+
+化解此疑問的關鍵在於：\textbf{我們另有許多獨立於 $ma$ 的方法描述「力」，而它們彼此自洽}。第二定律真正可被檢驗的內容，藏在以下幾點：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{力有獨立的來源定律}：重力 $F=GMm/r^2$、彈簧力 $F=kx$、庫侖力 $F=kq_1q_2/r^2$，都\textbf{不靠 $ma$}、各自獨立給出力的大小。第二定律宣稱：把這些獨立算出的力加總，結果\textbf{會}等於 $m\vec a$。這一點可被實驗檢驗，也可能失敗（例如水星近日點進動，須由廣義相對論修正）。
+\item \textbf{力可向量疊加}：「兩力的合效果等於其向量和」本身是一條經驗事實。
+\item \textbf{質量普適}：同一物體被重力、彈力或電力推動時，反推出的 $m$ 都相同。
+\end{itemize}
+因此 $\vec F=m\vec a$ \textbf{不是純粹的定義}，而是一個框架性的物理定律，具有可被推翻的經驗內容。它也有適用範圍：原子尺度以下須由量子力學取代，接近光速時須由狹義相對論修正，強重力場中須由廣義相對論接手。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 力的單位：牛頓}
+
+使 $1\ \text{kg}$ 的物體產生 $1\ \text{m/s}^2$ 加速度的力，定義為 $1$ 牛頓（newton, N）：
+$$1\ \text{N} = 1\ \text{kg}\cdot\text{m/s}^2.$$
+
+\subsection*{\sffamily C.\ 解題流程：自由體圖}
+
+牛頓第二定律的應用，須依靠一張\textbf{自由體圖（free-body diagram）}。其三步驟是：
+\begin{enumerate}\setlength{\itemsep}{1pt}
+\item \textbf{把研究對象單獨抽出}，畫成一個點或方塊。
+\item \textbf{只畫「它所受」的每一個力}（重力、正向力、摩擦力、張力、外加推力等），\textbf{不畫它對別人施的力}。
+\item \textbf{選坐標、分解、對各軸寫 $\sum F = ma$}，再解聯立方程。
+\end{enumerate}
+
+\begin{補充框}{自由體圖怎麼畫才正確？}
+自由體圖的目的，是把「要研究的那一個物體」單獨取出，只畫上「別人施加在它身上」的所有力，以便正確寫出 $\sum\vec F=m\vec a$。可類比為替這個物體「點名」：只列出正在碰它、拉它、壓它、吸它的力，且每一個力都必須說得出\textbf{是誰施的}；說不出施力者的，一律不畫。
+
+\textbf{找力時依固定順序，最不易遺漏：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{重力 $mg$}：永遠存在，恆鉛直向下。
+\item \textbf{接觸力}：凡有東西接觸它，就有垂直接觸面的\textbf{正向力 $N$} 與沿接觸面的\textbf{摩擦力 $f$}。
+\item \textbf{張力 $T$}：有繩連著就有，方向\textbf{沿繩、朝離開物體的方向}（繩只能拉、不能推）。
+\item \textbf{外加推力／拉力}：題目明確給出的外力。
+\end{itemize}
+
+\textbf{一張正確的自由體圖應滿足：}圖上只有一個物體；每一支箭頭都答得出「是誰施的」；沒有任何一支箭頭是「這個物體施給別人」的力（那屬於別人的圖）；加速度標在一旁、不與力畫在一起（加速度不是力）。
+
+\textbf{三種典型錯誤：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{漏畫力}（最常見）：例如斜面上漏掉摩擦力、被繩拉著卻漏掉張力。少一個力，$\sum F$ 就少一項，加速度即算錯。
+\item \textbf{多畫不存在的力}：例如憑空畫一個「向前的推力」。\textbf{等速運動不需要力}；找不到施力者的力，在地面參考系中不該出現。
+\item \textbf{把「施給別人的力」也畫進來}：例如分析書本時把「書壓桌子的力」畫到書上。該力作用在桌子上，屬於桌子的自由體圖。作用力與反作用力\textbf{永遠分屬兩張不同的圖}。
+\end{itemize}
+\end{補充框}
+
+\textbf{注意：}「正向力 $N$ 永遠等於 $mg$」並不正確。$N$ 是由限制條件決定的未知量，須由鉛直方向的 $\sum F_y$ 解出；只有在「水平面、且無鉛直方向外力分量」時才剛好 $N=mg$。此外，「物體運動方向就是受力方向」也不正確：物體可以向東運動卻受向西的合力（此時在減速）。決定加速度方向的是\textbf{合力}，而非當下的速度。
+
+\section*{\sffamily 4-4\quad 牛頓第三運動定律：作用與反作用}
+
+\subsection*{\sffamily A.\ 第三定律}
+
+兩物體間的作用力總是\textbf{成對}出現：大小相等、方向相反，且分別作用在\textbf{這兩個不同的物體}上：
+$$\boxed{\;\vec F_{A\to B} = -\,\vec F_{B\to A}\;}$$
+任何力都不會單獨存在；有作用力，必有等大反向的反作用力。
+
+\fig{si4-action-reaction}{0.72}{圖 4-3：作用力與反作用力。$\vec F_{A\to B}$ 與 $\vec F_{B\to A}$ 大小相等、方向相反，但分別作用在 $B$ 與 $A$ 兩個不同物體上，因此不會互相抵消。}
+
+\subsection*{\sffamily B.\ 為什麼這兩個力不會互相抵消}
+
+作用力與反作用力\textbf{作用在不同物體上}，因此\textbf{永遠不能直接相消}。「能否相消」只對「作用在\textbf{同一個}物體上的力」才有意義。
+
+以靜放在桌上的書為例。書受兩個力：重力 $W$（地球拉書，向下）與正向力 $N$（桌推書，向上）。這兩者\textbf{不是}一對作用力與反作用力，理由有二：（1）兩者都作用在\textbf{同一個物體（書）}上；（2）一個是重力、一個是接觸力，來源不同。它們只是恰好等大反向的\textbf{一對平衡力}（因為書沒有鉛直方向的加速度）。真正的配對是：「地球拉書（$W$）」對應「書拉地球」（作用在地球上）；「桌推書（$N$）」對應「書壓桌」（作用在桌上）。
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{作用反作用力不等於平衡力}。前者作用在\textbf{兩個}物體上、永不相消；後者作用在\textbf{同一個}物體上、可相消。混淆兩者是常見的錯誤。
+\item 「大卡車撞小汽車，卡車對汽車的力比較大」並不正確。由第三定律，兩者\textbf{互相施加等大的力}。汽車損壞較嚴重，是因為它質量小、由 $a=F/m$ 得到的\textbf{加速度}大，而非受力較大。
+\item 慣性不等於慣性力。慣性是物體的性質（量度為質量），不是一種力。
+\end{itemize}
+
+第三定律在某些情況下會出現例外。例如兩個相隔一段距離、正在運動的電荷，彼此的磁力並不恰好等大反向；此時動量仍守恆，但須把「場本身帶有動量」一併計入。此一進階討論已於必修章節處理。
+
+\section*{\sffamily 4-5\quad 牛頓定律的應用：摩擦、張力、斜面與連接體}
+
+本節把前面所有工具組合起來，處理多步驟的受力分析。先補齊兩個常見的力。
+
+\subsection*{\sffamily A.\ 摩擦力}
+
+接觸面阻止相對滑動的力稱為\textbf{摩擦力（friction）}，方向沿接觸面。
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{靜摩擦力 $f_s$}：物體尚未滑動時，\textbf{自動調整}大小以抵抗外力，直到上限——\textbf{最大靜摩擦力} $f_{s,\max}=\mu_s N$，即 $0 \le f_s \le \mu_s N$，其中 $\mu_s$ 為靜摩擦係數。
+\item \textbf{動摩擦力 $f_k$}：物體一旦滑動，摩擦力變為定值，方向與相對運動相反：$f_k = \mu_k N$。一般 $\mu_k < \mu_s$。
+\end{itemize}
+
+\begin{補充框}{靜摩擦力為什麼可大可小？最大靜摩擦是什麼？}
+動摩擦有明確的值 $f_k=\mu_k N$，靜摩擦卻寫成不等式 $0\le f_s\le\mu_s N$。原因是：\textbf{靜摩擦力是一個被動回應的力}。物體尚未滑動時，它自動調整大小，剛好抵消想讓它滑動的外力，直到調至極限 $f_{s,\max}=\mu_s N$ 為止。
+
+以水平推一個靜止的箱子為例：推 $5$ N 而不動，靜摩擦即為 $5$ N；推 $10$ N 仍不動，靜摩擦即為 $10$ N；推到某個值時，箱子開始滑動。可見物體未動之前，\textbf{靜摩擦力的大小完全由外力決定}（因為不動，故 $\sum F=0$，靜摩擦等於外力）。但它有一個上限：
+$$\boxed{\;0 \le f_s \le f_{s,\max} = \mu_s N\;}$$
+外力一旦超過 $f_{s,\max}$，物體開始滑動，摩擦力\textbf{改為}固定的動摩擦 $f_k=\mu_k N$。由於通常 $\mu_k<\mu_s$，阻力在滑動瞬間會減小，這即「推動之後反而較省力」的原因。
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 「靜摩擦力 $=\mu_s N$」並不正確。$\mu_s N$ 只是\textbf{上限}。物體不動時，靜摩擦多半小於此上限，其真實大小須由「合力為零」反推；\textbf{只有在即將滑動的臨界瞬間}，靜摩擦才剛好等於 $\mu_s N$。
+\item 理想模型下，最大靜摩擦 $\mu_s N$ 與\textbf{接觸面積}及推動的快慢\textbf{無關}，只與 $\mu_s$、$N$ 有關。
+\end{itemize}
+
+可類比為一個頂住門的人：對方推多用力，他就頂多用力，門不動；但他的力氣有上限，外力一旦超過此上限，門就開了，他改成在地上滑動摩擦（動摩擦），力變得小而固定。
+\end{補充框}
+
+\textbf{解題上的鐵則：}遇到含摩擦的題目，\textbf{第一步永遠是判斷會不會動}——比較「想讓它動的驅動力」與「最大靜摩擦 $\mu_s N$」。若驅動力 $\le\mu_s N$，物體不動，此時 $f_s$ 等於驅動力（由平衡反推，\textbf{不可}寫成 $\mu_s N$）；若驅動力 $>\mu_s N$，物體會動，改用 $f_k=\mu_k N$ 代入 $\sum F=ma$。
+
+\subsection*{\sffamily B.\ 張力}
+
+繩、線被拉緊時，沿繩內部傳遞的力稱為\textbf{張力（tension）$T$}，方向沿繩、永遠是「拉」而非「推」。\textbf{理想輕繩}（質量可忽略）上各處張力相同；\textbf{理想滑輪}（無質量、無摩擦）只改變張力的方向，不改變其大小。
+
+\textbf{注意：}「張力等於懸掛物的重量」只在\textbf{靜止或等速}時才成立。物體一旦有鉛直方向的加速度，則 $T\neq mg$。
+
+\subsection*{\sffamily C.\ 視重}
+
+人站在電梯地板的磅秤上時，磅秤讀數會隨電梯的運動狀態改變。
+
+\begin{補充框}{質量、重量與視重的差別}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{質量（mass）$m$}：物體含有多少物質、有多難被加速的量度。它是物體自身的性質，\textbf{走到哪都不變}（地球、月球、外太空、加速的電梯中皆相同）。單位：公斤（kg）。
+\item \textbf{重量（weight）$W$}：所在天體對物體的重力大小，$W=mg$。它\textbf{隨所在地的 $g$ 改變}（月球 $g$ 較小，重量約為地球的 $1/6$）。單位：牛頓（N）。
+\end{itemize}
+
+電梯中改變的，\textbf{既不是質量，也不是真正的重量}（$mg$ 沒變，$g$ 仍是原值），而是\textbf{磅秤所量到的正向力 $N$}，稱為\textbf{視重（apparent weight）}。人站在磅秤上，受重力 $mg$（向下）與正向力 $N$（向上）。取向上為正：
+$$N - mg = ma \;\Rightarrow\; \boxed{N = m(g+a)}.$$
+磅秤顯示的是 $N$，不是 $mg$：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{0.28\linewidth} p{0.20\linewidth} p{0.30\linewidth}}
+\hline
+\textbf{電梯狀態} & \textbf{加速度 $a$} & \textbf{視重 $N=m(g+a)$} \\
+\hline
+靜止／等速 & $0$ & $mg$（正常）\\
+向上加速 & $+$ & $>mg$（變重）\\
+向下加速 & $-$ & $<mg$（變輕）\\
+自由下墜 & $-g$ & $0$（失重）\\
+\hline
+\end{tabular}
+\end{center}
+
+人感覺到的「體重」，其實是地板（或磅秤、椅子）頂住人的力 $N$，而非地球拉人的力 $mg$ 本身。電梯向上加速時，地板須更用力把人連同「向上加速」一起頂起，故 $N$ 變大、感覺變重；自由下墜時地板不再頂人（$N=0$），即為失重。
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 「失重等於沒有重力」並不正確。自由下墜或繞地軌道上，重力\textbf{照樣在拉}（正是它提供向下的加速度）；只因人與磅秤一起下落、彼此不再擠壓，\textbf{視重}才為零。太空人在軌道上「失重」即此原因——他們和太空站一起以 $g$ 自由下落。
+\item 「到了月球，質量變成 $1/6$」並不正確。質量不變，變的是\textbf{重量}（因月球 $g$ 較小）。
+\item 家用磅秤量的是\textbf{正向力（視重）}，再除以 $g$ 換算成「公斤」，因此它在電梯中、在月球上都會測得不準。真正量質量須用天平（兩邊同地比較，$g$ 自動約掉）。
+\end{itemize}
+\end{補充框}
+
+\subsection*{\sffamily D.\ 斜面問題}
+
+斜面是「選對坐標軸」的典型情況。\textbf{訣竅：把坐標軸轉成沿斜面與垂直斜面}，這樣正向力與摩擦力剛好落在軸上，只需分解重力。
+
+\fig{si4-fbd-incline}{0.66}{圖 4-4：斜面上物體的自由體圖。坐標軸沿斜面與垂直斜面，重力 $mg$ 分解為沿斜面向下的 $mg\sin\theta$ 與垂直壓向斜面的 $mg\cos\theta$；$N$ 為正向力，$f$ 為摩擦力。}
+
+傾角 $\theta$ 時，重力 $mg$（鉛直向下）分解為：
+$$\underbrace{mg\sin\theta}_{\text{沿斜面向下}},\qquad \underbrace{mg\cos\theta}_{\text{垂直壓向斜面}}.$$
+垂直斜面方向無加速度，故 $N = mg\cos\theta$。據此，含摩擦時最大靜摩擦為 $f_{s,\max}=\mu_s N=\mu_s\, mg\cos\theta$，可與沿斜面的驅動力 $mg\sin\theta$ 比較，判斷物體會不會下滑。
+
+\subsection*{\sffamily E.\ 連接體}
+
+兩個以上的物體用繩相連、跨過滑輪時，稱為\textbf{連接體}。
+
+\fig{si4-connected}{0.66}{圖 4-5：連接體。桌面上的 $m_1$ 經理想滑輪以輕繩連到懸掛的 $m_2$。兩物體共用同一加速度 $a$，繩中張力 $T$ 在兩物體的方程式中皆出現、方向相反。}
+
+連接體的分析流程如下：
+\begin{enumerate}\setlength{\itemsep}{1pt}
+\item \textbf{整個系統定同一個 $a$}：繩不伸長，故各物體加速度大小相同。
+\item \textbf{每個物體各畫一張自由體圖、各列一條方程}：張力 $T$ 在兩條方程中都出現，方向相反。
+\item \textbf{聯立消去 $T$ 求 $a$}（常用兩式相加），再回代求 $T$。
+\end{enumerate}
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 「理想滑輪兩側張力不一樣」並不正確。對理想滑輪（無質量、無摩擦）而言兩側張力相同；只有有質量的滑輪才不同（超出本章範圍）。
+\item 「掛在繩上的兩物體，張力等於較重者的重量」並不正確，只有系統靜止時才如此。系統加速時，張力嚴格介於兩個重量之間。
+\end{itemize}
+
+\section*{\sffamily 4-6\quad 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{力是向量}：合力 $\vec F_{\text{net}}=\sum\vec F_i$，以平行四邊形法合成；$R=\sqrt{F_1^2+F_2^2+2F_1F_2\cos\theta}$，範圍 $|F_1-F_2|\le R\le F_1+F_2$。
+\item \textbf{分解}：$F_x=F\cos\theta$、$F_y=F\sin\theta$；選正交軸使各軸方程獨立。
+\item \textbf{第一定律}：合力為零則維持靜止或等速度；只在\textbf{慣性參考系}成立。
+\item \textbf{第二定律}：$\vec F_{\text{net}}=m\vec a$，分量式 $\sum F_x=ma_x$、$\sum F_y=ma_y$；$1\ \text{N}=1\ \text{kg·m/s}^2$。解題核心為\textbf{自由體圖}。
+\item \textbf{第三定律}：$\vec F_{A\to B}=-\vec F_{B\to A}$；作用反作用力\textbf{作用在不同物體、永不相消}（不等於平衡力）。
+\item \textbf{常見力}：重力 $mg$；正向力 $N$（由限制決定，斜面上 $N=mg\cos\theta$）；摩擦（靜 $0\le f_s\le\mu_s N$、動 $f_k=\mu_k N$）；張力 $T$（理想輕繩各處相同）。
+\item \textbf{視重}：$N=m(g+a)$（電梯向上加速變重、向下加速變輕、自由落體失重）；質量不變，變的是磅秤量到的正向力。
+\item \textbf{斜面}：坐標軸轉成沿斜面／垂直斜面，重力分解為 $mg\sin\theta$、$mg\cos\theta$。
+\item \textbf{含摩擦}：先比較「驅動力」與 $f_{s,\max}=\mu_s N$ 判斷動不動，再選用 $f_s$ 或 $f_k$。
+\item \textbf{連接體}：繩不伸長則同一 $a$；各物體各列一式，聯立消 $T$ 求解。
+\end{itemize}
+\end{補充框}
+
+\end{document}

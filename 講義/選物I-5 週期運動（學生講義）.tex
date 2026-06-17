@@ -1,0 +1,256 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\Huge\bfseries 選物I-5 週期運動}\\[3pt]
+{\sffamily\large 普通高中 選修物理I（力學一）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+自然界存在大量會一再重複的運動：月球繞地球、彈簧上下振盪、鞦韆來回擺動、音叉振動。本章用\textbf{牛頓第二定律}定量描述這類\textbf{週期運動}，主要對象有兩個：\textbf{等速圓周運動（uniform circular motion）}與\textbf{簡諧運動（simple harmonic motion, SHM）}。最後會說明兩者是同一件事的兩個面向。
+
+圓周運動是下一章萬有引力（行星、衛星繞行）的數學工具；簡諧運動則是日後波動、聲音、交流電以及量子力學中各種振盪行為的原型。本章同時用到向量、牛頓第二定律與三角函數三項先前所學的內容。
+
+\medskip
+本章主線：
+
+\begin{center}
+等速圓周運動 $\rightarrow$ 向心加速度與向心力 $\rightarrow$ 簡諧運動 $\rightarrow$ 簡諧與圓周的關係 $\rightarrow$ 單擺
+\end{center}
+
+\section*{\sffamily 5-1\quad 等速圓周運動}
+
+\subsection*{\sffamily A.\ 為什麼「等速率」仍稱為「有加速度」}
+
+\textbf{等速圓周運動}指物體沿圓形軌道運動，且\textbf{速率（speed，速度的大小）}保持不變。此處用「等速\textit{率}」而非「等速\textit{度}」，是因為\textbf{速度是向量}：圓周上每一點的速度都沿該點的\textbf{切線方向}，方向持續改變。
+
+\begin{補充框}{速率不變，為什麼還有加速度？}
+加速度量的不是「速率有沒有變快」，而是「\textbf{速度向量有沒有變}」。速度是向量，包含\textbf{大小（速率）與方向}兩部分；只要其中任何一個改變，速度就改變，就有加速度。等速圓周運動屬於「大小不變、方向持續改變」，因此仍有加速度。
+
+加速度的定義是
+$$\vec a=\frac{\Delta\vec v}{\Delta t}.$$
+分子是 $\Delta\vec v$（速度\textbf{向量}的變化），而非 $\Delta v$（速率這個\textbf{數值}的變化）。把圓周上相鄰兩點的速度 $\vec v_1$、$\vec v_2$ 平移到同一起點相減，即使 $|\vec v_1|=|\vec v_2|$（速率相等），$\vec v_2-\vec v_1$ 也\textbf{不是零向量}，因為兩者方向不同。這個差向量 $\Delta\vec v$ 指向圓心。
+
+\textbf{注意：}「加速度」與「變快」並不等同。變快、變慢、轉向三種情形都有加速度；圓周運動是純粹的「轉向」型加速度。可類比為開車以固定速率轉彎：碼錶顯示不變，但乘客仍感覺被推向車門，這即為加速度存在的證據。
+\end{補充框}
+
+如下圖：把圓周上相鄰兩點的速度 $\vec v_1$、$\vec v_2$ 平移到一起，畫出 $\Delta\vec v=\vec v_2-\vec v_1$。當兩點靠得很近時，$\Delta\vec v$ 指向圓心。因此這個加速度稱為\textbf{向心加速度（centripetal acceleration）}，centripetal 源自拉丁文「尋求中心」之意。
+
+\fig{si5-centripetal}{0.92}{圖 5-1：左——圓周上速度沿切線方向，速率不變但方向持續改變；右——把相鄰兩點的速度平移相減，差向量 $\Delta\vec v$ 指向圓心，故加速度指向圓心。}
+
+\subsection*{\sffamily B.\ 描述圓周運動的量：$T$、$f$、$\omega$}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{0.30\linewidth} p{0.10\linewidth} p{0.34\linewidth} p{0.14\linewidth}}
+\hline
+\textbf{量} & \textbf{符號} & \textbf{定義} & \textbf{單位} \\
+\hline
+週期（period） & $T$ & 繞一圈所需時間 & s \\
+頻率（frequency） & $f$ & 每秒繞幾圈 & Hz \\
+角速度（angular velocity） & $\omega$ & 每秒掃過的角度（弧度） & rad/s \\
+\hline
+\end{tabular}
+\end{center}
+
+每繞一圈走過角度 $2\pi$（弧度）、花時間 $T$，因此三者的關係為
+$$\boxed{\;f=\frac{1}{T},\qquad \omega=\frac{2\pi}{T}=2\pi f\;}$$
+
+\begin{補充框}{角速度 $\omega$ 是什麼？為什麼用弧度？}
+$\omega$ 量的是「轉得多快」（每秒轉幾弧度），與量「跑得多快」的線速率 $v$ 不同，兩者相差一個半徑：$v=\omega r$。
+
+使用\textbf{弧度}而非角度，是為了讓 $v=\omega r$ 這類關係式最簡潔（弧長＝半徑 $\times$ 弧度角）。另須注意 $\omega=2\pi f$，與頻率 $f$ 相差一個 $2\pi$：$f$ 是每秒幾圈，$\omega$ 是每秒幾弧度。
+\end{補充框}
+
+\subsection*{\sffamily C.\ 線速率與向心加速度的公式}
+
+繞一圈走過的弧長為圓周長 $2\pi r$，花時間 $T$，因此線速率
+$$v=\frac{2\pi r}{T}=\omega r.$$
+
+向心加速度的大小可由「速度三角形」推得。當物體掃過小角度 $\Delta\theta$ 時，速度方向也恰好轉了 $\Delta\theta$。速度大小皆為 $v$，故 $|\Delta\vec v|\approx v\,\Delta\theta$（弧長公式，半徑換成 $v$）。除以 $\Delta t$：
+$$a=\frac{|\Delta\vec v|}{\Delta t}=v\,\frac{\Delta\theta}{\Delta t}=v\,\omega.$$
+再用 $v=\omega r$ 消去 $\omega$ 或 $v$，得到三個等價寫法：
+$$\boxed{\;a=\frac{v^2}{r}=\omega^2 r=v\omega\;}$$
+
+\subsection*{\sffamily D.\ 向心力}
+
+既然有指向圓心的加速度，依牛頓第二定律 $\vec F_{\text{net}}=m\vec a$，必有一個\textbf{指向圓心的合力}維持圓周運動：
+$$\boxed{\;F=\frac{mv^2}{r}=m\omega^2 r\;}$$
+這個合力稱為\textbf{向心力（centripetal force）}。
+
+\begin{補充框}{向心力不是一種新的力}
+\textbf{向心力不是一種新的力，而是「剛好指向圓心的那個合力」的角色名稱。}真正提供它的，永遠是某個已知的真實力——繩的張力、地球的重力、輪胎的靜摩擦力等。向心力只是這些力在圓周運動中所扮演的\textbf{角色}，並非另一個獨立的來源。
+
+牛頓第二定律只指出「合力要等於多少、指向何方」，並未指出這個力\textbf{從何而來}。不同情境的來源各異：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{p{0.42\linewidth} p{0.42\linewidth}}
+\hline
+\textbf{情境} & \textbf{由何者提供向心力} \\
+\hline
+用繩甩石頭 & 繩的張力 \\
+衛星／月球繞地球 & 地球的萬有引力 \\
+汽車在水平彎道轉彎 & 輪胎與路面的靜摩擦力 \\
+碗裡繞圈的珠子 & 碗面正向力的水平分量 \\
+\hline
+\end{tabular}
+\end{center}
+
+因此畫自由體圖時：\textbf{只畫真實的力（張力、重力、摩擦力、正向力），再把它們的合力設為 $\dfrac{mv^2}{r}$ 指向圓心；不可在真實力之外另畫一支「向心力」箭頭}，否則等於把同一個力計算兩次。
+
+\textbf{注意：}並不存在一個「離心力」把人往外拉。坐車轉彎時感覺被甩向車門，是因為身體依慣性想沿直線前進，而車門把身體拉回圓形軌道；所感覺到的「往外」是慣性的表現，不是真有一支力把人往外推。向心加速度也不會使速率變快，它只負責改變方向。
+\end{補充框}
+
+\section*{\sffamily 5-2\quad 簡諧運動}
+
+\subsection*{\sffamily A.\ 回復力}
+
+將彈簧水平放置、一端固定、另一端接一物體，在光滑桌面上拉開後放手，物體會來回振盪。觀察它所受的彈力：物體往右偏（$x>0$）時，彈簧把它往左拉；往左偏（$x<0$）時，彈簧把它往右推。也就是說，力\textbf{永遠指向平衡位置}，且偏離越多力越大。這種力稱為\textbf{回復力（restoring force）}。對理想彈簧，回復力遵守虎克定律：
+$$\boxed{\;F=-kx\;}$$
+負號表示力的方向與位移 $x$ \textbf{相反}（指回平衡點），$k$ 為彈簧的\textbf{勁度係數（spring constant）}。
+
+\fig{si5-spring}{0.66}{圖 5-2：水平彈簧。上——壓縮（$x<0$）、平衡（$x=0$）、拉伸（$x>0$）三種情形下，回復力 $F=-kx$ 皆指回平衡位置；下——位移隨時間呈餘弦曲線，週期 $T=2\pi\sqrt{m/k}$。}
+
+\textbf{簡諧運動}的定義為：凡是\textbf{回復力與位移成正比、方向相反}（$F=-kx$）的運動。它是最基本的週期運動模型，自然界許多微小振動都近似於它。
+
+\subsection*{\sffamily B.\ 位移、速度、加速度與時間的關係}
+
+把 $F=-kx$ 代入牛頓第二定律 $F=ma$：
+$$ma=-kx \;\Rightarrow\; a=-\frac{k}{m}\,x.$$
+加速度與位移成正比、方向相反。若放手時物體在最大位移 $A$ 處，其位移隨時間為
+$$\boxed{\;x(t)=A\cos(\omega t)\;},\qquad \omega=\sqrt{\frac{k}{m}}.$$
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item $A$：\textbf{振幅（amplitude）}，離開平衡點的最大距離。
+\item $\omega$：\textbf{角頻率（angular frequency）}，決定振盪快慢。
+\item $\omega t$（或 $\omega t+\phi$）：\textbf{相位（phase）}，$\phi$ 為初相位，由起始狀態決定。
+\end{itemize}
+
+由 $x=A\cos\omega t$ 逐次求變化率（速度是位移的變化率，加速度是速度的變化率）：
+$$v(t)=-A\omega\sin(\omega t),\qquad a(t)=-A\omega^2\cos(\omega t)=-\omega^2 x.$$
+最後一式 $a=-\omega^2 x$ 與前面 $a=-\dfrac{k}{m}x$ 對照，即得 $\omega^2=\dfrac{k}{m}$。
+
+\begin{補充框}{為什麼解一定是正弦／餘弦？$\omega=\sqrt{k/m}$ 從何而來？}
+式子 $a=-\dfrac{k}{m}x$ 表示：這個函數的二次變化率，等於自己乘上一個負數 $-\dfrac{k}{m}$。在基本函數中，只有\textbf{正弦與餘弦}具有這個性質——餘弦取兩次變化率後變回自身的負倍數，正弦亦然。其他函數（如三角形波、拋物線）代入後都無法滿足這個關係。
+
+設 $x=A\cos\omega t$，其二次變化率為 $-A\omega^2\cos\omega t=-\omega^2 x$。與 $a=-\dfrac{k}{m}x$ 比對，立即得到
+$$\omega^2=\frac{k}{m}\;\Rightarrow\;\omega=\sqrt{\frac{k}{m}}.$$
+因此 $\omega$ 並非外加，而是由方程式形式決定：要讓 $\cos\omega t$ 的二次變化率恰為 $-\dfrac{k}{m}$ 倍，$\omega$ 必須等於 $\sqrt{k/m}$。
+
+\textbf{注意：}餘弦與正弦並非兩種不同的運動，兩者只差一個起始相位（$\sin\omega t=\cos(\omega t-\tfrac{\pi}{2})$）。採用 cos 或 sin，取決於把 $t=0$ 設在最大位移處還是平衡點。
+\end{補充框}
+
+由 $\omega=\sqrt{k/m}$ 與 $\omega=\dfrac{2\pi}{T}$，得彈簧簡諧的週期
+$$\boxed{\;T=2\pi\sqrt{\frac{m}{k}}\;}$$
+
+兩個結論值得留意：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 週期 $T$ \textbf{只與質量 $m$、勁度 $k$ 有關，與振幅 $A$ 無關}。拉開的幅度不影響來回一趟的時間，此性質稱為\textbf{等時性（isochronism）}。
+\item 質量越大、$T$ 越長（振盪越慢）；彈簧越硬（$k$ 大）、$T$ 越短（振盪越快）。
+\end{itemize}
+
+\textbf{注意：}振幅不影響週期。拉得越開，路程越長，但速度也越快，兩者恰好抵消。此外，$x=\pm A$（最大位移處）時速度為零、加速度最大（$|a|=\omega^2 A$）；$x=0$（平衡位置）時加速度為零、速度最大（$|v|=\omega A$）。「速度最大」與「加速度最大」發生在不同位置。簡諧的力隨位置變化、不是定值，因此不能套用等加速度三公式。
+
+\section*{\sffamily 5-3\quad 簡諧與圓周的關係}
+
+讓一個物體在半徑 $A$ 的圓上做等速圓周運動，角速度為 $\omega$。把它在一條直徑上的投影取出來——\textbf{這個投影的來回運動，即為簡諧運動}。
+
+\fig{si5-projection}{0.92}{圖 5-3：左——半徑 $A$、角速度 $\omega$ 的等速圓周，其在 $x$ 軸上的投影為 $x=A\cos\omega t$；右——投影隨時間描出餘弦曲線，一個來回對應圓周轉一圈，週期同為 $T=2\pi/\omega$。}
+
+設圓周上的點起始於 $x$ 軸正向，轉到角度 $\omega t$ 時，它在 $x$ 軸上的投影為
+$$x(t)=A\cos(\omega t).$$
+這正是 5-2 的簡諧位移式。因此上一節的解有了明確的幾何來歷。
+
+\begin{補充框}{圓周與簡諧的對應（不是巧合）}
+這個對應並非巧合：等速圓周運動的 $x$ 分量本來就滿足 $a_x=-\omega^2 x$（向心加速度的 $x$ 分量），而這正是簡諧的定義式。所以圓周的投影必然是簡諧。
+
+把圓周的速度、加速度向量投影到 $x$ 軸，正好得到簡諧的 $v=-A\omega\sin\omega t$、$a=-A\omega^2\cos\omega t$。正弦／餘弦、$\omega$ 與相位，都可由圓周運動讀出。兩者的對應如下：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{p{0.44\linewidth} p{0.44\linewidth}}
+\hline
+\textbf{圓周運動} & \textbf{投影（簡諧）} \\
+\hline
+半徑 $r=A$ & 振幅 $A$ \\
+角速度 $\omega$ & 角頻率 $\omega$ \\
+線速率 $v=\omega A$ & 平衡點最大速率 $v_{\max}=\omega A$ \\
+向心加速度 $a=\omega^2 A$ & 端點最大加速度 $a_{\max}=\omega^2 A$ \\
+轉一圈時間 $T=\dfrac{2\pi}{\omega}$ & 振盪週期 $T=\dfrac{2\pi}{\omega}$ \\
+\hline
+\end{tabular}
+\end{center}
+\end{補充框}
+
+\section*{\sffamily 5-4\quad 單擺}
+
+\subsection*{\sffamily A.\ 小角度下的單擺也是簡諧運動}
+
+\textbf{單擺（simple pendulum）}：一條長 $L$ 的輕線吊一個質量 $m$ 的小球，拉開小角度後放手來回擺動。擺球受兩個力——重力 $mg$（向下）與線張力 $T$（沿線）。把重力沿「擺線方向」與「切線方向」分解：
+
+\fig{si5-pendulum}{0.56}{圖 5-4：單擺受力分解。重力沿擺線的分量 $mg\cos\theta$ 與張力相關，沿切線的分量 $mg\sin\theta$ 指向平衡位置，即為回復力；小角度時 $\sin\theta\approx\theta$，回復力近似正比於位移，故近似為簡諧。}
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 沿擺線的分量 $mg\cos\theta$ 與張力相關（使球維持圓弧軌跡）；
+\item 沿切線的分量 $mg\sin\theta$ \textbf{指向平衡位置}，即為回復力。
+\end{itemize}
+
+回復力大小為 $mg\sin\theta$。當擺角 $\theta$ 很小（約 $\theta<15^\circ$）時，採用\textbf{小角度近似} $\sin\theta\approx\theta$（$\theta$ 取弧度），且弧長位移 $s=L\theta$，於是
+$$F_{\text{回}}\approx -mg\theta=-mg\cdot\frac{s}{L}=-\left(\frac{mg}{L}\right)s.$$
+這是 $F=-ks$ 的形式，等效勁度 $k=\dfrac{mg}{L}$。代入 $T=2\pi\sqrt{m/k}$：
+$$\boxed{\;T=2\pi\sqrt{\frac{L}{g}}\;}$$
+
+由此式可得三個結論：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 週期只與擺長 $L$、重力加速度 $g$ 有關。
+\item 週期\textbf{與擺球質量 $m$ 無關}（$m$ 在推導中被約掉）。
+\item 週期\textbf{與振幅（擺角）無關}（小角度下），即等時性。
+\end{itemize}
+
+\textbf{注意：}$T=2\pi\sqrt{L/g}$ 只在小角度成立。擺角較大時 $\sin\theta\neq\theta$，回復力不再正比於位移，運動不再是嚴格的簡諧，週期會略微變長。此外，「擺長 $L$」是從懸掛點量到\textbf{擺球質心}，若球體較大，須加上其半徑。
+
+\begin{延伸框}{單擺週期為何與振幅無關，且只在小角度成立}
+這兩個敘述看似矛盾，實際上是同一個近似的兩面。
+
+\textbf{為什麼振幅大、路程長，週期卻相同？}關鍵在於擺得越開，速度也越快，兩個效應恰好抵消。在簡諧運動中，回復力（即加速度）與位移成正比：拉得越開，回復力越大、加速度越大，球被拉回的速度也越大。路程變長，但速度也變快，一來一回的時間恰好不變。「力正比於位移」是等時性的數學根源——只要力嚴格正比於位移，週期就一定與振幅無關，這對任何簡諧系統（含彈簧）都成立。
+
+\textbf{但單擺的力並非嚴格正比於位移。}單擺真正的回復力是 $mg\sin\theta$，正比的是 $\sin\theta$ 而\textbf{不是} $\theta$（位移 $s=L\theta$）。只有當角度小、$\sin\theta\approx\theta$ 時，回復力才近似正比於位移，才近似為簡諧、才有等時性。因此「振幅無關」是小角度近似的結果：一旦角度大到 $\sin\theta$ 明顯小於 $\theta$，回復力就比簡諧所需的小，週期隨之變長。
+
+精確的單擺週期可展開為
+$$T=2\pi\sqrt{\frac{L}{g}}\left(1+\frac{1}{16}\theta_0^2+\cdots\right),$$
+其中 $\theta_0$ 為最大擺角（弧度）。$\theta_0$ 很小時修正項 $\dfrac{1}{16}\theta_0^2$ 可忽略，週期幾乎只由 $L$、$g$ 決定（等時性）；$\theta_0$ 變大則修正項變大，週期確實隨振幅增加。例如擺角 $23^\circ$ 時，週期約比小角度公式長 $1\%$。因此等時性嚴格說是\textbf{近似}而非定律，課本「限小角度」即在劃定這個近似的有效範圍。
+
+\textbf{彈簧與單擺的差別}：彈簧的回復力 $F=-kx$ 嚴格正比於位移，等時性對任何振幅都成立；單擺的 $F=mg\sin\theta$ 只是近似正比，僅小角度成立。此為兩者的本質差別。單擺本身是已被完整理解的古典系統，大角度的精確週期可用橢圓積分嚴格表示，上面的級數即為其展開，沒有未解的開放問題。
+\end{延伸框}
+
+\section*{\sffamily 5-5\quad 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\textbf{等速圓周運動}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 速率不變、方向改變，故有\textbf{向心加速度}（指向圓心）。
+\item $f=\dfrac1T$，$\omega=\dfrac{2\pi}{T}=2\pi f$，$v=\omega r$。
+\item 向心加速度 $a=\dfrac{v^2}{r}=\omega^2 r=v\omega$；向心力 $F=\dfrac{mv^2}{r}=m\omega^2 r$。
+\item 向心力\textbf{不是新的力}，由張力／重力／摩擦力等提供；自由體圖不另畫向心力，亦無離心力。
+\end{itemize}
+
+\textbf{簡諧運動（SHM）}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 定義：回復力 $F=-kx$（與位移成正比、方向相反）。
+\item $x=A\cos\omega t$，$v=-A\omega\sin\omega t$，$a=-\omega^2 x$；$\omega=\sqrt{k/m}$。
+\item 端點（$x=\pm A$）：$v=0$、$|a|$ 最大；平衡點（$x=0$）：$|v|=A\omega$ 最大、$a=0$。
+\item 彈簧週期 $T=2\pi\sqrt{m/k}$，\textbf{與振幅無關}。
+\end{itemize}
+
+\textbf{簡諧＝圓周的投影}：半徑 $A$、角速度 $\omega$ 的等速圓周，投影到一直徑上即為簡諧；正弦／餘弦與 $\omega$ 由此而來。
+
+\textbf{單擺（小角度）}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 回復力 $\approx mg\sin\theta\approx -\left(\dfrac{mg}{L}\right)s$；$T=2\pi\sqrt{L/g}$。
+\item 與質量、振幅無關（僅小角度成立）；可用來測量 $g$。
+\end{itemize}
+\end{補充框}
+
+\end{document}

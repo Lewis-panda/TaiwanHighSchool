@@ -1,0 +1,246 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\begin{document}
+
+% 讓羅馬數字 Ⅰ（U+2160）走中文字型，避免落到無此字的拉丁字型
+\xeCJKDeclareCharClass{CJK}{"2160}
+
+\begin{center}
+{\sffamily\Huge\bfseries 選物I-2 直線運動}\\[3pt]
+{\sffamily\large 普通高中 選修物理Ⅰ（力學一）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+高一已經定性地認識過運動。本章把運動學整理成一套\textbf{定量}的數學語言：先把描述一維運動的四個量（位置、位移、速度、加速度）定義清楚，並分清「平均」與「瞬時」；接著從 $v\text{–}t$ 圖\textbf{推導}出等加速度三公式；再把它用到兩個重要實例——\textbf{自由落體}與\textbf{鉛直上拋}；最後處理「在運動的參考系上看另一物體」的\textbf{一維相對速度}。
+
+本章是高二力學能進行定量計算的起點。所有運動都限制在\textbf{一條直線}上；後續章節會把同一套想法升級為兩個分量的向量版（平面運動），並進一步討論「是什麼力造成這些加速度」（牛頓運動定律）。也就是說：先學會\textbf{描述運動}（本章），才能談\textbf{解釋運動}（後續章）。
+
+\medskip
+本章主線：
+
+\begin{center}
+描述量（位移、速度、加速度）$\rightarrow$ $v\text{–}t$ 圖（斜率與面積）$\rightarrow$ 等加速度三公式 $\rightarrow$ 自由落體與鉛直上拋 $\rightarrow$ 一維相對速度
+\end{center}
+
+\section*{\sffamily 2-1\quad 描述運動：位置、位移、速度、加速度}
+
+\subsection*{\sffamily A.\ 一維運動與「正方向」}
+
+本章所有運動都發生在\textbf{一條直線}上。在一維中，向量只剩\textbf{正、負兩個方向}，因此原本需要用箭頭表示的向量，在這裡可用一個\textbf{帶正負號的數}完全表達。
+
+處理一維運動的第一步是\textbf{先在數線上選定一個正方向}（例如「向右為正」或「向上為正」）。選定後，所有位置、位移、速度、加速度都依此約定帶正負號。一維運動的計算錯誤多數源自符號錯誤，而符號錯誤多半來自未先選定正方向。
+
+\subsection*{\sffamily B.\ 位置、位移、路程}
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{位置（position）} $x$：物體在數線上的座標（相對於選定的原點），可正可負。
+\item \textbf{位移（displacement）} $\Delta x$：位置的變化，$\Delta x = x_{\text{末}} - x_{\text{始}}$，是\textbf{向量}（在一維就是帶正負的數），只看頭尾、不計中間路徑。
+\item \textbf{路程（path length）} $s$：實際走過的總長度，是\textbf{純量}，恆 $\ge 0$。
+\end{itemize}
+
+兩者的差別在「來回」情形最明顯。例如一個人從 $x=0$ 走到 $x=5$，再退回 $x=2$：位移 $\Delta x = 2-0 = +2\ \text{m}$（只看頭尾）；路程 $s = 5+3 = 8\ \text{m}$（去 5 m、回 3 m，加總）。
+
+\textbf{注意：}「位移＝走了多遠」並不正確。\textbf{位移看頭尾、可正可負、可為零}（繞一圈回到原點時位移為 0，但路程不為 0）；\textbf{路程是實際長度、永遠非負}。
+
+\subsection*{\sffamily C.\ 平均速度、平均速率}
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{平均速度（average velocity）}：位移除以所花時間，是\textbf{向量}。
+$$\bar v = \frac{\Delta x}{\Delta t}.$$
+\item \textbf{平均速率（average speed）}：路程除以時間，是\textbf{純量}。
+$$\text{平均速率} = \frac{s}{\Delta t}.$$
+\end{itemize}
+
+因為位移可正可負、路程恆正，這兩個量\textbf{一般不相等}；只有在「一路不回頭」的單向運動中才相等。
+
+\subsection*{\sffamily D.\ 瞬時速度}
+
+平均速度描述「一整段路整體多快」，但無法表示\textbf{某一瞬間}的快慢。要描述「某一刻的速度」，就把時間間隔 $\Delta t$ 取得越來越小：
+$$v = \lim_{\Delta t \to 0} \frac{\Delta x}{\Delta t}.$$
+這個「無限縮小間隔」的極限，在數學上即\textbf{微分（導數）}；其幾何意義是 $x\text{–}t$ 圖上\textbf{該點切線的斜率}。汽車速率表顯示的就是瞬時速率。
+
+\begin{補充框}{平均速度與瞬時速度差在哪？$v\text{–}t$ 圖的斜率與面積為何有意義？}
+\textbf{平均速度}是「一整段」的位移除以時間，描述這段路\textbf{整體}多快；\textbf{瞬時速度}是把時間間隔縮到\textbf{無限小}時的平均速度，描述\textbf{某一瞬間}多快（即速率表的讀數）。把測量時段取得越短（1 秒、0.01 秒\dots），這個平均值就越接近「那一瞬間的快慢」。
+
+\textbf{為什麼「斜率＝速度」。}在 $x\text{–}t$ 圖上取兩點，連線（\textbf{割線}）的斜率
+$$\frac{\Delta x}{\Delta t} = \frac{\text{位置變化}}{\text{時間變化}}$$
+就是這段的\textbf{平均速度}——斜率的定義恰好等於速度的定義。讓兩點不斷靠近，割線收斂成\textbf{切線}，於是\textbf{切線斜率＝瞬時速度}。同理，$v\text{–}t$ 圖的斜率是「速度變化 ÷ 時間」，即\textbf{加速度}。
+
+\textbf{為什麼「面積＝位移」。}反過來，已知速度要回推位移。先看等速：速度固定 $v$、經時間 $t$，位移 $=v\,t$，恰好是 $v\text{–}t$ 圖上「寬 $t$、高 $v$ 的矩形面積」。速度會變時，把時間切成許多\textbf{極窄}的小段，每段內速度幾乎不變，那一小段位移約等於一根細長條的面積（高＝該瞬間速度、寬＝極短時間）；把所有細條面積加起來，就是總位移。這在數學上稱為\textbf{積分}。
+
+可記住：斜率是「除」（位移÷時間 $\rightarrow$ 速度），面積是「乘再加」（速度×時間累加 $\rightarrow$ 位移），兩者是互逆的操作。
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 「平均速度 $=\tfrac{v_0+v}{2}$」\textbf{只在等加速度時成立}。速度變化不均勻時這條會出錯，正確的定義永遠是「位移÷時間」。
+\item 面積\textbf{不一定}是正位移：若 $v$ 為負（往反方向），那段面積位於時間軸下方，記為\textbf{負位移}；正負面積相加才是淨位移。
+\item $x\text{–}t$ 圖的\textbf{高度}是位置，不是速度；\textbf{斜率}才是速度。
+\end{itemize}
+\end{補充框}
+
+\fig{si2-vt}{0.98}{圖 2-1：左——等加速度的 $v\text{–}t$ 圖是直線，斜率 $\tfrac{\Delta v}{\Delta t}=a$，圖下方面積等於位移。右——在 $x\text{–}t$ 圖上，割線斜率為平均速度；當後一點趨近前一點，割線收斂為切線，切線斜率即瞬時速度（平均 $\rightarrow$ 瞬時，等於割線 $\rightarrow$ 切線）。}
+
+\subsection*{\sffamily E.\ 加速度}
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{平均加速度（average acceleration）}：速度的變化除以時間，$\bar a = \dfrac{\Delta v}{\Delta t} = \dfrac{v - v_0}{\Delta t}$。
+\item \textbf{瞬時加速度}：$\Delta t \to 0$ 的極限，即 $v\text{–}t$ 圖上的\textbf{切線斜率}。
+\end{itemize}
+單位 $\text{m/s}^2$。加速度是\textbf{向量}（一維帶正負號）。
+
+\textbf{注意：}關於加速度有三個常見誤解，整理如下。
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{「加速度為正」不等於「變快」}。判準是 $a$ 與 $v$ \textbf{同號才變快，異號則變慢（減速）}。例如向上拋的球上升時 $v>0$ 但 $a=-g<0$，正在減速。
+\item \textbf{「速度為零」不等於「加速度為零」}。鉛直上拋的最高點 $v=0$，但 $a=g$ 仍向下。
+\item \textbf{「速度方向」不一定等於「加速度方向」}。煞車中的車向前行（$v>0$）卻在減速（$a<0$）。
+\end{itemize}
+可用一張 $v$、$a$ 正負的 $2\times 2$ 組合表整理：同號變快、異號變慢。
+
+\section*{\sffamily 2-2\quad 等加速度直線運動：三公式的由來}
+
+許多重要運動的加速度\textbf{剛好為定值}（自由落體、煞停、起步加速等）。當 $a$ 為常數，運動就被三條公式完全決定。以下不採取硬背，而是從 $v\text{–}t$ 圖推導。
+
+\subsection*{\sffamily A.\ 設定}
+
+取某方向為正，物體在 $t=0$ 時速度為 $v_0$（初速度），加速度 $a$ 為定值。於是 $v\text{–}t$ 圖是一條\textbf{斜率為 $a$、截距為 $v_0$ 的直線}（見圖 2-1 左）。
+
+\subsection*{\sffamily B.\ 第一式：由「斜率＝加速度」}
+
+直線斜率固定為 $a$，速度從 $v_0$ 開始，到時刻 $t$ 增加了 $a\,t$，所以
+\begin{equation}\boxed{\,v = v_0 + a t\,}\tag{1}\end{equation}
+這正是加速度定義 $a=\dfrac{v-v_0}{t}$ 的移項。
+
+\subsection*{\sffamily C.\ 第二式：由「面積＝位移」}
+
+$v\text{–}t$ 圖與時間軸圍成的面積等於位移。從 $0$ 到 $t$ 圍出的是一個\textbf{梯形}（上底 $v_0$、下底 $v$、高 $t$），可拆成「矩形 $v_0 t$」加「三角形 $\tfrac12(at)\,t$」：
+$$\Delta x = \underbrace{v_0 t}_{\text{矩形}} + \underbrace{\tfrac12 a t^2}_{\text{三角形}},$$
+\begin{equation}\boxed{\,\Delta x = v_0 t + \tfrac12 a t^2\,}\tag{2}\end{equation}
+
+也可直接用梯形面積公式 $\dfrac{v_0+v}{2}\cdot t$，這同時說明「等加速度下，平均速度 $=\dfrac{v_0+v}{2}$（首尾平均）」。許多題目可用「平均速度 × 時間」直接計算。
+
+\subsection*{\sffamily D.\ 第三式：消去時間}
+
+有些題目沒有給時間。把 (1) 解出 $t=\dfrac{v-v_0}{a}$ 代入 (2)，化簡後 $t$ 消失：
+\begin{equation}\boxed{\,v^2 = v_0^2 + 2 a\,\Delta x\,}\tag{3}\end{equation}
+
+\begin{補充框}{三公式怎麼來、要不要背？}
+三條公式\textbf{全部出自同一張 $v\text{–}t$ 圖}：等加速度時 $v\text{–}t$ 圖是直線，\textbf{斜率＝加速度}給出第一式、\textbf{面積＝位移}給出第二式、把第一式代進第二式消去時間就得第三式。理解這條主線後，幾乎不必背。
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{第一式}是加速度定義 $a=\dfrac{v-v_0}{t}$ 的移項，沒有新內容。
+\item \textbf{第二式}由梯形面積 $\Delta x=\dfrac{v_0+v}{2}\,t$ 得到（記作 $(\ast)$），把其中的 $v$ 用第一式換掉即得。
+\item \textbf{第三式}是前兩式的代數結果：由 $(\ast)$ 與 $t=\dfrac{v-v_0}{a}$，得 $\Delta x=\dfrac{v_0+v}{2}\cdot\dfrac{v-v_0}{a}=\dfrac{v^2-v_0^2}{2a}$，即 (3)。它\textbf{不是}獨立的新事實。
+\end{itemize}
+
+可記成\textbf{一張圖 + 兩個動作}：圖是等加速度的 $v\text{–}t$ 直線；動作一「斜率＝加速度」得 (1)，動作二「面積（梯形）＝位移」得 (2) 與 $(\ast)$；(3) 由 (1) 代 (2) 推得，或記成「沒有 $t$ 的那一條」。
+
+\textbf{注意：}三式的唯一前提是\textbf{$a$ 為定值}。$a$ 會變（如有空氣阻力、變力）時通通失效。$\Delta x$ 與 $v$ 須帶正負號：先定正方向，減速時 $a$ 取負、反向運動時速度取負，公式才會自洽。「平均速度 $=\tfrac{v_0+v}{2}$」同樣只在等加速度成立。
+\end{補充框}
+
+選用公式時可依「缺哪個量」判斷：缺位移用 (1)、缺末速用 (2)、缺時間用 (3)。已知首尾速度求位移時，可直接用 $\Delta x=\dfrac{v_0+v}{2}t$。減速到 0 後若沒有反向動力（如煞車），物體停著不動、不會自動倒退；\textbf{等加速度公式只在「持續加速／減速」期間有效}，停止後即失效。
+
+\section*{\sffamily 2-3\quad 自由落體與鉛直上拋}
+
+\subsection*{\sffamily A.\ 重力加速度 $g$}
+
+\textbf{自由落體（free fall）}：只受重力、忽略空氣阻力的下落運動。\textbf{在忽略空氣阻力時，所有物體不分輕重，下落的加速度都相同}，這個定值稱為\textbf{重力加速度（gravitational acceleration）} $g$：
+$$g \approx 9.8\ \text{m/s}^2\quad(\text{計算常取 } 10\ \text{m/s}^2).$$
+自由落體即「初速為 0、加速度為 $g$ 的等加速度運動」，三公式照搬，把 $a$ 換成 $g$、$\Delta x$ 換成下落高度 $h$ 即可。
+
+\begin{補充框}{重的物體會先落地嗎？伽利略與自由落體}
+\textbf{在忽略空氣阻力時，所有物體（不論輕重、材質）下落的加速度都相同，等於 $g\approx 9.8\ \text{m/s}^2$。}「重的物體掉得比較快」這個直覺，是\textbf{空氣阻力}造成的，並非重力本身。
+
+\textbf{伽利略的反證（思想實驗）。}亞里斯多德認為「物體越重、下落越快」。伽利略指出此說自相矛盾：把一顆重球與一顆輕球用繩子綁在一起下落——
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 依「重的快、輕的慢」：輕球會拖慢重球，組合應掉得\textbf{比重球慢}。
+\item 但兩球綁起來總重量比重球更重，依「越重越快」又應掉得\textbf{比重球快}。
+\end{itemize}
+同一件事推出「較慢」又「較快」，產生矛盾。能消除矛盾的唯一可能，是\textbf{輕重物體本來就掉得一樣快}。此論證不需實際操作。
+
+\textbf{空氣阻力的角色。}羽毛掉得慢，是因為它輕、表面積大，空氣阻力相對其重量很可觀，被「托」著慢慢飄；鐵球密度大、迎風面小，空氣阻力相對其重量微不足道，幾乎照 $g$ 下落。把空氣抽掉後差別即消失：真空落體管中硬幣與羽毛同時落底；1971 年阿波羅 15 號太空人在無空氣的月球上同時放開鎚子與羽毛，兩者同時著地。
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 「重的東西就是掉得比較快」只在\textbf{有空氣}且兩物受阻力差很多時看起來如此；主導差異的是空氣阻力，不是重力。
+\item 月球\textbf{有}重力（約地球的 $\tfrac16$），鎚子與羽毛才會落下；它們同時著地的關鍵是月球\textbf{沒有空氣}。
+\item $g$ 是\textbf{加速度}（單位 $\text{m/s}^2$），不是力；物體受的重力才是力，$W=mg$。
+\end{itemize}
+
+\textbf{「都一樣快」的意義。}$W=mg$ 中的 $m$ 量度「被重力拉得多用力」，$F=ma$ 中的 $m$ 量度「多難被加速」。自由落體把兩者相除：$a=\dfrac{W}{m}=\dfrac{mg}{m}=g$，$m$ 完全消去，故加速度與質量無關。這個結果並非理所當然，背後對應一個更深的事實（等效原理）。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 鉛直上拋與對稱性}
+
+\textbf{鉛直上拋（vertical projection）}：以初速 $v_0$ 向上拋出，之後只受重力。取\textbf{向上為正}，則整個過程 $a=-g$（恆向下，最高點也是）。
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{最高點}：$v=0$，但 $a=-g$ 不變。由式 (3)，最大高度 $H=\dfrac{v_0^2}{2g}$。
+\item \textbf{上升所需時間} $t_{\uparrow}=\dfrac{v_0}{g}$；\textbf{回到拋出點的總時間} $t_{\text{全}}=\dfrac{2v_0}{g}$（上升、下降時間相等）。
+\item \textbf{對稱性}：回到\textbf{同一高度}時，速率與拋出時相同、方向相反（上升為 $+v$、下降為 $-v$）。同一高度在上升與下降途中各被經過一次。
+\end{itemize}
+
+上拋全程都是 $a=-g$ 的等加速度運動，上升、最高點、下降是同一條 $x(t)$ 的不同階段，不必另記一套公式。一張從 $+v_0$ 線性降到負值的 $v\text{–}t$ 圖即可說明全部：過零點對應最高點，圖形對稱於該點。
+
+\fig{si2-freefall}{0.5}{圖 2-2：鉛直上拋的對稱性（$v_0=20\ \text{m/s}$，$g=10\ \text{m/s}^2$）。最高點 $v=0$，但 $a=-g$ 仍向下；同一高度在 $t=1\ \text{s}$（上升）與 $t=3\ \text{s}$（下降）各被經過一次，速率相同、方向相反；$t=0\ \text{s}$ 拋出（$v=20$ 向上）與 $t=4\ \text{s}$ 回到拋出點（$v=20$ 向下）速率相同。}
+
+\section*{\sffamily 2-4\quad 一維相對運動：相對速度}
+
+\subsection*{\sffamily A.\ 速度與參考系}
+
+站在月台上看一列火車以 $20\ \text{m/s}$ 駛過；但坐在另一列同向 $12\ \text{m/s}$ 火車上的人，看那列車只是緩慢向前移動。\textbf{速度是相對於某個參考系（觀察者）測量的}，換觀察者，測得的速度就不同。本章只討論沿同一直線的情形。
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item 設 A、B 兩物體相對地面的速度分別為 $v_A$、$v_B$（皆帶正負號）。則 \textbf{B 相對於 A 的速度}（站在 A 上看 B）為兩者之差：
+$$\boxed{\,v_{B/A} = v_B - v_A\,}.$$
+\item 並且 $v_{A/B} = v_A - v_B = -\,v_{B/A}$（A 看 B 與 B 看 A，等大反向）。
+\end{itemize}
+
+\fig{si2-relative}{0.78}{圖 2-3：一維相對速度。A 車 $+20\ \text{m/s}$、B 車 $+12\ \text{m/s}$ 同向行駛（向右為正）。A 上的人看 B：$v_{B/A}=12-20=-8\ \text{m/s}$（B 相對 A 向左退）；B 上的人看 A：$v_{A/B}=20-12=+8\ \text{m/s}$。兩者等大反向。}
+
+直覺上，同向行駛時相對速度為兩速率\textbf{相減}（追趕較慢），相向行駛時為兩速率\textbf{相加}（迎面接近較快）。這兩種情形其實是\textbf{同一條} $v_{B/A}=v_B-v_A$：只要先定正方向、嚴格帶正負號，反向時其中一個速度本來就是負的，相減便自動成為相加。
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 相對速度須\textbf{帶正負號}：反向時若把兩個速率都當正數相減，會少算。務必先定正方向。
+\item 「相對速度＝兩速率相加」只在\textbf{反向}時成立；同向是相減。統一用 $v_B-v_A$ 即不會記錯。
+\item 物體有長度時，計算「完全通過」的位移要算進\textbf{兩者長度之和}（通過一個點時只算自身長度）。
+\end{itemize}
+
+\begin{補充框}{相對速度為什麼是「相減」？}
+從\textbf{位置}講起。設地面為參考系，A、B 在某時刻的位置為 $x_A$、$x_B$。「B 相對 A 的位置」就是把座標原點搬到 A 身上：
+$$x_{B/A} = x_B - x_A.$$
+這個「相減」只是「以 A 為原點重新量 B 的座標」。對時間取變化率（速度是位置的變化率）：
+$$v_{B/A} = \frac{\Delta x_{B/A}}{\Delta t} = \frac{\Delta x_B - \Delta x_A}{\Delta t} = v_B - v_A.$$
+因此相對速度的「減」，根源是相對位置的「換原點」。同向時兩速度同號相減（差變小），反向時一正一負相減（等於相加，差變大）；同向相減、反向相加是同一條式子，差別只在有沒有正確帶正負號。
+\end{補充框}
+
+\begin{延伸框}{相對速度與伽利略相對性}
+依同樣的邏輯再取一次變化率（加速度是速度的變化率），得
+$$a_{B/A} = a_B - a_A.$$
+所以加速度也能相對，同樣是相減。其中有一個重要特例：若 A 本身\textbf{等速度}運動（$a_A=0$），則 $a_{B/A}=a_B$——\textbf{B 的加速度在 A 看來，和在地面看來完全相同}。也就是說，速度會隨參考系改變，但只要參考系彼此等速度，加速度就不變。
+
+由此可理解：在平穩等速行駛的車廂裡丟球、倒水、走路，結果與在地面上相同。原因是牛頓第二定律 $\vec F=m\vec a$ 中是\textbf{加速度}；車廂相對地面等速 $\Rightarrow$ 兩參考系測得的加速度相同；力與質量也相同 $\Rightarrow$ 同一條 $\vec F=m\vec a$ 在兩個參考系都成立、形式相同。因此無法靠車內的力學實驗判斷自己是靜止或等速前進。這就是\textbf{伽利略相對性原理（Galilean relativity）}：所有彼此等速度運動的參考系（慣性系），力學定律形式相同。可類比為等速飛行的客機上能正常吃飯、走動。
+
+但\textbf{加速}的車不同：車急煞時（$a_A\ne 0$）人會前傾、水會灑出，此時車廂不是慣性系，會出現「慣性力」的假象。可見「等速」這個條件不可省略。
+
+\textbf{修正邊界。}「直接相減」只是\textbf{低速近似}。當相對速度接近光速 $c$ 時，$v_{B/A}=v_B-v_A$ 不再成立，須改用狹義相對論的速度合成公式
+$$v_{B/A}=\frac{v_B-v_A}{1-\dfrac{v_A v_B}{c^2}}.$$
+在日常速度（$v\ll c$）下分母幾乎為 1，它退回成熟悉的相減，因此高中用「相減」沒有問題；但這說明課本的相對速度是一個低速近似。
+\end{延伸框}
+
+\section*{\sffamily 2-5\quad 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{描述量}：位移 $\Delta x = x_{\text{末}} - x_{\text{始}}$（向量，可負）；路程 $s$（純量，恆正）。平均速度 $\bar v=\dfrac{\Delta x}{\Delta t}$、平均速率 $=\dfrac{s}{\Delta t}$，一般不相等。
+\item \textbf{瞬時＝圖的斜率}：$x\text{–}t$ 斜率＝瞬時速度；$v\text{–}t$ 斜率＝瞬時加速度、\textbf{面積＝位移}。
+\item \textbf{判讀加速}：$a$ 與 $v$ 同號 $\rightarrow$ 變快；異號 $\rightarrow$ 變慢。速度為零不等於加速度為零。
+\item \textbf{等加速度三式}（$a$ 為定值）：
+$$v=v_0+at,\quad \Delta x=v_0t+\tfrac12at^2,\quad v^2=v_0^2+2a\,\Delta x,\quad \Delta x=\tfrac{v_0+v}{2}t.$$
+\item \textbf{自由落體}：$v_0=0$、$a=g\approx 9.8\ (\text{或}\ 10)\ \text{m/s}^2$。\textbf{鉛直上拋}：全程 $a=-g$；最高點 $v=0$、$a\ne 0$；$H=\dfrac{v_0^2}{2g}$、$t_{\text{全}}=\dfrac{2v_0}{g}$；同高度速率相同、方向相反（對稱）。
+\item \textbf{一維相對速度}：$v_{B/A}=v_B-v_A$（先定正方向、帶正負號）；同向相減、反向相加。等速參考系間加速度不變，故力學定律形式相同（伽利略相對性）。
+\end{itemize}
+\end{補充框}
+
+\end{document}
