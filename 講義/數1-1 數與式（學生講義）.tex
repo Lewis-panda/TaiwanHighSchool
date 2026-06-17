@@ -1,0 +1,241 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\Huge\bfseries 數1-1 數與式}\\[3pt]
+{\sffamily\large 普通高中 數學（必修・第一冊）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+本章先把高中數學的基礎——\textbf{實數（real number）}——重新整理清楚：它如何填滿一整條數線、有理數與無理數的區別、$\sqrt2$ 為何不能寫成分數。接著學\textbf{絕對值（absolute value）}，把它理解為「數線上的距離」，並以此觀點處理絕對值方程式與不等式。最後熟練\textbf{式的運算}：乘法公式、根式的有理化、分式的化簡，這些是後續各章計算的工具。
+
+\medskip
+本章主線：
+
+\begin{center}
+實數與數線 $\rightarrow$ 有理數／無理數 $\rightarrow$ 絕對值（距離觀點）$\rightarrow$ 絕對值方程式與不等式 $\rightarrow$ 乘法公式 $\rightarrow$ 根式與有理化 $\rightarrow$ 分式運算
+\end{center}
+
+\section*{\sffamily 1-1\quad 實數與數線}
+
+\subsection*{\sffamily A.\ 實數的分類}
+
+從自然數、整數、分數，到 $\sqrt2$、$\pi$ 這類「除不盡、寫不完」的數，高中第一步是把這一路的擴張整理成一個系統，並回答一個問題：把這些數合在一起會構成什麼樣的結構。
+
+把全部實數放上一條直線，\textbf{每個實數恰好對應數線上唯一一點，每一點也恰好對應唯一一個實數}——不重複、不遺漏。這條直線稱為\textbf{數線（number line）}。
+
+\begin{補充框}{實數的分類}
+\textbf{實數（real number）}依「能否寫成兩整數之比」分成兩類：
+$$\text{實數}=\underbrace{\text{有理數}}_{\text{rational}}\ \cup\ \underbrace{\text{無理數}}_{\text{irrational}}.$$
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{有理數（rational number）}：可寫成 $\dfrac{p}{q}$（$p,q$ 為整數、$q\ne0$）的數。整數、有限小數、循環小數都是有理數。
+\item \textbf{無理數（irrational number）}：\textbf{不能}寫成兩整數之比的實數，例如 $\sqrt2,\ \sqrt3,\ \pi,\ e$。
+\end{itemize}
+\end{補充框}
+
+\fig{d11-number-line}{0.92}{圖 1-1：數線上每個實數對應唯一一點。藍點為有理數（如 $-\tfrac12$、$2.\overline{3}$），紅點為無理數（如 $\sqrt2$、$\pi$）。邊長 $1$ 正方形的對角線長為 $\sqrt2$，可用尺規定出 $\sqrt2$ 在數線上的位置。}
+
+\textbf{注意：}關於實數分類有幾個常見的錯誤理解。
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 無理數並非「罕見而特殊」的數。實際上數線上的點\textbf{幾乎都是無理數}，有理數雖然分布稠密，數量上卻相對稀少（見本節末延伸閱讀）。
+\item $\dfrac{22}{7}$ 只是 $\pi$ 的\textbf{近似值}（$\approx 3.142857$），不等於 $\pi\,(\approx 3.14159265\ldots)$；$\pi$ 是無理數。
+\item 帶根號不一定是無理數，要看是否開得盡。例如 $\sqrt9=3$ 是整數。
+\end{itemize}
+
+\subsection*{\sffamily B.\ 三一律}
+
+數線最基本的性質是：任意兩個實數一定能比大小，而且只有一種大小關係成立。
+
+\begin{補充框}{三一律（trichotomy）}
+對任意兩個實數 $a,b$，下列三者\textbf{恰有一個}成立：
+$$\boxed{\;a<b\quad\text{或}\quad a=b\quad\text{或}\quad a>b\;}$$
+在數線上，這對應「$a$ 在 $b$ 左邊、同一點、或右邊」三者擇一。
+
+三一律保證實數是\textbf{全序}的：任何兩數都能分出先後，數線上不會出現「並排卻分不出左右」的兩點。這是後續解不等式的依據。
+\end{補充框}
+
+\subsection*{\sffamily C.\ 有理數的小數特徵}
+
+把有理數 $\dfrac{p}{q}$ 做\textbf{長除法}，每一步的餘數只能是 $0,1,2,\ldots,q-1$ 這 $q$ 種。若某次餘數為 $0$，除法結束，得到\textbf{有限小數}；若一直除不盡，餘數至多 $q$ 種，依鴿籠原理\textbf{必有一個餘數重複出現}，從該處起小數開始\textbf{週期性循環}。反過來，任何循環小數也都能還原成分數。
+
+\begin{補充框}{有理數的小數特徵}
+$$\boxed{\;\text{一個數是有理數}\iff\text{它的小數展開為「有限」或「循環」}\;}$$
+循環的部分用上劃線表示，例：$\dfrac13=0.\overline{3}$、$\dfrac{1}{7}=0.\overline{142857}$、$\dfrac{5}{12}=0.41\overline{6}$。
+
+將循環小數化為分數的標準作法是「乘 $10$ 的次方再相減，消去循環的部分」。循環節長為 $k$ 時，用 $10^k x$ 與 $x$（或對齊後的兩式）相減。
+\end{補充框}
+
+由此立即得到對照：\textbf{無理數的小數展開既不終止、也不循環}（否則它就會是有理數）。$\sqrt2=1.41421356\ldots$、$\pi=3.14159265\ldots$ 都屬於這種「不終止且無週期」的小數。雖然寫不完，仍可將無理數\textbf{夾在兩個有理數之間}，並使誤差任意小，這稱為\textbf{估算（逼近）}：例如由 $1.4^2=1.96<2<2.25=1.5^2$ 得 $1.4<\sqrt2<1.5$，每多比一位就把 $\sqrt2$ 夾得更緊。
+
+\begin{補充框}{為什麼 $0.\overline{9}=1$}
+用上述同一套作法：令 $x=0.\overline{9}$，則 $10x=9.\overline{9}$，相減得 $9x=9$，故 $x=1$。這與把 $0.\overline{3}$ 化成 $\dfrac13$ 用的是同一招，沒有特殊處理。
+
+直覺上常認為「$0.999\ldots$ 只是\textbf{無限接近} $1$、永遠差一點」。此直覺描述的其實是\textbf{有限}項：$0.9$ 差 $0.1$、$0.99$ 差 $0.01$、$0.999$ 差 $0.001$……每個有限位數的小數確實都還沒到 $1$。但 $0.\overline{9}$ 有\textbf{無限多個 $9$}，那個差距是 $0.000\ldots$（後面永遠是 $0$），即為 $0$；差距為 $0$，兩數就相等。
+
+另一個判別方式：兩個相異實數之間一定塞得進第三個數。若 $0.\overline{9}\ne1$，應能寫出一個比 $0.\overline{9}$ 大又比 $1$ 小的數，但這樣的數寫不出來，因此兩者是同一個數。可從另一角度驗證：由 $\dfrac13=0.\overline{3}$ 兩邊乘 $3$，即得 $1=0.\overline{9}$。
+
+由此也可知：同一個數可有\textbf{兩種小數寫法}，但只有\textbf{有限小數}才有第二種寫法（尾端改成 $\ldots\overline{9}$），例如 $0.5=0.4\overline{9}$；其餘小數的寫法唯一。
+\end{補充框}
+
+\subsection*{\sffamily D.\ 科學記號}
+
+很大或很小的數，寫成\textbf{科學記號（scientific notation）} $a\times10^n$（$1\le|a|<10$、$n$ 為整數）最為簡便。運算時把「有效數字 $a$」與「$10$ 的次方」分開處理，乘除用指數律 $10^m\cdot10^n=10^{m+n}$、$\dfrac{10^m}{10^n}=10^{m-n}$。
+
+\textbf{注意：}加減（非乘除）時，\textbf{必須先把次方對齊}才能相加。例如
+$$3\times10^{5}+4\times10^{4}=30\times10^{4}+4\times10^{4}=34\times10^{4}=3.4\times10^{5},$$
+不可將數字直接相加而保留某一個次方寫成 $7\times10^{5}$。運算結束後須化回標準形 $1\le|a|<10$。
+
+\section*{\sffamily 1-2\quad 絕對值}
+
+\subsection*{\sffamily A.\ 絕對值是數線上的距離}
+
+國中對絕對值的定義是「去掉負號」：$|3|=3$、$|-3|=3$。高中將它提升為一個\textbf{幾何}觀念。
+
+\begin{補充框}{絕對值（absolute value）}
+$$|x|=\begin{cases}x,& x\ge0\\[2pt]-x,& x<0\end{cases}$$
+它的幾何意義是：\textbf{$|x|$ 為數線上 $x$ 到原點 $0$ 的距離}；更一般地，
+$$\boxed{\;|x-a|=\text{數線上 }x\text{ 與 }a\text{ 兩點之間的距離}\;}$$
+
+由「距離」即可說明絕對值的兩個基本性質：距離一定 $\ge0$，故絕對值非負；$x$ 在 $0$ 的左側或右側不影響「離多遠」，故 $|5|=|-5|$。「去負號」與「距離」是同一件事的兩種說法，差別在於「距離」對應一個可畫出的圖像。可類比為一條筆直的道路：$a$ 是一點、$x$ 是另一點，$|x-a|$ 就是兩點之間的路程，與方向無關。
+\end{補充框}
+
+\fig{d11-abs-distance}{0.86}{圖 1-2：上——$|x-a|$ 等於數線上 $x$ 與 $a$ 兩點之間的距離；下——$|x-a|<r$ 表示「離 $a$ 比 $r$ 近」，對應以 $a$ 為中心、半徑 $r$ 的一段開區間 $a-r<x<a+r$。}
+
+掌握「絕對值＝距離」後，多數絕對值方程式與不等式都能直接由數線判讀，而不必逐一拆解正負號。若把絕對值畫成函數，會得到以頂點為轉折的 \textbf{V 形圖}；$y=|x-a|$ 是把 $y=|x|$ 沿 $x$ 軸平移 $a$ 個單位的結果。
+
+\fig{d11-abs-function}{0.62}{圖 1-3：絕對值函數的 V 形圖。$y=|x|$（實線）頂點在 $(0,0)$；$y=|x-2|$（虛線）是把它向右平移 $2$ 個單位，頂點移到 $(2,0)$。}
+
+\textbf{注意：}兩個與絕對值有關、且在計算中常出錯的式子。
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item $|-x|=x$ 並不成立，正確為 $|-x|=|x|$。當 $x<0$ 時 $-x>0$，但 $|x|$ 仍為正。
+\item $\sqrt{x^2}=x$ 並不成立，正確為 $\sqrt{x^2}=|x|$（根號取非負值）。例如 $\sqrt{(-3)^2}=\sqrt9=3=|-3|$。
+\end{itemize}
+
+\subsection*{\sffamily B.\ 絕對值方程式 $|x-a|=b$}
+
+$|x-a|=b$ 問的是「離 $a$ 恰好為 $b$ 的點在哪裡」。
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 若 $b>0$：有兩解 $x=a+b$ 或 $x=a-b$。
+\item 若 $b=0$：唯一解 $x=a$。
+\item 若 $b<0$：\textbf{無解}（距離不可能為負）。
+\end{itemize}
+
+兩個絕對值相等的式子 $|x-a|=|x-c|$，意思是「$x$ 到 $a$、到 $c$ 一樣遠」，其解為 $a$ 與 $c$ 的\textbf{中點} $x=\dfrac{a+c}{2}$。
+
+\subsection*{\sffamily C.\ 絕對值不等式}
+
+以距離觀點，絕對值不等式有兩條核心型（$a>0$）：
+$$\boxed{\;|x|<a\iff -a<x<a\;}\qquad(\text{離原點「比 }a\text{ 近」}\Rightarrow\text{一段區間})$$
+$$\boxed{\;|x|>a\iff x<-a\ \text{或}\ x>a\;}\qquad(\text{離原點「比 }a\text{ 遠」}\Rightarrow\text{兩段})$$
+一般化：$|x-c|<a\iff c-a<x<c+a$，即以 $c$ 為中心、半徑 $a$ 的開區間。可記為「小於夾中間，大於分兩邊」。
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 將 $|x|>a$ 寫成 $-a>x>a$ 是無意義的式子（沒有數同時小於 $-a$ 又大於 $a$）。大於型一定是「或」、兩段；小於型才是「且」、一段。
+\item $a<0$ 時須先判斷再處理：$|x|<-3$ \textbf{無解}（絕對值非負，不可能小於負數）；$|x|>-3$ 則\textbf{所有實數皆成立}。
+\end{itemize}
+
+\subsection*{\sffamily D.\ 三角不等式}
+
+\begin{補充框}{三角不等式（triangle inequality）}
+對任意實數 $a,b$：
+$$\boxed{\;|a+b|\le|a|+|b|\;}$$
+等號成立 $\iff a,b$ \textbf{同號，或其中一個為 $0$}。它的意思是：先相加再取絕對值，不會比先各取絕對值再相加更大。名稱「三角」來自向量版本——三角形兩邊長之和不小於第三邊。
+\end{補充框}
+
+\section*{\sffamily 1-3\quad 式的運算}
+
+本節是後續各章計算的工具，觀念不多，重點在熟練度。
+
+\subsection*{\sffamily A.\ 乘法公式}
+
+\begin{補充框}{常用乘法公式}
+$$
+\begin{aligned}
+&(a\pm b)^2=a^2\pm2ab+b^2 &&\text{（完全平方）}\\
+&(a+b)(a-b)=a^2-b^2 &&\text{（平方差）}\\
+&(a\pm b)^3=a^3\pm3a^2b+3ab^2\pm b^3 &&\text{（立方的展開）}\\
+&a^3+b^3=(a+b)(a^2-ab+b^2) &&\text{（立方和）}\\
+&a^3-b^3=(a-b)(a^2+ab+b^2) &&\text{（立方差）}\\
+&(a+b+c)^2=a^2+b^2+c^2+2ab+2bc+2ca &&
+\end{aligned}
+$$
+立方和、立方差的二次因式中間項符號與一次因式相反：$a^3+b^3$ 配 $(a+b)$，二次因式為 $a^2-ab+b^2$。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 根式運算與有理化}
+
+\begin{補充框}{根式基本性質與有理化}
+對 $a,b\ge0$：
+$$\sqrt a\,\sqrt b=\sqrt{ab},\qquad\frac{\sqrt a}{\sqrt b}=\sqrt{\frac ab}\ (b>0),\qquad \sqrt{a^2}=|a|.$$
+\textbf{有理化（rationalization）}：把分母的根號消去。
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 分母是單一根式 $\sqrt a$：分子分母同乘 $\sqrt a$。
+\item 分母是 $\sqrt a\pm\sqrt b$ 型：分子分母同乘\textbf{共軛根式} $\sqrt a\mp\sqrt b$，以平方差消去根號。
+\end{itemize}
+有理化用「共軛」的原因，正是平方差公式 $(\sqrt a-\sqrt b)(\sqrt a+\sqrt b)=a-b$ 的逆用：把要消去的根號湊成平方差。
+\end{補充框}
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item $\sqrt{a+b}\ne\sqrt a+\sqrt b$。例如 $\sqrt{9+16}=\sqrt{25}=5$，但 $\sqrt9+\sqrt{16}=3+4=7$。根號\textbf{不能逐項拆開}。
+\item $\sqrt{a^2}=a$ 只在 $a\ge0$ 成立；一般須寫 $\sqrt{a^2}=|a|$（與 1-2 的情形對應）。
+\end{itemize}
+
+\subsection*{\sffamily C.\ 分式運算}
+
+分式（有理式）運算的原則與分數相同：\textbf{乘除先因式分解再約分；加減先通分}，最後化到最簡。
+
+\textbf{注意：}約分只能以「整塊因式」進行，不能逐項約去。例如 $\dfrac{x+2}{x}\ne 2$，不能把 $x$ 約掉只留 $+2$；必須先因式分解成乘積，才能約去相同的因式。此外，分式化簡後須標明使原分母為 $0$ 的變數限制（例如 $x\ne 1$）。
+
+\section*{\sffamily 1-4\quad 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{實數}＝有理數 $\cup$ 無理數。有理數 $\iff$ 小數有限或循環；無理數 $\iff$ 小數不終止且不循環。三一律：任兩實數恰有一種大小關係。
+\item \textbf{循環小數化分數}：乘 $10^{(\text{循環節長})}$ 後相減，消去循環部分。$0.\overline{9}=1$。
+\item \textbf{科學記號} $a\times10^n\,(1\le|a|<10)$：乘除把數字與次方分開算；加減先對齊次方。
+\item \textbf{絕對值＝距離}：$|x-a|$ 為兩點距離。方程式 $|x-a|=b$（$b>0$ 兩解、$b=0$ 一解、$b<0$ 無解）；不等式「小於夾中間 $-a<x<a$，大於分兩邊 $x<-a$ 或 $x>a$」。三角不等式 $|a+b|\le|a|+|b|$。
+\item \textbf{乘法公式}：完全平方、平方差、$(a\pm b)^3$、$a^3\pm b^3=(a\pm b)(a^2\mp ab+b^2)$、$(a+b+c)^2$。
+\item \textbf{根式}：$\sqrt{a^2}=|a|$，$\sqrt{a+b}\ne\sqrt a+\sqrt b$；有理化用\textbf{共軛}（以平方差消根號）。
+\item \textbf{分式}：乘除先分解再約分，加減先通分，整塊因式才能約去，化簡後標明變數限制。
+\end{itemize}
+\end{補充框}
+
+\begin{延伸框}{$\sqrt2$ 為什麼是無理數：反證法}
+無理數的定義是「不能寫成兩整數之比」。要證明\textbf{不能}寫成分數，無法逐一檢驗所有分數（分數有無限多個），因此採用\textbf{反證法（proof by contradiction）}：先假設 $\sqrt2$ 是分數，再導出矛盾，於是此假設不成立。
+
+\textbf{定理}：$\sqrt2$ 是無理數。\quad\textbf{證明（反證法）}：
+\begin{enumerate}\setlength{\itemsep}{1pt}
+\item \textbf{假設}：設 $\sqrt2$ 是有理數，可寫成最簡分數 $\sqrt2=\dfrac{p}{q}$，其中 $p,q$ 為正整數且\textbf{互質}（沒有大於 $1$ 的公因數）。
+\item \textbf{平方整理}：兩邊平方得 $2=\dfrac{p^2}{q^2}$，即 $p^2=2q^2$。\hfill$(\ast)$
+\item \textbf{$p$ 為偶數}：由 $(\ast)$，$p^2$ 是偶數；而奇數的平方仍是奇數，故「平方為偶 $\Rightarrow$ 原數為偶」，因此 $p$ 為偶數，可寫成 $p=2k$。
+\item \textbf{$q$ 也是偶數}：代回 $(\ast)$，$(2k)^2=2q^2\Rightarrow 4k^2=2q^2\Rightarrow q^2=2k^2$，同理 $q$ 為偶數。
+\item \textbf{矛盾}：於是 $p,q$ 都是偶數、有公因數 $2$，與第 1 步「互質」矛盾。
+\end{enumerate}
+矛盾來自「$\sqrt2$ 是有理數」這個假設，故假設錯誤，$\sqrt2$ 是無理數。$\blacksquare$
+
+同樣的方法可證 $\sqrt3,\sqrt5,\sqrt6,\ldots$ 等「開不盡的整數平方根」皆為無理數。（$\pi$ 也是無理數，但其證明遠較困難，高中不涉及，結論可直接使用。）
+\end{延伸框}
+
+\begin{延伸框}{無理數比有理數多嗎：兩種無限的大小}
+本篇屬於超出段考範圍的延伸內容。前面提到「數線上幾乎都是無理數」，但有理數與無理數都有無限多個，要說一種無限「比另一種多」，須先定義如何比較兩個無限集合的大小。這需要 19 世紀數學家\textbf{康托（Georg Cantor）}引進的工具：\textbf{一一對應}。
+
+\textbf{比較多寡不必會數，只要看能否「一個對一個」配對。}據此定義：一個無限集合若能與正整數 $1,2,3,\ldots$ \textbf{一一對應}（排成一列、編上號碼、不遺漏任何一個），就稱為\textbf{可數無限（countable）}。
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{整數可數}：排成 $0,1,-1,2,-2,3,-3,\ldots$，每個整數都有號碼。
+\item \textbf{有理數也可數}：把分數 $\dfrac pq$ 排成二維表格，沿對角線依序編號，每個有理數都會被編到。因此有理數雖然在數線上稠密，仍只是可數無限，與正整數「一樣多」。
+\end{itemize}
+
+\textbf{康托對角論證（Cantor diagonal argument）}則指出：$0$ 到 $1$ 之間的實數\textbf{不可數}。其論證為（反證）：假設能把 $0$ 到 $1$ 的所有小數排成一列 $r_1,r_2,r_3,\ldots$，再造一個新數 $d=0.d_1d_2d_3\ldots$，規則是讓 $d_1$ 與 $r_1$ 的第 $1$ 位不同、$d_2$ 與 $r_2$ 的第 $2$ 位不同、$d_3$ 與 $r_3$ 的第 $3$ 位不同……如此 $d$ 與清單中每一個數至少有一位不同，故不在清單上，但 $d$ 確實是 $0$ 到 $1$ 的實數，矛盾。可見實數無法排成一列。
+
+由「有理數可數、實數不可數」可推得：實數扣掉可數的有理數後，剩下的無理數\textbf{必為不可數}（可數加可數仍為可數，若無理數可數則實數也可數，矛盾）。因此「無理數比有理數多」並非指個數多幾個，而是指\textbf{層級不同的無限}：有理數是可數無限，無理數是不可數無限，後者嚴格大於前者。在數線上隨意取一點，落在有理數的「機率」為 $0$，亦即數線上幾乎每一點都是無理數。
+
+\textbf{連續統假設}：在「可數無限」與「實數那種不可數無限」之間是否還有別種大小的無限，康托推測沒有，此即\textbf{連續統假設（Continuum Hypothesis）}。此問題已超出高中範圍，並且在數學上是一個\textbf{開放／獨立性問題}：20 世紀的結果顯示，在目前通用的集合論公理（ZFC）下，這個假設\textbf{既不能被證明、也不能被否證}，亦即在現行公理系統內無法判定。
+\end{延伸框}
+
+\end{document}

@@ -1,0 +1,250 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\Huge\bfseries 數1-3 指數與對數}\\[3pt]
+{\sffamily\large 普通高中 數學（必修・第一冊）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+最初的「次方」只是正整數個相同因數的連乘，例如 $2^3=2\times2\times2$。本章先把次方的指數從正整數一路推廣到分數、零、負數，乃至任意實數，使 $2^{1/2}$、$2^{0}$、$2^{-3}$、$2^{\sqrt2}$ 都有確定意義；過程中認識\textbf{幾何平均數}與\textbf{算幾不等式}。接著把指數運算反過來問：「$10$ 的幾次方等於某數」，這個問題的答案就是\textbf{常用對數（common logarithm）}$\log$。最後用對數處理橫跨多個數量級的數（位數、科學記號、pH、芮氏規模、分貝），並認識計算機運算的有限性與誤差。
+
+\medskip
+本章主線：
+
+\begin{center}
+指數的推廣與指數律 $\rightarrow$ 幾何平均與算幾不等式 $\rightarrow$ 常用對數（指數的反運算）$\rightarrow$ 對數律 $\rightarrow$ 首數尾數與位數 $\rightarrow$ 對數尺度與數值誤差
+\end{center}
+
+\medskip
+本章一切以 $10$ 為底的對數簡寫成 $\log N$（即 $\log_{10}N$），這是高中「常用對數」的慣例。
+
+\section*{\sffamily 3-1\quad 指數的推廣與指數律}
+
+\subsection*{\sffamily A.\ 從「重複相乘」出發}
+
+對正整數 $n$，$a^n$ 代表 $n$ 個 $a$ 連乘：
+$$a^n=\underbrace{a\times a\times\cdots\times a}_{n\ \text{個}}.$$
+
+在這個定義下，直接數因數的個數即可得到三條規律：
+$$a^m\cdot a^n=a^{m+n},\qquad (a^m)^n=a^{mn},\qquad (ab)^n=a^n b^n.$$
+
+接著的問題是：$a^0$、$a^{-2}$、$a^{1/2}$ 是什麼意思？「$0$ 個 $a$ 相乘」「$-2$ 個 $a$ 相乘」「半個 $a$ 相乘」沒有字面意義。數學上的處理方式是：不另創新運算，而是\textbf{規定}這些新符號的值，使上面三條指數律對新的指數仍然成立。這種做法稱為\textbf{一致性延拓}：以「保持既有規則不變」作為定義的依據。
+
+\begin{補充框}{分數、零、負次方是怎麼定義出來的}
+這些新次方的值不是任意指定的，而是被指數律唯一地決定。最核心的一條指數律是 $a^m\cdot a^n=a^{m+n}$，以下用它逐一推出各個定義（底數限定 $a>0$）。
+
+\textbf{(1) 零次方 $a^0=1$。}\ 要 $a^1\cdot a^0=a^{1+0}=a^1=a$ 成立，左邊是 $a\cdot a^0$，唯一能使它等於 $a$ 的值是
+$$a^0=1\quad(a\ne0).$$
+
+\textbf{(2) 負次方 $a^{-n}=\dfrac{1}{a^n}$。}\ 要 $a^n\cdot a^{-n}=a^{n+(-n)}=a^0=1$，因此 $a^{-n}$ 必須是 $a^n$ 的倒數：
+$$a^{-n}=\frac{1}{a^n}.$$
+負號的作用相當於「反過來除」：$a^3$ 是乘三次 $a$，$a^{-3}$ 是除三次 $a$。
+
+\textbf{(3) 分數次方 $a^{1/n}=\sqrt[n]{a}$。}\ 用 $(a^x)^y=a^{xy}$：$\big(a^{1/n}\big)^n=a^{(1/n)\cdot n}=a^1=a$。也就是 $a^{1/n}$ 自乘 $n$ 次會得到 $a$，這正是 $n$ 次方根的定義，因此
+$$a^{1/n}=\sqrt[n]{a}.$$
+特別地 $a^{1/2}=\sqrt a$，因為它平方後即為 $a$。一般分數次方則為
+$$a^{m/n}=\big(a^{1/n}\big)^m=\big(\sqrt[n]{a}\big)^m=\sqrt[n]{a^m}\qquad(n\text{ 為正整數},\ m\text{ 為整數}).$$
+
+\textbf{注意：}底數須限定 $a>0$。若 $a<0$，分數次方會自相矛盾。例如 $(-8)^{1/3}$ 看似為 $-2$，但 $\tfrac13=\tfrac26$，依此 $(-8)^{2/6}=\sqrt[6]{(-8)^2}=\sqrt[6]{64}=2\ne-2$；同一指數寫成不同分數卻得到不同的值。為避免此問題，本章一律限定 $a>0$。
+\end{補充框}
+
+至於無理數次方（例如 $2^{\sqrt2}$），則用「分數指數逼近」定義：取一串越來越接近 $\sqrt2$ 的有理數 $\frac{m}{n}$，對應的 $2^{m/n}$ 會逼近一個固定的值，該極限即定義為 $2^{\sqrt2}$。這使 $y=2^x$ 成為一條完整、連續的曲線。
+
+\subsection*{\sffamily B.\ 指數律}
+
+推廣後，下列指數律對所有實數指數仍然成立。
+
+\begin{補充框}{指數律（$a,b>0$；$x,y$ 為任意實數）}
+$$a^x\cdot a^y=a^{x+y}\qquad \frac{a^x}{a^y}=a^{x-y}\qquad (a^x)^y=a^{xy}$$
+$$(ab)^x=a^x b^x\qquad \left(\frac{a}{b}\right)^x=\frac{a^x}{b^x}$$
+這些律只處理\textbf{乘除與次方}，不處理加減。
+\end{補充框}
+
+\textbf{注意：}指數律不適用於加減，常見的錯誤有以下幾種。
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item $a^{m}+a^{n}\ne a^{m+n}$。例如 $2^3+2^2=12$，並不等於 $2^5=32$。
+\item $(a+b)^x\ne a^x+b^x$。例如 $(1+1)^{1/2}=\sqrt2\approx1.414$，但 $1^{1/2}+1^{1/2}=2$。指數可以分配到每個\textbf{因數}，但不能分配到每個\textbf{加項}。
+\end{itemize}
+
+\subsection*{\sffamily C.\ 指數函數的圖形}
+
+把指數推廣到所有實數後，$y=a^x$ 成為一條連續曲線，稱為\textbf{指數函數（exponential function）}。圖形的細節留待高二，但先指出兩個與對數有關的關鍵特徵。
+
+\fig{d13-exp}{0.74}{圖 3-1：指數函數 $y=a^x$。$a>1$（藍）遞增，為指數成長；$0<a<1$（紅）遞減，為指數衰退。兩條曲線都通過 $(0,1)$，且都以 $x$ 軸（$y=0$）為水平漸近線。}
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 不論 $a$ 為何，$x=0$ 時 $y=a^0=1$，因此每條曲線都通過 $(0,1)$。
+\item $a>1$ 時遞增（指數成長）；$0<a<1$ 時遞減（指數衰退）。
+\item $y$ 永遠 $>0$，曲線以 $x$ 軸為水平漸近線但不與之相交。這對應後面「對數的真數一定要 $>0$」這項限制。
+\end{itemize}
+
+\subsection*{\sffamily D.\ 幾何平均數與算幾不等式}
+
+指數推廣使「開根號」成為自然的運算，由此引入第二種平均。
+
+\begin{補充框}{算術平均、幾何平均與算幾不等式}
+對兩個正數 $a,b$：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{算術平均數（arithmetic mean）}：$\dfrac{a+b}{2}$，即相加除以 $2$。
+\item \textbf{幾何平均數（geometric mean）}：$\sqrt{ab}$，即相乘再開根號。
+\end{itemize}
+幾何平均常用於「比例、倍率、成長率」的平均。若某量第一年變為原來的 $a$ 倍、第二年變為 $b$ 倍，則兩年「平均每年變幾倍」是 $\sqrt{ab}$，而非 $\frac{a+b}{2}$。
+
+兩者之間恆有\textbf{算幾不等式（AM–GM inequality）}：對任意正數 $a,b$，
+$$\boxed{\;\frac{a+b}{2}\ge\sqrt{ab}\;}$$
+等號成立的充要條件是 $a=b$。
+
+\textbf{代數證明（一行）：}因為 $\big(\sqrt a-\sqrt b\big)^2\ge0$，展開得 $a-2\sqrt{ab}+b\ge0$，即 $a+b\ge2\sqrt{ab}$，兩邊除以 $2$ 即得。等號 $\Leftrightarrow\sqrt a=\sqrt b\Leftrightarrow a=b$。
+\end{補充框}
+
+\fig{d13-amgm}{0.62}{圖 3-2：算幾不等式的幾何解釋。以 $a+b$ 為直徑作半圓，半徑 $R=\frac{a+b}{2}$；在把直徑分成 $a$、$b$ 的分點處往上作垂線交半圓，垂線長 $h=\sqrt{ab}$。半徑是半圓中最長的半弦，故 $R\ge h$，即 $\frac{a+b}{2}\ge\sqrt{ab}$；當 $a=b$ 時分點落在圓心，$h=R$，等號成立。}
+
+\textbf{注意：}不等號的方向是\textbf{算術平均 $\ge$ 幾何平均}（相加的那個較大），勿記反。
+
+\begin{延伸框}{算幾不等式為何成立、如何推廣與應用}
+算幾不等式的兩個數版本可由一個完全平方完整證出（見上方補充框）；以下說明其幾何意義、推廣與用途。
+
+\textbf{(1) 周長與面積的關係。}\ 由 $\dfrac{a+b}{2}\ge\sqrt{ab}$ 兩邊平方，得 $ab\le\left(\dfrac{a+b}{2}\right)^2$。對一個長寬為 $a,b$ 的長方形，這表示：在半周長 $\frac{a+b}{2}$ 固定（即周長固定）時，面積 $ab$ 在 $a=b$（正方形）時最大。反過來，面積固定時，正方形的周長最短。算幾不等式的等號條件 $a=b$ 對應「最對稱時最佳」。
+
+\textbf{(2) 求極值的用途。}\ 算幾不等式可用於求「一個正數加上其倒數型」的最小值，關鍵是：當兩個正項\textbf{相乘剛好把變數消成常數}時，它們的和便有確定的下界。
+
+\textbf{(3) 推廣到 $n$ 個數。}\ 不等式不限於兩個數。對 $n$ 個正數 $a_1,\dots,a_n$，
+$$\frac{a_1+a_2+\cdots+a_n}{n}\ge\sqrt[n]{a_1a_2\cdots a_n},$$
+等號同樣在所有數相等時成立。它是一整族不等式的基礎，更一般的版本（如柯西不等式、冪平均不等式）會在後續課程中出現。
+\end{延伸框}
+
+\section*{\sffamily 3-2\quad 常用對數與對數律}
+
+\subsection*{\sffamily A.\ 把指數「反過來問」}
+
+指數函數 $y=10^x$ 是「給定指數，求結果」。科學中常遇到反方向的問題：「$10$ 的幾次方等於 $1000$？」「$10$ 的幾次方等於 $2$？」這個「要幾次方」的答案就是\textbf{對數}。
+
+\begin{補充框}{對數的定義：log 是指數的反運算}
+設 $N>0$。使 $10^x=N$ 成立的那個指數 $x$，稱為 $N$ 的\textbf{常用對數（common logarithm）}，記作
+$$\boxed{\,\log N=x \iff 10^{x}=N\,}$$
+以 $10$ 為底時底數省略不寫，$\log N$ 即 $\log_{10}N$。換言之，$\log N$ 就是在問「$10$ 要幾次方才會得到 $N$」。
+
+\textbf{為什麼說它是反運算。}\ 每個運算都有一個「反過來」的搭檔，用來抵消它：$+3$ 與 $-3$ 互消、$\times3$ 與 $\div3$ 互消、平方與開根號互消。運算「$10^{(\ )}$」是「給指數、求結果」，其反運算必須「給結果、求指數」，那就是 $\log$。兩者一前一後互相抵消：
+$$10^{\log N}=N,\qquad \log(10^x)=x.$$
+
+直接由定義即可心算的值（每一個都是在問「$10$ 的幾次方」）：
+$$\log 1=0,\quad \log 10=1,\quad \log 100=2,\quad \log 1000=3,\quad \log 0.1=-1,\quad \log\tfrac{1}{100}=-2.$$
+$\log N$ 多半是小數，因為多數數不是 $10$ 的整數次方。例如 $\log2\approx0.301$，表示 $10^{0.301}\approx2$；由於 $2$ 介於 $10^0=1$ 與 $10^1=10$ 之間，其指數自然介於 $0$ 與 $1$。
+\end{補充框}
+
+「互為反運算」在圖形上有對應的表現：把 $y=a^x$ 與 $y=\log_a x$ 畫在一起，兩條曲線\textbf{對直線 $y=x$ 對稱}（互為反函數的圖形必然如此）。指數曲線通過 $(0,1)$，對數曲線就通過 $(1,0)$，恰為把座標 $x,y$ 對調。
+
+\fig{d13-log}{0.62}{圖 3-3：指數與對數互為反函數。$y=2^x$（藍）與 $y=\log_2 x$（紅）對直線 $y=x$（虛線）對稱；前者過 $(0,1)$，後者過 $(1,0)$，座標恰好對調。}
+
+\textbf{注意：}$\log N$ 中的 $N$ 稱為\textbf{真數}，且必須 $N>0$。因為 $10^x$ 永遠 $>0$（見圖 3-1，曲線恆在 $x$ 軸上方），「$10$ 的幾次方等於 $-5$ 或 $0$」無解，因此 $\log(-5)$、$\log 0$ 在實數中無意義。真數須為正並非額外規定，而是指數本身的性質所致。
+
+\subsection*{\sffamily B.\ 對數律}
+
+對數能把乘法化為加法、除法化為減法、次方化為倍數。這三條律分別對應一條指數律。
+
+\begin{補充框}{對數律（$M,N>0$，$k$ 為實數）}
+$$\boxed{\;\log(MN)=\log M+\log N\;}\qquad(\text{積} \to \text{和})$$
+$$\boxed{\;\log\frac{M}{N}=\log M-\log N\;}\qquad(\text{商} \to \text{差})$$
+$$\boxed{\;\log M^{k}=k\log M\;}\qquad(\text{次方} \to \text{倍})$$
+
+\textbf{為什麼成立。}\ 證明的關鍵都是先把真數寫成 $10$ 的次方。設 $\log M=x$、$\log N=y$，即 $M=10^x$、$N=10^y$。則
+$$MN=10^x\cdot10^y=10^{x+y}\ \Longrightarrow\ \log(MN)=x+y=\log M+\log N.$$
+同理 $\dfrac MN=\dfrac{10^x}{10^y}=10^{x-y}$ 給出第二條；$M^k=\big(10^x\big)^k=10^{kx}$ 給出第三條。對數律即指數律經由「讀取指數」反映而成的對應規則。
+\end{補充框}
+
+\textbf{注意：}對數律只把乘除與次方降級，加法不能拆解，常見的錯誤有以下幾種。
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item $\log(M+N)\ne\log M+\log N$。例如 $\log(2+3)=\log5\approx0.699$，而 $\log2+\log3\approx0.778$。
+\item $\dfrac{\log M}{\log N}\ne\log\dfrac{M}{N}$。前者是兩個對數相除，後者是商的對數（第二條律），兩者不同。
+\item $(\log M)^2\ne\log M^2$。前者是對數值自乘，後者 $=2\log M$。
+\end{itemize}
+
+\begin{延伸框}{把乘法變加法在歷史上的作用}
+在沒有計算機的年代，大數相乘極為費力，相加則相對容易。對數律使乘法可化為加法處理：要算 $M\times N$，先查表得 $\log M$、$\log N$，相加後再反查（查 $10^{(\cdot)}$）得到答案。這正是「對數表」與「計算尺」的原理，長期是工程、天文與航海計算的主要工具。
+
+從更一般的角度看，這是一種「結構翻譯」：指數函數 $x\mapsto10^x$ 把加法搬成乘法（$10^{x+y}=10^x10^y$），對數是其逆，把乘法搬回加法。數學上稱這種忠實的運算對應為\textbf{同態（homomorphism）}；因為對應是忠實的，對數律才能成立得如此整齊。高中階段掌握「對數律即指數律的鏡像」即可。
+\end{延伸框}
+
+\section*{\sffamily 3-3\quad 對數的應用與數值誤差}
+
+\subsection*{\sffamily A.\ 首數、尾數與位數}
+
+任何正數都能寫成\textbf{科學記號（scientific notation）}$N=a\times10^{n}$，其中 $1\le a<10$、$n$ 為整數。取對數：
+$$\log N=\log\!\big(a\times10^{n}\big)=\log a+\log10^{n}=n+\log a.$$
+因為 $1\le a<10$，所以 $0\le\log a<1$。於是 $\log N$ 自然拆成兩部分。
+
+\begin{補充框}{首數與尾數}
+$$\log N=\underbrace{n}_{\textbf{首數}\ (\text{整數})}+\underbrace{\log a}_{\textbf{尾數}\ (0\le\,\cdot\,<1)}$$
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{首數（characteristic）}$=n$：表示 $N$ 的數量級，即它落在 $10$ 的哪一段，這決定 $N$ 的\textbf{位數}。
+\item \textbf{尾數（mantissa）}$=\log a$：表示 $N$ 的有效數字。$N$ 與 $10N$、$100N$ 的尾數\textbf{完全相同}（因為它們的 $a$ 相同），只有首數相差整數。
+\end{itemize}
+
+\textbf{注意：}尾數依定義須落在 $0$ 到 $1$ 之間（含 $0$）。對於 $\log N$ 為負的情形，須先湊出非負的尾數再讀首數。例如 $\log 0.002=\log(2\times10^{-3})=-3+\log 2\approx-3+0.301$，首數為 $-3$、尾數為 $0.301$；不可把 $-2.699$ 直接拆成首數 $-2$、尾數 $-0.699$。
+\end{補充框}
+
+\begin{補充框}{用對數估計位數}
+一個正整數 $N$ 的位數 $=\lfloor\log N\rfloor+1$，其中 $\lfloor\ \cdot\ \rfloor$ 為高斯符號（取不超過該數的最大整數）。
+
+\textbf{道理：}$N$ 為 $d$ 位數 $\iff 10^{d-1}\le N<10^{d}\iff d-1\le\log N<d$，因此 $d=\lfloor\log N\rfloor+1$，即\textbf{首數加 $1$ 就是位數}。
+
+同一個尾數還能判斷\textbf{最高位數字}：把 $N$ 寫成 $10^{\,n}\times10^{\,\log a}$，只看 $10^{\log a}$ 落在哪兩個整數之間即可。若尾數落在 $[\log d,\ \log(d+1))$，則最高位數字為 $d$。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 對數尺度}
+
+當一群數橫跨多個數量級（從很小到極大）時，直接比較不便，取對數可將其壓縮成便於處理的尺度，稱為\textbf{對數尺度（logarithmic scale）}。下列三個量都建立在對數尺度上。
+
+\begin{補充框}{三個常見的對數尺度}
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{p{0.20\linewidth} p{0.32\linewidth} p{0.38\linewidth}}
+\hline
+\textbf{量} & \textbf{定義} & \textbf{尺度含義} \\
+\hline
+pH 值（酸鹼） & $\text{pH}=-\log[\text{H}^+]$ & pH 每降 $1$，氫離子濃度變為 $10$ 倍 \\
+芮氏規模（地震） & $M\propto\log E$ & 規模每升 $1$，釋放能量約 $32$ 倍 \\
+分貝（聲音強度） & $L=10\log\dfrac{I}{I_0}$ & 每加 $10$ dB，聲音強度變為 $10$ 倍 \\
+\hline
+\end{tabular}
+\end{center}
+三者的共同點是：\textbf{等差的刻度對應等比的真實量}。這即對數把乘法化為加法的性質在現實量度上的呈現——真實量每變為固定倍數，對數尺度上只移動固定的一格。
+\end{補充框}
+
+\subsection*{\sffamily C.\ 計算機的有限性與有效位數}
+
+計算機與電腦只能儲存\textbf{有限位數}的數，因此遇到無理數或無限小數時，存的一律是\textbf{近似值}，而每一步運算的微小誤差還會\textbf{累積}。
+
+\begin{補充框}{有效數字與誤差}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{有效數字（significant figures）}：一個近似值中可靠的數字位數。例如 $\log2\approx0.301$ 是取到 $3$ 位有效數字，更精確的值為 $0.30103\ldots$。
+\item \textbf{四捨五入}會引入誤差，但可控制在最後一位的半個單位以內。
+\item \textbf{誤差會累積}：連續相乘、相加多步後，原本在第 $4$ 位的小誤差可能上移到第 $2$、$3$ 位。因此計算過程中應多保留 $1$ 至 $2$ 位，最後再依需求取捨。
+\end{itemize}
+在估計位數等需要判斷整數臨界的情境，有效位數尤其不可省略：若中間值接近整數（例如 $29.97$ 與 $30.03$），位數的結論會隨保留位數而改變。
+\end{補充框}
+
+\textbf{注意：}計算機螢幕上顯示一長串數字，並不代表該值是精確值。$\sqrt2$、$\log3$ 都是無限不循環小數，螢幕顯示的只是位數較多的近似值。此外，把中間結果四捨五入過早（例如只留 $2$ 位）再進入後續運算，會放大誤差，應保留足夠位數至最後一步。
+
+\section*{\sffamily 3-4\quad 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{指數推廣}（$a>0$）：$a^0=1$、$a^{-n}=\dfrac1{a^n}$、$a^{m/n}=\sqrt[n]{a^m}$。皆為「保持指數律成立」而被唯一決定的定義。
+\item \textbf{指數律}：$a^x a^y=a^{x+y}$、$\dfrac{a^x}{a^y}=a^{x-y}$、$(a^x)^y=a^{xy}$、$(ab)^x=a^xb^x$。只處理乘除次方，不處理加減。
+\item \textbf{算幾不等式}：$\dfrac{a+b}{2}\ge\sqrt{ab}$（$a,b>0$），等號 $\iff a=b$。可由 $(\sqrt a-\sqrt b)^2\ge0$ 證得。
+\item \textbf{常用對數}：$\log N=x\iff 10^x=N$（$N>0$），與 $10^x$ 互為反運算；真數須為正。
+\item \textbf{對數律}：$\log(MN)=\log M+\log N$、$\log\dfrac MN=\log M-\log N$、$\log M^k=k\log M$。加法不能拆。
+\item \textbf{首數／尾數}：$\log N=n+\log a$（$N=a\times10^n$）。位數 $=\lfloor\log N\rfloor+1=$ 首數 $+1$。
+\item \textbf{對數尺度}：pH、芮氏規模、分貝——等差刻度對應等比真實量。
+\item \textbf{數值誤差}：計算機只有有限位數，過程中多保留位數，最後再取捨；接近整數臨界時不可省位數。
+\end{itemize}
+\textbf{常用近似}：$\log2\approx0.301$、$\log3\approx0.477$、$\log5=1-\log2\approx0.699$、$\log7\approx0.845$。
+\end{補充框}
+
+\end{document}
