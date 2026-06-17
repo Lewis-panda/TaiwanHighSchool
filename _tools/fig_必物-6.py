@@ -134,7 +134,7 @@ def fig_modes():
     ax1.set_xlim(-0.24, L+0.34)
     ax1.set_ylim(-1.35, 4*1.7+1.1)
     ax1.axis("off")
-    ax1.set_title("空腔裡的「振動模式」（駐波）", fontsize=13)
+    ax1.set_title("空腔裡的「振動模式」（1D 駐波示意）", fontsize=13)
     ax1.text(L/2, -1.08, "只有「整數個半波長」剛好塞得進盒子", ha="center", color=F.INK, fontsize=11)
 
     nu = np.linspace(0, 10, 200)
@@ -146,8 +146,8 @@ def fig_modes():
     ax2.set_xticks([])
     ax2.set_yticks([])
     ax2.set_xlabel("頻率 ν（∝ 1/λ）→", fontsize=12)
-    ax2.set_ylabel("可容納的模式數目 →", fontsize=12)
-    ax2.set_title("波長越短，模式越多（沒有上限）", fontsize=13)
+    ax2.set_ylabel("模式總數（短於此波長）→", fontsize=12)
+    ax2.set_title("波長越短，模式越多（3D 空腔，沒有上限）", fontsize=13)
     ax2.annotate("短波長端\n模式急速暴增", xy=(9.2, 9.2**3), xytext=(2.0, 830),
                  color=F.RED, fontsize=11, ha="center",
                  arrowprops=dict(arrowstyle="->", color=F.RED))
