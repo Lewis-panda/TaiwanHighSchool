@@ -119,9 +119,48 @@ def fig_double_slit():
     F.save_to(fig, CH, "必物-6-雙狹縫累積")
 
 
+def fig_modes():
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9.4, 4.6))
+    L = 1.0
+    x = np.linspace(0, L, 400)
+    for n in [1, 2, 3, 4, 5]:
+        off = (5 - n) * 1.7
+        ax1.hlines(off, 0, L, color="#d8dde3", lw=1.0)
+        ax1.plot(x, off + 0.7*np.sin(n*np.pi*x/L), color=F.BLUE, lw=2.2)
+        ax1.text(-0.04, off, f"$n={n}$", ha="right", va="center", fontsize=12)
+        ax1.text(L+0.05, off, fr"$\lambda=2L/{n}$", ha="left", va="center", fontsize=10, color="#666")
+    ax1.axvline(0, color=F.INK, lw=2.5)
+    ax1.axvline(L, color=F.INK, lw=2.5)
+    ax1.set_xlim(-0.24, L+0.34)
+    ax1.set_ylim(-1.35, 4*1.7+1.1)
+    ax1.axis("off")
+    ax1.set_title("空腔裡的「振動模式」（駐波）", fontsize=13)
+    ax1.text(L/2, -1.08, "只有「整數個半波長」剛好塞得進盒子", ha="center", color=F.INK, fontsize=11)
+
+    nu = np.linspace(0, 10, 200)
+    N = nu**3
+    ax2.plot(nu, N, color=F.RED, lw=2.8)
+    ax2.fill_between(nu, 0, N, color=F.RED, alpha=0.08)
+    ax2.set_xlim(0, 10)
+    ax2.set_ylim(0, 1080)
+    ax2.set_xticks([])
+    ax2.set_yticks([])
+    ax2.set_xlabel("頻率 ν（∝ 1/λ）→", fontsize=12)
+    ax2.set_ylabel("可容納的模式數目 →", fontsize=12)
+    ax2.set_title("波長越短，模式越多（沒有上限）", fontsize=13)
+    ax2.annotate("短波長端\n模式急速暴增", xy=(9.2, 9.2**3), xytext=(2.0, 830),
+                 color=F.RED, fontsize=11, ha="center",
+                 arrowprops=dict(arrowstyle="->", color=F.RED))
+    for s in ("top", "right"):
+        ax2.spines[s].set_visible(False)
+    fig.tight_layout()
+    F.save_to(fig, CH, "必物-6-振動模式")
+
+
 if __name__ == "__main__":
     fig_blackbody()
     fig_photoelectric()
     fig_energy_levels()
     fig_double_slit()
+    fig_modes()
     print("done.")
