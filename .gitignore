@@ -1,0 +1,12 @@
+# Python 繪圖環境（勿納入版控，很大）
+.venv/
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Obsidian 個人工作區快取（保留 vault 內容，排除每台機器不同的暫存）
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.trash/
