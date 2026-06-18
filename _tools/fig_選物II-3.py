@@ -467,9 +467,231 @@ def fig_collision():
     F.save_to(fig, CH, "選物II-3-一維碰撞")
 
 
+def fig_slide_vs_tip():
+    """受側推力的方塊：先滑 vs 先翻的競爭。
+    比較滑動門檻 F_滑=μs·mg 與傾倒門檻 F_翻=mg(w/2)/h，
+    標出重心、支撐底面、推力作用高度 h 與底半寬 w/2。
+    左：地滑（μs 小）→ 先滑；右：又高又窄、地粗（μs 大）→ 先翻。"""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9.8, 5.2))
+    for ax in (ax1, ax2):
+        ax.set_aspect("equal")
+        ax.axis("off")
+
+    YTOP = 5.6  # 兩panel共用上界，留出標題與門檻字的空間
+
+    def draw_case(ax, w, h, push_h, mode, title, thresh):
+        """mode: 'slide' 或 'tip'。w=底寬, h=箱高, push_h=推力作用高度。"""
+        # 地面
+        ax.plot([-3.4, 3.4], [0, 0], color=F.INK, lw=2.0, zorder=2)
+        ax.add_patch(
+            Rectangle(
+                (-3.4, -0.5),
+                6.8,
+                0.5,
+                facecolor="#eef1f5",
+                edgecolor="none",
+                hatch="////",
+                lw=0,
+            )
+        )
+        x0 = -w / 2.0  # 箱左緣
+        # 箱子
+        ax.add_patch(
+            Rectangle(
+                (x0, 0.0),
+                w,
+                h,
+                facecolor="#dbe7ff",
+                edgecolor=F.INK,
+                lw=1.8,
+                zorder=3,
+            )
+        )
+        # 重心（幾何中心）
+        Gc = np.array([0.0, h / 2.0])
+        ax.add_patch(
+            Circle(Gc, 0.11, facecolor="white", edgecolor=F.RED, lw=1.8, zorder=6)
+        )
+        for s in (1, -1):
+            ax.plot(
+                [Gc[0] - 0.075, Gc[0] + 0.075],
+                [Gc[1] - s * 0.075, Gc[1] + s * 0.075],
+                color=F.RED,
+                lw=1.4,
+                zorder=7,
+            )
+        F.label(ax, Gc + np.array([0.0, 0.42]), "重心", color=F.RED, fs=11)
+        # 重力鉛垂線（重心 → 地面）
+        ax.plot([0, 0], [Gc[1], 0], color=F.RED, lw=1.2, ls=":", zorder=4)
+        F.arrow(ax, Gc, Gc + np.array([0, -h / 2 - 0.55]), color=F.RED, lw=2.2)
+        F.label(
+            ax, np.array([0.62, h / 2 - 0.55]), r"$mg$", color=F.RED, fs=12, ha="left"
+        )
+
+        # 底半寬 w/2 標註（從中線到右底角）
+        pivot = np.array([w / 2.0, 0.0])  # 翻倒支點（右下角）
+        ax.annotate(
+            "",
+            xy=(w / 2.0, -0.30),
+            xytext=(0.0, -0.30),
+            arrowprops=dict(arrowstyle="<->", color=F.GREEN, lw=1.5),
+        )
+        F.label(ax, np.array([w / 4.0, -0.62]), "底半寬 w/2", color=F.GREEN, fs=10)
+        # 支撐底面（整條底邊）
+        ax.plot(
+            [x0, w / 2.0],
+            [0, 0],
+            color=F.GREEN,
+            lw=4.0,
+            solid_capstyle="butt",
+            zorder=5,
+        )
+        # 翻倒支點
+        ax.add_patch(Circle(pivot, 0.07, color=F.INK, zorder=8))
+        F.label(
+            ax,
+            pivot + np.array([0.18, 0.20]),
+            "翻倒支點",
+            color=F.INK,
+            fs=10,
+            ha="left",
+        )
+
+        # 側向推力 F（作用在左緣、高 push_h 處，水平向右）
+        push_pt = np.array([x0, push_h])
+        F.arrow(ax, push_pt - np.array([1.35, 0]), push_pt, color=F.BLUE, lw=2.8)
+        F.label(
+            ax,
+            push_pt - np.array([1.45, 0.0]),
+            r"$F$",
+            color=F.BLUE,
+            fs=14,
+            ha="right",
+        )
+        # 作用高度 h（地面 → 推力線）
+        ax.plot(
+            [x0 - 1.05, x0 - 1.05],
+            [0, push_h],
+            color=F.AMBER,
+            lw=1.4,
+            zorder=4,
+        )
+        ax.annotate(
+            "",
+            xy=(x0 - 1.05, push_h),
+            xytext=(x0 - 1.05, 0),
+            arrowprops=dict(arrowstyle="<->", color=F.AMBER, lw=1.5),
+        )
+        F.label(
+            ax,
+            np.array([x0 - 1.30, push_h / 2.0]),
+            "高 h",
+            color=F.AMBER,
+            fs=10,
+            ha="right",
+        )
+
+        # 底部摩擦力 / 滑動指示
+        if mode == "slide":
+            # 整箱往右滑：底部畫滑動箭頭
+            F.arrow(
+                ax,
+                np.array([0.0, -0.02]),
+                np.array([1.1, -0.02]),
+                color=F.PURPLE,
+                lw=2.4,
+            )
+            F.label(ax, np.array([0.55, 0.30]), "整箱滑開", color=F.PURPLE, fs=11)
+        else:
+            # 繞右下角翻轉：畫旋轉弧
+            ax.add_patch(
+                Arc(
+                    pivot,
+                    2.0,
+                    2.0,
+                    angle=0,
+                    theta1=90,
+                    theta2=150,
+                    color=F.PURPLE,
+                    lw=2.2,
+                    zorder=6,
+                )
+            )
+            F.arrow(
+                ax,
+                pivot + np.array([np.cos(np.deg2rad(150)), np.sin(np.deg2rad(150))]),
+                pivot + np.array([np.cos(np.deg2rad(158)), np.sin(np.deg2rad(158))]),
+                color=F.PURPLE,
+                lw=2.2,
+            )
+            F.label(
+                ax,
+                np.array([1.55, h * 0.5]),
+                "繞支點翻倒",
+                color=F.PURPLE,
+                fs=11,
+                ha="left",
+            )
+
+        # 標題（畫在座標頂端，兩panel等高、位置一致）
+        ax.text(
+            0.0,
+            YTOP,
+            title,
+            ha="center",
+            va="top",
+            color=F.INK,
+            fontsize=12.5,
+            fontweight="bold",
+        )
+        # 門檻比較字（標題下方一行，仍在箱頂之上）
+        ax.text(
+            0.0,
+            YTOP - 0.78,
+            thresh,
+            ha="center",
+            va="top",
+            color=F.PURPLE,
+            fontsize=10.5,
+            fontweight="bold",
+        )
+        ax.set_xlim(-3.4, 3.0)
+        ax.set_ylim(-1.0, YTOP + 0.15)
+
+    # 左：又矮又寬、地面滑（μs 小）→ 先滑
+    draw_case(
+        ax1,
+        w=2.2,
+        h=2.4,
+        push_h=1.7,
+        mode="slide",
+        title="地面滑（μs 小）→ 先滑動",
+        thresh="門檻：F_滑 = μs·mg  <  F_翻 = mg(w/2)/h\n→ 先達到滑動門檻",
+    )
+    # 右：又高又窄、地面粗（μs 大）→ 先翻
+    draw_case(
+        ax2,
+        w=1.3,
+        h=3.2,
+        push_h=2.6,
+        mode="tip",
+        title="又高又窄、地粗（μs 大）→ 先翻倒",
+        thresh="門檻：F_翻 = mg(w/2)/h  <  F_滑 = μs·mg\n→ 先達到傾倒門檻",
+    )
+
+    fig.suptitle(
+        "受側推力的方塊：比較 μs 與 w/2h，誰小先發生哪一種",
+        fontsize=13.5,
+        y=0.99,
+    )
+    fig.tight_layout(rect=(0, 0, 1, 0.96))
+    F.save_to(fig, CH, "選物II-3-先滑vs先翻")
+
+
 if __name__ == "__main__":
     fig_static_equilibrium()
     fig_torque_lever()
     fig_stability()
     fig_collision()
+    fig_slide_vs_tip()
     print("done.")

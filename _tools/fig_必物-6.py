@@ -2,7 +2,9 @@
 """產生「必物-6 量子現象」的圖，輸出到該章 sources/。
 重繪：  .venv/bin/python _tools/fig_必物-6.py
 """
+
 import os, sys
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 import matplotlib.pyplot as plt
@@ -19,47 +21,70 @@ def fig_blackbody():
     lam = np.linspace(60, 2000, 600) * 1e-9
 
     def planck(lam, T):
-        return (2*h*c**2/lam**5) / (np.exp(h*c/(lam*k*T)) - 1)
+        return (2 * h * c**2 / lam**5) / (np.exp(h * c / (lam * k * T)) - 1)
 
     peak6000 = planck(np.array([4.8e-7]), 6000)[0]
     # 可見光帶
     ax.axvspan(380, 700, color="#ffe9b0", alpha=0.45, lw=0)
-    ax.text(540, peak6000*1.02, "可見光", ha="center", color="#9a6700", fontsize=11)
+    ax.text(540, peak6000 * 1.02, "可見光", ha="center", color="#9a6700", fontsize=11)
     for T, col in [(4000, F.AMBER), (5000, F.RED), (6000, F.BLUE)]:
-        ax.plot(lam*1e9, planck(lam, T), color=col, lw=2.6, label=f"{T} K（量子論）")
+        ax.plot(lam * 1e9, planck(lam, T), color=col, lw=2.6, label=f"{T} K（量子論）")
     # 古典 Rayleigh–Jeans（5000K）→ 紫外災難
-    rj = 2*c*k*5000/lam**4
-    ax.plot(lam*1e9, rj, color="#6b7280", lw=2.2, ls="--", label="古典理論 (5000 K)")
-    F.arrow(ax, (255, peak6000*0.60), (130, peak6000*1.05), color="#6b7280")
-    ax.text(150, peak6000*0.46, "紫外災難\n（古典理論發散）", color="#6b7280", fontsize=11, va="center", ha="center")
-    ax.set_xlim(0, 2000); ax.set_ylim(0, peak6000*1.35)
-    ax.set_xlabel("波長 $\\lambda$ (nm)"); ax.set_ylabel("輻射強度（任意單位）")
-    ax.set_yticks([]); ax.set_title("黑體輻射：古典理論的破產")
-    F.clean_grid(ax); ax.legend(loc="upper right", fontsize=10, frameon=False)
+    rj = 2 * c * k * 5000 / lam**4
+    ax.plot(lam * 1e9, rj, color="#6b7280", lw=2.2, ls="--", label="古典理論 (5000 K)")
+    F.arrow(ax, (255, peak6000 * 0.60), (130, peak6000 * 1.05), color="#6b7280")
+    ax.text(
+        150,
+        peak6000 * 0.46,
+        "紫外災難\n（古典理論發散）",
+        color="#6b7280",
+        fontsize=11,
+        va="center",
+        ha="center",
+    )
+    ax.set_xlim(0, 2000)
+    ax.set_ylim(0, peak6000 * 1.35)
+    ax.set_xlabel("波長 $\\lambda$ (nm)")
+    ax.set_ylabel("輻射強度（任意單位）")
+    ax.set_yticks([])
+    ax.set_title("黑體輻射：古典理論的破產")
+    F.clean_grid(ax)
+    ax.legend(loc="upper right", fontsize=10, frameon=False)
     F.save_to(fig, CH, "必物-6-黑體輻射")
 
 
 def fig_photoelectric():
     fig, ax = F.canvas(6.6, 4.4)
-    s = 0.4136                       # hν(eV) = 0.4136 × ν(×10^14 Hz)
+    s = 0.4136  # hν(eV) = 0.4136 × ν(×10^14 Hz)
     nu = np.linspace(0, 12, 200)
-    for W, nu0, col, name in [(2.0, 2.0/s, F.BLUE, "金屬 A（$W=2.0$ eV）"),
-                              (2.9, 2.9/s, F.RED,  "金屬 B（$W=2.9$ eV）")]:
-        ke = np.clip(s*nu - W, 0, None)
+    for W, nu0, col, name in [
+        (2.0, 2.0 / s, F.BLUE, "金屬 A（$W=2.0$ eV）"),
+        (2.9, 2.9 / s, F.RED, "金屬 B（$W=2.9$ eV）"),
+    ]:
+        ke = np.clip(s * nu - W, 0, None)
         ax.plot(nu, ke, color=col, lw=2.6, label=name)
-        ax.plot(nu, s*nu - W, color=col, lw=1.2, ls=":")   # 延伸線
+        ax.plot(nu, s * nu - W, color=col, lw=1.2, ls=":")  # 延伸線
         ax.plot([nu0], [0], "o", color=col, ms=7)
     ax.axhline(0, color=F.INK, lw=1.0)
-    ax.annotate("遏止頻率 $\\nu_0$", xy=(2.0/s, 0), xytext=(5.6, 0.5),
-                color=F.BLUE, fontsize=11,
-                arrowprops=dict(arrowstyle="->", color=F.BLUE))
-    ax.text(9.0, s*9-2.0+0.15, "斜率 = $h$", color=F.BLUE, fontsize=12, rotation=20)
+    ax.annotate(
+        "遏止頻率 $\\nu_0$",
+        xy=(2.0 / s, 0),
+        xytext=(5.6, 0.5),
+        color=F.BLUE,
+        fontsize=11,
+        arrowprops=dict(arrowstyle="->", color=F.BLUE),
+    )
+    ax.text(
+        9.0, s * 9 - 2.0 + 0.15, "斜率 = $h$", color=F.BLUE, fontsize=12, rotation=20
+    )
     ax.text(0.2, -2.4, "$y$ 軸截距 $= -W$（功函數）", color=F.INK, fontsize=11)
-    ax.set_xlim(0, 12); ax.set_ylim(-3.2, 3.0)
+    ax.set_xlim(0, 12)
+    ax.set_ylim(-3.2, 3.0)
     ax.set_xlabel("入射光頻率 $\\nu$（$\\times10^{14}$ Hz）")
     ax.set_ylabel("光電子最大動能 $K_{\\max}$ (eV)")
     ax.set_title("光電效應：$K_{\\max}=h\\nu-W$")
-    F.clean_grid(ax); ax.legend(loc="upper left", fontsize=10, frameon=False)
+    F.clean_grid(ax)
+    ax.legend(loc="upper left", fontsize=10, frameon=False)
     F.save_to(fig, CH, "必物-6-光電效應")
 
 
@@ -74,13 +99,28 @@ def fig_energy_levels():
             ax.plot([0.64, 0.70], [E, ly], color="#999", lw=0.8)
         ax.text(0.72, ly, f"$n={n}$", va="center", fontsize=12)
         if n <= 3:
-            ax.text(0.07, E, f"{E:.2f} eV", va="center", ha="right", fontsize=10, color="#555")
+            ax.text(
+                0.07,
+                E,
+                f"{E:.2f} eV",
+                va="center",
+                ha="right",
+                fontsize=10,
+                color="#555",
+            )
     ax.hlines(0, 0.10, 0.64, color=F.INK, lw=2.0, ls="--")
     ax.plot([0.64, 0.70], [0, 0.70], color="#999", lw=0.8)
     ax.text(0.72, 0.70, "$n=\\infty$（游離）", va="center", fontsize=11)
 
     def trans(n_hi, n_lo, x, col):
-        F.arrow(ax, (x, levels.get(n_hi, 0)), (x, levels[n_lo]), color=col, lw=2.0, mutation=14)
+        F.arrow(
+            ax,
+            (x, levels.get(n_hi, 0)),
+            (x, levels[n_lo]),
+            color=col,
+            lw=2.0,
+            mutation=14,
+        )
 
     # 來曼系（→ n=1，紫外）
     for n, x in [(2, 0.16), (3, 0.21), (4, 0.26)]:
@@ -90,8 +130,10 @@ def fig_energy_levels():
     for n, x, col in [(3, 0.40, F.RED), (4, 0.45, "#17a2b8"), (5, 0.50, F.BLUE)]:
         trans(n, 2, x, col)
     ax.text(0.45, -4.6, "巴耳末系（可見光）", ha="center", color=F.INK, fontsize=11)
-    ax.set_xlim(0, 1.12); ax.set_ylim(-14.5, 1.4)
-    ax.set_xticks([]); ax.set_ylabel("能量 $E$ (eV)")
+    ax.set_xlim(0, 1.12)
+    ax.set_ylim(-14.5, 1.4)
+    ax.set_xticks([])
+    ax.set_ylabel("能量 $E$ (eV)")
     ax.set_title("氫原子能階與光譜系列（$E_n=-13.6/n^2$ eV）")
     for sname in ("top", "right", "bottom"):
         ax.spines[sname].set_visible(False)
@@ -102,15 +144,17 @@ def fig_double_slit():
     rng = np.random.default_rng(7)
     xs = np.linspace(-1, 1, 2000)
     # 干涉條紋 × 單縫包絡
-    inten = (np.cos(9*np.pi*xs/2)**2) * (np.sinc(xs/0.45)**2)
-    p = inten/inten.sum()
+    inten = (np.cos(9 * np.pi * xs / 2) ** 2) * (np.sinc(xs / 0.45) ** 2)
+    p = inten / inten.sum()
     fig, axes = plt.subplots(2, 2, figsize=(8.2, 5.0))
     for ax, N in zip(axes.ravel(), [40, 400, 4000, 40000]):
         x = rng.choice(xs, size=N, p=p)
         y = rng.uniform(0, 1, N)
         ax.scatter(x, y, s=2, c=F.INK, alpha=0.55, edgecolors="none", rasterized=True)
-        ax.set_xlim(-1, 1); ax.set_ylim(0, 1)
-        ax.set_xticks([]); ax.set_yticks([])
+        ax.set_xlim(-1, 1)
+        ax.set_ylim(0, 1)
+        ax.set_xticks([])
+        ax.set_yticks([])
         ax.set_title(f"$N = {N:,}$ 個電子", fontsize=12)
         for sname in ("top", "right", "bottom", "left"):
             ax.spines[sname].set_color("#999")
@@ -126,16 +170,31 @@ def fig_modes():
     for n in [1, 2, 3, 4, 5]:
         off = (5 - n) * 1.7
         ax1.hlines(off, 0, L, color="#d8dde3", lw=1.0)
-        ax1.plot(x, off + 0.7*np.sin(n*np.pi*x/L), color=F.BLUE, lw=2.2)
+        ax1.plot(x, off + 0.7 * np.sin(n * np.pi * x / L), color=F.BLUE, lw=2.2)
         ax1.text(-0.04, off, f"$n={n}$", ha="right", va="center", fontsize=12)
-        ax1.text(L+0.05, off, fr"$\lambda=2L/{n}$", ha="left", va="center", fontsize=10, color="#666")
+        ax1.text(
+            L + 0.05,
+            off,
+            rf"$\lambda=2L/{n}$",
+            ha="left",
+            va="center",
+            fontsize=10,
+            color="#666",
+        )
     ax1.axvline(0, color=F.INK, lw=2.5)
     ax1.axvline(L, color=F.INK, lw=2.5)
-    ax1.set_xlim(-0.24, L+0.34)
-    ax1.set_ylim(-1.35, 4*1.7+1.1)
+    ax1.set_xlim(-0.24, L + 0.34)
+    ax1.set_ylim(-1.35, 4 * 1.7 + 1.1)
     ax1.axis("off")
     ax1.set_title("空腔裡的「振動模式」（1D 駐波示意）", fontsize=13)
-    ax1.text(L/2, -1.08, "只有「整數個半波長」剛好塞得進盒子", ha="center", color=F.INK, fontsize=11)
+    ax1.text(
+        L / 2,
+        -1.08,
+        "只有「整數個半波長」剛好塞得進盒子",
+        ha="center",
+        color=F.INK,
+        fontsize=11,
+    )
 
     nu = np.linspace(0, 10, 200)
     N = nu**3
@@ -148,13 +207,130 @@ def fig_modes():
     ax2.set_xlabel("頻率 ν（∝ 1/λ）→", fontsize=12)
     ax2.set_ylabel("模式總數（短於此波長）→", fontsize=12)
     ax2.set_title("波長越短，模式越多（3D 空腔，沒有上限）", fontsize=13)
-    ax2.annotate("短波長端\n模式急速暴增", xy=(9.2, 9.2**3), xytext=(2.0, 830),
-                 color=F.RED, fontsize=11, ha="center",
-                 arrowprops=dict(arrowstyle="->", color=F.RED))
+    ax2.annotate(
+        "短波長端\n模式急速暴增",
+        xy=(9.2, 9.2**3),
+        xytext=(2.0, 830),
+        color=F.RED,
+        fontsize=11,
+        ha="center",
+        arrowprops=dict(arrowstyle="->", color=F.RED),
+    )
     for s in ("top", "right"):
         ax2.spines[s].set_visible(False)
     fig.tight_layout()
     F.save_to(fig, CH, "必物-6-振動模式")
+
+
+def _wavelength_to_rgb(lam_nm):
+    """把可見光波長 (nm) 轉成近似 RGB 顏色，用於畫連續光譜色帶。"""
+    w = float(lam_nm)
+    if w < 380 or w > 750:
+        r = g = b = 0.0
+    elif w < 440:
+        r, g, b = -(w - 440) / (440 - 380), 0.0, 1.0
+    elif w < 490:
+        r, g, b = 0.0, (w - 440) / (490 - 440), 1.0
+    elif w < 510:
+        r, g, b = 0.0, 1.0, -(w - 510) / (510 - 490)
+    elif w < 580:
+        r, g, b = (w - 510) / (580 - 510), 1.0, 0.0
+    elif w < 645:
+        r, g, b = 1.0, -(w - 645) / (645 - 580), 0.0
+    else:
+        r, g, b = 1.0, 0.0, 0.0
+    # 邊緣亮度衰減
+    if w < 420:
+        f = 0.3 + 0.7 * (w - 380) / (420 - 380)
+    elif w > 700:
+        f = 0.3 + 0.7 * (750 - w) / (750 - 700)
+    else:
+        f = 1.0
+    return (r * f, g * f, b * f)
+
+
+def fig_spectra():
+    """發射光譜（黑底亮線）vs 吸收光譜（連續彩虹背景上的暗線）對照。
+    亮線與暗線位置完全重合——同一組氫原子巴耳末系能階差。"""
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8.4, 4.0))
+
+    lam_lo, lam_hi = 390.0, 700.0
+    # 氫原子巴耳末系可見譜線（n→2）：Hα, Hβ, Hγ, Hδ
+    lines = [
+        (656.3, "H$\\alpha$"),
+        (486.1, "H$\\beta$"),
+        (434.0, "H$\\gamma$"),
+        (410.2, "H$\\delta$"),
+    ]
+    line_w = 2.4  # 譜線視覺寬度 (nm)
+
+    # ---- 上：發射光譜（黑底＋幾條亮線）----
+    ax1.set_facecolor("black")
+    ax1.set_xlim(lam_lo, lam_hi)
+    ax1.set_ylim(0, 1)
+    for lam, name in lines:
+        ax1.axvspan(lam - line_w, lam + line_w, color=_wavelength_to_rgb(lam), lw=0)
+        ax1.text(lam, 1.05, name, ha="center", va="bottom", fontsize=9, color=F.INK)
+    ax1.set_yticks([])
+    ax1.set_xticks([])
+    ax1.text(
+        lam_lo + 5,
+        0.5,
+        "發射光譜",
+        color="white",
+        fontsize=12,
+        ha="left",
+        va="center",
+        fontweight="bold",
+    )
+    ax1.set_title("發射光譜（emission）：黑底上的亮線", fontsize=12, pad=20)
+
+    # ---- 下：吸收光譜（連續彩虹背景＋幾條暗線）----
+    grad = np.linspace(lam_lo, lam_hi, 600)
+    band = np.array([_wavelength_to_rgb(w) for w in grad]).reshape(1, -1, 3)
+    ax2.imshow(
+        band,
+        extent=[lam_lo, lam_hi, 0, 1],
+        aspect="auto",
+        origin="lower",
+        interpolation="bilinear",
+        zorder=0,
+    )
+    for lam, _ in lines:
+        ax2.axvspan(lam - line_w, lam + line_w, color="black", lw=0, zorder=2)
+    ax2.set_xlim(lam_lo, lam_hi)
+    ax2.set_ylim(0, 1)
+    ax2.set_yticks([])
+    ax2.set_xlabel("波長 $\\lambda$ (nm)")
+    ax2.text(
+        lam_lo + 5,
+        0.5,
+        "吸收光譜",
+        color="black",
+        fontsize=12,
+        ha="left",
+        va="center",
+        fontweight="bold",
+    )
+    ax2.set_title("吸收光譜（absorption）：連續彩虹背景上的暗線", fontsize=12, pad=4)
+
+    for ax in (ax1, ax2):
+        for s in ("top", "right", "bottom", "left"):
+            ax.spines[s].set_visible(False)
+
+    fig.text(
+        0.5,
+        0.49,
+        "亮線與暗線位置完全重合（同一組能階差）",
+        ha="center",
+        va="center",
+        fontsize=10,
+        color=F.RED,
+        bbox=dict(boxstyle="round,pad=0.25", fc="white", ec=F.RED, lw=1.0),
+    )
+    fig.tight_layout()
+    fig.subplots_adjust(hspace=0.95)
+    F.save_to(fig, CH, "必物-6-發射吸收光譜")
 
 
 if __name__ == "__main__":
@@ -163,4 +339,5 @@ if __name__ == "__main__":
     fig_energy_levels()
     fig_double_slit()
     fig_modes()
+    fig_spectra()
     print("done.")

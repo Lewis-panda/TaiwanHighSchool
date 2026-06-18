@@ -103,6 +103,136 @@ def fig_vt():
     F.save_to(fig, CH, "選物I-2-vt圖")
 
 
+def fig_xt():
+    """如何讀 x–t 圖：水平段＝靜止、斜率正負＝方向、凹凸＝加速度正負、兩線交點＝相遇。"""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9.8, 4.2))
+
+    # ── 左：一個物體的 x–t 圖，依序示範四種判讀 ──
+    # 分段建構：等速上升 → 水平靜止 → 加速（凹上）→ 減速回頭（凹下、斜率轉負）
+    seg1_t = np.linspace(0.0, 1.6, 60)  # 等速前進（直線、斜率正）
+    seg1_x = 1.0 + 1.6 * seg1_t
+    x_a = seg1_x[-1]
+    seg2_t = np.linspace(1.6, 2.8, 50)  # 水平段：靜止
+    seg2_x = np.full_like(seg2_t, x_a)
+    seg3_t = np.linspace(2.8, 4.4, 60)  # 凹口朝上：速度漸增（a>0）
+    seg3_x = x_a + 0.9 * (seg3_t - 2.8) ** 2
+    x_b = seg3_x[-1]
+    v_b = 2 * 0.9 * (4.4 - 2.8)  # 進入第四段的斜率（連續）
+    seg4_t = np.linspace(4.4, 6.4, 70)  # 凹口朝下：速度漸減、過頂點後斜率轉負
+    seg4_x = x_b + v_b * (seg4_t - 4.4) - 0.85 * (seg4_t - 4.4) ** 2
+
+    ax1.plot(seg1_t, seg1_x, color=F.BLUE, lw=2.8, zorder=5)
+    ax1.plot(seg2_t, seg2_x, color=F.AMBER, lw=2.8, zorder=5)
+    ax1.plot(seg3_t, seg3_x, color=F.GREEN, lw=2.8, zorder=5)
+    ax1.plot(seg4_t, seg4_x, color=F.RED, lw=2.8, zorder=5)
+
+    # 四個判讀標註
+    ax1.annotate(
+        "斜率正\n往正方向",
+        xy=(0.8, 1.0 + 1.6 * 0.8),
+        xytext=(0.15, 7.4),
+        color=F.BLUE,
+        fontsize=10.5,
+        ha="left",
+        va="center",
+        arrowprops=dict(arrowstyle="->", color=F.BLUE, lw=1.3),
+    )
+    ax1.annotate(
+        "水平段\n靜止",
+        xy=(2.2, x_a),
+        xytext=(1.55, 8.6),
+        color=F.AMBER,
+        fontsize=10.5,
+        ha="center",
+        va="center",
+        arrowprops=dict(arrowstyle="->", color=F.AMBER, lw=1.3),
+    )
+    ax1.annotate(
+        "凹口朝上\n加速 a>0",
+        xy=(3.9, x_a + 0.9 * (3.9 - 2.8) ** 2),
+        xytext=(2.95, 9.3),
+        color=F.GREEN,
+        fontsize=10.5,
+        ha="left",
+        va="center",
+        arrowprops=dict(arrowstyle="->", color=F.GREEN, lw=1.3),
+    )
+    # 第四段頂點（斜率為零、離原點最遠）
+    t_top = 4.4 + v_b / (2 * 0.85)
+    x_top = x_b + v_b * (t_top - 4.4) - 0.85 * (t_top - 4.4) ** 2
+    ax1.plot([t_top], [x_top], "o", color=F.INK, ms=6, zorder=7)
+    ax1.annotate(
+        "頂點：斜率=0\n離原點最遠（非速度最大）",
+        xy=(t_top, x_top),
+        xytext=(3.05, 1.0),
+        color=F.INK,
+        fontsize=9.5,
+        ha="left",
+        va="center",
+        arrowprops=dict(arrowstyle="->", color=F.INK, lw=1.2),
+    )
+    ax1.annotate(
+        "凹口朝下\n減速 a<0",
+        xy=(5.9, x_b + v_b * (5.9 - 4.4) - 0.85 * (5.9 - 4.4) ** 2),
+        xytext=(5.0, 9.3),
+        color=F.RED,
+        fontsize=10.5,
+        ha="left",
+        va="center",
+        arrowprops=dict(arrowstyle="->", color=F.RED, lw=1.3),
+    )
+
+    ax1.set_xlim(0, 6.6)
+    ax1.set_ylim(0, 10.2)
+    ax1.set_xlabel("時間 $t$ (s)")
+    ax1.set_ylabel("位置 $x$ (m)")
+    ax1.set_title("一張 x–t 圖怎麼讀")
+    F.clean_grid(ax1)
+
+    # ── 右：兩條 x–t 線的交點＝相遇 ──
+    t = np.linspace(0, 6, 200)
+    # A：等速（直線）
+    xA = 1.0 + 1.3 * t
+    # B：起步較後、速度較快（直線），與 A 交於某時刻
+    xB = 7.5 - 0.9 * t
+    ax2.plot(t, xA, color=F.BLUE, lw=2.8, zorder=5, label="物體 A")
+    ax2.plot(t, xB, color=F.RED, lw=2.8, zorder=5, label="物體 B")
+    # 交點
+    t_meet = (7.5 - 1.0) / (1.3 + 0.9)
+    x_meet = 1.0 + 1.3 * t_meet
+    ax2.plot([t_meet], [x_meet], "o", color=F.INK, ms=8, zorder=7)
+    ax2.plot([t_meet, t_meet], [0, x_meet], color=F.INK, lw=1.0, ls="--", zorder=3)
+    ax2.annotate(
+        "交點：同一時刻\n位置相同 → 相遇",
+        xy=(t_meet, x_meet),
+        xytext=(t_meet + 0.4, x_meet + 2.3),
+        color=F.INK,
+        fontsize=11,
+        ha="left",
+        va="center",
+        arrowprops=dict(arrowstyle="->", color=F.INK, lw=1.3),
+    )
+    ax2.text(
+        0.2, 1.0 + 1.3 * 0.2 - 0.6, "A", color=F.BLUE, fontsize=13, fontweight="bold"
+    )
+    ax2.text(
+        0.2, 7.5 - 0.9 * 0.2 + 0.3, "B", color=F.RED, fontsize=13, fontweight="bold"
+    )
+    ax2.text(
+        t_meet, -0.55, "相遇時刻", color=F.INK, fontsize=10.5, ha="center", va="top"
+    )
+
+    ax2.set_xlim(0, 6.2)
+    ax2.set_ylim(0, 10.2)
+    ax2.set_xlabel("時間 $t$ (s)")
+    ax2.set_ylabel("位置 $x$ (m)")
+    ax2.set_title("兩條 x–t 線的交點＝相遇")
+    F.clean_grid(ax2)
+
+    fig.tight_layout()
+    F.save_to(fig, CH, "選物I-2-xt圖")
+
+
 def fig_freefall():
     """鉛直上拋：對稱性、最高點 v=0、各點速度等大反向，加速度恆為 g 向下。"""
     fig, ax = F.schematic(6.2, 5.6)
@@ -294,6 +424,7 @@ def fig_relative():
 
 if __name__ == "__main__":
     fig_vt()
+    fig_xt()
     fig_freefall()
     fig_relative()
     print("done.")

@@ -157,6 +157,187 @@ def fig_collision():
     F.save_to(fig, CH, "選物II-1-碰撞")
 
 
+def fig_collision_2d():
+    """二維碰撞：左——動量向量守恆（碰前 = 碰後兩動量向量和，x/y 分量各自守恆）；
+    右——等質量彈性偏心碰撞，碰後兩速度必成 90 度分開。"""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9.8, 4.6))
+
+    # ---------- 左：一般二維碰撞，動量向量守恆＋分量 ----------
+    ax1.set_aspect("equal")
+    ax1.axis("off")
+    O = np.array([0.0, 0.0])
+
+    # 碰前：單一入射動量 p（沿 +x）
+    p_in = np.array([4.2, 0.0])
+    # 碰後：兩動量分向兩側，向量和 = p_in（守恆）
+    p1 = np.array([2.7, 1.7])  # 球1 碰後動量（偏上）
+    p2 = p_in - p1  # 球2 碰後動量（偏下），確保 p1+p2 = p_in
+
+    # 碰前動量（灰、加粗，當作總動量基準）
+    F.arrow(ax1, O, p_in, color="#888", lw=3.0, mutation=20)
+    ax1.text(
+        p_in[0] + 0.15,
+        p_in[1] - 0.42,
+        "碰前總動量",
+        color="#666",
+        fontsize=10.5,
+        ha="center",
+    )
+    ax1.text(
+        p_in[0] * 0.5,
+        -0.42,
+        "$\\vec p$",
+        color="#666",
+        fontsize=13,
+        ha="center",
+    )
+
+    # 碰後兩動量（從原點畫出）
+    F.arrow(ax1, O, p1, color=F.BLUE, lw=2.6)
+    ax1.text(p1[0] - 0.35, p1[1] + 0.30, "$\\vec p_1'$", color=F.BLUE, fontsize=13)
+    F.arrow(ax1, O, p2, color=F.RED, lw=2.6)
+    ax1.text(p2[0] - 0.55, p2[1] - 0.10, "$\\vec p_2'$", color=F.RED, fontsize=13)
+
+    # 平行四邊形：示意 p1 + p2 = p_in（向量和）
+    ax1.plot(
+        [p1[0], p_in[0]],
+        [p1[1], p_in[1]],
+        color=F.BLUE,
+        lw=1.1,
+        ls="--",
+        alpha=0.7,
+    )
+    ax1.plot(
+        [p2[0], p_in[0]],
+        [p2[1], p_in[1]],
+        color=F.RED,
+        lw=1.1,
+        ls="--",
+        alpha=0.7,
+    )
+
+    # y 分量互相抵消的標註（p1 向上、p2 向下，碰前 y 分量為 0）
+    ax1.annotate(
+        "",
+        xy=(p1[0], p1[1]),
+        xytext=(p1[0], 0.0),
+        arrowprops=dict(arrowstyle="-", color=F.BLUE, lw=1.0, ls=(0, (2, 2))),
+    )
+    ax1.annotate(
+        "",
+        xy=(p2[0], p2[1]),
+        xytext=(p2[0], 0.0),
+        arrowprops=dict(arrowstyle="-", color=F.RED, lw=1.0, ls=(0, (2, 2))),
+    )
+    ax1.axhline(0, color=F.INK, lw=0.8, alpha=0.4)
+
+    ax1.text(
+        2.4,
+        -2.05,
+        "x 分量：相加守恆      y 分量：上下抵消（碰前為零）",
+        color=F.INK,
+        fontsize=10.5,
+        ha="center",
+        va="top",
+    )
+    ax1.set_xlim(-0.6, 5.4)
+    ax1.set_ylim(-2.6, 2.7)
+    ax1.set_title("動量向量守恆：分 x、y 各自守恆", fontsize=12.5)
+
+    # ---------- 右：等質量彈性偏心碰撞 → 兩速度成直角 ----------
+    ax2.set_aspect("equal")
+    ax2.axis("off")
+    C = np.array([0.0, 0.0])
+
+    v_in = np.array([3.6, 0.0])  # 母球碰前速度（沿 +x）
+    ang1 = np.deg2rad(30.0)  # 母球碰後偏 +30 度
+    ang2 = ang1 - np.deg2rad(90.0)  # 目標球碰後偏 -60 度（與母球差 90 度）
+    # 等質量彈性：v1'^2 + v2'^2 = v_in^2，且方向正交
+    s1 = np.linalg.norm(v_in) * np.cos(ang1)  # 母球碰後速率
+    s2 = np.linalg.norm(v_in) * np.sin(ang1)  # 目標球碰後速率
+    v1p = s1 * np.array([np.cos(ang1), np.sin(ang1)])
+    v2p = s2 * np.array([np.cos(ang2), np.sin(ang2)])
+
+    # 碰前速度（灰）
+    F.arrow(ax2, C - np.array([2.2, 0.0]), C, color="#888", lw=2.6, mutation=18)
+    ax2.text(
+        C[0] - 1.1,
+        0.28,
+        "碰前 $\\vec v$",
+        color="#666",
+        fontsize=11,
+        ha="center",
+    )
+    # 碰撞點兩球
+    ax2.add_patch(Circle(C, 0.16, facecolor=F.BLUE, edgecolor=F.INK, lw=1.3, zorder=5))
+
+    # 碰後兩速度
+    F.arrow(ax2, C, v1p, color=F.BLUE, lw=2.6)
+    ax2.text(
+        v1p[0] + 0.18,
+        v1p[1] + 0.18,
+        "$\\vec v_1'$（母球）",
+        color=F.BLUE,
+        fontsize=12,
+        ha="left",
+    )
+    F.arrow(ax2, C, v2p, color=F.RED, lw=2.6)
+    ax2.text(
+        v2p[0] + 0.12,
+        v2p[1] - 0.30,
+        "$\\vec v_2'$（目標球）",
+        color=F.RED,
+        fontsize=12,
+        ha="left",
+        va="top",
+    )
+
+    # 直角符號（在兩碰後速度之間）
+    u1 = v1p / np.linalg.norm(v1p)
+    u2 = v2p / np.linalg.norm(v2p)
+    d = 0.5
+    corner = C + d * u1 + d * u2
+    ax2.plot(
+        [C[0] + d * u1[0], corner[0]],
+        [C[1] + d * u1[1], corner[1]],
+        color=F.PURPLE,
+        lw=1.4,
+    )
+    ax2.plot(
+        [C[0] + d * u2[0], corner[0]],
+        [C[1] + d * u2[1], corner[1]],
+        color=F.PURPLE,
+        lw=1.4,
+    )
+    # 角度標註
+    F.angle_arc(
+        ax2,
+        C,
+        0.95,
+        np.rad2deg(ang2),
+        np.rad2deg(ang1),
+        color=F.PURPLE,
+        text="$90^\\circ$",
+    )
+
+    ax2.text(
+        1.3,
+        -2.35,
+        "等質量、彈性、偏心碰撞\n碰後兩速度必成直角",
+        color=F.PURPLE,
+        fontsize=11,
+        ha="center",
+        va="top",
+    )
+    ax2.set_xlim(-2.7, 3.9)
+    ax2.set_ylim(-2.9, 2.4)
+    ax2.set_title("等質量彈性偏心碰撞：直角分開", fontsize=12.5)
+
+    fig.suptitle("二維碰撞：動量向量守恆（分量各自守恆）", fontsize=13.5)
+    fig.tight_layout(rect=[0, 0, 1, 0.95])
+    F.save_to(fig, CH, "選物II-1-二維碰撞")
+
+
 def fig_center_of_mass():
     """兩質點的質心位置（靠近大質量一側），與系統運動。"""
     fig, ax = F.schematic(8.2, 3.6)
@@ -363,6 +544,7 @@ def fig_angular_momentum():
 if __name__ == "__main__":
     fig_impulse()
     fig_collision()
+    fig_collision_2d()
     fig_center_of_mass()
     fig_angular_momentum()
     print("done.")

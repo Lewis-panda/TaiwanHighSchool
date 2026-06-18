@@ -287,9 +287,211 @@ def fig_parabola():
     F.save_to(fig, CH, "選物I-3-平拋軌跡")
 
 
+def fig_boat():
+    """河中行船的速度向量三角形：左圖「船頭垂直對岸（最快渡河）」、
+    右圖「垂直抵達正對岸」。每張都把船速、水流速、合速度頭尾相接成三角形，
+    並標出直角／偏角，凸顯兩種問法的差異。"""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10.6, 5.0))
+    for ax in (ax1, ax2):
+        ax.set_aspect("equal")
+        ax.axis("off")
+
+    # 共用尺度（v=船速、u=水流）：取 v=5、u=3，與例題 3-8 一致（3-4-5 直角三角形）
+    v, u = 5.0, 3.0
+
+    # ===== 左：問法一 船頭垂直對岸（最快渡河）=====
+    O = np.array([0.0, 0.0])
+    # 河岸（上下兩條水平線）與水流方向（向右）
+    bank_w = 7.2
+    for yb in (0.0, 6.0):
+        ax1.plot([-0.6, bank_w], [yb, yb], color=F.INK, lw=1.6, zorder=1)
+    ax1.add_patch(
+        Rectangle(
+            (-0.6, 6.0),
+            bank_w + 0.6,
+            0.5,
+            facecolor="#eef1f5",
+            edgecolor="none",
+            hatch="////",
+            lw=0.8,
+            zorder=0,
+        )
+    )
+    ax1.add_patch(
+        Rectangle(
+            (-0.6, -0.5),
+            bank_w + 0.6,
+            0.5,
+            facecolor="#eef1f5",
+            edgecolor="none",
+            hatch="////",
+            lw=0.8,
+            zorder=0,
+        )
+    )
+    F.label(ax1, (bank_w - 1.0, 5.68), "對岸", color=F.INK, fs=11, ha="center")
+    F.label(ax1, (bank_w - 1.0, 0.34), "出發岸", color=F.INK, fs=11, ha="center")
+    # 水流方向小箭頭（背景，沿河岸向右）
+    for xb in (1.2, 3.2, 5.2):
+        F.arrow(
+            ax1, (xb, 3.0), (xb + 0.9, 3.0), color="#9aa0a6", lw=1.2, mutation=12, z=1
+        )
+    F.label(ax1, (4.6, 3.32), "水流方向", color="#9aa0a6", fs=10, ha="center")
+
+    # 向量三角形（頭尾相接）：船速（向上，垂直對岸）＋ 水流（向右）＝ 合速度（斜向右上）
+    vb = np.array([0.0, v])  # 船對水：垂直指向對岸
+    vu = np.array([u, 0.0])  # 水對地：沿河岸
+    res = vb + vu  # 船對地：合速度
+    # 船速向量
+    F.arrow(ax1, O, vb, color=F.BLUE, lw=3.0, mutation=18)
+    ax1.text(-0.25, v / 2, "船速 v", color=F.BLUE, fontsize=13, ha="right", va="center")
+    # 水流向量（接在船速末端）
+    F.arrow(ax1, vb, vb + vu, color=F.RED, lw=3.0, mutation=18)
+    ax1.text(
+        vb[0] + u / 2,
+        v + 0.28,
+        "水流 u",
+        color=F.RED,
+        fontsize=13,
+        ha="center",
+        va="bottom",
+    )
+    # 合速度（對地航跡）
+    F.arrow(ax1, O, res, color=F.PURPLE, lw=3.0, mutation=20)
+    ax1.text(
+        res[0] / 2 + 0.45,
+        res[1] / 2 - 0.35,
+        "合速度",
+        color=F.PURPLE,
+        fontsize=12.5,
+        ha="left",
+        va="center",
+    )
+    ax1.text(
+        res[0] / 2 + 0.45,
+        res[1] / 2 - 0.95,
+        "（被沖向下游）",
+        color=F.PURPLE,
+        fontsize=10.5,
+        ha="left",
+        va="center",
+    )
+    # 直角標記（船速與水流垂直）
+    rs = 0.42
+    ax1.plot([0, rs], [v, v], color=F.INK, lw=1.2)
+    ax1.plot([rs, rs], [v, v - rs], color=F.INK, lw=1.2)
+    # 漂移距離標示（沿對岸從正對點到實際登岸點）
+    ax1.plot([res[0], res[0]], [v, 6.0], color=F.PURPLE, lw=0.8, ls=":")
+    ax1.set_title("問法一：船頭垂直對岸（渡河最快，但被沖下游）", fontsize=12)
+    ax1.set_xlim(-1.4, bank_w + 0.3)
+    ax1.set_ylim(-0.9, 6.9)
+
+    # ===== 右：問法二 垂直抵達正對岸 =====
+    # 船速朝上游偏 θ，使 v sinθ 抵消水流 u；合速度垂直對岸
+    # sinθ = u/v = 3/5 → θ=37°，v cosθ = 4
+    O2 = np.array([0.0, 0.0])
+    vcos = np.sqrt(v**2 - u**2)  # =4，垂直分量（合速度大小）
+    vb2 = np.array([-u, vcos])  # 船對水：朝左上（上游側）
+    vu2 = np.array([u, 0.0])  # 水對地：向右
+    res2 = vb2 + vu2  # 合速度：純向上（垂直對岸）
+    for yb in (0.0, 6.0):
+        ax2.plot([-2.4, 5.4], [yb, yb], color=F.INK, lw=1.6, zorder=1)
+    ax2.add_patch(
+        Rectangle(
+            (-2.4, 6.0),
+            7.8,
+            0.5,
+            facecolor="#eef1f5",
+            edgecolor="none",
+            hatch="////",
+            lw=0.8,
+            zorder=0,
+        )
+    )
+    ax2.add_patch(
+        Rectangle(
+            (-2.4, -0.5),
+            7.8,
+            0.5,
+            facecolor="#eef1f5",
+            edgecolor="none",
+            hatch="////",
+            lw=0.8,
+            zorder=0,
+        )
+    )
+    F.label(ax2, (4.4, 5.68), "對岸", color=F.INK, fs=11, ha="center")
+    F.label(ax2, (4.4, 0.34), "出發岸", color=F.INK, fs=11, ha="center")
+    for xb in (-1.6, 0.4, 2.4):
+        F.arrow(
+            ax2, (xb, 3.0), (xb + 0.9, 3.0), color="#9aa0a6", lw=1.2, mutation=12, z=1
+        )
+    F.label(ax2, (1.4, 3.32), "水流方向", color="#9aa0a6", fs=10, ha="center")
+    # 船速向量（朝上游偏）
+    F.arrow(ax2, O2, vb2, color=F.BLUE, lw=3.0, mutation=18)
+    ax2.text(
+        vb2[0] - 0.2,
+        vb2[1] / 2 + 0.2,
+        "船速 v",
+        color=F.BLUE,
+        fontsize=13,
+        ha="right",
+        va="center",
+    )
+    ax2.text(
+        vb2[0] - 0.2,
+        vb2[1] / 2 - 0.4,
+        "（朝上游偏）",
+        color=F.BLUE,
+        fontsize=10,
+        ha="right",
+        va="center",
+    )
+    # 水流向量（接在船速末端）
+    F.arrow(ax2, vb2, vb2 + vu2, color=F.RED, lw=3.0, mutation=18)
+    ax2.text(
+        vb2[0] + u / 2,
+        vb2[1] + 0.28,
+        "水流 u",
+        color=F.RED,
+        fontsize=13,
+        ha="center",
+        va="bottom",
+    )
+    # 合速度（純向上，垂直對岸）
+    F.arrow(ax2, O2, res2, color=F.PURPLE, lw=3.0, mutation=20)
+    ax2.text(
+        res2[0] + 0.2,
+        res2[1] / 2,
+        "合速度（正對對岸）",
+        color=F.PURPLE,
+        fontsize=12,
+        ha="left",
+        va="center",
+    )
+    # 偏角 θ（合速度鉛直 vs 船速）
+    ang = np.degrees(np.arctan2(vb2[0], vb2[1]))  # 與鉛直的夾角（負值朝左）
+    ax2.add_patch(
+        Arc(O2, 1.6, 1.6, angle=0, theta1=90, theta2=90 - ang, color=F.INK, lw=1.4)
+    )
+    ax2.text(-0.42, 1.05, "θ", color=F.INK, fontsize=14, ha="center", va="center")
+    # 直角標記（合速度與河岸垂直）
+    rs2 = 0.42
+    ax2.plot([0, rs2], [0, 0], color=F.INK, lw=1.2, zorder=2)  # 沿河岸短段
+    ax2.plot([rs2, rs2], [0, rs2], color=F.INK, lw=1.2, zorder=2)
+    ax2.set_title("問法二：垂直抵達正對岸（船頭朝上游偏 θ）", fontsize=12)
+    ax2.set_xlim(-2.6, 5.6)
+    ax2.set_ylim(-0.9, 6.9)
+
+    fig.suptitle("河中行船的速度向量三角形：對地 ＝ 船對水 ＋ 水對地", fontsize=13.5)
+    fig.tight_layout(rect=(0, 0, 1, 0.96))
+    F.save_to(fig, CH, "選物I-3-行船向量三角形")
+
+
 if __name__ == "__main__":
     fig_independence()
     fig_dropvsproj()
     fig_oblique()
     fig_parabola()
+    fig_boat()
     print("done.")

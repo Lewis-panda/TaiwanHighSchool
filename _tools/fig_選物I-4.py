@@ -274,6 +274,125 @@ def fig_connected():
     F.save_to(fig, CH, "選物I-4-連接體")
 
 
+def fig_contact_push():
+    """接觸推擠型連接體：外力 F 推 m1、m1 推 m2；下排為 m2 的隔離自由體圖。"""
+    fig, ax = F.schematic(7.4, 4.8)
+
+    # ---- 上排：整體情境（F 推兩相貼木塊） ----
+    gy = 1.05  # 上排地面高度
+    ax.add_patch(
+        Rectangle(
+            (-3.8, gy - 0.42),
+            7.6,
+            0.42,
+            facecolor="#eef1f5",
+            edgecolor=F.INK,
+            hatch="////",
+            lw=1.1,
+        )
+    )
+    ax.plot([-3.8, 3.8], [gy, gy], color=F.INK, lw=1.4)
+
+    # m1（後塊，較大）與 m2（前塊），前後緊貼
+    w1, w2, h = 1.5, 1.1, 1.1
+    x1 = -1.2  # m1 左緣
+    ax.add_patch(
+        Rectangle(
+            (x1, gy), w1, h, facecolor="#dbe7ff", edgecolor=F.INK, lw=1.6, zorder=3
+        )
+    )
+    ax.add_patch(
+        Rectangle(
+            (x1 + w1, gy), w2, h, facecolor="#ffe3e3", edgecolor=F.INK, lw=1.6, zorder=3
+        )
+    )
+    F.label(ax, np.array([x1 + w1 / 2, gy + h / 2]), r"$m_1$", color=F.INK, fs=14)
+    F.label(ax, np.array([x1 + w1 + w2 / 2, gy + h / 2]), r"$m_2$", color=F.INK, fs=14)
+    # 接觸面（虛線）
+    ax.plot(
+        [x1 + w1, x1 + w1],
+        [gy + 0.05, gy + h - 0.05],
+        color=F.INK,
+        lw=1.0,
+        ls=":",
+        zorder=4,
+    )
+
+    # 外力 F（推 m1，向右）
+    yF = gy + h / 2
+    F.arrow(ax, np.array([x1 - 1.35, yF]), np.array([x1, yF]), color=F.PURPLE, lw=2.8)
+    F.label(ax, np.array([x1 - 1.5, yF]), r"$F$", color=F.PURPLE, ha="right", fs=14)
+    # 共同加速度 a
+    F.arrow(
+        ax,
+        np.array([x1 + w1 + w2 + 0.35, gy + h + 0.32]),
+        np.array([x1 + w1 + w2 + 1.15, gy + h + 0.32]),
+        color=F.INK,
+        lw=1.6,
+    )
+    F.label(
+        ax, np.array([x1 + w1 + w2 + 0.75, gy + h + 0.62]), r"$a$", color=F.INK, fs=13
+    )
+
+    ax.text(
+        0.0,
+        gy - 0.85,
+        "整體：外力 F 推動兩相貼木塊一起前進",
+        ha="center",
+        color=F.INK,
+        fontsize=11.5,
+    )
+
+    # ---- 下排：m2 的隔離自由體圖 ----
+    cy = -1.55
+    cx = 1.55
+    ax.add_patch(
+        Rectangle(
+            (cx - w2 / 2, cy - h / 2),
+            w2,
+            h,
+            facecolor="#ffe3e3",
+            edgecolor=F.INK,
+            lw=1.6,
+            zorder=3,
+        )
+    )
+    F.label(ax, np.array([cx, cy]), r"$m_2$", color=F.INK, fs=14)
+    ax.add_patch(Circle((cx, cy), 0.045, color=F.INK, zorder=6))
+    # m1 推 m2 的接觸力（向右，唯一的水平力）
+    F.arrow(ax, np.array([cx, cy]), np.array([cx + 1.6, cy]), color=F.BLUE, lw=2.8)
+    F.label(
+        ax, np.array([cx + 1.78, cy]), r"$F_{1\to 2}$", color=F.BLUE, ha="left", fs=13
+    )
+    # 共同加速度 a
+    F.arrow(ax, np.array([cx - 1.6, cy]), np.array([cx - 0.9, cy]), color=F.INK, lw=1.6)
+    F.label(ax, np.array([cx - 1.75, cy]), r"$a$", color=F.INK, ha="right", fs=13)
+
+    ax.text(
+        cx,
+        cy - h / 2 - 0.55,
+        "隔離 m2：水平只有接觸力 → F(1→2) = m2·a",
+        ha="center",
+        color=F.INK,
+        fontsize=11.5,
+    )
+    ax.text(
+        -3.4,
+        cy + 0.05,
+        "隔離法",
+        ha="left",
+        va="center",
+        color=F.AMBER,
+        fontsize=12,
+        fontweight="bold",
+    )
+
+    ax.set_title("接觸推擠型連接體（整體法求 a、隔離法求接觸力）", fontsize=12.5)
+    ax.set_xlim(-4.2, 4.4)
+    ax.set_ylim(-2.7, 2.9)
+    F.save_to(fig, CH, "選物I-4-接觸推擠連接體")
+
+
 def fig_action_reaction():
     """作用與反作用：兩物體互推，力作用在不同物體上。"""
     fig, ax = F.schematic(7.0, 4.0)
@@ -319,5 +438,6 @@ if __name__ == "__main__":
     fig_decompose()
     fig_incline_fbd()
     fig_connected()
+    fig_contact_push()
     fig_action_reaction()
     print("done.")

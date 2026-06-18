@@ -240,8 +240,161 @@ def fig_propagation():
     F.save_to(fig, CH, "選物I-1-不確定度傳遞")
 
 
+def 選物I_1_two_axes():
+    """誤差的兩條獨立分類軸：四大來源（縱）× 兩種性質（橫）對照矩陣。
+    重點是呈現「來源」與「性質」彼此正交——同一個來源常可同時製造
+    系統與隨機兩種性質的誤差，破除「儀器誤差＝系統誤差」的混淆。"""
+    fig, ax = plt.subplots(figsize=(9.4, 5.6))
+    ax.set_xlim(0, 12)
+    ax.set_ylim(0, 9.2)
+    ax.axis("off")
+
+    # 欄（性質）與列（來源）的幾何
+    x_src = 0.3  # 來源標籤欄左緣
+    w_src = 3.0  # 來源標籤欄寬
+    x_col0 = x_src + w_src + 0.2
+    col_w = 4.0
+    col_gap = 0.2
+    rows = [
+        (
+            "被測物本身\n(measurand)",
+            "邊緣有毛邊、隨溫度脹縮\n而固定偏向（如總是偏大）",
+            "毛邊／不規則造成每次\n對齊點忽前忽後",
+        ),
+        (
+            "儀器\n(instrument)",
+            "沒歸零、刻度本身不準、\n碼表走得偏快",
+            "內部電子雜訊使讀數抖動",
+        ),
+        (
+            "測量者\n(observer)",
+            "固定的讀數習慣\n（總是斜著看而偏一邊）",
+            "估讀最後一位的判斷、\n按碼表的反應時間不定",
+        ),
+        (
+            "環境\n(environment)",
+            "室溫長期偏高使尺持續\n熱脹（固定方向）",
+            "氣流、振動、電壓波動\n造成的隨機擾動",
+        ),
+    ]
+    n = len(rows)
+    top = 7.6
+    bottom = 1.1  # 列底保留空間給最下方說明
+    row_h = (top - bottom) / n
+
+    col_colors = [F.RED, F.BLUE]
+    col_titles = [
+        "系統誤差（systematic）\n整批偏同一方向、多測無效",
+        "隨機誤差（random）\n上下亂跳、多測取平均可壓低",
+    ]
+
+    # 欄標題列
+    ax.text(
+        x_src + w_src / 2,
+        top + 0.85,
+        "來源 ＼ 性質",
+        ha="center",
+        va="center",
+        fontsize=12.5,
+        color=F.INK,
+        fontweight="bold",
+    )
+    for j, (ct, cc) in enumerate(zip(col_titles, col_colors)):
+        cx = x_col0 + j * (col_w + col_gap)
+        ax.add_patch(
+            Rectangle(
+                (cx, top + 0.18),
+                col_w,
+                1.25,
+                facecolor=cc,
+                alpha=0.16,
+                edgecolor=cc,
+                lw=1.2,
+            )
+        )
+        ax.text(
+            cx + col_w / 2,
+            top + 0.80,
+            ct,
+            ha="center",
+            va="center",
+            fontsize=10.5,
+            color=cc,
+            fontweight="bold",
+        )
+
+    # 各列
+    for i, (src, syst, rand) in enumerate(rows):
+        y0 = top - (i + 1) * row_h
+        yc = y0 + row_h / 2
+        # 來源標籤
+        ax.add_patch(
+            Rectangle(
+                (x_src, y0 + 0.06),
+                w_src,
+                row_h - 0.12,
+                facecolor="#eef1f5",
+                edgecolor="#aab4c2",
+                lw=1.0,
+            )
+        )
+        ax.text(
+            x_src + w_src / 2,
+            yc,
+            src,
+            ha="center",
+            va="center",
+            fontsize=11,
+            color=F.INK,
+            fontweight="bold",
+        )
+        # 兩格範例
+        for j, (txt, cc) in enumerate(zip((syst, rand), col_colors)):
+            cx = x_col0 + j * (col_w + col_gap)
+            ax.add_patch(
+                Rectangle(
+                    (cx, y0 + 0.06),
+                    col_w,
+                    row_h - 0.12,
+                    facecolor="white",
+                    edgecolor=cc,
+                    lw=1.0,
+                    alpha=0.9,
+                )
+            )
+            ax.text(
+                cx + col_w / 2,
+                yc,
+                txt,
+                ha="center",
+                va="center",
+                fontsize=8.8,
+                color=F.INK,
+            )
+
+    ax.text(
+        6.0,
+        0.42,
+        "同一個來源（每一列）兩格幾乎都填得出來：來源與性質是兩條獨立的軸，"
+        "別把「儀器誤差」一律當成系統誤差。",
+        ha="center",
+        va="center",
+        fontsize=9.8,
+        color=F.INK,
+    )
+
+    fig.suptitle(
+        "誤差的兩條分類軸：四大來源（從哪來）× 兩種性質（能不能靠多測消）",
+        fontsize=13,
+        y=0.99,
+    )
+    fig.tight_layout(rect=[0, 0.02, 1, 0.96])
+    F.save_to(fig, CH, "選物I-1-兩條分類軸")
+
+
 if __name__ == "__main__":
     fig_error_types()
     fig_distribution()
     fig_propagation()
+    選物I_1_two_axes()
     print("done.")

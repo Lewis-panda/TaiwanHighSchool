@@ -336,9 +336,176 @@ def fig_nuclear_balance():
     F.save_to(fig, CH, "必物-3-核內力平衡")
 
 
+def fig_beta_decay():
+    """β 衰變：核內一個中子變質子＋電子（＋反微中子），Z＋1、A 不變 → 變成另一種元素。"""
+    fig, ax = F.schematic(8.8, 4.8)
+
+    def draw_nucleus(cx, cy, protons, neutrons, special=None):
+        """畫一團核子；protons/neutrons 為座標列表，special=該位置畫成轉變中的核子。"""
+        for i, (dx, dy) in enumerate(protons):
+            col_f, col_e = "#ffd9d9", F.RED
+            if special == ("p", i):
+                col_f, col_e = "#fff0c2", F.AMBER
+            ax.add_patch(
+                Circle(
+                    (cx + dx, cy + dy),
+                    0.30,
+                    facecolor=col_f,
+                    edgecolor=col_e,
+                    lw=1.8,
+                    zorder=4,
+                )
+            )
+            ax.text(
+                cx + dx,
+                cy + dy,
+                "$p$",
+                ha="center",
+                va="center",
+                fontsize=11,
+                color=col_e,
+                zorder=6,
+            )
+        for i, (dx, dy) in enumerate(neutrons):
+            col_f, col_e = "#e7e7e7", "#555"
+            if special == ("n", i):
+                col_f, col_e = "#fff0c2", F.AMBER
+            ax.add_patch(
+                Circle(
+                    (cx + dx, cy + dy),
+                    0.30,
+                    facecolor=col_f,
+                    edgecolor=col_e,
+                    lw=1.8,
+                    zorder=4,
+                )
+            )
+            ax.text(
+                cx + dx,
+                cy + dy,
+                "$n$",
+                ha="center",
+                va="center",
+                fontsize=11,
+                color=col_e,
+                zorder=6,
+            )
+
+    # 核子相對位置（母核：2 質子 3 中子；子核：3 質子 2 中子，A=5 不變）
+    P = [(-0.34, 0.36), (0.34, 0.36)]
+    N3 = [(-0.34, -0.30), (0.34, -0.30), (0.0, 0.92)]
+    # 母核（左）：標出「即將轉變」的那個中子
+    cxL, cyL = -2.9, 0.4
+    draw_nucleus(cxL, cyL, P, N3, special=("n", 0))
+    ax.text(cxL, cyL + 1.6, "母核（衰變前）", ha="center", fontsize=11.5, color=F.INK)
+    ax.text(
+        cxL,
+        cyL - 1.35,
+        "原子序 $Z$、質量數 $A$",
+        ha="center",
+        fontsize=10.5,
+        color="#555",
+    )
+    ax.text(
+        cxL - 1.45,
+        cyL + 0.05,
+        "中子過多、\n不夠穩定",
+        ha="right",
+        va="center",
+        fontsize=9.5,
+        color=F.AMBER,
+    )
+    ax.annotate(
+        "",
+        xy=(cxL - 0.62, cyL - 0.18),
+        xytext=(cxL - 1.4, cyL + 0.0),
+        arrowprops=dict(arrowstyle="->", color=F.AMBER, lw=1.3),
+        zorder=6,
+    )
+
+    # 子核（右）：3 質子 2 中子，多一個質子
+    P3 = [(-0.34, 0.36), (0.34, 0.36), (0.0, -0.30)]
+    N2 = [(-0.34, -0.30), (0.0, 0.92)]
+    cxR, cyR = 2.9, 0.4
+    draw_nucleus(cxR, cyR, P3, N2, special=("p", 2))
+    ax.text(cxR, cyR + 1.6, "子核（衰變後）", ha="center", fontsize=11.5, color=F.INK)
+    ax.text(
+        cxR,
+        cyR - 1.35,
+        "原子序 $Z+1$、質量數 $A$ 不變",
+        ha="center",
+        fontsize=10.5,
+        color=F.GREEN,
+    )
+
+    # 中央：轉變大箭頭
+    F.arrow(
+        ax,
+        (cxL + 1.15, cyL + 0.2),
+        (cxR - 1.15, cyL + 0.2),
+        color=F.INK,
+        lw=2.4,
+        mutation=18,
+    )
+    ax.text(
+        0.0,
+        cyL + 0.62,
+        "弱力作用：一個中子變質子",
+        ha="center",
+        fontsize=11,
+        color=F.PURPLE,
+    )
+
+    # 放出電子（β 射線）與反微中子，往右下／右上射出
+    F.arrow(ax, (0.0, cyL - 0.15), (1.55, -2.05), color=F.BLUE, lw=2.0, mutation=15)
+    ax.text(
+        1.7,
+        -2.05,
+        "電子 $e^-$\n（β 射線）",
+        ha="left",
+        va="center",
+        fontsize=10,
+        color=F.BLUE,
+    )
+    F.arrow(
+        ax,
+        (0.0, cyL - 0.15),
+        (-1.55, -2.05),
+        color="#888",
+        lw=1.6,
+        mutation=13,
+        ls="--",
+    )
+    ax.text(
+        -1.7,
+        -2.05,
+        "反微中子\n（幾乎不帶能量痕跡）",
+        ha="right",
+        va="center",
+        fontsize=9.5,
+        color="#888",
+    )
+
+    # 底部反應式（純文字，避免 mathtext 缺字）
+    ax.text(
+        0.0,
+        2.45,
+        "中子 → 質子 ＋ 電子 ＋ 反微中子",
+        ha="center",
+        fontsize=12,
+        color=F.INK,
+    )
+
+    ax.set_xlim(-5.6, 5.0)
+    ax.set_ylim(-2.7, 2.9)
+    ax.set_title("β 衰變：中子變質子，原子核變成另一種元素", fontsize=14)
+    F.save_to(fig, CH, "必物-3-貝他衰變")
+
+
 if __name__ == "__main__":
     fig_hierarchy()
     fig_rutherford()
     fig_four_forces()
     fig_nuclear_balance()
+    fig_beta_decay()
     print("done.")

@@ -326,9 +326,222 @@ def fig_conservative():
     F.save_to(fig, CH, "選物II-2-保守非保守")
 
 
+def fig_closed_loop():
+    """保守力判準 2：封閉路徑功為零。去程功與回程功大小相等、正負相消。
+    以矩形封閉迴路（對應例題 2-8b）為例，標出四段重力做的功。"""
+    fig, ax = F.schematic(7.6, 5.0)
+
+    # 矩形迴路四個角（起點 P 在左下）
+    P = np.array([0.0, 0.0])
+    Q = np.array([0.0, 2.4])  # 上升段終點
+    Rr = np.array([3.4, 2.4])  # 第一水平段終點
+    S = np.array([3.4, 0.0])  # 下降段終點
+
+    # 重力（恆向下）參考箭頭
+    F.arrow(ax, (5.2, 1.7), (5.2, 0.7), color=F.RED, lw=2.2)
+    ax.text(5.35, 1.2, r"$mg$", color=F.RED, fontsize=13, va="center")
+
+    # 四段路徑（依箭頭方向 P→Q→R→S→P 繞一圈）
+    seg = dict(color=F.BLUE, lw=2.6, mutation=18, z=4)
+    # 上升段 P→Q：重力做負功
+    F.arrow(ax, P + [0, 0.12], Q - [0, 0.12], **seg)
+    # 第一水平段 Q→R：重力做零功
+    F.arrow(
+        ax, Q + [0.12, 0], Rr - [0.12, 0], color="#6b7280", lw=2.6, mutation=18, z=4
+    )
+    # 下降段 R→S：重力做正功
+    F.arrow(ax, Rr - [0, 0.12], S + [0, 0.12], color=F.GREEN, lw=2.6, mutation=18, z=4)
+    # 第二水平段 S→P：重力做零功
+    F.arrow(ax, S - [0.12, 0], P + [0.12, 0], color="#6b7280", lw=2.6, mutation=18, z=4)
+
+    # 四角端點
+    for pt, nm, dx, dy, hav in [
+        (P, "P（起點）", -0.12, -0.34, "right"),
+        (Q, "Q", -0.18, 0.0, "right"),
+        (Rr, "R", 0.18, 0.0, "left"),
+        (S, "S", 0.12, -0.34, "left"),
+    ]:
+        ax.add_patch(Circle(pt, 0.08, color=F.INK, zorder=6))
+        ax.text(
+            pt[0] + dx, pt[1] + dy, nm, color=F.INK, fontsize=12, ha=hav, va="center"
+        )
+
+    # 每段做功標註
+    ax.text(
+        -0.25,
+        1.2,
+        "上升段\n$W_1=-mgh<0$",
+        color=F.BLUE,
+        fontsize=11,
+        ha="right",
+        va="center",
+    )
+    ax.text(1.7, 2.62, "水平段　$W_2=0$", color="#6b7280", fontsize=11, ha="center")
+    ax.text(
+        3.6,
+        1.2,
+        "下降段\n$W_3=+mgh>0$",
+        color=F.GREEN,
+        fontsize=11,
+        ha="left",
+        va="center",
+    )
+    ax.text(1.7, -0.34, "水平段　$W_4=0$", color="#6b7280", fontsize=11, ha="center")
+
+    # 結論：去程與回程相消
+    ax.text(
+        1.7,
+        3.5,
+        r"$W_{\rm net}=W_1+W_2+W_3+W_4=(-mgh)+0+(+mgh)+0=0$",
+        color=F.INK,
+        fontsize=13,
+        ha="center",
+    )
+    ax.text(
+        1.7,
+        -1.15,
+        "繞封閉迴路一圈回到起點：上升段的負功與下降段的正功大小相等、正負相消，總功為零",
+        color=F.INK,
+        fontsize=11,
+        ha="center",
+    )
+
+    ax.set_title("保守力判準②：封閉路徑做功為零（去程／回程功相消）", fontsize=13)
+    ax.set_xlim(-2.2, 5.8)
+    ax.set_ylim(-1.6, 3.9)
+    F.save_to(fig, CH, "選物II-2-封閉路徑功為零")
+
+
+def fig_pe_zero():
+    """重力位能可正可負：以一把鉛直「位能尺」呈現零點上方 U>0、下方 U<0。"""
+    fig, ax = F.schematic(7.2, 5.2)
+
+    x0 = 0.0  # 尺的水平位置
+    y_zero = 0.0  # 零點所在高度
+    top, bot = 2.7, -2.7
+
+    # 上方（U>0）與下方（U<0）色帶
+    ax.add_patch(
+        Rectangle(
+            (x0 - 0.28, y_zero),
+            0.56,
+            top,
+            facecolor=F.BLUE,
+            alpha=0.12,
+            ec="none",
+            zorder=1,
+        )
+    )
+    ax.add_patch(
+        Rectangle(
+            (x0 - 0.28, bot),
+            0.56,
+            -bot,
+            facecolor=F.RED,
+            alpha=0.12,
+            ec="none",
+            zorder=1,
+        )
+    )
+
+    # 尺身與零點線
+    ax.plot([x0, x0], [bot, top], color=F.INK, lw=2.0, zorder=3)
+    ax.plot(
+        [x0 - 1.7, x0 + 2.6], [y_zero, y_zero], color=F.INK, lw=1.6, ls="--", zorder=3
+    )
+    ax.text(
+        x0 - 1.75,
+        y_zero,
+        "零點\n$h=0$，$U_g=0$",
+        color=F.INK,
+        fontsize=11,
+        ha="right",
+        va="center",
+    )
+
+    # 刻度
+    for h in [-2, -1, 1, 2]:
+        ax.plot([x0 - 0.14, x0 + 0.14], [h, h], color=F.INK, lw=1.2, zorder=4)
+
+    # 上方物體：h>0、U>0
+    yA = 2.0
+    ax.add_patch(
+        Rectangle(
+            (x0 + 0.5, yA - 0.22),
+            0.5,
+            0.44,
+            facecolor="#dbe7ff",
+            ec=F.INK,
+            lw=1.4,
+            zorder=5,
+        )
+    )
+    F.arrow(ax, (x0 + 0.28, yA), (x0 + 0.46, yA), color=F.INK, lw=1.4, mutation=12)
+    ax.text(
+        x0 + 1.15,
+        yA,
+        "零點上方：$h>0$，$U_g=mgh>0$",
+        color=F.BLUE,
+        fontsize=12,
+        ha="left",
+        va="center",
+    )
+
+    # 下方物體：h<0、U<0
+    yB = -2.0
+    ax.add_patch(
+        Rectangle(
+            (x0 + 0.5, yB - 0.22),
+            0.5,
+            0.44,
+            facecolor="#ffe0e0",
+            ec=F.INK,
+            lw=1.4,
+            zorder=5,
+        )
+    )
+    F.arrow(ax, (x0 + 0.28, yB), (x0 + 0.46, yB), color=F.INK, lw=1.4, mutation=12)
+    ax.text(
+        x0 + 1.15,
+        yB,
+        "零點下方：$h<0$，$U_g=mgh<0$",
+        color=F.RED,
+        fontsize=12,
+        ha="left",
+        va="center",
+    )
+
+    # 高度座標方向
+    F.arrow(ax, (x0 - 1.2, -1.6), (x0 - 1.2, 1.6), color="#6b7280", lw=1.6, mutation=14)
+    ax.text(
+        x0 - 1.35,
+        1.7,
+        "高度座標 $h$",
+        color="#6b7280",
+        fontsize=11,
+        ha="center",
+        va="bottom",
+    )
+
+    ax.text(
+        0.45,
+        -3.35,
+        "零點可任意選；換零點只改變各處位能的數值，不改變物理上有意義的位能差",
+        color=F.INK,
+        fontsize=11,
+        ha="center",
+    )
+    ax.set_title("重力位能可正可負：零點上方為正、下方為負", fontsize=13)
+    ax.set_xlim(-2.6, 4.6)
+    ax.set_ylim(-3.7, 3.4)
+    F.save_to(fig, CH, "選物II-2-重力位能正負")
+
+
 if __name__ == "__main__":
     fig_work_definition()
     fig_variable_force()
     fig_mechanical_energy()
     fig_conservative()
+    fig_closed_loop()
+    fig_pe_zero()
     print("done.")

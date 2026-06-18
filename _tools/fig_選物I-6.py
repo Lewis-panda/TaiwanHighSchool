@@ -8,7 +8,7 @@ import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.patches import Circle, FancyArrowPatch
+from matplotlib.patches import Circle, FancyArrowPatch, Polygon
 import figlib as F
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -240,9 +240,225 @@ def fig_kepler3():
     F.save_to(fig, CH, "選物I-6-克卜勒推導")
 
 
+def fig_kepler_laws():
+    """克卜勒三大定律三聯圖：
+    左——第一定律：橢圓軌道、太陽在一焦點（另一焦點空著）。
+    中——第二定律：等面積（相等時間內掃過面積相等，故近日快、遠日慢）。
+    右——第三定律：T² 正比於 a³（半長軸）。
+    """
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(13.2, 4.5))
+
+    # 橢圓參數（兩圖共用）：a 半長軸、b 半短軸、c 焦距
+    a, b = 2.3, 1.65
+    c = np.sqrt(a**2 - b**2)  # 焦點離中心的距離
+    th = np.linspace(0, 2 * np.pi, 400)
+    ex, ey = a * np.cos(th), b * np.sin(th)
+
+    # ---- 左：第一定律（橢圓軌道、太陽在焦點）----
+    ax1.set_aspect("equal")
+    ax1.axis("off")
+    ax1.plot(ex, ey, color=F.BLUE, lw=2.2, zorder=2)
+    # 太陽在右焦點 (+c, 0)；左焦點 (-c, 0) 為空焦點
+    Fsun = np.array([c, 0.0])
+    Fempty = np.array([-c, 0.0])
+    ax1.plot([Fsun[0]], [Fsun[1]], "o", color=F.AMBER, ms=16, zorder=4)
+    ax1.plot([Fempty[0]], [Fempty[1]], "x", color="#6b7280", ms=9, mew=2, zorder=4)
+    ax1.text(
+        Fsun[0] + 0.12,
+        Fsun[1] - 0.18,
+        "太陽（焦點）",
+        ha="left",
+        va="top",
+        color=F.AMBER,
+        fontsize=11,
+    )
+    ax1.text(
+        Fempty[0],
+        Fempty[1] + 0.18,
+        "空焦點",
+        ha="center",
+        va="bottom",
+        color="#6b7280",
+        fontsize=10,
+    )
+    # 中心
+    ax1.plot([0], [0], "+", color="#6b7280", ms=8, mew=1.4, zorder=4)
+    ax1.text(0.05, 0.16, "中心", ha="left", va="bottom", color="#6b7280", fontsize=9)
+    # 一顆行星
+    pang = np.deg2rad(118)
+    P = np.array([a * np.cos(pang), b * np.sin(pang)])
+    ax1.add_patch(Circle(P, 0.13, facecolor=F.RED, edgecolor=F.INK, lw=1.2, zorder=5))
+    ax1.text(
+        P[0] - 0.1,
+        P[1] + 0.2,
+        "行星",
+        ha="center",
+        va="bottom",
+        color=F.RED,
+        fontsize=11,
+    )
+    # 半長軸 a（中心到左頂點，畫在離太陽較遠的一側避免重疊）
+    ax1.annotate(
+        "",
+        xy=(-a, -0.0),
+        xytext=(0, -0.0),
+        arrowprops=dict(arrowstyle="<->", color=F.GREEN, lw=1.4),
+    )
+    ax1.text(
+        -a * 0.5, -0.26, "半長軸 a", ha="center", va="top", color=F.GREEN, fontsize=11
+    )
+    # 近日點 / 遠日點（相對太陽焦點；太陽在右焦點，故右頂點離太陽最近＝近日點）
+    ax1.text(a + 0.06, 0.18, "近日點", ha="left", va="bottom", color=F.INK, fontsize=10)
+    ax1.text(
+        -a - 0.06, 0.18, "遠日點", ha="right", va="bottom", color=F.INK, fontsize=10
+    )
+    ax1.set_xlim(-a - 0.9, a + 0.9)
+    ax1.set_ylim(-b - 1.0, b + 0.7)
+    ax1.set_title("第一定律：橢圓軌道，太陽在焦點", fontsize=12)
+
+    # ---- 中：第二定律（等面積）----
+    ax2.set_aspect("equal")
+    ax2.axis("off")
+    ax2.plot(ex, ey, color=F.BLUE, lw=2.2, zorder=2)
+    Fsun2 = np.array([c, 0.0])
+    ax2.plot([Fsun2[0]], [Fsun2[1]], "o", color=F.AMBER, ms=15, zorder=4)
+    ax2.text(
+        Fsun2[0],
+        Fsun2[1] - 0.4,
+        "太陽",
+        ha="center",
+        va="top",
+        color=F.AMBER,
+        fontsize=11,
+    )
+
+    def sector(t0, t1):
+        """以太陽焦點為頂點，橢圓弧 t0→t1 之間圍成的扇形 Polygon 頂點。"""
+        ts = np.linspace(t0, t1, 80)
+        arc = np.column_stack([a * np.cos(ts), b * np.sin(ts)])
+        return np.vstack([Fsun2, arc])
+
+    def poly_area(pts):
+        x, y = pts[:, 0], pts[:, 1]
+        return 0.5 * abs(np.dot(x, np.roll(y, -1)) - np.dot(y, np.roll(x, -1)))
+
+    # 太陽在右焦點：右端為近日點（靠太陽）、左端為遠日點（離太陽遠）
+    # 近日點側（右端，靠太陽）：相同時間走得快、掃角大
+    near = sector(np.deg2rad(-42), np.deg2rad(42))
+    target = poly_area(near)
+    # 遠日點側（左端，離太陽遠）：求出與近日點側等面積的較小掃角
+    half = np.deg2rad(2.0)
+    for _ in range(60):  # 二分逼近，使兩扇形面積相等（克卜勒第二定律）
+        far = sector(np.pi - half, np.pi + half)
+        if poly_area(far) < target:
+            half += np.deg2rad(0.5)
+        else:
+            half -= np.deg2rad(0.25)
+        if half <= np.deg2rad(0.5):
+            half = np.deg2rad(0.5)
+            break
+    far = sector(np.pi - half, np.pi + half)
+    ax2.add_patch(
+        Polygon(
+            near,
+            closed=True,
+            facecolor=F.RED,
+            alpha=0.30,
+            edgecolor=F.RED,
+            lw=1.4,
+            zorder=3,
+        )
+    )
+    ax2.add_patch(
+        Polygon(
+            far,
+            closed=True,
+            facecolor=F.BLUE,
+            alpha=0.30,
+            edgecolor=F.BLUE,
+            lw=1.4,
+            zorder=3,
+        )
+    )
+    # 兩塊面積相等的標註（紅＝近日點側、藍＝遠日點側）
+    ax2.text(
+        a - 0.95,
+        0.0,
+        "面積\n相等",
+        ha="center",
+        va="center",
+        color=F.RED,
+        fontsize=10,
+        zorder=6,
+    )
+    ax2.text(
+        -a + 0.62,
+        0.0,
+        "面積\n相等",
+        ha="center",
+        va="center",
+        color=F.BLUE,
+        fontsize=10,
+        zorder=6,
+    )
+    # 兩端弧長對比：近日點走的弧長（快）vs 遠日點走的弧長（慢）
+    ax2.annotate(
+        "近日點\n走得快（弧長）",
+        xy=(a, 0.0),
+        xytext=(a + 0.2, b + 0.5),
+        ha="center",
+        va="bottom",
+        color=F.RED,
+        fontsize=10,
+        arrowprops=dict(arrowstyle="->", color=F.RED),
+    )
+    ax2.annotate(
+        "遠日點\n走得慢（弧短）",
+        xy=(-a, 0.0),
+        xytext=(-a - 0.2, b + 0.5),
+        ha="center",
+        va="bottom",
+        color=F.BLUE,
+        fontsize=10,
+        arrowprops=dict(arrowstyle="->", color=F.BLUE),
+    )
+    ax2.set_xlim(-a - 0.9, a + 0.9)
+    ax2.set_ylim(-b - 0.7, b + 1.05)
+    ax2.set_title("第二定律：相等時間掃過相等面積", fontsize=12)
+
+    # ---- 右：第三定律 T²∝a³（半長軸的立方）----
+    names = ["水", "金", "地", "火", "木", "土"]
+    a_au = np.array([0.39, 0.72, 1.00, 1.52, 5.20, 9.58])
+    T_yr = a_au**1.5  # 在 AU、年 的單位下 T² = a³
+    ax3.plot(a_au**3, T_yr**2, "o", color=F.RED, ms=8, zorder=4)
+    xline = np.linspace(0, a_au.max() ** 3 * 1.05, 50)
+    ax3.plot(xline, xline, color=F.BLUE, lw=2.2, zorder=2)
+    for nm, x, y in zip(names, a_au**3, T_yr**2):
+        ax3.annotate(
+            nm,
+            (x, y),
+            textcoords="offset points",
+            xytext=(6, -11),
+            fontsize=10,
+            color=F.INK,
+        )
+    ax3.text(120, 700, r"$T^{2}=k\,a^{3}$", color=F.BLUE, fontsize=12)
+    ax3.text(120, 470, "斜率 $k=\\dfrac{4\\pi^{2}}{GM}$", color=F.BLUE, fontsize=11)
+    ax3.set_xlim(0, a_au.max() ** 3 * 1.05)
+    ax3.set_ylim(0, T_yr.max() ** 2 * 1.05)
+    ax3.set_xlabel(r"半長軸立方 $a^{3}$（$\mathrm{AU}^{3}$）")
+    ax3.set_ylabel(r"週期平方 $T^{2}$（年$^{2}$）")
+    ax3.set_title("第三定律：$T^{2}$ 正比於 $a^{3}$", fontsize=12)
+    F.clean_grid(ax3)
+
+    fig.tight_layout()
+    F.save_to(fig, CH, "選物I-6-克卜勒三定律")
+
+
 if __name__ == "__main__":
     fig_gravitation()
     fig_surface_gravity()
     fig_satellite()
     fig_kepler3()
+    fig_kepler_laws()
     print("done.")

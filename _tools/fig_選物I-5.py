@@ -350,9 +350,89 @@ def fig_pendulum():
     F.save_to(fig, CH, "選物I-5-單擺")
 
 
+def fig_energy():
+    """簡諧能量：U=½kx² 上凹、K=½k(A²−x²) 下凹，總和 E 為水平線。"""
+    fig, ax = F.canvas(7.4, 4.8)
+
+    A = 1.0
+    k = 1.0  # 取 k=1，縱軸用 ½kA² 當單位即可
+    E = 0.5 * k * A**2
+    x = np.linspace(-A, A, 400)
+    U = 0.5 * k * x**2
+    K = 0.5 * k * (A**2 - x**2)
+
+    # 位能 U（上凹）、動能 K（下凹）、總能 E（水平線）
+    ax.plot(x, U, color=F.RED, lw=2.6, label="位能 U = ½kx²")
+    ax.plot(x, K, color=F.BLUE, lw=2.6, label="動能 K = ½k(A²−x²)")
+    ax.axhline(E, color=F.GREEN, lw=2.2, ls="--", label="總力學能 E = ½kA²（定值）")
+
+    # 平衡點與兩端點的標示線
+    for xv in (-A, 0.0, A):
+        ax.axvline(xv, color="#c2c7cd", lw=0.9, ls=":")
+
+    # 交點：U=K 時 x=±A/√2，能量各半
+    xc = A / np.sqrt(2)
+    for xv in (-xc, xc):
+        ax.plot([xv], [0.5 * E], "o", color=F.INK, ms=5, zorder=6)
+
+    # 端點：全位能（右上）；平衡點：全動能（左上）。中文不放 $...$
+    ax.annotate(
+        "端點 x=±A：\n速度為零\n全為位能 U=E",
+        xy=(A, E),
+        xytext=(A * 0.62, E * 1.62),
+        color=F.RED,
+        fontsize=10,
+        ha="center",
+        va="center",
+        arrowprops=dict(arrowstyle="->", color=F.RED, lw=1.2),
+    )
+    ax.annotate(
+        "平衡點 x=0：\n速率最大\n全為動能 K=E",
+        xy=(0, E),
+        xytext=(-A * 0.60, E * 1.62),
+        color=F.BLUE,
+        fontsize=10,
+        ha="center",
+        va="center",
+        arrowprops=dict(arrowstyle="->", color=F.BLUE, lw=1.2),
+    )
+    ax.annotate(
+        "U=K，能量各半",
+        xy=(xc, 0.5 * E),
+        xytext=(xc + 0.05, 0.5 * E - 0.16),
+        color=F.INK,
+        fontsize=9.5,
+        ha="left",
+        va="top",
+        arrowprops=dict(arrowstyle="->", color=F.INK, lw=1.0),
+    )
+
+    ax.set_xlim(-A * 1.18, A * 1.18)
+    ax.set_ylim(0, E * 2.0)
+    ax.set_xlabel("位置 $x$")
+    ax.set_ylabel("能量")
+    ax.set_xticks([-A, -xc, 0, xc, A])
+    ax.set_xticklabels(["$-A$", "$-A/\\sqrt{2}$", "$0$", "$A/\\sqrt{2}$", "$+A$"])
+    ax.set_yticks([0, 0.5 * E, E])
+    ax.set_yticklabels(["$0$", "$E/2$", "$E=\\frac{1}{2}kA^2$"])
+    ax.legend(
+        loc="upper center",
+        fontsize=9.5,
+        frameon=False,
+        ncol=3,
+        bbox_to_anchor=(0.5, 1.0),
+    )
+    ax.set_title("簡諧運動的能量：動能與位能此消彼長，總和守恆", fontsize=13, pad=10)
+    F.clean_grid(ax)
+
+    fig.tight_layout()
+    F.save_to(fig, CH, "選物I-5-簡諧能量")
+
+
 if __name__ == "__main__":
     fig_centripetal()
     fig_shm_projection()
     fig_spring()
     fig_pendulum()
+    fig_energy()
     print("done.")

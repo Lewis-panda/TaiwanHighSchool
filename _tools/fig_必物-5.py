@@ -8,7 +8,7 @@ import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.patches import FancyBboxPatch
+from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 import figlib as F
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -311,9 +311,310 @@ def fig_heat_engine():
     F.save_to(fig, CH, "必物-5-熱機方向")
 
 
+def fig_heat_transfer():
+    """傳導／對流／輻射三種傳熱方式並列示意：各一格，標機制與例子，註明只有輻射穿越真空。"""
+    fig, axes = plt.subplots(1, 3, figsize=(11.4, 4.7))
+    rng = np.random.default_rng(7)
+
+    # ---------- (1) 傳導 conduction ----------
+    ax = axes[0]
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.axis("off")
+    # 一根金屬棒，一端高溫一端低溫；分子排成晶格、靠碰撞接力
+    bar_y0, bar_y1 = 0.40, 0.60
+    # 漸層底色：左熱右冷
+    ngrad = 60
+    for k in range(ngrad):
+        x0 = 0.08 + 0.84 * k / ngrad
+        frac = k / (ngrad - 1)
+        col = (
+            0.82 + 0.13 * (1 - frac),  # R 高溫偏紅
+            0.30 + 0.55 * frac,
+            0.30 + 0.55 * frac,
+        )
+        ax.add_patch(
+            plt.Rectangle(
+                (x0, bar_y0),
+                0.84 / ngrad + 0.002,
+                bar_y1 - bar_y0,
+                fc=col,
+                ec="none",
+                zorder=2,
+            )
+        )
+    ax.add_patch(
+        plt.Rectangle(
+            (0.08, bar_y0),
+            0.84,
+            bar_y1 - bar_y0,
+            fill=False,
+            ec=F.INK,
+            lw=2.0,
+            zorder=4,
+        )
+    )
+    # 晶格分子（固定位置，畫小幅振動箭頭表示原地振動、不整體移動）
+    for i in range(7):
+        px = 0.16 + i * 0.11
+        py = 0.50
+        ax.add_patch(plt.Circle((px, py), 0.018, color=F.INK, zorder=5))
+        ax.add_patch(FancyArrowPatchSafe(ax, (px - 0.022, py), (px + 0.022, py)))
+    # 火源（畫在棒下方，與「高溫」標籤錯開避免重疊）
+    ax.text(0.04, 0.50, "火", ha="center", va="center", fontsize=12, color=F.RED)
+    F.arrow(ax, (0.055, 0.50), (0.085, 0.50), color=F.RED, lw=2.2, mutation=12)
+    # 熱沿棒向右接力
+    F.arrow(ax, (0.20, 0.70), (0.80, 0.70), color=F.AMBER, lw=2.6, mutation=18)
+    ax.text(0.5, 0.78, "動能逐顆接力傳遞", ha="center", fontsize=10.5, color=F.AMBER)
+    ax.text(0.16, 0.345, "高溫", ha="center", fontsize=9.5, color=F.RED)
+    ax.text(0.84, 0.345, "低溫", ha="center", fontsize=9.5, color=F.BLUE)
+    ax.set_title("傳導（conduction）", fontsize=13)
+    ax.text(
+        0.5,
+        0.16,
+        "靠分子／自由電子碰撞接力\n物質本身不整體移動",
+        ha="center",
+        va="center",
+        fontsize=10,
+        color=F.INK,
+    )
+    ax.text(
+        0.5,
+        0.02,
+        "例：鐵湯匙一端泡熱湯、另一端變燙",
+        ha="center",
+        va="center",
+        fontsize=9,
+        color="#555",
+    )
+
+    # ---------- (2) 對流 convection ----------
+    ax = axes[1]
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.axis("off")
+    # 容器（一鍋水）
+    ax.add_patch(
+        plt.Rectangle(
+            (0.14, 0.30), 0.72, 0.50, fc="#eaf3ff", ec=F.INK, lw=2.0, zorder=2
+        )
+    )
+    # 底部加熱
+    ax.add_patch(
+        plt.Rectangle(
+            (0.14, 0.265), 0.72, 0.035, fc="#fdecec", ec=F.RED, lw=1.5, zorder=3
+        )
+    )
+    ax.text(0.5, 0.235, "加熱", ha="center", fontsize=10, color=F.RED)
+    # 循環箭頭：熱流體上升（中央），冷流體下沉（兩側）
+    # 中央上升（紅）
+    F.arrow(ax, (0.50, 0.36), (0.50, 0.74), color=F.RED, lw=2.6, mutation=16, z=5)
+    ax.text(0.50, 0.55, "熱\n上升", ha="center", va="center", fontsize=9.5, color=F.RED)
+    # 左側下沉（藍）
+    F.arrow(ax, (0.26, 0.74), (0.26, 0.36), color=F.BLUE, lw=2.6, mutation=16, z=5)
+    # 右側下沉（藍）
+    F.arrow(ax, (0.74, 0.74), (0.74, 0.36), color=F.BLUE, lw=2.6, mutation=16, z=5)
+    ax.text(
+        0.26, 0.55, "冷\n下沉", ha="center", va="center", fontsize=9.5, color=F.BLUE
+    )
+    ax.text(
+        0.74, 0.55, "冷\n下沉", ha="center", va="center", fontsize=9.5, color=F.BLUE
+    )
+    # 頂部與底部的橫向流（形成循環）
+    F.arrow(ax, (0.47, 0.75), (0.30, 0.75), color="#888", lw=1.6, mutation=11, z=5)
+    F.arrow(ax, (0.53, 0.75), (0.70, 0.75), color="#888", lw=1.6, mutation=11, z=5)
+    F.arrow(ax, (0.30, 0.345), (0.47, 0.345), color="#888", lw=1.6, mutation=11, z=5)
+    F.arrow(ax, (0.70, 0.345), (0.53, 0.345), color="#888", lw=1.6, mutation=11, z=5)
+    ax.set_title("對流（convection）", fontsize=13)
+    ax.text(
+        0.5,
+        0.16,
+        "靠流體本身整體流動載走熱\n熱流體上升、冷流體下沉成循環",
+        ha="center",
+        va="center",
+        fontsize=10,
+        color=F.INK,
+    )
+    ax.text(
+        0.5,
+        0.02,
+        "例：燒開水、暖氣使房間變暖、海陸風",
+        ha="center",
+        va="center",
+        fontsize=9,
+        color="#555",
+    )
+
+    # ---------- (3) 輻射 radiation ----------
+    ax = axes[2]
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.axis("off")
+    # 真空背景（深色），標「真空」
+    ax.add_patch(
+        plt.Rectangle(
+            (0.06, 0.28), 0.88, 0.54, fc="#1b2330", ec=F.INK, lw=1.6, zorder=1
+        )
+    )
+    ax.text(0.83, 0.78, "真空", ha="center", fontsize=10, color="#cdd6e3", zorder=6)
+    # 熱源（太陽 / 火）放在左
+    sun = plt.Circle((0.24, 0.55), 0.085, fc="#ffcf33", ec=F.RED, lw=1.6, zorder=4)
+    ax.add_patch(sun)
+    ax.text(
+        0.24, 0.55, "熱源", ha="center", va="center", fontsize=9, color=F.RED, zorder=6
+    )
+    # 電磁波（波浪箭頭）向右穿越真空到接收者
+    xx = np.linspace(0.345, 0.74, 100)
+    for yc, amp in [(0.62, 0.025), (0.55, 0.030), (0.48, 0.025)]:
+        yy = yc + amp * np.sin((xx - 0.345) / 0.40 * 4 * np.pi)
+        ax.plot(xx, yy, color="#ffd24d", lw=1.8, zorder=5)
+    F.arrow(ax, (0.70, 0.55), (0.775, 0.55), color="#ffd24d", lw=2.2, mutation=14, z=6)
+    ax.text(0.52, 0.70, "電磁波", ha="center", fontsize=10, color="#ffd24d", zorder=6)
+    # 接收者
+    ax.add_patch(
+        plt.Rectangle(
+            (0.80, 0.44), 0.07, 0.22, fc="#fdecec", ec=F.RED, lw=1.6, zorder=4
+        )
+    )
+    ax.text(0.835, 0.40, "受熱", ha="center", fontsize=8.5, color=F.RED, zorder=6)
+    ax.set_title("輻射（radiation）", fontsize=13)
+    ax.text(
+        0.5,
+        0.16,
+        "靠電磁波傳熱，不需任何介質\n唯一能穿越真空的方式",
+        ha="center",
+        va="center",
+        fontsize=10,
+        color=F.INK,
+    )
+    ax.text(
+        0.5,
+        0.02,
+        "例：太陽橫越真空把熱送到地球、紅外線測溫",
+        ha="center",
+        va="center",
+        fontsize=9,
+        color="#555",
+    )
+
+    fig.suptitle(
+        "熱傳遞的三種方式：傳導、對流、輻射（只有輻射能穿越真空）", fontsize=14
+    )
+    fig.tight_layout(rect=[0, 0, 1, 0.93])
+    F.save_to(fig, CH, "必物-5-三種傳熱")
+
+
+def fig_thermal_equilibrium():
+    """熱平衡：熱只從高溫流向低溫，溫度逐漸接近，最終相等、淨熱流停止。"""
+    fig, (ax1, ax2) = plt.subplots(
+        1, 2, figsize=(9.4, 4.4), gridspec_kw={"width_ratios": [1.05, 1.0]}
+    )
+
+    # 左：兩物體接觸，熱由高溫流向低溫
+    ax1.set_xlim(0, 1)
+    ax1.set_ylim(0, 1)
+    ax1.axis("off")
+    # 高溫物體（左）
+    ax1.add_patch(
+        FancyBboxPatch(
+            (0.06, 0.34),
+            0.32,
+            0.40,
+            boxstyle="round,pad=0.01,rounding_size=0.03",
+            fc="#fdecec",
+            ec=F.RED,
+            lw=2.2,
+        )
+    )
+    ax1.text(0.22, 0.62, "高溫物體", ha="center", fontsize=12, color=F.RED)
+    ax1.text(0.22, 0.46, "80°C", ha="center", fontsize=15, color=F.RED)
+    # 低溫物體（右）
+    ax1.add_patch(
+        FancyBboxPatch(
+            (0.62, 0.34),
+            0.32,
+            0.40,
+            boxstyle="round,pad=0.01,rounding_size=0.03",
+            fc="#eaf3ff",
+            ec=F.BLUE,
+            lw=2.2,
+        )
+    )
+    ax1.text(0.78, 0.62, "低溫物體", ha="center", fontsize=12, color=F.BLUE)
+    ax1.text(0.78, 0.46, "20°C", ha="center", fontsize=15, color=F.BLUE)
+    # 熱流箭頭：高溫→低溫
+    F.arrow(ax1, (0.40, 0.56), (0.60, 0.56), color=F.AMBER, lw=3.0, mutation=22)
+    ax1.text(0.50, 0.66, "熱", ha="center", fontsize=13, color=F.AMBER)
+    # 強調：不會自發逆流
+    F.arrow(
+        ax1,
+        (0.60, 0.44),
+        (0.40, 0.44),
+        color="#bbb",
+        lw=2.0,
+        mutation=16,
+        ls=(0, (3, 3)),
+    )
+    ax1.text(0.50, 0.355, "不會自發逆流", ha="center", fontsize=9, color="#999")
+    ax1.set_title("熱只從高溫流向低溫", fontsize=13)
+    ax1.text(
+        0.5, 0.18, "與兩者內能總量無關，只看溫度", ha="center", fontsize=10, color=F.INK
+    )
+
+    # 右：溫度隨時間趨近、相等 → 熱平衡
+    t = np.linspace(0, 6, 200)
+    Teq = 35.0
+    Thot = Teq + (80 - Teq) * np.exp(-0.8 * t)
+    Tcold = Teq + (20 - Teq) * np.exp(-0.8 * t)
+    ax2.plot(t, Thot, color=F.RED, lw=2.6, label="高溫物體")
+    ax2.plot(t, Tcold, color=F.BLUE, lw=2.6, label="低溫物體")
+    ax2.axhline(Teq, color="#888", lw=1.4, ls=(0, (4, 3)))
+    ax2.text(6.05, Teq, "  共同溫度", color="#555", fontsize=10, va="center")
+    ax2.annotate(
+        "達熱平衡\n淨熱流停止",
+        xy=(5.2, Teq),
+        xytext=(3.2, 56),
+        fontsize=10.5,
+        color=F.GREEN,
+        ha="center",
+        arrowprops=dict(arrowstyle="->", color=F.GREEN, lw=1.6),
+    )
+    ax2.set_xlim(0, 7.4)
+    ax2.set_ylim(10, 90)
+    ax2.set_xlabel("時間")
+    ax2.set_ylabel("溫度（°C）")
+    ax2.set_title("溫度趨於相等即達熱平衡")
+    ax2.legend(loc="center right", fontsize=10, frameon=False)
+    F.clean_grid(ax2)
+    ax2.set_xticks([])
+
+    fig.suptitle("熱平衡：熱由高溫流向低溫，直到兩者同溫、淨熱流停止", fontsize=13.5)
+    fig.tight_layout(rect=[0, 0, 1, 0.93])
+    F.save_to(fig, CH, "必物-5-熱平衡")
+
+
+def FancyArrowPatchSafe(ax, p0, p1):
+    """小幅雙向振動標記（原地振動，不整體移動）。"""
+    a = FancyArrowPatch(
+        p0,
+        p1,
+        arrowstyle="<->",
+        mutation_scale=7,
+        lw=1.1,
+        color="#888",
+        zorder=5,
+        shrinkA=0,
+        shrinkB=0,
+    )
+    ax.add_patch(a)
+    return a
+
+
 if __name__ == "__main__":
     fig_energy_conversion()
     fig_binding_energy()
     fig_internal_energy()
     fig_heat_engine()
+    fig_heat_transfer()
+    fig_thermal_equilibrium()
     print("done.")
