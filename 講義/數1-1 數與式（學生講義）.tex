@@ -132,13 +132,43 @@ $$\boxed{\;|x|<a\iff -a<x<a\;}\qquad(\text{離原點「比 }a\text{ 近」}\Righ
 $$\boxed{\;|x|>a\iff x<-a\ \text{或}\ x>a\;}\qquad(\text{離原點「比 }a\text{ 遠」}\Rightarrow\text{兩段})$$
 一般化：$|x-c|<a\iff c-a<x<c+a$，即以 $c$ 為中心、半徑 $a$ 的開區間。可記為「小於夾中間，大於分兩邊」。
 
+當小於型的絕對值內部\textbf{係數不為 $1$}（即 $|ax+b|<c$，其中 $c>0$、$a\ne0$）時，作法是先把整塊 $ax+b$ 夾在中間，再對三段同時做運算：
+$$|ax+b|<c\iff -c<ax+b<c\;\xrightarrow{\;\text{三段同時加減、同時乘除}\;}\;\text{解出 }x.$$
+三段同除以係數時須留意正負：除以正數時不等號方向不變，除以負數時三段的不等號方向都要反轉。
+
 \textbf{注意：}
 \begin{itemize}\setlength{\itemsep}{1pt}
 \item 將 $|x|>a$ 寫成 $-a>x>a$ 是無意義的式子（沒有數同時小於 $-a$ 又大於 $a$）。大於型一定是「或」、兩段；小於型才是「且」、一段。
 \item $a<0$ 時須先判斷再處理：$|x|<-3$ \textbf{無解}（絕對值非負，不可能小於負數）；$|x|>-3$ 則\textbf{所有實數皆成立}。
 \end{itemize}
 
-\subsection*{\sffamily D.\ 三角不等式}
+\subsection*{\sffamily D.\ 分段討論法}
+
+前面的距離觀點適用於\textbf{單一個}絕對值的方程式與不等式。但有兩類題型距離法使不上力，必須回到絕對值的\textbf{定義本身}，依內部正負「分段討論（casework）」。不等式版的處理方式相同。
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{一邊也含未知數}：如 $|x-1|=2x-3$，右邊不是常數，並非「離某點固定距離」。
+\item \textbf{兩個（含以上）絕對值相加減}：如 $|x-1|+|x-4|=5$、$|x+1|-|x-3|\le2$，不是單一距離。
+\end{itemize}
+
+\begin{補充框}{分段討論法（casework）的步驟}
+\begin{enumerate}\setlength{\itemsep}{1pt}
+\item \textbf{找變號點}：求出每個絕對值內部 $=0$ 的 $x$，絕對值在此處由負轉正或由正轉負。
+\item \textbf{切段}：用這些變號點把數線分成數段。在每一段內，各絕對值的正負都固定，可直接去掉絕對值符號改寫。
+\item \textbf{逐段求解}：在每一段內把絕對值去號後，解出方程式（或不等式）。
+\item \textbf{檢查落點}：在某一段內解出的 $x$，\textbf{必須落在該段範圍內}才算數，否則\textbf{越界捨去}。若為不等式，每段的解還須與該段範圍\textbf{取交集}。
+\item \textbf{取聯集}：把各段保留下來的解合起來，即為全部的解。
+\end{enumerate}
+切成幾段就要算幾段，一段都不能跳。例如 $|x-1|=2x-3$ 以變號點 $x=1$ 分兩段；$|x-1|+|x-4|=5$ 以變號點 $x=1,4$ 分成 $x<1$、$1\le x\le4$、$x>4$ 三段。
+\end{補充框}
+
+\textbf{注意：}分段討論法最常見的兩個錯誤是「\textbf{漏一段}」與「\textbf{不檢查範圍}」。
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 切成三段卻只算兩段（尤其容易漏掉中間那一段）。應先寫出所有變號點、確定切成幾段，再逐段計算。
+\item 在某段解出 $x$ 後直接收下，未回頭確認該 $x$ 是否真的落在本段範圍內。每段解完都要檢查落點，不在範圍內就捨去。
+\end{itemize}
+
+\subsection*{\sffamily E.\ 三角不等式}
 
 \begin{補充框}{三角不等式（triangle inequality）}
 對任意實數 $a,b$：
@@ -198,7 +228,8 @@ $$\sqrt a\,\sqrt b=\sqrt{ab},\qquad\frac{\sqrt a}{\sqrt b}=\sqrt{\frac ab}\ (b>0
 \item \textbf{實數}＝有理數 $\cup$ 無理數。有理數 $\iff$ 小數有限或循環；無理數 $\iff$ 小數不終止且不循環。三一律：任兩實數恰有一種大小關係。
 \item \textbf{循環小數化分數}：乘 $10^{(\text{循環節長})}$ 後相減，消去循環部分。$0.\overline{9}=1$。
 \item \textbf{科學記號} $a\times10^n\,(1\le|a|<10)$：乘除把數字與次方分開算；加減先對齊次方。
-\item \textbf{絕對值＝距離}：$|x-a|$ 為兩點距離。方程式 $|x-a|=b$（$b>0$ 兩解、$b=0$ 一解、$b<0$ 無解）；不等式「小於夾中間 $-a<x<a$，大於分兩邊 $x<-a$ 或 $x>a$」。三角不等式 $|a+b|\le|a|+|b|$。
+\item \textbf{絕對值＝距離}：$|x-a|$ 為兩點距離。方程式 $|x-a|=b$（$b>0$ 兩解、$b=0$ 一解、$b<0$ 無解）；不等式「小於夾中間 $-a<x<a$，大於分兩邊 $x<-a$ 或 $x>a$」（$|ax+b|<c$ 型先夾中間再同除係數，留意除負數要反向）。三角不等式 $|a+b|\le|a|+|b|$。
+\item \textbf{分段討論法}：距離法解不了時（一邊含未知數、或多個絕對值相加減）用變號點切段，逐段去絕對值求解，每段解須落在該段內（不等式則與該段取交集），最後取聯集。切幾段就要算幾段，不可漏案、不可越界。
 \item \textbf{乘法公式}：完全平方、平方差、$(a\pm b)^3$、$a^3\pm b^3=(a\pm b)(a^2\mp ab+b^2)$、$(a+b+c)^2$。
 \item \textbf{根式}：$\sqrt{a^2}=|a|$，$\sqrt{a+b}\ne\sqrt a+\sqrt b$；有理化用\textbf{共軛}（以平方差消根號）。
 \item \textbf{分式}：乘除先分解再約分，加減先通分，整塊因式才能約去，化簡後標明變數限制。

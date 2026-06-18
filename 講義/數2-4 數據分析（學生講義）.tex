@@ -1,0 +1,281 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\Huge\bfseries 數2-4 數據分析}\\[3pt]
+{\sffamily\large 普通高中 數學（必修・第二冊）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+一組數字本身難以一眼看出特徵：一次小考全班 40 人的成績是 40 個數字，直接看這 40 個數字，看不出「考得好不好」「分數散不散」。\textbf{敘述統計（descriptive statistics）}的工作，就是用少數幾個數字把一整組資料的特徵摘要出來。
+
+本章先處理\textbf{一維數據}（每筆資料只有一個數字）：用\textbf{集中量數}描述「資料大致落在哪」，用\textbf{離散量數}描述「資料散得開不開」，再把每筆資料\textbf{標準化}成 $z$ 分數，使不同尺度的資料能互相比較。接著處理\textbf{二維數據}（成對出現的資料）：用\textbf{散布圖}觀察兩個量的關係，用\textbf{相關係數}量化關係的方向與強弱，最後用\textbf{最小平方法}配出\textbf{最適直線}。本章是高中唯一的描述統計章節，以\textbf{定性理解與基本計算}為主。
+
+\medskip
+本章主線：
+
+\begin{center}
+集中量數與離散量數 $\rightarrow$ 線性變換的影響 $\rightarrow$ 標準化（$z$ 分數）$\rightarrow$ 散布圖與相關 $\rightarrow$ 相關係數 $\rightarrow$ 最適直線（最小平方）
+\end{center}
+
+\section*{\sffamily 4-1\quad 一維數據的集中與離散}
+
+\subsection*{\sffamily A.\ 為什麼需要摘要一組數據}
+
+把一整組資料摘要成幾個數字，方向有兩個，缺一不可：
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{集中量數（measures of central tendency）}：資料大致落在哪？——平均數、中位數、眾數。
+\item \textbf{離散量數（measures of dispersion）}：資料散得開不開？——全距、四分位距、變異數、標準差。
+\end{itemize}
+
+只報集中量數而不報離散量數，會掩蓋關鍵資訊：兩組資料的平均數可能相同，分散程度卻天差地遠（本節稍後會看到）。
+
+\subsection*{\sffamily B.\ 集中量數：平均數、中位數、眾數}
+
+設一組數據為 $x_1, x_2, \dots, x_n$，共 $n$ 筆。
+
+\begin{itemize}\setlength{\itemsep}{3pt}
+\item \textbf{算術平均數（arithmetic mean）}$\bar{x}$：所有數值的總和除以筆數，
+$$\boxed{\;\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i = \frac{x_1 + x_2 + \cdots + x_n}{n}\;}$$
+\item \textbf{中位數（median）}：把資料\textbf{由小到大排序}後位居正中間的數。$n$ 為奇數時取第 $\frac{n+1}{2}$ 個；$n$ 為偶數時取中間兩個的平均。
+\item \textbf{眾數（mode）}：出現次數最多的數值（可能不只一個，也可能沒有）。
+\end{itemize}
+
+\textbf{注意：}若資料中有一個離群的極大或極小值（\textbf{離群值，outlier}），平均數會明顯被它拉動，中位數則幾乎不受影響。例如 5 人的月薪為 $3,\ 3,\ 4,\ 4,\ 100$（萬元），平均數為 $22.8$ 萬，但中位數仍是 $4$ 萬。此時中位數更能代表「典型的人」。新聞報導「家戶所得中位數」而非平均數，正是這個理由。
+
+\subsection*{\sffamily C.\ 離散量數：全距、四分位距、變異數、標準差}
+
+集中量數無法回答「散不散」。最簡單的離散量數是\textbf{全距（range）}：
+$$\text{全距} = \text{最大值} - \text{最小值}.$$
+全距計算最快，但只用到兩個極端值，浪費了中間所有資訊，且\textbf{對離群值極敏感}——一個離群值就能把全距撐大。
+
+改良的辦法是「砍掉頭尾、只看中間一半資料的寬度」，這就是四分位距。把資料\textbf{由小到大排序}後，用三個分割點把它切成四等份：
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{第一四分位數（first quartile）}$Q_1$：位置在 $25\%$ 處，其左邊約有四分之一的資料。
+\item \textbf{第二四分位數}$Q_2$：即\textbf{中位數}，位置在 $50\%$ 處。
+\item \textbf{第三四分位數（third quartile）}$Q_3$：位置在 $75\%$ 處。
+\end{itemize}
+
+\textbf{四分位距（interquartile range, IQR）}定義為中間一半資料的寬度：
+$$\boxed{\;\text{IQR} = Q_3 - Q_1\;}$$
+IQR 越大，中間 $50\%$ 的資料散得越開。它只看中段、不理會頭尾的極端值，因此\textbf{不受離群值影響}——這正是它比全距好的地方。
+
+\begin{補充框}{求 $Q_1$、$Q_3$ 的位置：高中採用的常見作法}
+資料筆數不是 $4$ 的倍數時，各教科書求 $Q_1,Q_3$ 的位置略有出入。高中階段以下面這個常見作法為準：\textbf{先用中位數把資料切成左右兩半，$Q_1$、$Q_3$ 各取左半、右半的中位數}。例如 $11$ 筆排序後的資料，中位數 $Q_2$ 取第 $6$ 個；以它為界，左半 $5$ 筆的中位數即 $Q_1$，右半 $5$ 筆的中位數即 $Q_3$。
+\end{補充框}
+
+全距與四分位距都只用到少數幾個位置上的數。要善用\textbf{每一筆}資料，自然的想法是看每筆資料\textbf{離平均數多遠}，即\textbf{偏差（deviation）}$x_i - \bar{x}$。但偏差直接相加一定得到 $0$：
+$$\sum_{i=1}^{n}(x_i - \bar{x}) = \sum x_i - n\bar{x} = n\bar{x} - n\bar{x} = 0.$$
+這是因為平均數正是讓正負偏差互相抵消的那個「平衡點」。所以不能直接加偏差，必須先消去正負號。做法是\textbf{先把每個偏差平方}（消去正負號、且讓大偏差更顯著），取平均得到\textbf{變異數}；再開根號把單位變回原來的單位，得到\textbf{標準差}。
+
+\begin{itemize}\setlength{\itemsep}{3pt}
+\item \textbf{變異數（variance）}$\sigma^2$：偏差平方的平均，
+$$\boxed{\;\sigma^2 = \frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^2\;}$$
+\item \textbf{標準差（standard deviation）}$\sigma$：變異數開正的平方根，
+$$\boxed{\;\sigma = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^2}\;}$$
+\end{itemize}
+
+標準差與原資料\textbf{同單位}（資料是公分，標準差也是公分），可直接解讀為「資料大致偏離平均多少」。實際手算時常用下面這條\textbf{展開公式}（先算「平方的平均」再減「平均的平方」）較快：
+$$\sigma^2 = \frac{1}{n}\sum x_i^2 - \bar{x}^2.$$
+
+\begin{補充框}{標準差為什麼要「平方再開根號」？它到底在量什麼}
+標準差量的是「\textbf{資料典型上偏離平均數多遠}」——一個與原資料同單位的「平均離散程度」。標準差小，資料擠在平均附近；標準差大，資料散得開。
+
+要消去偏差的正負號，取\textbf{絕對值}的平均（稱為平均差 $\frac1n\sum|x_i-\bar x|$）其實也是合理的離散量數。但統計學主流選了「平方再開根號」，理由有三：
+\begin{enumerate}\setlength{\itemsep}{2pt}
+\item \textbf{平方在數學上比絕對值好處理。}絕對值函數 $|x|$ 在 $0$ 處有尖點、不可微；平方函數 $x^2$ 處處光滑、可微。後面配最適直線時要「求使某量最小」，平方能直接求極值，絕對值不行。
+\item \textbf{開根號是為了把單位變回來。}偏差平方後單位也平方了（公分變成平方公分），這叫變異數；\textbf{開根號就是把單位開回原來的單位}，所以標準差能直接解讀為「大約偏離平均幾公分」。
+\item \textbf{平方讓大偏差被放大。}偏差 $10$ 貢獻 $100$，偏差 $2$ 只貢獻 $4$，因此標準差對離群值較敏感——這在許多場合正是我們想要的。
+\end{enumerate}
+\textbf{注意：}標準差\textbf{不可能是負的}（平方與開根號都非負）；$\sigma=0$ 只發生在所有資料完全相同時。變異數是標準差的平方，兩者一體兩面：變異數方便做代數運算，標準差方便解讀（同單位）。
+\end{補充框}
+
+\fig{d24-stddev}{0.92}{圖 4-1：兩組資料平均數都是 $50$，但甲組擠在平均附近（標準差約 $1.4$），乙組散得很開（標準差約 $14.1$）。標準差越大，資料越分散。}
+
+\begin{補充框}{分母用 $n$ 還是 $n-1$？母體標準差與樣本標準差}
+本章公式分母用 $n$，得到的是\textbf{母體標準差}——把手上這組資料當成「全部」來描述。在統計推論裡，若這組資料只是從更大母體抽出的\textbf{樣本}，要改用分母 $n-1$（\textbf{樣本標準差}，記作 $s$）才能不偏地估計母體變異數。高中階段以分母 $n$ 為主；但留意計算機常同時提供 $\sigma_n$ 與 $\sigma_{n-1}$ 兩鍵，按錯會得到不同答案。
+\end{補充框}
+
+\subsection*{\sffamily D.\ 資料平移與伸縮對統計量的影響}
+
+實務上常需要對整組資料做同一個變換：攝氏改華氏、公分改公尺、全班加分。設把每筆資料 $x_i$ 都換成
+$$y_i = a x_i + b \qquad(a,b\ \text{為常數}),$$
+這稱為\textbf{線性變換（linear transformation）}。其中 $b$ 是\textbf{平移（translation）}——整組資料一起加減；$a$ 是\textbf{伸縮（scaling）}——整組資料一起放大或縮小。各統計量怎麼變，有一組固定的結論：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{0.24\linewidth} p{0.26\linewidth} p{0.40\linewidth}}
+\hline
+\textbf{統計量} & \textbf{新值} & \textbf{說明} \\
+\hline
+平均數 & $\bar{y} = a\bar{x} + b$ & 平移與伸縮\textbf{都}影響 \\
+標準差 & $\sigma_y = \lvert a\rvert\,\sigma_x$ & \textbf{只受伸縮影響}，平移 $b$ 完全無關 \\
+變異數 & $\sigma_y^2 = a^2\,\sigma_x^2$ & 同上，係數平方 \\
+全距 / 四分位距 & 各乘 $\lvert a\rvert$ & 與標準差同理 \\
+\hline
+\end{tabular}
+\end{center}
+
+一句話記住：\textbf{「加減」（平移）只動集中量數、不動離散量數；「乘除」（伸縮）讓離散量數同步放大 $\lvert a\rvert$ 倍。}
+
+直觀理由：平移 $+b$ 把整組資料原封不動地搬走一段距離，\textbf{資料彼此間的相對距離一點都沒變}，所以衡量「散不散」的標準差、變異數、全距、四分位距全都不變；但每一筆都離原點遠了 $b$，平均數自然跟著加 $b$。伸縮 $\times a$ 則把所有間距同步拉成 $\lvert a\rvert$ 倍，離散量數隨之放大 $\lvert a\rvert$ 倍（取絕對值是因為 $a<0$ 時資料左右翻轉，但「散開的程度」不會變成負的）。
+
+\textbf{注意：}整組資料同加（或同減）一個常數，\textbf{標準差、變異數、全距、四分位距都不變}，這是最常被答錯的一點。常見的錯誤是以為「平均變了，離散量數也跟著變」。其實平移只是整體搬家，內部疏密不動；只有乘除（伸縮）才會改變離散程度。
+
+\section*{\sffamily 4-2\quad 數據的標準化}
+
+\subsection*{\sffamily A.\ 為什麼要標準化}
+
+考慮一個問題：小明數學考 $80$ 分、英文考 $70$ 分，他哪一科考得「相對比較好」？\textbf{不能直接比分數}，因為兩科的難易與全班分布不同。$80$ 分若全班平均 $85$，其實偏低；$70$ 分若全班平均 $50$，反而很突出。
+
+要回答「相對位置」，得同時考慮\textbf{離平均多遠}以及\textbf{全班有多分散}。把「偏差」用「標準差」當尺度量出來，就得到\textbf{標準分數}。設一組數據平均數 $\bar{x}$、標準差 $\sigma$，把每筆資料 $x$ 換成
+$$\boxed{\;z = \frac{x - \bar{x}}{\sigma}\;}$$
+稱為\textbf{標準化（standardization）}，$z$ 稱為\textbf{標準分數（standard score）}或 \textbf{$z$ 分數（z-score）}。它表示「$x$ 在平均數的上方（或下方）幾個標準差」。標準化後的新資料 $z_1,\dots,z_n$ 有兩個固定性質：
+$$\bar{z}=0,\qquad \sigma_z = 1.$$
+也就是說，\textbf{任何一組資料標準化後，平均數一律變成 $0$、標準差一律變成 $1$}。這把所有資料拉到「同一把尺」上，才能公平比較。
+
+\begin{補充框}{把分數變成 $z$ 分數到底有什麼用？}
+標準化是把「\textbf{原始分數}」換成「\textbf{離平均幾個標準差}」。它把不同尺度、不同單位的資料，都拉到同一把尺（平均 $0$、標準差 $1$）上，於是原本不能比的東西變得可以公平比較。
+
+可類比為「不同貨幣不能直接比金額」：手上有 $100$ 日圓和 $100$ 新台幣，數字一樣大，但價值天差地遠；要比較，得先換成同一種貨幣。標準化就是統計上的「換匯」，換算的辦法很自然：
+$$z = \frac{x-\bar x}{\sigma} = \frac{\text{離平均多遠（偏差）}}{\text{這組資料的離散尺度（標準差）}}.$$
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 分子 $x-\bar x$：先看「離平均多遠」，但這個距離的「大小感」取決於整組散不散。
+\item 除以 $\sigma$：用標準差當尺，把距離換算成「幾個標準差」。在很集中的資料裡偏離一點點就很突出（$z$ 大）；在很分散的資料裡偏離同樣的量卻不算什麼（$z$ 小）。
+\end{itemize}
+結果 $z$ \textbf{沒有單位}（分子分母的單位互相約掉），所以數學分數的 $z$ 和英文分數的 $z$ 可以直接比。
+
+\textbf{為什麼化後一定是「平均 $0$、標準差 $1$」？}標準化其實是 4-1 D 小節線性變換 $y=ax+b$ 的特例（取 $a=\frac{1}{\sigma}$、$b=-\frac{\bar x}{\sigma}$）。代入那組結論立刻得 $\bar z=\frac{1}{\sigma}\bar x-\frac{\bar x}{\sigma}=0$、$\sigma_z=\frac{1}{\sigma}\cdot\sigma=1$。直觀地說，減去 $\bar x$ 把中心搬到 $0$，除以 $\sigma$ 把尺度縮成 $1$。
+\end{補充框}
+
+\fig{d24-standardize}{0.92}{圖 4-2：原始分布平均 $70$、標準差 $8$，原始分數 $86$ 在平均上方 $2$ 個標準差處；標準化後整個分布平移縮放，原來的 $86$ 對應到 $z=+2$。}
+
+由 $z=\dfrac{x-\bar{x}}{\sigma}$ 反解，可由 $z$ 分數回推原始分數：
+$$x = \bar{x} + z\sigma.$$
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item $z$ 分數\textbf{沒有單位}，所以才能跨不同單位的資料比較。
+\item $z>0$ 只代表「在平均之上」，\textbf{不代表及格或表現好}，要看相對於整體分布的位置；$z=0$ 表示恰好等於平均，不是 $0$ 分。
+\item 標準化是\textbf{平移加伸縮的線性變換}，它改變數值與單位，但\textbf{不改變資料的相對名次與分布形狀}（原本第 3 名的人，標準化後仍是第 3 名；原本左偏的分布，化後一樣左偏）。
+\item 標準化\textbf{不會}把資料變成常態分布。「化成平均 $0$、標準差 $1$」與「化成鐘形」是兩回事；只有原本就接近常態的資料，化後才接近標準常態。
+\end{itemize}
+
+\section*{\sffamily 4-3\quad 二維數據與散布圖}
+
+\subsection*{\sffamily A.\ 從一維到二維}
+
+前兩節每筆資料只有一個數字（一維）。但現實常成對出現：每位學生有「身高」與「體重」、每天有「氣溫」與「冰品銷量」。這種\textbf{成對的資料}$(x_1,y_1),(x_2,y_2),\dots,(x_n,y_n)$ 稱為\textbf{二維數據（bivariate data）}。我們想知道的是：\textbf{$x$ 與 $y$ 之間有沒有關係？}
+
+把每一組 $(x_i, y_i)$ 當成坐標平面上的一個點畫出來，所得的圖稱為\textbf{散布圖（scatter plot）}。從點的\textbf{整體走向}就能初步判斷 $x$ 與 $y$ 的關係：
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{正相關（positive correlation）}：$x$ 增大時 $y$ 傾向增大，散布圖整體由左下往右上。
+\item \textbf{負相關（negative correlation）}：$x$ 增大時 $y$ 傾向減小，整體由左上往右下。
+\item \textbf{零相關／無相關}：看不出隨 $x$ 變化的方向性，點四散。
+\end{itemize}
+
+又依點貼近一條直線的程度，分為\textbf{強相關}（點緊貼一條直線）與\textbf{弱相關}（點鬆散但仍有趨勢）。
+
+\fig{d24-scatter}{0.96}{圖 4-3：散布圖的三種走向。左——正相關（左下到右上）；中——負相關（左上到右下）；右——近乎無相關（看不出隨 $x$ 的趨勢）。}
+
+\textbf{注意：}散布圖呈現的「相關」專指\textbf{線性（直線）關係}的傾向。若 $x,y$ 是明確的拋物線關係（如沿 $y=x^2$ 對稱取點），散布圖雖有清楚規律，但「直線相關」卻可能接近 $0$。\textbf{無線性相關不等於無任何關係。}此外，判斷時要看\textbf{整體走向}，不要只看單一極端點就斷定相關方向。
+
+\section*{\sffamily 4-4\quad 相關係數與最適直線}
+
+\subsection*{\sffamily A.\ 相關係數：把「相關」化成一個數}
+
+散布圖讓人「看出」相關，但「看」帶有主觀。\textbf{相關係數（correlation coefficient）}$r$ 用一個介於 $-1$ 與 $1$ 的數字，客觀量化\textbf{線性相關的方向與強弱}。它的構造延續前面兩節的精神：把 $x$ 與 $y$ \textbf{各自標準化}，再看兩者的乘積平均。設 $x$ 的平均與標準差為 $\bar{x},\sigma_x$，$y$ 的為 $\bar{y},\sigma_y$，則
+$$\boxed{\;r = \frac{1}{n}\sum_{i=1}^{n}\frac{(x_i-\bar{x})(y_i-\bar{y})}{\sigma_x\,\sigma_y} = \frac{\displaystyle\sum (x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\displaystyle\sum (x_i-\bar{x})^2}\;\sqrt{\displaystyle\sum (y_i-\bar{y})^2}}\;}$$
+其性質為 $-1 \le r \le 1$，且：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item $r>0$ 正相關，$r<0$ 負相關，$r\approx 0$ 無線性相關；
+\item $|r|$ 越接近 $1$，點越貼近一條直線（相關越強）；$r=\pm 1$ 表示所有點\textbf{恰好共線}。
+\end{itemize}
+
+分子 $\sum(x_i-\bar{x})(y_i-\bar{y})$ 的意義是：當 $x$ 在平均之上時 $y$ 也常在平均之上（兩偏差同號、乘積為正），總和為正，就是正相關；反之為負相關。分母用兩個標準差把它「標準化」，使結果落在 $[-1,1]$、且與單位無關。
+
+\begin{補充框}{$r$ 為什麼一定介於 $-1$ 與 $1$？}
+把每筆資料標準化：令 $u_i=\dfrac{x_i-\bar x}{\sigma_x}$、$v_i=\dfrac{y_i-\bar y}{\sigma_y}$。則相關係數正是這兩組標準分數乘積的平均：
+$$r = \frac1n\sum_{i=1}^{n} u_i v_i.$$
+而 $u,v$ 各自的「標準差為 $1$」意味著 $\dfrac1n\sum u_i^2 = 1$、$\dfrac1n\sum v_i^2 = 1$。
+
+接著用「任何實數的平方都非負」夾出範圍。考慮
+$$\frac1n\sum_{i=1}^{n}(u_i - v_i)^2 \ge 0,$$
+展開後利用上面兩個等於 $1$ 的和：
+$$\frac1n\sum (u_i^2 - 2u_i v_i + v_i^2) = 1 - 2r + 1 = 2 - 2r \ge 0,$$
+所以 $r\le 1$。同理對 $\dfrac1n\sum(u_i+v_i)^2\ge0$ 展開得 $2+2r\ge0$，即 $r\ge-1$。合起來即 $-1 \le r \le 1$。
+
+\textbf{等號何時成立？}$r=1$ 當且僅當每個 $u_i=v_i$，即所有點恰好落在一條\textbf{斜率為正}的直線上；$r=-1$ 當且僅當每個 $u_i=-v_i$，所有點落在一條\textbf{斜率為負}的直線上。換言之，$|r|=1$ 就是「完美的線性關係」。
+\end{補充框}
+
+\begin{延伸框}{$r$ 與向量內積：柯西不等式的特例}
+把 $(u_1,\dots,u_n)$ 與 $(v_1,\dots,v_n)$ 看成兩個 $n$ 維向量，相關係數 $r=\frac1n\sum u_iv_i$ 正好是兩向量的「正規化內積」，也就是它們\textbf{夾角的餘弦}。餘弦的絕對值不超過 $1$，這正是 $|r|\le1$ 的另一個來源，屬於高二向量內積裡\textbf{柯西不等式（Cauchy inequality）}的一個特例。從這個角度看，「相關係數」其實在度量兩組標準化資料的「方向有多接近」：方向完全一致時 $r=1$，完全相反時 $r=-1$，互相垂直時 $r=0$。
+\end{延伸框}
+
+\subsection*{\sffamily B.\ 最適直線（迴歸直線）}
+
+當 $x,y$ 有線性相關時，希望找一條直線 $y = a + bx$ \textbf{最能代表}這群點，用來描述趨勢、或由 $x$ 預測 $y$。問題是：怎樣算「最能代表」？對直線 $y=a+bx$，第 $i$ 筆資料的\textbf{殘差（residual）}是「實際 $y_i$」與「直線預測值 $a+bx_i$」的鉛直差：
+$$e_i = y_i - (a+bx_i).$$
+\textbf{最小平方法（method of least squares）}：選 $a,b$ 使\textbf{殘差平方和}$\displaystyle\sum_{i=1}^{n} e_i^2$ 最小。所得直線稱為\textbf{最適直線}或\textbf{迴歸直線（regression line）}。
+
+\fig{d24-bestfit}{0.62}{圖 4-4：橘色虛線是各點的殘差（資料點到直線的鉛直距離）。最適直線就是讓這些殘差「平方後加起來」最小的那條，且必通過平均點。}
+
+可證明最小平方解為：
+$$\boxed{\;b = \frac{\sum (x_i-\bar{x})(y_i-\bar{y})}{\sum (x_i-\bar{x})^2} = r\,\frac{\sigma_y}{\sigma_x},\qquad a = \bar{y} - b\,\bar{x}\;}$$
+由 $a=\bar y - b\bar x$ 知迴歸直線\textbf{必通過平均點 $(\bar{x},\bar{y})$}（把 $x=\bar x$ 代入得 $y=a+b\bar x=\bar y$）。斜率 $b$ 與相關係數 $r$ \textbf{同號}（因 $\sigma_x,\sigma_y>0$）。式子 $b=r\dfrac{\sigma_y}{\sigma_x}$ 把全章串起來：相關係數、標準差、迴歸斜率原來是同一家人——$r$ 管方向與強弱，$\dfrac{\sigma_y}{\sigma_x}$ 把 $x$ 的尺度換成 $y$ 的尺度。
+
+\begin{補充框}{最適直線的公式是怎麼來的？最小平方法}
+把「直線與資料的不合身程度」定義成\textbf{殘差平方和}，它是 $a,b$ 的二次函數；讓這個二次函數最小，就解出上面那兩條公式。整個推導就是「二次函數求極小」。目標函數為
+$$S(a,b)=\sum_{i=1}^{n}\bigl[y_i-(a+bx_i)\bigr]^2.$$
+$S$ 對 $a$、對 $b$ 都是開口向上的二次式，必有唯一最小值。
+
+\textbf{第一步——先固定 $b$，看成 $a$ 的二次函數。}$S=\sum[(y_i-bx_i)-a]^2$ 是「一堆數 $y_i-bx_i$ 到 $a$ 的距離平方和」，由二次函數配方知，當 $a$ 取這堆數的平均時最小：
+$$a=\frac1n\sum(y_i-bx_i)=\bar y - b\bar x.$$
+這立刻說明\textbf{迴歸直線通過平均點 $(\bar x,\bar y)$}。
+
+\textbf{第二步——把 $a=\bar y-b\bar x$ 代回。}令 $X_i=x_i-\bar x$、$Y_i=y_i-\bar y$，殘差變成 $Y_i-bX_i$，於是
+$$S(b)=\sum (Y_i-bX_i)^2=\Bigl(\sum X_i^2\Bigr)b^2-2\Bigl(\sum X_iY_i\Bigr)b+\sum Y_i^2,$$
+這是 $b$ 的二次函數，開口向上（$\sum X_i^2>0$），頂點在
+$$b=\frac{\sum X_iY_i}{\sum X_i^2}=\frac{\sum(x_i-\bar x)(y_i-\bar y)}{\sum(x_i-\bar x)^2},$$
+即課本的斜率公式。上下同除以 $n$，分子是共變數、分母是 $\sigma_x^2$，可改寫成 $b=r\dfrac{\sigma_y}{\sigma_x}$。
+
+\textbf{注意：}最小平方量的是\textbf{鉛直}距離（$y$ 方向的殘差），不是點到直線的垂直距離，因為迴歸的目的是「用 $x$ 預測 $y$」，在意的是 $y$ 預測得準不準。也因為這個不對稱，「$x$ 對 $y$ 的迴歸線」和「$y$ 對 $x$ 的迴歸線」\textbf{一般是兩條不同的線}，只有 $r=\pm1$（完美共線）時才重合。本章以「由 $x$ 預測 $y$」為準。
+\end{補充框}
+
+\subsection*{\sffamily C.\ 兩個務必小心的觀念}
+
+\textbf{相關 $\ne$ 因果。}$r$ 大只說明「兩量一起變化」，\textbf{不保證}一個是另一個的原因。把相關當因果，是新聞、廣告、偽科學最常見的誤導手法。兩個變數高度相關，可能來自下列任一種情形，只有第一種才是真因果：
+
+\begin{enumerate}\setlength{\itemsep}{2pt}
+\item \textbf{真有因果}：$x$ 確實造成 $y$（如施肥量增加使產量增加）。
+\item \textbf{共同原因（潛在變數，lurking variable）}：$x,y$ 都被第三個變數帶動，彼此卻無因果。經典例：\textbf{冰品銷量}與\textbf{溺水人數}高度正相關，但吃冰不會害人溺水，背後共同原因是\textbf{氣溫}（天熱時兩者都上升）；某地區\textbf{消防車數量}與\textbf{火災損失}正相關，不是消防車造成損失，而是「火勢大」同時帶動兩者。
+\item \textbf{因果方向相反}：其實是 $y$ 造成 $x$，而非 $x$ 造成 $y$。
+\item \textbf{巧合（虛假相關）}：尤其在資料量小或硬湊變數時，會出現毫無意義卻數值很高的相關。
+\end{enumerate}
+
+\textbf{不要外推太遠。}迴歸直線是由現有資料範圍配出來的；拿它去預測遠在資料範圍外的 $x$（外插，extrapolation）很危險，因為趨勢未必延續。
+
+\begin{延伸框}{怎樣才能確定因果？}
+觀察到的相關不足以確立因果。要談因果，須靠\textbf{對照實驗}：把對象隨機分成實驗組與對照組，控制其他變數只讓所研究的因素不同，再比較結果。隨機分組的用意，是把各種未知的潛在變數平均分散到兩組，使兩組「除了被研究的因素以外大致相同」，這樣若仍看到差異，才較有把握歸因於該因素。這套方法是實驗科學與醫學試驗的基礎，細節超出高中範圍，但「相關要升級成因果，需要的是實驗而非更大的 $r$」這個原則值得記住。
+\end{延伸框}
+
+\section*{\sffamily 4-5\quad 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{集中量數}：平均數 $\bar x=\frac1n\sum x_i$、中位數（排序取中）、眾數（最常出現）。極端值大幅影響平均數，幾乎不影響中位數。
+\item \textbf{離散量數}：全距 $=$ 最大 $-$ 最小；四分位距 $\text{IQR}=Q_3-Q_1$（中間 $50\%$ 的寬度，對離群值穩健）；變異數 $\sigma^2=\frac1n\sum (x_i-\bar x)^2=\frac1n\sum x_i^2-\bar x^2$；標準差 $\sigma=\sqrt{\sigma^2}$（與資料同單位）。標準差非負，$\sigma=0$ 只在資料全相同時。
+\item \textbf{線性變換 $y=ax+b$}：$\bar y=a\bar x+b$；$\sigma_y=\lvert a\rvert\sigma_x$、$\sigma_y^2=a^2\sigma_x^2$、全距與 IQR 各乘 $\lvert a\rvert$。\textbf{平移（加減 $b$）不改變任何離散量數，只有伸縮（乘 $a$）才改變。}
+\item \textbf{標準化}：$z=\dfrac{x-\bar x}{\sigma}$（線性變換的特例），化後平均 $0$、標準差 $1$，無單位，可跨尺度比較相對位置；反推 $x=\bar x+z\sigma$。不改名次、不改分布形狀。
+\item \textbf{二維數據}：散布圖看走向 $\rightarrow$ 正相關 / 負相關 / 無相關。無線性相關不等於無任何關係。
+\item \textbf{相關係數}：$r=\dfrac{\sum(x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum(x_i-\bar x)^2}\sqrt{\sum(y_i-\bar y)^2}}$，$-1\le r\le1$，$|r|$ 越大線性越強，$r=\pm1$ 為完美共線。\textbf{相關不等於因果。}
+\item \textbf{最適直線（最小平方）}：$b=\dfrac{\sum(x_i-\bar x)(y_i-\bar y)}{\sum(x_i-\bar x)^2}=r\dfrac{\sigma_y}{\sigma_x}$，$a=\bar y-b\bar x$，必過平均點 $(\bar x,\bar y)$；斜率與 $r$ 同號。量的是鉛直殘差，故 $x$ 對 $y$ 與 $y$ 對 $x$ 的迴歸線一般不同。
+\end{itemize}
+\end{補充框}
+
+\end{document}

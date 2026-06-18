@@ -1,0 +1,378 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\Huge\bfseries 數2-1 三角比}\\[3pt]
+{\sffamily\large 普通高中 數學（必修・第二冊）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+三角比（trigonometric ratios）把「角度」和「邊長比」連在一起。一開始只在直角三角形裡定義銳角的正弦、餘弦、正切，它們是純粹的邊長比值，只與角度有關、與三角形大小無關。接著把這套定義從「只能用在 $0^\circ$ 到 $90^\circ$」推廣到\textbf{任意角（廣義角）}，改用坐標平面上的點來定義，於是 $120^\circ$、$210^\circ$、甚至負角都能算三角比。
+
+有了三角比這把尺，就能去解\textbf{任意三角形}（不再限於直角）——這就是\textbf{正弦定理}與\textbf{餘弦定理}，它們是測量與導航的核心工具。最後把三角比接回上一章的坐標幾何：直線的斜率其實就是傾斜角的正切，兩直線夾角也能算；再認識另一種描述位置的方式——\textbf{極坐標}。
+
+\medskip
+本章主線：
+
+\begin{center}
+銳角三角比 $\rightarrow$ 廣義角（坐標定義）$\rightarrow$ 解三角形（正弦定理、餘弦定理）$\rightarrow$ 面積 $\rightarrow$ 斜率與夾角、極坐標
+\end{center}
+
+\section*{\sffamily 1-1\quad 銳角三角比}
+
+\subsection*{\sffamily A.\ 邊比只與角度有關}
+
+先看一個日常情形：一道斜坡的傾斜角固定為 $30^\circ$。不論沿著它走 $1$ 公尺、$10$ 公尺還是 $100$ 公尺，「每往前一段、上升多少」這個\textbf{比例}始終一樣。也就是說，比例只與角度有關，與走多遠（三角形多大）無關。
+
+\begin{補充框}{先釐清：為什麼同一個角，三角形畫大畫小、邊比都一樣？}
+整套三角比的定義都建立在「邊比只與角度有關」這個事實上。這件事是國中相似三角形（similar triangles）的直接結果。
+
+取一個銳角 $\theta$，畫兩個都含這個角的直角三角形，一大一小。它們各有一個直角、一個 $\theta$，第三個角也被決定（內角和 $180^\circ$），所以三個角分別相等，這就是「AA 相似」。相似三角形的核心性質是\textbf{對應邊成比例}：
+$$\frac{\text{大的對邊}}{\text{大的斜邊}}=\frac{\text{小的對邊}}{\text{小的斜邊}}.$$
+左右兩邊正是「用大三角形算的 $\sin\theta$」與「用小三角形算的 $\sin\theta$」，兩者相等。$\cos$、$\tan$ 同理。
+
+可用照片類比：把一張照片等比例放大，照片裡「人的身高 $\div$ 門的高度」這個比值不變，因為所有長度同步放大、比值約掉了。三角比就是三角形這張「照片」裡兩條邊的比值，放大縮小都不影響它，真正決定它的是三角形的形狀，而形狀由角度鎖定。
+
+\textbf{注意：}三角比沒有單位。它是兩個長度相除，單位約掉了，是\textbf{純數}。正因如此，才能把它列成一張固定的「值表」。
+\end{補充框}
+
+正因為「比只與角度有關」，才能把這些邊比取名字、當成角度的函數，這就是三角比。
+
+\subsection*{\sffamily B.\ 三個基本邊比的定義}
+
+取一個直角三角形，鎖定其中一個銳角 $\theta$。相對這個角，三條邊有專屬名稱：\textbf{對邊（opposite，正對著 $\theta$）}、\textbf{鄰邊（adjacent，夾著 $\theta$ 的非斜邊）}、\textbf{斜邊（hypotenuse，直角對面、最長的邊）}。
+
+\fig{d21-right-triangle}{0.62}{圖 1-1：直角三角形中對邊、鄰邊、斜邊的位置（鎖定銳角 $\theta$）。換一個銳角，對邊與鄰邊會互換。}
+
+設對邊長 $a$、鄰邊長 $b$、斜邊長 $c$，定義
+$$\boxed{\;\sin\theta=\frac{\text{對邊}}{\text{斜邊}}=\frac{a}{c}\;}\qquad\boxed{\;\cos\theta=\frac{\text{鄰邊}}{\text{斜邊}}=\frac{b}{c}\;}\qquad\boxed{\;\tan\theta=\frac{\text{對邊}}{\text{鄰邊}}=\frac{a}{b}\;}$$
+三者的名稱依序為\textbf{正弦（sine）、餘弦（cosine）、正切（tangent）}。由定義可立刻得到一個常用關係：
+$$\tan\theta=\frac{a/c}{b/c}=\frac{\sin\theta}{\cos\theta}.$$
+
+\textbf{注意：}「對邊、鄰邊」是相對於你鎖定的那個角而言。在同一個直角三角形裡換一個銳角，對邊與鄰邊就互換了；斜邊則永遠是直角對面那條，不隨選的角改變。
+
+\subsection*{\sffamily C.\ 互餘關係}
+
+直角三角形的兩個銳角互為\textbf{餘角（complementary，相加等於 $90^\circ$）}。在同一個三角形裡對兩個銳角分別算三角比，會發現一個角的「對邊」正是另一個角的「鄰邊」。於是
+$$\boxed{\;\sin(90^\circ-\theta)=\cos\theta,\qquad \cos(90^\circ-\theta)=\sin\theta\;}$$
+「餘弦」的「餘」字正是「餘角」之意：\textbf{餘角的正弦等於本角的餘弦}。例如 $\cos 60^\circ=\sin 30^\circ$、$\sin 70^\circ=\cos 20^\circ$。
+
+\subsection*{\sffamily D.\ 特殊角：$30^\circ$、$45^\circ$、$60^\circ$}
+
+有三個角的三角比是「乾淨值」，務必記熟，因為後面解三角形常用到。來源不必硬背，用兩個經典三角形就能現場推出來：
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{$45^\circ$}：等腰直角三角形，兩股都是 $1$，斜邊 $\sqrt2$。故 $\sin 45^\circ=\cos 45^\circ=\dfrac{1}{\sqrt2}=\dfrac{\sqrt2}{2}$，$\tan 45^\circ=1$。
+\item \textbf{$30^\circ$、$60^\circ$}：正三角形（邊長 $2$）切一半，得到一個股長 $1$、斜邊 $2$、另一股 $\sqrt3$ 的直角三角形。
+\end{itemize}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{c|c|c|c}
+\hline
+$\theta$ & $\sin\theta$ & $\cos\theta$ & $\tan\theta$ \\
+\hline
+$30^\circ$ & $\dfrac12$ & $\dfrac{\sqrt3}{2}$ & $\dfrac{1}{\sqrt3}=\dfrac{\sqrt3}{3}$ \\
+$45^\circ$ & $\dfrac{\sqrt2}{2}$ & $\dfrac{\sqrt2}{2}$ & $1$ \\
+$60^\circ$ & $\dfrac{\sqrt3}{2}$ & $\dfrac12$ & $\sqrt3$ \\
+\hline
+\end{tabular}
+\end{center}
+
+記憶方法：$\sin$ 由小到大依序是 $\dfrac{\sqrt1}{2},\dfrac{\sqrt2}{2},\dfrac{\sqrt3}{2}$（$\sqrt1=1$），$\cos$ 倒過來排。
+
+\subsection*{\sffamily E.\ 用計算機求一般角的三角比}
+
+不是每個角都是特殊角。求 $\sin 37^\circ$、$\cos 52^\circ$ 這類值要靠\textbf{計算機}：先確認計算機在\textbf{角度模式（DEG）}，再按 \texttt{sin}、\texttt{cos}、\texttt{tan} 鍵。反過來，已知三角比值要回推角度，用反鍵 $\sin^{-1}$、$\cos^{-1}$、$\tan^{-1}$。
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 計算機若停在 RAD（弧度）模式，按 $\sin 30$ 不會得到 $0.5$。本章一律用角度，先確認螢幕顯示 DEG。（弧度是高二才學的另一種角度單位。）
+\item $\sin^2\theta$ 是 $(\sin\theta)^2$ 的簡寫，\textbf{不是} $\sin(\sin\theta)$，也不是 $\sin(\theta^2)$。
+\item $\sin^{-1}x$（反正弦）\textbf{不是} $\dfrac{1}{\sin x}$。前者是「正弦值為 $x$ 的角」，後者是倒數。
+\end{itemize}
+
+\section*{\sffamily 1-2\quad 廣義角與三角比的推廣}
+
+\subsection*{\sffamily A.\ 問題：角度超過 $90^\circ$ 怎麼辦？}
+
+直角三角形裡的銳角最多到 $90^\circ$。但生活中到處是更大的角：時鐘轉一圈是 $360^\circ$，陀螺轉兩圈是 $720^\circ$，倒車時方向盤往回打是「負角」。要讓三角比能用在這些角上，得先把「角」的概念本身擴大，這就是\textbf{廣義角（general angle）}。
+
+把角放進坐標平面，規定：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{始邊（initial side）}固定在 $x$ 軸正向；
+\item \textbf{終邊（terminal side）}由始邊旋轉而來；
+\item \textbf{逆時針旋轉為正角，順時針為負角}；轉超過一圈（大於 $360^\circ$）也允許。
+\end{itemize}
+這樣擺放的角稱為\textbf{標準位置（standard position）}。終邊落在第幾象限，就說這角是「第幾象限角」；終邊落在坐標軸上的（$0^\circ,90^\circ,180^\circ,270^\circ,\dots$）稱\textbf{象限軸角}。
+
+例如 $120^\circ$ 的終邊在第二象限，$210^\circ$ 在第三象限，$-30^\circ$（順時針轉 $30^\circ$）的終邊與 $330^\circ$ 同位置。終邊相同的角彼此相差 $360^\circ$ 的整數倍，稱\textbf{同界角（coterminal angles）}。
+
+\subsection*{\sffamily B.\ 用坐標 $(x,y,r)$ 重新定義三角比}
+
+關鍵的一步：在終邊上任取一點 $P(x,y)$（不取原點），令它到原點的距離 $r=\overline{OP}=\sqrt{x^2+y^2}>0$。用這三個量重新定義三角比：
+$$\boxed{\;\sin\theta=\frac{y}{r},\qquad \cos\theta=\frac{x}{r},\qquad \tan\theta=\frac{y}{x}\;(x\ne0)\;}$$
+
+\fig{d21-general-angle}{0.66}{圖 1-2：標準位置的廣義角與單位圓。終邊上取點 $P(x,y)$、$r=\overline{OP}$，定義 $\sin\theta=\frac{y}{r}$、$\cos\theta=\frac{x}{r}$、$\tan\theta=\frac{y}{x}$。終邊在第二象限時 $x<0$，故 $\cos\theta<0$。}
+
+\begin{補充框}{為什麼可以這樣用坐標定義？這跟原本的銳角定義是同一套嗎？}
+是同一個定義的「升級版」：銳角時兩者一字不差，只是把限制（邊長必為正、角必為銳角）拿掉。
+
+\textbf{先確認新舊相容。}當 $\theta$ 是銳角，終邊落在第一象限。在終邊上取點 $P(x,y)$（$x,y>0$），放下一條鉛直線到 $x$ 軸，就得到一個直角三角形：水平股 $=x$，正是 $\theta$ 的\textbf{鄰邊}；鉛直股 $=y$，正是 $\theta$ 的\textbf{對邊}；斜邊 $=r$。於是 $\dfrac{y}{r}=\dfrac{\text{對邊}}{\text{斜邊}}=\sin\theta$，$\dfrac{x}{r}=\dfrac{\text{鄰邊}}{\text{斜邊}}=\cos\theta$，新舊完全一致。
+
+\textbf{取終邊上哪一點都行。}終邊是一條從原點射出的射線，上面每個點對原點的「方向」都一樣。取近一點、遠一點，$x,y,r$ 全部按同一倍率縮放（又是相似三角形），所以 $\dfrac{y}{r}$、$\dfrac{x}{r}$ 不變。為了乾淨，常直接取 $r=1$ 的那一點，它落在\textbf{單位圓（unit circle）} $x^2+y^2=1$ 上，此時 $\sin\theta=y$、$\cos\theta=x$，三角比就是「單位圓上那一點的坐標」。
+
+\textbf{升級帶來的新東西是負值。}舊定義裡邊長都是正的，所以銳角三角比都是正數。新定義裡 $x,y$ 可正可負（看終邊在哪個象限），三角比於是能取負值。例如 $120^\circ$ 在第二象限，取 $r=1$ 的點坐標約為 $(-0.5,\,0.866)$，於是 $\cos120^\circ=-0.5$、$\sin120^\circ=0.866=\dfrac{\sqrt3}{2}$。
+
+\textbf{注意：}$r=\sqrt{x^2+y^2}$ \textbf{永遠取正}（它是距離），負號只能來自 $x$ 或 $y$。別把終邊上某點的 $y$ 直接當成 $\sin\theta$，要除以該點的 $r$；只有取 $r=1$ 時才剛好 $\sin\theta=y$。
+\end{補充框}
+
+\subsection*{\sffamily C.\ 各象限的正負號}
+
+由 $\sin\theta=\dfrac{y}{r}$、$\cos\theta=\dfrac{x}{r}$（$r$ 恆正），三角比的正負完全由終邊上點的 $x,y$ 符號決定：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c|c|c|c|c}
+\hline
+象限 & $x,y$ 符號 & $\sin\theta=\frac{y}{r}$ & $\cos\theta=\frac{x}{r}$ & $\tan\theta=\frac{y}{x}$ \\
+\hline
+第一 & $x>0,\,y>0$ & $+$ & $+$ & $+$ \\
+第二 & $x<0,\,y>0$ & $+$ & $-$ & $-$ \\
+第三 & $x<0,\,y<0$ & $-$ & $-$ & $+$ \\
+第四 & $x>0,\,y<0$ & $-$ & $+$ & $-$ \\
+\hline
+\end{tabular}
+\end{center}
+
+可用口訣「\textbf{全（一）正、（二）弦、（三）切、（四）餘}」記：第一象限全正、第二象限只有正弦正、第三象限只有正切正、第四象限只有餘弦正。
+
+有了象限正負，就能把鈍角的三角比換算成熟悉的銳角。方法：找終邊與 $x$ 軸所夾的\textbf{銳角（稱參考角，reference angle）}，先算它的三角比，再依象限補上正負號。例如 $120^\circ$ 在第二象限、參考角 $60^\circ$，第二象限 $\sin$ 為正，故 $\sin120^\circ=+\sin60^\circ=\dfrac{\sqrt3}{2}$。
+
+\textbf{象限軸角的值}（終邊落在軸上時直接用坐標讀，取 $r=1$ 的點）：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c|c|c|c|c}
+\hline
+$\theta$ & 點 $(x,y)$ & $\sin$ & $\cos$ & $\tan$ \\
+\hline
+$0^\circ$ & $(1,0)$ & $0$ & $1$ & $0$ \\
+$90^\circ$ & $(0,1)$ & $1$ & $0$ & 不存在 \\
+$180^\circ$ & $(-1,0)$ & $0$ & $-1$ & $0$ \\
+$270^\circ$ & $(0,-1)$ & $-1$ & $0$ & 不存在 \\
+\hline
+\end{tabular}
+\end{center}
+
+$90^\circ$、$270^\circ$ 的 $\tan$ 不存在，因為此時 $x=0$，$\dfrac{y}{x}$ 分母為零。
+
+\subsection*{\sffamily D.\ 平方關係 $\sin^2\theta+\cos^2\theta=1$}
+
+把廣義定義代進去：
+$$\sin^2\theta+\cos^2\theta=\frac{y^2}{r^2}+\frac{x^2}{r^2}=\frac{x^2+y^2}{r^2}=\frac{r^2}{r^2}=1.$$
+一行就出來，而且\textbf{對任何角都成立}（不限銳角），因為推導只用到 $r^2=x^2+y^2$：
+$$\boxed{\;\sin^2\theta+\cos^2\theta=1\;}$$
+由此可知：已知 $\sin\theta$（或 $\cos\theta$）與所在象限，就能反推另一個。另一個常用變形（兩邊除以 $\cos^2\theta$）是 $\tan^2\theta+1=\dfrac{1}{\cos^2\theta}$。
+
+\begin{補充框}{為什麼這條式子對「任何角」都成立，連鈍角、負角也對？}
+課本常只在直角三角形（用畢氏定理）裡證它，那只涵蓋銳角。但用廣義定義證，一步到位、不限象限：推導只用到 $r^2=x^2+y^2$，完全沒用到「$\theta$ 是不是銳角」「點在哪個象限」。
+
+$r^2=x^2+y^2$ 本身是什麼？它正是「原點到 $P(x,y)$ 的距離平方 $=$ 水平差平方 $+$ 鉛直差平方」，也就是\textbf{畢氏定理寫成坐標的樣子}。$x,y$ 可正可負都不影響，因為它們被\textbf{平方}了，負號平方掉，所以象限根本不參與。這也是這條式子被稱作\textbf{畢氏三角恆等式（Pythagorean identity）}的原因。
+
+用單位圓看最直觀：取 $r=1$，則 $\cos\theta=x$、$\sin\theta=y$，這個點落在單位圓 $x^2+y^2=1$ 上，把 $x,y$ 換成 $\cos\theta,\sin\theta$ 就是 $\cos^2\theta+\sin^2\theta=1$。\textbf{這條恆等式就是「單位圓方程式」換了個寫法}：終邊轉到圓上任何位置，那點都在圓上，等式自然恆成立。
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 鈍角的 $\cos$ 是負的，但式子裡是 $\cos^2\theta=(\cos\theta)^2$，\textbf{負數平方變正}。例如 $\cos120^\circ=-\dfrac12$，$\cos^2120^\circ=\dfrac14$，配上 $\sin^2120^\circ=\dfrac34$，相加正好 $1$。
+\item 由此式開根號求另一個比時，$\cos\theta=\pm\sqrt{1-\sin^2\theta}$ 的\textbf{正負號要看象限決定}，不能直接取正。這是本節最常見的失誤點。
+\item $\sin\theta$ 不會大於 $1$：因為 $|y|\le r$，所以 $-1\le\sin\theta\le1$，$\cos\theta$ 亦然。但 $\tan\theta$ 可以是任意實數。
+\end{itemize}
+\end{補充框}
+
+\section*{\sffamily 1-3\quad 正弦定理與餘弦定理}
+
+\subsection*{\sffamily A.\ 動機：解「任意」三角形}
+
+到目前為止，三角比都綁在「直角」三角形上。但真實世界的三角形大多沒有直角（例如測量兩座山頭的距離）。我們要的是：\textbf{已知三角形的某些邊與角，求其餘的邊與角}，這叫「解三角形（solving a triangle）」。為此需要把邊與角連起來的橋，這座橋有兩條：正弦定理與餘弦定理。
+
+約定符號：三角形 $ABC$，三個角 $A,B,C$ 的\textbf{對邊}分別記為 $a,b,c$（$a$ 對 $A$，依此類推）。
+
+\fig{d21-sine-cosine-law}{0.66}{圖 1-3：解三角形的兩條定理。從頂點 $C$ 對 $\overline{AB}$ 作高 $h$ 可推得正弦定理；把角放進坐標、用兩點距離公式可推得餘弦定理。}
+
+\subsection*{\sffamily B.\ 正弦定理}
+
+任意三角形 $ABC$ 中，每個角的正弦與其對邊成比例，比值是外接圓直徑：
+$$\boxed{\;\frac{a}{\sin A}=\frac{b}{\sin B}=\frac{c}{\sin C}=2R\;}$$
+其中 $R$ 是三角形外接圓的半徑。
+
+\begin{補充框}{正弦定理是怎麼來的？}
+從頂點 $C$ 向對邊 $\overline{AB}$（長 $c$）作高 $h$，這條高把三角形切成兩個直角三角形：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 左邊直角三角形：$\sin A=\dfrac{h}{b}\Rightarrow h=b\sin A$。
+\item 右邊直角三角形：$\sin B=\dfrac{h}{a}\Rightarrow h=a\sin B$。
+\end{itemize}
+兩式的 $h$ 是同一條高，所以 $b\sin A=a\sin B$，整理得 $\dfrac{a}{\sin A}=\dfrac{b}{\sin B}$。對其他頂點作高同理得第三個比也相等。
+
+「$=2R$」的部分要再用圓周角定理：把三角形放進外接圓（半徑 $R$），由圓的幾何可推出共同比值恰為外接圓直徑。
+
+推導用到「對邊配對角的正弦」，這正暗示了它的\textbf{使用時機}：手上有「一個角和它的對邊」配成一對時，正弦定理最順。
+\end{補充框}
+
+\textbf{注意：用正弦定理求角時的「兩解」問題。}用正弦定理由邊回推角（已知兩邊與其中一邊的對角，記為 SSA）時，因為 $\sin\theta=\sin(180^\circ-\theta)$，算出的角可能有\textbf{銳角、鈍角兩個解}。不能算出一個 $\sin$ 值就直接按反鍵交差，這俗稱「\textbf{模糊情況（ambiguous case）}」。
+
+\textbf{SSA 完整判別（無解／一解／兩解）。}已知 $A$（一角）、$a$（該角對邊）、$b$（另一邊）求角 $B$ 時，由正弦定理 $\sin B=\dfrac{b\sin A}{a}$。能拼出幾個三角形，要把 $a$ 拿來和「高 $h=b\sin A$」比大小（以下先看 $A$ 為\textbf{銳角}的主情形）：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c|c|c}
+\hline
+條件 & 幾何意義 & 解的個數 \\
+\hline
+$a<b\sin A$ & $a$ 比高還短，搆不到底邊 & \textbf{無解} \\
+$a=b\sin A$ & $a$ 恰等於高，垂足正好落點 & \textbf{恰一解}（直角三角形） \\
+$b\sin A<a<b$ & $a$ 比高長、又比 $b$ 短 & \textbf{兩解}（一銳一鈍） \\
+$a\ge b$ & $a$ 已不短於 $b$ & \textbf{恰一解} \\
+\hline
+\end{tabular}
+\end{center}
+
+另一種快速判讀：先算 $\sin B=\dfrac{b\sin A}{a}$，
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 若 $\sin B>1$，算不出 $B$，\textbf{無解}；
+\item 若 $\sin B=1$，$B=90^\circ$，\textbf{一解}；
+\item 若 $0<\sin B<1$，候選 $B_1=\sin^{-1}(\cdots)$ 與 $B_2=180^\circ-B_1$，逐一用「$A+B<180^\circ$」檢查：兩個都通過就\textbf{兩解}，只有一個通過就\textbf{一解}。
+\end{itemize}
+若 $A$ 為\textbf{直角或鈍角}：此時 $a$ 必須是最大邊（大角對大邊），只有 $a>b$ 時才有解，且\textbf{恰一解}（$B$ 必為銳角，不會有鈍角的第二解）。
+
+\subsection*{\sffamily C.\ 餘弦定理}
+
+當已知的是「兩邊夾一角（SAS）」或「三邊（SSS）」時，正弦定理使不上力（沒有現成的「角配對邊」），這時要用餘弦定理：
+$$\boxed{\;c^2=a^2+b^2-2ab\cos C\;}$$
+（對其餘角同理：$a^2=b^2+c^2-2bc\cos A$，$b^2=a^2+c^2-2ac\cos B$。）反過來解角：$\cos C=\dfrac{a^2+b^2-c^2}{2ab}$，可由三邊直接求任一角。
+
+\begin{補充框}{餘弦定理是怎麼來的？那個 $-2ab\cos C$ 從哪來？}
+用坐標法推導最乾淨。把角 $C$ 放在原點、一邊沿 $x$ 軸正向：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 頂點 $B$ 在 $x$ 軸上，坐標 $(a,0)$（因為 $\overline{CB}=a$）。
+\item 頂點 $A$ 在與 $x$ 軸夾角 $C$ 的射線上、距原點 $b$，由廣義角定義其坐標為 $(b\cos C,\,b\sin C)$。
+\end{itemize}
+邊 $c=\overline{AB}$，用上一章的兩點距離公式：
+$$c^2=(b\cos C-a)^2+(b\sin C)^2=a^2+b^2(\cos^2C+\sin^2C)-2ab\cos C.$$
+用 $\sin^2C+\cos^2C=1$，得 $c^2=a^2+b^2-2ab\cos C$。
+
+可見餘弦定理就是「\textbf{兩點距離公式 $+$ 平方關係}」，那個 $-2ab\cos C$ 來自展開 $(b\cos C-a)^2$ 的交叉項。當 $C=90^\circ$，$\cos C=0$，它退化成 $c^2=a^2+b^2$，所以\textbf{畢氏定理是餘弦定理的特例}，$-2ab\cos C$ 正是「角不是直角」時對畢氏定理的修正。
+
+推導用的是「兩邊 $a,b$ 與它們的夾角 $C$」去求第三邊 $c$，這正暗示它的\textbf{使用時機}：給的是「兩邊夾一角（SAS）」，或反過來「三邊求角（SSS）」。
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 餘弦定理中間是\textbf{減號}，不要寫成 $c^2=a^2+b^2+2ab\cos C$。當 $C$ 為鈍角時 $\cos C<0$，減去負數會讓 $c^2$ 變大、對邊變長，符合直覺。
+\item 餘弦定理求角\textbf{沒有兩解問題}：因為在 $0^\circ$ 到 $180^\circ$ 內 $\cos$ 是一對一的（$\cos$ 值唯一決定角），且 $\cos$ 的正負直接告訴你銳角還是鈍角。想避開兩解陷阱又要求角時，餘弦定理較安全。
+\end{itemize}
+\end{補充框}
+
+\textbf{怎麼選用哪一條？}關鍵是看「給的資訊長什麼樣」：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c|c}
+\hline
+已知 & 用什麼 \\
+\hline
+兩角一邊（AAS / ASA） & 正弦定理 \\
+兩邊一對角（SSA，先判無解／一解／兩解） & 正弦定理 \\
+兩邊夾一角（SAS） & 餘弦定理求第三邊，再求角 \\
+三邊（SSS）求角 & 餘弦定理（$\cos C=\frac{a^2+b^2-c^2}{2ab}$） \\
+\hline
+\end{tabular}
+\end{center}
+
+口訣：「\textbf{有現成的角配對邊用正弦，只有夾角或只有三邊用餘弦}」。
+
+\subsection*{\sffamily D.\ 三角形面積與海龍公式}
+
+直角三角形面積是 $\frac12\times$ 底 $\times$ 高。對一般三角形，若知道\textbf{兩邊與其夾角}，高可寫成 $b\sin C$，得到一條好用的面積公式：
+$$\boxed{\;\text{面積}=\frac12ab\sin C\;}$$
+（任兩邊與其夾角皆可：$\frac12bc\sin A=\frac12ac\sin B=\frac12ab\sin C$。）
+
+若\textbf{只知道三邊} $a,b,c$（連一個角都沒給），可用\textbf{海龍公式（Heron's formula）}直接求面積：先取\textbf{半周長（semi-perimeter）} $s=\dfrac{a+b+c}{2}$，則
+$$\boxed{\;\text{面積}=\sqrt{s(s-a)(s-b)(s-c)}\;}$$
+
+\begin{補充框}{海龍公式與 $\frac12ab\sin C$ 是同一個面積嗎？}
+是。兩者並不矛盾，是同一面積的兩種算法。把餘弦定理 $\cos C=\dfrac{a^2+b^2-c^2}{2ab}$ 代進 $\frac12ab\sin C$（用 $\sin C=\sqrt{1-\cos^2 C}$）化簡，就會得到只含邊長的海龍公式。
+
+實務上「三邊求面積」直接用海龍公式即可，不必繞一圈先求角。面積選法可記成：\textbf{有夾角用 $\frac12ab\sin C$，只剩三邊用海龍公式}。
+\end{補充框}
+
+\section*{\sffamily 1-4\quad 三角比的應用與極坐標}
+
+\subsection*{\sffamily A.\ 斜率等於傾斜角的正切}
+
+回到上一章的斜率。一條直線與 $x$ 軸正向所夾、由 $x$ 軸\textbf{逆時針量到直線}的角，稱\textbf{傾斜角（angle of inclination）} $\alpha$（規定 $0^\circ\le\alpha<180^\circ$）。沿直線往右走一段，水平變化 $\Delta x$、鉛直變化 $\Delta y$，恰好 $\dfrac{\Delta y}{\Delta x}=\tan\alpha$。所以：
+$$\boxed{\;m=\tan\alpha\;}$$
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item $\alpha=0^\circ$：水平線，$m=0$。
+\item $\alpha$ 為銳角：$m>0$（往右上）；$\alpha$ 為鈍角：$m<0$（往右下，因第二象限 $\tan<0$）。
+\item $\alpha=90^\circ$：鉛直線，$\tan90^\circ$ 不存在，正對應「斜率不存在」。
+\end{itemize}
+這正是上一章「斜率不存在」的真正理由：傾斜角到了 $90^\circ$，正切沒有定義。
+
+\subsection*{\sffamily B.\ 兩直線的夾角}
+
+兩條相交直線斜率分別為 $m_1,m_2$，它們夾角 $\theta$ 的正切可由斜率直接算（推導用「兩傾斜角相減」加上高二的正切差角公式，這裡先給結果使用）：
+$$\boxed{\;\tan\theta=\left|\frac{m_1-m_2}{1+m_1m_2}\right|\;}$$
+取絕對值是因為要報「兩線夾的\textbf{銳角}」。特例：$1+m_1m_2=0$（即 $m_1m_2=-1$）時分母為零、$\tan\theta$ 不存在，對應 $\theta=90^\circ$，正好就是上一章的垂直判定。
+
+\subsection*{\sffamily C.\ 仰角與俯角}
+
+測量時，常用觀測者視線與\textbf{水平線}所夾的角來描述目標方位，這對角是成對的：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{仰角（angle of elevation）}：目標在水平線\textbf{上方}時，視線往上抬、與水平線夾的角。
+\item \textbf{俯角（angle of depression）}：目標在水平線\textbf{下方}時，視線往下俯、與水平線夾的角。
+\end{itemize}
+兩者都從「水平線」量起，不是從鉛直線。一個常用幾何事實：A 看 B 的俯角，等於 B 看 A 的仰角（兩條水平線平行，內錯角相等）。解題時常靠這點把俯角「搬到」三角形內部變成可用的內角。
+
+\subsection*{\sffamily D.\ 正射影}
+
+把線段 $\overline{AB}$（長 $L$，與某方向夾角 $\theta$）投影到那個方向上，影子的長度是 $L\cos\theta$。這個「打在某方向上的影子長」叫\textbf{正射影（orthogonal projection）}：
+$$\boxed{\;\text{正射影長}=L\cos\theta\;}$$
+它是物理「力的分解」（$F\cos\theta$ 是沿某方向的分量）與高二向量內積的雛形。
+
+\subsection*{\sffamily E.\ 極坐標}
+
+描述平面上的點，除了上一章的直角坐標 $(x,y)$（往右幾格、往上幾格），還有另一種更自然的方式：\textbf{離原點多遠、朝哪個方向}，這就是\textbf{極坐標（polar coordinates）}。
+
+取原點為\textbf{極點（pole）}、$x$ 軸正向為\textbf{極軸（polar axis）}。平面上一點 $P$ 用 $(r,\theta)$ 表示：$r=\overline{OP}\ge0$ 是離極點的距離，$\theta$ 是 $\overrightarrow{OP}$ 與極軸的夾角（廣義角）。極坐標與直角坐標的互換：
+$$\boxed{\;x=r\cos\theta,\qquad y=r\sin\theta\;}\qquad\boxed{\;r=\sqrt{x^2+y^2},\qquad \tan\theta=\frac{y}{x}\;}$$
+這兩條互換式正是 1-2 廣義角定義 $\cos\theta=\dfrac{x}{r}$、$\sin\theta=\dfrac{y}{r}$ 移項而來，極坐標其實就是「把三角比反過來用」。
+
+\fig{d21-polar}{0.62}{圖 1-4：極坐標與直角坐標互換。點 $P$ 既可記為直角坐標 $(x,y)$，也可記為極坐標 $(r,\theta)$，兩者由 $x=r\cos\theta$、$y=r\sin\theta$ 相連。}
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 把直角坐標化極坐標時，\textbf{只用 $\tan\theta=\dfrac{y}{x}$ 會丟掉象限資訊}。例如 $\tan\theta=-\sqrt3$ 可能是 $120^\circ$ 或 $300^\circ$，一定要看點落在哪個象限來決定 $\theta$。
+\item 極坐標表示\textbf{不唯一}：同一點的 $\theta$ 可加減 $360^\circ$；極點（$r=0$）時 $\theta$ 可任意。
+\end{itemize}
+
+\section*{\sffamily 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{銳角三角比}：$\sin=\dfrac{\text{對}}{\text{斜}}$、$\cos=\dfrac{\text{鄰}}{\text{斜}}$、$\tan=\dfrac{\text{對}}{\text{鄰}}=\dfrac{\sin}{\cos}$；互餘 $\sin(90^\circ-\theta)=\cos\theta$。
+\item \textbf{特殊角}：$30^\circ/45^\circ/60^\circ$ 的 $\sin$ 為 $\dfrac12,\dfrac{\sqrt2}{2},\dfrac{\sqrt3}{2}$，$\cos$ 倒序，$\tan$ 為 $\dfrac{\sqrt3}{3},1,\sqrt3$。
+\item \textbf{廣義角}：標準位置（始邊在 $x$ 軸正向、逆時針為正）；終邊上點 $(x,y)$、$r=\sqrt{x^2+y^2}$，$\sin=\dfrac{y}{r}$、$\cos=\dfrac{x}{r}$、$\tan=\dfrac{y}{x}$。象限正負「全正、弦、切、餘」。
+\item \textbf{平方關係}：$\sin^2\theta+\cos^2\theta=1$（對任意角成立）；開根號取正負看象限。
+\item \textbf{正弦定理}：$\dfrac{a}{\sin A}=\dfrac{b}{\sin B}=\dfrac{c}{\sin C}=2R$（角配邊）。SSA 須先判無解／一解／兩解：比 $a$ 與高 $b\sin A$，$a<b\sin A$ 無解、$a=b\sin A$ 一解（直角）、$b\sin A<a<b$ 兩解、$a\ge b$ 一解。
+\item \textbf{餘弦定理}：$c^2=a^2+b^2-2ab\cos C$（兩邊夾角求第三邊；或 $\cos C=\dfrac{a^2+b^2-c^2}{2ab}$ 三邊求角）。畢氏定理是其特例。
+\item \textbf{面積}：有夾角用 $\dfrac12ab\sin C$；只知三邊用海龍公式 $\sqrt{s(s-a)(s-b)(s-c)}$，$s=\dfrac{a+b+c}{2}$。
+\item \textbf{斜率與夾角}：$m=\tan\alpha$（傾斜角）；兩直線夾角 $\tan\theta=\left|\dfrac{m_1-m_2}{1+m_1m_2}\right|$。
+\item \textbf{正射影}：影子長 $L\cos\theta$。
+\item \textbf{仰角／俯角}：皆從\textbf{水平線}量起；A 看 B 的俯角 $=$ B 看 A 的仰角（內錯角）。
+\item \textbf{極坐標}：$x=r\cos\theta,\ y=r\sin\theta$；$r=\sqrt{x^2+y^2},\ \tan\theta=\dfrac{y}{x}$（象限定 $\theta$）。
+\end{itemize}
+\end{補充框}
+
+\end{document}

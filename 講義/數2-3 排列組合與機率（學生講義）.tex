@@ -1,0 +1,307 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\Huge\bfseries 數2-3 排列組合與機率}\\[3pt]
+{\sffamily\large 普通高中 數學（必修・第二冊）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+排列組合與機率，本質上都在做兩件事：\textbf{數一堆東西有幾個}，以及\textbf{問某一類東西占多少比例}。本章先把「集合（set）」這個共同語言講清楚（表示法、子集、交集／聯集／餘集、文氏圖），並順手得到\textbf{取捨原理}；接著學「有系統地數數」——加法原理、乘法原理、樹狀圖，並用它們建立\textbf{排列（permutation）}（含相同物排列）與\textbf{組合（combination）}；最後把計數套進\textbf{古典機率（classical probability）}，並學會描述一場隨機過程「平均值」的\textbf{期望值（expected value）}。
+
+本章是高中機率統計的起點：古典機率與期望值通往數據分析的數據思維，也是高二條件機率、獨立性、貝氏定理的地基；排列組合的計數技巧則會在二項式定理與機率分布裡反覆出現。本章以\textbf{基本計算與觀念理解}為主。
+
+\medskip
+本章主線：
+
+\begin{center}
+集合與取捨原理 $\rightarrow$ 計數原理（加法、乘法、樹狀圖）$\rightarrow$ 排列與組合 $\rightarrow$ 古典機率與期望值
+\end{center}
+
+\section*{\sffamily 3-1\quad 集合}
+
+\subsection*{\sffamily A.\ 為什麼先學集合}
+
+排列組合與機率，都在問「一堆東西有幾個」「某一類占多少比例」。要把「一堆東西」「某一類」說清楚，就需要一種精準的語言——這就是\textbf{集合}。先把語言備好，後面數數才不會含糊。
+
+\begin{補充框}{基本名詞：集合與元素}
+把一些\textbf{確定、可分辨}的對象聚在一起，就成為一個\textbf{集合（set）}；其中每一個對象稱為這個集合的\textbf{元素（element）}。$a$ 是集合 $A$ 的元素，記作 $a\in A$；不是元素則記 $a\notin A$。
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{列舉法}：把元素一一列出，如 $A=\{1,2,3,4,5\}$。
+\item \textbf{描述法}：用條件描述，如 $A=\{x \mid x\ \text{是}\ 1\ \text{到}\ 5\ \text{的整數}\}$（讀作「所有滿足……的 $x$」）。
+\item 集合\textbf{不計次序、不計重複}：$\{1,2,3\}=\{3,1,2\}$，且 $\{1,1,2\}$ 就是 $\{1,2\}$。
+\end{itemize}
+兩個特別的集合：\textbf{空集（empty set）} $\varnothing$ 是沒有任何元素的集合；\textbf{宇集（universal set）} $U$ 是在某個問題裡，把所有討論對象的「總範圍」固定成的一個集合，後面所有集合都是 $U$ 的一部分。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 子集與包含關係}
+
+若集合 $A$ 的\textbf{每一個元素都屬於} $B$，就說 $A$ 是 $B$ 的\textbf{子集（subset）}，記作 $A\subseteq B$。規定\textbf{空集是任何集合的子集}（$\varnothing\subseteq B$ 恆成立），且任何集合都是自己的子集（$A\subseteq A$）。若 $A\subseteq B$ 且 $A\neq B$，稱 $A$ 是 $B$ 的\textbf{真子集（proper subset）}。
+
+一個好用的計數事實：含 $n$ 個元素的集合，總共有
+$$\boxed{\,2^n\,}$$
+個子集（含空集與自己）。理由：每一個元素都面臨「\textbf{選進來／不選進來}」兩種獨立選擇，$n$ 個元素就是 $\underbrace{2\times2\times\cdots\times2}_{n}=2^n$——這正是下一節\textbf{乘法原理}的第一個應用。
+
+\subsection*{\sffamily C.\ 交集、聯集、餘集}
+
+把集合「組合」起來，有三個基本運算。設 $A,B$ 都是宇集 $U$ 的子集：
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{交集（intersection）}：同時屬於 $A$ 與 $B$ 的元素所成的集合，$A\cap B=\{x \mid x\in A\ \text{且}\ x\in B\}$。
+\item \textbf{聯集（union）}：屬於 $A$ 或 $B$（至少其一）的元素所成的集合，$A\cup B=\{x \mid x\in A\ \text{或}\ x\in B\}$。
+\item \textbf{餘集（complement）}：在 $U$ 中\textbf{不屬於} $A$ 的元素所成的集合，$A^{c}=\{x \mid x\in U\ \text{且}\ x\notin A\}$。
+\end{itemize}
+
+\textbf{注意：}這裡的「或」是\textbf{邏輯上的或}，包含「只屬於 $A$」「只屬於 $B$」「兩者都屬於」三種情形，不是日常那種「二選一」的或。另外，「餘集」一定要先講清楚\textbf{相對於哪個宇集} $U$：同一個 $A$，宇集不同，$A^c$ 就不同。
+
+用\textbf{文氏圖（Venn diagram）}——以一個矩形代表宇集 $U$、圓圈代表各集合——可以一眼看出這三個運算。
+
+\fig{d23-venn}{0.96}{圖 3-1：文氏圖。左——交集 $A\cap B$（兩圈重疊處）；中——聯集 $A\cup B$（兩圈合起來，重疊只算一次）；右——餘集 $A^c$（圓 $A$ 以外、宇集 $U$ 以內的部分）。}
+
+\subsection*{\sffamily D.\ 取捨原理}
+
+用 $|A|$ 表示集合 $A$ 的元素個數。一個常見的誤會是「$|A\cup B|=|A|+|B|$」——這是\textbf{錯的}：同時屬於兩者的元素（即 $A\cap B$）被算了兩次，要扣回來。修正後就得到：
+
+$$\boxed{\,|A\cup B| = |A| + |B| - |A\cap B|\,}$$
+
+把 $|A|$、$|B|$ 相加時，交集那塊被算了\textbf{兩次}，所以要\textbf{減一次} $|A\cap B|$ 補回來。這種「先多加、再扣掉重複」的想法叫\textbf{取捨原理（inclusion–exclusion principle）}。
+
+\begin{補充框}{為什麼剛好「減一次」交集？盯著「每個元素被數幾次」}
+算 $|A\cup B|$ 時，每個元素都該被數\textbf{恰好一次}。但我們是用 $|A|+|B|$ 去湊，這個湊法會把「同時在 $A$ 和 $B$ 裡」的元素數兩次。把聯集裡的元素分成三種互不重疊的區域：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{0.34\linewidth} p{0.30\linewidth} p{0.18\linewidth}}
+\hline
+\textbf{元素位置} & \textbf{$|A|+|B|$ 共數了} & \textbf{應該數} \\
+\hline
+只在 $A$（不在 $B$） & 1 次 & 1 次 \\
+只在 $B$（不在 $A$） & 1 次 & 1 次 \\
+同時在 $A$、$B$（$A\cap B$） & 2 次 & 1 次（多 1 次） \\
+\hline
+\end{tabular}
+\end{center}
+
+只有「兩邊都在」的那群被多數了\textbf{剛好一次}，所以從 $|A|+|B|$ 裡\textbf{減掉一次} $|A\cap B|$，每個元素就都恰好剩 1 次。「先多加、再扣掉重複」就是\textbf{取捨}兩字的由來。
+\end{補充框}
+
+碰到\textbf{三個集合}時，同樣的「先多加、再扣重複」思路要再做一輪修正：
+
+$$\boxed{\,|A\cup B\cup C| = |A|+|B|+|C| - |A\cap B| - |B\cap C| - |C\cap A| + |A\cap B\cap C|\,}$$
+
+記法是「\textbf{加單個、減成對、再加三個一起}」。為什麼最後又要把 $|A\cap B\cap C|$ 加回來？追蹤「同時落在三個集合」的元素：它在 $|A|+|B|+|C|$ 被算了 3 次，又在三個兩兩交集各被減 1 次（共減 3 次），淨剩 $3-3=0$ 次——被扣光了，所以要 $+|A\cap B\cap C|$ 把它補成「恰好 1 次」。\textbf{加單、減雙、加三}這個「奇加偶減」的節奏，全來自「讓每個元素淨數一次」這一個要求。
+
+\begin{補充框}{一個常被忽略的特例：互斥時直接相加}
+若 $A\cap B=\varnothing$（兩集合\textbf{沒有重疊}，稱為\textbf{互斥}），則 $|A\cap B|=0$，取捨原理退化成 $|A\cup B|=|A|+|B|$。也就是說，「互斥才能直接相加」並不是另一條規則，而是取捨原理的\textbf{特例}。
+\end{補充框}
+
+\section*{\sffamily 3-2\quad 計數原理}
+
+排列組合的全部技術，都建立在兩條最樸素的原理上：\textbf{加法原理}與\textbf{乘法原理}。把它們講透，後面的公式都只是它們的反覆運用。
+
+\subsection*{\sffamily A.\ 有系統的窮舉與樹狀圖}
+
+「數有幾種」最笨但最可靠的方法，是\textbf{有系統地一個個列出來（窮舉）}，列的時候用\textbf{樹狀圖（tree diagram）}避免漏掉或重複：從一個起點出發，每做一個決定就分岔一次，走到底的每一條路徑就是一種情形。
+
+\fig{d23-tree}{0.62}{圖 3-2：樹狀圖。以「2 種上衣搭 3 種褲子」為例，從起點先分出 2 種上衣，每種上衣再分出 3 種褲子，走到底共 $2\times3=6$ 條路徑，對應 6 種搭配。}
+
+樹狀圖之所以可靠，是因為它逼你「\textbf{分階段、不重不漏}」地決定。但路徑一多就畫不下，於是我們需要能\textbf{直接算總數}的原理。
+
+\subsection*{\sffamily B.\ 加法原理與乘法原理}
+
+\begin{itemize}\setlength{\itemsep}{4pt}
+\item \textbf{加法原理（addition principle）}：完成一件事有幾種\textbf{互不重疊的方式類別}，若第一類有 $m$ 種做法、第二類有 $n$ 種做法、……，且各類\textbf{彼此互斥}（不會同時發生），則總方法數為 $\boxed{\,m+n+\cdots\,}$。關鍵詞是「\textbf{分類、或}」。
+\item \textbf{乘法原理（multiplication principle）}：完成一件事需要\textbf{連續做幾個步驟}，若第一步有 $m$ 種做法、第二步有 $n$ 種做法、……，則總方法數為 $\boxed{\,m\times n\times\cdots\,}$。關鍵詞是「\textbf{分步、且}」。
+\end{itemize}
+
+\begin{補充框}{我到底什麼時候該加、什麼時候該乘？一套可照走的判斷流程}
+兩個原理對應兩種不同的問句：
+
+\textbf{第一步——先問「完成這件事，是選一種就好，還是每樣都要做？」}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 若「做了 A 就完成、不必再做 B」（A、B 是兩種\textbf{並列}的辦法）$\rightarrow$ \textbf{分類，用加法}。類比：從家到學校，可以搭公車\textbf{或}騎腳踏車，搭上任何一種就到了。走法數 ＝ 公車路線數 ＋ 腳踏車路線數。
+\item 若「A 做完還得做 B，全部做完才算完成」（A、B 是\textbf{先後接續}的環節）$\rightarrow$ \textbf{分步，用乘法}。類比：早餐要「選一種飲料」\textbf{且}「選一種主食」，兩樣都選才湊成一份。早餐種數 ＝ 飲料數 $\times$ 主食數。
+\end{itemize}
+
+\textbf{第二步——複雜題往往兩者套在一起}：先分大類（加），每類內部再分步（乘）。
+
+\textbf{一眼分辨的口訣：}看到「\textbf{或}」「分成幾種情況」$\rightarrow$ 加；看到「\textbf{且}」「接著」「每一步」$\rightarrow$ 乘。還有一招更直觀：\textbf{畫得出「並排的幾堆」就是加，畫得出「一排要填的格子」就是乘}。
+\end{補充框}
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 加法原理要求各類\textbf{互斥}（不可重疊），否則會重複計數，要改用取捨原理先扣掉重疊。
+\item 乘法原理要求每一步的\textbf{選項數固定}，但「固定」不代表「跟前一步無關到選項都一樣」。排 3 人時第 1 格 7 種、第 2 格剩 6 種、第 3 格剩 5 種——每一步的選項數雖在變，但「在那一步\textbf{當下}有幾個選項」是確定的，照填即可（這正是排列公式 $n(n-1)(n-2)\cdots$ 的由來）。
+\end{itemize}
+
+\section*{\sffamily 3-3\quad 排列與組合}
+
+有了乘法原理，就能處理高中最重要的兩種計數：\textbf{排列}（在意順序）與\textbf{組合}（不在意順序）。
+
+\subsection*{\sffamily A.\ 階乘與直線排列}
+
+先看一個基本問題：把 $n$ 個\textbf{相異}物排成一列，有幾種排法？用「空格法」（要排幾樣就畫幾個空格，每格填「這一格有幾種選擇」，最後相乘）：第 1 格有 $n$ 種，選掉後第 2 格剩 $n-1$ 種，……，最後一格剩 1 種，相乘得 $n(n-1)\cdots2\cdot1$。這個連乘給它一個名字：
+
+\textbf{階乘（factorial）}：正整數 $n$ 的階乘定義為
+$$n! = n\times(n-1)\times\cdots\times2\times1,$$
+並\textbf{規定 $0!=1$}（這個規定能讓後面的公式不開特例地通用）。
+
+更一般地，從 $n$ 個相異物中\textbf{取出 $r$ 個排成一列}（在意先後），用空格法：$r$ 個格子依序有 $n,\,n-1,\,\dots,\,n-r+1$ 種選擇，相乘得\textbf{直線排列數} $P^n_r$（permutation）：
+
+$$\boxed{\,P^n_r = n(n-1)(n-2)\cdots(n-r+1) = \dfrac{n!}{(n-r)!}\,}\qquad(0\le r\le n)$$
+
+特例：取全部排列 $P^n_n = n!$。
+
+\subsection*{\sffamily B.\ 含重複物的排列}
+
+前面 $P^n_r$ 算的都是\textbf{相異物}。但若要排的東西裡有\textbf{完全相同、無法分辨}的（如「MAMA」裡有兩個 M、兩個 A），同一種「看起來的排法」會被相異物公式重複計算很多次，必須把這些重複扣掉。
+
+先看一個具體問題：把 \texttt{A}、\texttt{A}、\texttt{B} 三個字母排成一列有幾種？若把兩個 A 暫時貼上標籤當成相異物 $A_1,A_2$，全排列有 $3!=6$ 種；但每一種「真正看得到的排法」（如 \texttt{AAB}）裡，兩個 A 互換（$A_1A_2B$ 與 $A_2A_1B$）看起來\textbf{一模一樣}，被算了 $2!$ 次。除掉這個重複，得 $\dfrac{3!}{2!}=3$ 種。把這個想法一般化：
+
+\textbf{相同物的直線排列}：把 $n$ 個物排成一列，其中有 $k$ 種相同物、各有 $n_1,n_2,\dots,n_k$ 個（$n_1+n_2+\cdots+n_k=n$），則\textbf{相異排列數}為
+$$\boxed{\,\dfrac{n!}{n_1!\,n_2!\cdots n_k!}\,}$$
+\textbf{理由}：先把全部當相異物排，有 $n!$ 種；但第 $i$ 種相同物彼此互換（$n_i!$ 種）看起來都一樣，是重複計數，故每一種相同物都要除掉其內部排序 $n_i!$。
+
+\textbf{注意：}相同物排列\textbf{只除以「相同物自己」的階乘}，不要把相異物也拿去除。又，「相同」指\textbf{完全無法分辨}；若兩顆球同色但標了不同號碼，仍算相異物，用 $P$ 不用此式。
+
+\subsection*{\sffamily C.\ 組合}
+
+很多時候我們\textbf{只關心「選了哪些」，不關心「先後順序」}。例如從 5 人中選 3 人組一個委員會，「選甲乙丙」和「選丙乙甲」是同一個委員會。這種「取出但不排序」的計數叫\textbf{組合}。
+
+組合數怎麼由排列數得到？關鍵觀察：每一個「3 人組合」，若再排序，會產生 $3!$ 種不同的排列。也就是說
+$$\underbrace{P^5_3}_{\text{選 3 人並排序}} = \underbrace{C^5_3}_{\text{選哪 3 人}}\times\underbrace{3!}_{\text{這 3 人的排序}}.$$
+把 $3!$ 除過去就得到\textbf{組合數} $C^n_r$（combination，亦寫 $\binom{n}{r}$）：從 $n$ 個相異物中\textbf{取出 $r$ 個}（不計順序）的方法數為
+
+$$\boxed{\,C^n_r = \dfrac{P^n_r}{r!} = \dfrac{n!}{r!\,(n-r)!}\,}$$
+
+\fig{d23-perm-comb}{0.92}{圖 3-3：以「從 $\{A,B,C\}$ 取 2 個」對照。左——排列 $P^3_2=6$（順序不同算不同，如 $AB$、$BA$ 視為兩種）；右——組合 $C^3_2=3$（順序不同算同一組，$\{A,B\}$ 只算一種）。每個組合都對應 $2!=2$ 個排列，故 $C^3_2=P^3_2/2!=3$。}
+
+\begin{補充框}{排列和組合公式只差一個 $r!$，這個 $r!$ 到底在數什麼？}
+排列與組合數的是同一批「選出來的 $r$ 個東西」，差別只在\textbf{選出來之後排不排序}。把「從 $n$ 取 $r$ 並排成一列」這件事（即 $P^n_r$）拆成兩個步驟：
+\begin{enumerate}\setlength{\itemsep}{1pt}
+\item 先決定「選哪 $r$ 個」——有 $C^n_r$ 種；
+\item 再把這 $r$ 個排成一列——有 $r!$ 種。
+\end{enumerate}
+由乘法原理（分步、且）：$P^n_r = C^n_r \times r!$。把 $r!$ 除過去，立刻得到 $C^n_r=\dfrac{P^n_r}{r!}$。
+
+所以\textbf{$r!$ 數的就是「同一組 $r$ 個東西的內部排序方式數」}——組合把這 $r!$ 種通通看成一種，所以要\textbf{除掉}它。
+
+\textbf{注意：}是「除以 $r!$」不是「減 $r!$」。因為每個組合「\textbf{膨脹成}」 $r!$ 個排列是\textbf{乘}起來的關係，要還原就\textbf{除}回去。判斷該用 $P$ 還是 $C$ 的唯一標準是「\textbf{換位置算不算不同}」：排名次、安排不同職位、排成一列、密碼 $\rightarrow$ 排列；選委員、選球、組隊、抽幾張牌 $\rightarrow$ 組合。
+\end{補充框}
+
+組合有兩個好用的性質：
+$$\boxed{\,C^n_r = C^n_{\,n-r}\,}\quad\text{（對稱性：選 $r$ 個 ＝ 丟掉 $n-r$ 個）}$$
+$$\boxed{\,C^n_r = C^{n-1}_{r-1} + C^{n-1}_{r}\,}\quad\text{（巴斯卡關係：以「某特定元素選不選」分類）}$$
+對稱性可以把 $C^{100}_{98}$ 這種「取很多」的算成 $C^{100}_{2}$ 這種「取很少」的，省下大量計算。
+
+\begin{延伸框}{「平均分組」為什麼還要再除以一個階乘？}
+有一類題目是把 $2n$ 個人\textbf{平均分成兩組}。直覺上會寫 $C^{2n}_n$（先選 $n$ 人當一組，剩下 $n$ 人自然成另一組），但若兩組\textbf{沒有名稱、地位相同}，這樣會\textbf{重複計數}：把「甲組、乙組」的內容對調，其實是同一種分法，卻被算成兩次。所以還要再\textbf{除以 $2!$}。
+
+更一般地，把東西分成\textbf{若干個地位相同、且大小相等}的組時，這些「組之間的排序」也是一種「不在意順序」，要把它除掉。這與組合「除以 $r!$」是同一個道理——凡是「不在意順序」的重複，都要除掉對應的階乘。這類分組題在升學考試中經常出現。
+\end{延伸框}
+
+\section*{\sffamily 3-4\quad 古典機率與期望值}
+
+數數的技術備齊了，現在用它來回答「\textbf{某件事發生的可能性有多大}」。
+
+\subsection*{\sffamily A.\ 樣本空間與事件}
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{隨機試驗（random experiment）}：結果無法事先確定、但所有可能結果已知的試驗（如擲一顆骰子、抽一張牌）。
+\item \textbf{樣本空間（sample space）} $S$：一次試驗\textbf{所有可能結果}所成的集合。每個結果稱為一個\textbf{樣本點}。
+\item \textbf{事件（event）}：樣本空間的\textbf{子集}。例如擲骰子「出現偶數」就是事件 $A=\{2,4,6\}\subseteq S$。
+\end{itemize}
+
+既然事件是集合，前面學的集合運算就全部能用：$A\cap B$＝「$A,B$ 同時發生」、$A\cup B$＝「$A,B$ 至少一個發生」、$A^c$＝「$A$ 不發生」。
+
+\subsection*{\sffamily B.\ 古典機率}
+
+當樣本空間裡每個結果\textbf{發生的機會都一樣大}（稱為\textbf{等可能}，如公正骰子的六面、洗勻的牌）時，機率就退化成一個「數個數」的問題：若樣本空間 $S$ 由 $n(S)$ 個\textbf{等可能}的結果組成，事件 $A$ 含其中 $n(A)$ 個結果，則 $A$ 發生的機率為
+
+$$\boxed{\,P(A)=\dfrac{n(A)}{n(S)}=\dfrac{\text{有利結果數}}{\text{所有結果數}}\,}$$
+
+這就是為什麼前三節的計數技術，是機率的基本功——分子分母都是在「數個數」。
+
+\fig{d23-probability}{0.96}{圖 3-4：左——擲一顆公正骰子，樣本空間 $S=\{1,2,3,4,5,6\}$（六面等可能），事件「出現偶數」$A=\{2,4,6\}$，故 $P(A)=\tfrac{3}{6}=\tfrac12$。右——期望值是「以機率為權重的平均」（見 C 段）：各結果的數值乘上各自機率再相加。}
+
+\textbf{機率的基本性質}（對任何事件 $A,B$）：
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item $0\le P(A)\le 1$；$P(\varnothing)=0$（必不發生）、$P(S)=1$（必發生）。
+\item \textbf{餘事件}：$\boxed{\,P(A^c)=1-P(A)\,}$。求「至少……」常從反面用此式算。
+\item \textbf{取捨（加法公式）}：$\boxed{\,P(A\cup B)=P(A)+P(B)-P(A\cap B)\,}$（與集合取捨原理同形，只是把「個數」換成「機率」）。
+\item 若 $A,B$ \textbf{互斥}（$A\cap B=\varnothing$，不可能同時發生），則 $P(A\cup B)=P(A)+P(B)$。
+\end{itemize}
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 分子分母的\textbf{數法要一致}：分母用組合數，分子也要用組合數；分母用排列數，分子也用排列。千萬不能一個有序、一個無序。
+\item 「至少一個」不等於「剛好一個」。「至少」型用餘事件 $P(A^c)=1-P(A)$ 通常最穩、最快。
+\end{itemize}
+
+\begin{延伸框}{「等可能」憑什麼成立？這個假設誰保證？}
+古典機率公式 $P(A)=\dfrac{n(A)}{n(S)}$ 看似理所當然，但它\textbf{完全建立在「每個結果等可能」這個假設上}。要誠實地說：\textbf{等可能性是前提假設，不是能被證明的定理}。它的合理性來自兩個層面：
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{對稱性論證}：當各結果在物理上「找不到任何理由偏好其中之一」時，我們\textbf{假定}它們等可能。公正骰子六面形狀、質量對稱，沒有哪一面特別容易朝上，於是賦予各 $\tfrac16$。這是合理的設定，但本質上是人為賦予的，不是自然界保證的。
+\item \textbf{頻率觀點}：另一種理解是「機率＝長期相對頻率」。把骰子擲非常多次，第 $k$ 面出現的比例會趨近某固定值，那就是它的機率。對\textbf{真正對稱}的骰子，六面比例都趨近 $\tfrac16$；對\textbf{灌鉛骰}，實驗會給出不相等的比例——這時就\textbf{不能用古典公式數個數}，得改用各面實際的機率逐一加總。
+\end{itemize}
+
+因此古典公式只是「等可能」這個\textbf{特例}下的捷徑。三點提醒：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 「擲骰子六面各 $\tfrac16$」是\textbf{有條件}的；考題若明說「不公正」「灌鉛」，就不能再數個數。
+\item 「等可能」不能套到不對稱的樣本空間。例如「擲兩骰，點數和」的 $\{2,3,\dots,12\}$ 共 11 個值，但它們\textbf{不等可能}（和為 7 有 6 種、和為 2 只有 1 種）。正確做法是回到 $36$ 個等可能的 $(\text{骰}1,\text{骰}2)$ 結果去數——\textbf{選對「等可能的那一層樣本空間」是關鍵}。
+\item \textbf{大數法則不保證短期會平均}：連續擲出 5 個正面，第 6 次仍是 $\tfrac12$，骰子沒有記憶（這是「賭徒謬誤」）。
+\end{itemize}
+\end{延伸框}
+
+\subsection*{\sffamily C.\ 期望值}
+
+機率告訴我們「\textbf{一次}試驗各結果的可能性」。但若一個隨機過程帶有\textbf{數值}（贏多少錢、得幾分），我們常想知道：\textbf{長期下來、平均每次大約是多少}？這就是期望值。
+
+設某隨機試驗的結果為數值 $x_1,x_2,\dots,x_k$，對應機率為 $p_1,p_2,\dots,p_k$（$p_1+\cdots+p_k=1$），則其\textbf{期望值（expected value）} 為
+$$\boxed{\,E = x_1 p_1 + x_2 p_2 + \cdots + x_k p_k = \sum_{i=1}^{k} x_i\,p_i\,}$$
+也就是「\textbf{以機率為權重的加權平均}」。直覺意義：試驗重複很多很多次，每次數值的\textbf{平均}會趨近 $E$。
+
+\begin{補充框}{期望值為什麼是「乘機率再相加」？它在算什麼？}
+想像把這個隨機試驗\textbf{重複 $N$ 次}（$N$ 很大）。在 $N$ 次中，數值 $x_i$ 大約出現 $N\cdot p_i$ 次（因為它出現的相對頻率會趨近機率 $p_i$）。那麼 $N$ 次的總和約為
+$$\text{總和}\approx x_1(Np_1)+x_2(Np_2)+\cdots+x_k(Np_k),$$
+再除以次數 $N$ 求平均：
+$$\text{平均}\approx\frac{N(x_1p_1+\cdots+x_kp_k)}{N}=x_1p_1+\cdots+x_kp_k=E.$$
+$N$ 約掉了，剩下的恰好就是期望值。所以：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{為什麼乘機率？} 因為「出現次數正比於機率」，算總和時每個值要按它出現的頻繁程度加權——權重自然就是機率。
+\item \textbf{它在算什麼？} 它是「重複非常多次後，每次數值的\textbf{長期平均}」。所以骰子期望值 $3.5$，意思不是「某一次會拿 $3.5$」，而是「擲很多次，平均每次約 $3.5$ 點」。就像「平均每家 $2.3$ 個小孩」，沒有哪家真有 $2.3$ 個小孩。
+\end{itemize}
+
+\textbf{為什麼不是「所有可能值直接平均」？}因為各個值出現的機會不一樣。直接平均 $\dfrac{x_1+\cdots+x_k}{k}$ 等於\textbf{偷偷假設每個值等可能}——只有在 $p_1=\cdots=p_k$ 時，加權平均才退化成普通平均。
+\end{補充框}
+
+\begin{延伸框}{期望值的一個秤桿圖像，與三個容易踩的坑}
+把數線想成一根秤桿，在每個可能值 $x_i$ 的位置掛上「重量 $p_i$」的砝碼（總重 $1$）。\textbf{期望值就是這根秤桿的平衡點（重心）}。機率大的值「比較重」，會把重心拉向自己。這也解釋了為什麼期望值可能落在「兩個可能值中間、自己卻取不到」的位置——重心本來就不必落在某個砝碼上。
+
+三個常見迷思：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 期望值\textbf{不是「最可能出現的值」}，也不是「某一次的結果」；它是長期平均，可能是個誰都拿不到的數（如 $3.5$）。
+\item \textbf{權重必須是機率、且總和為 $1$}。計算前先確認各 $p_i$ 加起來是 $1$，別漏掉「沒中獎／沒發生」那一項的機率。
+\item 「期望值為正就一定賺」是短視的。期望值描述的是\textbf{長期}；單次或少數次可能大賠或大賺。保險與賭場正是靠「重複夠多次、期望值穩定實現」在運作。
+\end{itemize}
+\end{延伸框}
+
+\section*{\sffamily 3-5\quad 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{集合}：$A\cap B$（且）、$A\cup B$（或）、$A^c$（補）；含 $n$ 個元素的集合有 $2^n$ 個子集。
+\item \textbf{取捨原理}：$|A\cup B|=|A|+|B|-|A\cap B|$；三集合 $|A\cup B\cup C|=\sum|A|-\sum|A\cap B|+|A\cap B\cap C|$（加單、減雙、加三）。互斥（$A\cap B=\varnothing$）時直接相加。
+\item \textbf{兩大計數原理}：分類用\textbf{加}（$m+n$，各類互斥）、分步用\textbf{乘}（$m\times n$）。看「或／且」判斷。
+\item \textbf{排列（在意順序）}：$P^n_r=\dfrac{n!}{(n-r)!}=n(n-1)\cdots(n-r+1)$，全排列 $P^n_n=n!$（規定 $0!=1$）；\textbf{相同物排列} $\dfrac{n!}{n_1!\,n_2!\cdots n_k!}$。
+\item \textbf{組合（不計順序）}：$C^n_r=\dfrac{P^n_r}{r!}=\dfrac{n!}{r!\,(n-r)!}$；性質 $C^n_r=C^n_{n-r}$、$C^n_r=C^{n-1}_{r-1}+C^{n-1}_r$。$P=C\times r!$，$r!$ 即「同一組內部的排序」。
+\item \textbf{古典機率}：等可能下 $P(A)=\dfrac{n(A)}{n(S)}$（前提是「等可能」）；$P(A^c)=1-P(A)$；$P(A\cup B)=P(A)+P(B)-P(A\cap B)$；互斥時 $P(A\cup B)=P(A)+P(B)$。分子分母數法要一致。
+\item \textbf{期望值}：$E=\sum x_i p_i$（以機率加權的平均，代表\textbf{長期平均}，不是單次結果）。
+\end{itemize}
+\textbf{常用招式}：「至少」型用餘事件、「不相鄰」用反面扣除、「相鄰」用綁綑法、分子分母數法要一致、平均分成地位相同的組要再除階乘。
+\end{補充框}
+
+\end{document}

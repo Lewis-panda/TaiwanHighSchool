@@ -1,0 +1,366 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\Huge\bfseries 數2-2 數列與級數}\\[3pt]
+{\sffamily\large 普通高中 數學（必修・第二冊）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+本章先把「一串有順序的數」整理成\textbf{數列（sequence）}，認識兩個最重要的型——\textbf{等差}與\textbf{等比}，並學會用\textbf{遞迴（recursion）}描述它們；接著把一個數列的各項\textbf{加總}成\textbf{級數（series）}，導出等差、等比的求和公式與 $\sum k$、$\sum k^2$ 等常用公式；再學一套專門證明「對所有正整數都成立」的方法——\textbf{數學歸納法（mathematical induction）}；最後補上整章證明都會用到的語言工具——\textbf{邏輯（logic）}：命題的否定、且／或、條件命題與\textbf{充分／必要／充要條件}。
+
+數列與級數可視為「離散版的函數」，是日後微積分裡\textbf{極限}與\textbf{無窮級數}的起點；求和公式在機率的期望值、統計的平均數都會用到。數學歸納法與邏輯則是整個高中（乃至大學）證明的通用語言。
+
+\medskip
+本章主線：
+
+\begin{center}
+數列（等差／等比／遞迴）$\rightarrow$ 級數與求和公式 $\rightarrow$ 數學歸納法 $\rightarrow$ 邏輯（命題否定、條件命題、充分／必要條件）
+\end{center}
+
+\section*{\sffamily 2-1\quad 數列：等差、等比與遞迴}
+
+\subsection*{\sffamily A.\ 什麼是數列}
+
+把一串數\textbf{依固定順序}排好，就是一個\textbf{數列（sequence）}：
+$$
+a_1,\ a_2,\ a_3,\ \dots,\ a_n,\ \dots
+$$
+其中 $a_1$ 叫\textbf{首項}，$a_n$ 叫\textbf{第 $n$ 項}或\textbf{一般項（general term）}。有限多項的叫\textbf{有限數列}，可以一直寫下去的叫\textbf{無窮數列}。本章主要處理有限項的情形。
+
+一個重要的觀念：數列其實就是一個「\textbf{以正整數為輸入}的函數」——輸入項數 $n$，輸出第 $n$ 項 $a_n$。所以數列也可以用公式 $a_n=(\text{含 }n\text{ 的式子})$ 來定義。描述一個數列有兩種寫法：
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{一般項（顯式公式）}：直接給出 $a_n$ 與 $n$ 的關係，例如 $a_n=2n-1$，代入 $n$ 就能算出任何一項，可以「跳著算」。
+\item \textbf{遞迴關係（recurrence）}：先給\textbf{首項}，再給「\textbf{由前一（幾）項算出下一項}」的規則，例如 $a_1=1,\ a_{n+1}=a_n+2$，須一步一步往下推。
+\end{itemize}
+兩種寫法可以描述同一個數列（上例皆為 $1,3,5,7,\dots$），只是觀點不同。
+
+\subsection*{\sffamily B.\ 等差數列}
+
+從第二項起，\textbf{每一項減前一項都是同一個定值} $d$，這個 $d$ 叫\textbf{公差（common difference）}：
+$$a_{n+1}-a_n=d\quad(\text{定值}).$$
+由首項 $a_1$ 一路加 $d$：$a_2=a_1+d$、$a_3=a_1+2d$、$\dots$，到第 $n$ 項共加了 $(n-1)$ 次 $d$，因此一般項為
+$$\boxed{\,a_n=a_1+(n-1)d\,}.$$
+
+\textbf{注意：}是加 $(n-1)$ 次 $d$，\textbf{不是} $n$ 次，所以不能寫成 $a_1+nd$。另外，「等差」指的是\textbf{相鄰兩項的差固定}，不是「各項與首項的差固定」。
+
+把 $(n,a_n)$ 點在座標上，會落在一條\textbf{直線}上（斜率就是公差 $d$）——這正呼應「等差是離散版的一次函數」。
+
+\subsection*{\sffamily C.\ 等比數列}
+
+從第二項起，\textbf{每一項除以前一項都是同一個定值} $r$（且各項非零），這個 $r$ 叫\textbf{公比（common ratio）}：
+$$\frac{a_{n+1}}{a_n}=r\quad(\text{定值}).$$
+由首項 $a_1$ 一路乘 $r$：$a_2=a_1 r$、$a_3=a_1 r^2$、$\dots$，到第 $n$ 項共乘了 $(n-1)$ 次 $r$，因此一般項為
+$$\boxed{\,a_n=a_1\,r^{\,n-1}\,}.$$
+把 $(n,a_n)$ 點出來會像\textbf{指數曲線}——等比是離散版的指數函數。
+
+\textbf{注意：}公比 $r$ 可以是負數（如 $1,-2,4,-8,\dots$，$r=-2$，正負交錯），也可以是分數（數列遞減）。但 $r\neq0$，且各項不可為 $0$。若三數 $a,b,c$ 成等比，則 $b^2=ac$（$b$ 稱為 $a,c$ 的\textbf{等比中項}）；開根號時 $b$ 的正負號須由整個數列「相鄰比一致」的條件再判斷，不可隨意取。
+
+\fig{d22-arith-geo}{0.92}{圖 2-1：等差數列（左）的點落在一條直線上，斜率為公差 $d$；等比數列（右）的點呈指數曲線。}
+
+\subsection*{\sffamily D.\ 用遞迴描述數列}
+
+許多數列「下一項怎麼來」很清楚，但「直接公式」不好寫，這時用\textbf{遞迴}最自然。等差、等比本身就是最簡單的遞迴：
+$$
+\text{等差：}\ a_{n+1}=a_n+d;\qquad \text{等比：}\ a_{n+1}=a_n\cdot r .
+$$
+更一般地，有些數列只有遞迴定義最乾淨，例如\textbf{費氏數列（Fibonacci sequence）}：
+$$a_1=a_2=1,\qquad a_{n+2}=a_{n+1}+a_n,$$
+即 $1,1,2,3,5,8,\dots$（每一項是前兩項之和）。遞迴的價值在於「描述容易、一步一步計算」，顯式公式的價值在於「能跳著算任何一項」，兩者互補。
+
+\section*{\sffamily 2-2\quad 級數：把數列加起來}
+
+\subsection*{\sffamily A.\ 級數與求和符號}
+
+把一個數列的前 $n$ 項\textbf{加總}，得到的「和」叫\textbf{級數（series）}。前 $n$ 項的和記作 $S_n$：
+$$
+S_n=a_1+a_2+\cdots+a_n=\sum_{k=1}^{n}a_k .
+$$
+\textbf{$\sum$（sigma）符號}讀作「從 $k=1$ 加到 $k=n$」：$k$ 是\textbf{指標（index）}，從下標的 $1$ 跑到上標的 $n$，把每個 $a_k$ 加起來。例如 $\displaystyle\sum_{k=1}^{4}k^2=1+4+9+16=30$。
+
+$S_n$ 本身又是一個（關於 $n$ 的）數列，且滿足
+$$a_n=S_n-S_{n-1}\quad(n\ge2).$$
+也就是說「和的差」會還原成原數列；這個關係常用來「由 $S_n$ 反推 $a_n$」。
+
+\subsection*{\sffamily B.\ 等差級數的求和（高斯配對）}
+
+等差級數 $S_n=a_1+a_2+\cdots+a_n$ 怎麼快速加？把它\textbf{正著寫一遍、再反著寫一遍}，上下對齊相加：
+$$
+\begin{aligned}
+S_n &= a_1 + a_2 + \cdots + a_{n-1} + a_n\\
+S_n &= a_n + a_{n-1} + \cdots + a_2 + a_1
+\end{aligned}
+$$
+每一直行相加都是 $a_1+a_n$（因為等差「往後走加 $d$、往前走減 $d$」，配成一對總和不變，例如 $a_2+a_{n-1}=(a_1+d)+(a_n-d)=a_1+a_n$），共 $n$ 行，所以 $2S_n=n(a_1+a_n)$：
+$$
+\boxed{\,S_n=\frac{n(a_1+a_n)}{2}=\frac{n\bigl[\,2a_1+(n-1)d\,\bigr]}{2}\,}.
+$$
+這就是高斯（Gauss）相傳在小學時秒算 $1+2+\cdots+100=\dfrac{100\times101}{2}=5050$ 所用的方法：把這 100 個數配成 50 對，每對都等於 $101$。
+
+\fig{d22-series-sum}{0.92}{圖 2-2：左——等差級數的「高斯配對」，正反兩列上下相加，每一直行都等於 $a_1+a_n$；右——等比級數的「錯位相減」，整式乘 $r$ 後與原式相減，中段項全部抵消。}
+
+\begin{補充框}{為什麼配對法只對「等差」有效？}
+配對之所以成立，靠的是\textbf{公差固定}：把級數反寫後上下相加，一項往右增多少、對齊的另一項就往左減多少，一增一減\textbf{恰好相抵}，每一直行才會等於同一個數 $a_1+a_n$。若不是等差，這個「一增一減恰抵」就不成立，配對法也就失效。這也是為什麼等比級數不能用配對，而要改用下面的「錯位相減」。
+\end{補充框}
+
+\subsection*{\sffamily C.\ 等比級數的求和（錯位相減）}
+
+等比級數 $S_n=a_1+a_1r+a_1r^2+\cdots+a_1r^{\,n-1}$ 沒辦法配對（相鄰差不固定），但可用\textbf{錯位相減}：把整式乘上公比 $r$，再與原式相減，中間項剛好全部抵消。
+$$
+\begin{aligned}
+S_n &= a_1 + a_1r + a_1r^2 + \cdots + a_1r^{\,n-1}\\
+rS_n &= \qquad\ \ a_1r + a_1r^2 + \cdots + a_1r^{\,n-1} + a_1r^{\,n}
+\end{aligned}
+$$
+兩式相減，中間從 $a_1r$ 到 $a_1r^{\,n-1}$ 的項上下一模一樣、全部抵消，只剩頭尾：$S_n-rS_n=a_1-a_1r^{\,n}$，即 $(1-r)S_n=a_1(1-r^{\,n})$。當 $r\neq1$ 時：
+$$
+\boxed{\,S_n=\frac{a_1(1-r^{\,n})}{1-r}=\frac{a_1(r^{\,n}-1)}{r-1}\,}\quad(r\neq1).
+$$
+
+\begin{補充框}{為什麼乘 $r$ 就能抵消？}
+因為等比「下一項 $=$ 這一項乘 $r$」，整式乘 $r$ 之後，原本的第 $k$ 項就剛好變成原本的第 $k+1$ 項。於是兩式自然錯開一格、中段完全重疊，相減便相消。這跟\textbf{伸縮和（telescoping）}是同一個精神：刻意製造一串會自己消掉的項。
+\end{補充框}
+
+\textbf{注意：別忘了 $r=1$ 的情形。}上式分母有 $r-1$，\textbf{$r=1$ 不能代入}。當 $r=1$ 時，所有項都等於 $a_1$，所以
+$$S_n=n\,a_1\quad(r=1).$$
+套等比求和公式前，務必先確認 $r$ 是否為 $1$，否則會在 $r=1$ 的情形出錯。
+
+\subsection*{\sffamily D.\ 常用求和公式}
+
+把 $a_k=k$、$a_k=k^2$ 這些「老面孔」的和記下來，後面（機率、統計）會反覆用到：
+$$
+\boxed{\ \sum_{k=1}^{n}k=\frac{n(n+1)}{2}\ },\qquad
+\boxed{\ \sum_{k=1}^{n}k^2=\frac{n(n+1)(2n+1)}{6}\ }.
+$$
+第一條就是 $1+2+\cdots+n$，用高斯配對立即得到。第二條 $1^2+2^2+\cdots+n^2$ 沒那麼顯然，標準推導用\textbf{伸縮和} $(k+1)^3-k^3=3k^2+3k+1$ 逐項累加而得，它也是數學歸納法的經典練習（見 2-3）。
+
+$\sum$ 有兩個\textbf{線性性質}，拆解較複雜的和時很好用：
+$$
+\sum_{k=1}^{n}(c\,a_k)=c\sum_{k=1}^{n}a_k,\qquad
+\sum_{k=1}^{n}(a_k+b_k)=\sum_{k=1}^{n}a_k+\sum_{k=1}^{n}b_k .
+$$
+也就是常數可以提到 $\sum$ 外、和可以逐項拆開。
+
+\begin{延伸框}{無窮多項加起來會是有限值嗎？}
+若把等比級數一直加下去（如 $1+\tfrac12+\tfrac14+\cdots$，公比 $r=\tfrac12$），總和會不會發散到無限大？觀察等比求和公式 $S_n=\dfrac{a_1(1-r^{\,n})}{1-r}$：當 $|r|<1$ 時，項數 $n$ 越大，$r^{\,n}$ 越接近 $0$，於是 $S_n$ 會\textbf{越來越接近一個固定值}
+$$
+S=\frac{a_1}{1-r}\qquad(|r|<1).
+$$
+這稱為\textbf{無窮等比級數（infinite geometric series）}的和。例如 $1+\tfrac12+\tfrac14+\cdots=\dfrac{1}{1-\frac12}=2$：無窮多個正數相加，竟然收斂到有限值 $2$。這背後需要嚴格定義「無限相加」的意義（即\textbf{極限}），是大學微積分的入口，本章先不展開。
+\end{延伸框}
+
+\section*{\sffamily 2-3\quad 數學歸納法}
+
+\subsection*{\sffamily A.\ 為什麼需要它}
+
+像 $1+2+\cdots+n=\dfrac{n(n+1)}{2}$ 這種敘述，是\textbf{對「每一個」正整數 $n$ 都宣稱成立}。但正整數有無窮多個，你驗 $n=1,2,3,\dots$ 永遠驗不完。我們需要一種方法，用\textbf{有限步驟}就能斷言「對所有正整數都成立」。這就是\textbf{數學歸納法（mathematical induction）}。
+
+它的精神像\textbf{骨牌}：只要（一）第一張會倒，而且（二）任何一張倒了都會撞倒下一張，那麼\textbf{整列骨牌全都會倒}。
+
+\fig{d22-induction}{0.78}{圖 2-3：數學歸納法的骨牌比喻。基底＝第一張骨牌倒下；遞推＝任一張倒下都會撞倒下一張。兩者齊備，整列骨牌全倒。}
+
+要證明「對所有正整數 $n$，敘述 $P(n)$ 都成立」，只需完成兩步：
+
+\begin{enumerate}\setlength{\itemsep}{2pt}
+\item \textbf{基底（base case）}：證明 $P(1)$ 成立。（第一張骨牌倒下。）
+\item \textbf{遞推（inductive step）}：\textbf{假設} $P(k)$ 成立（這個假設叫\textbf{歸納假設}），由它\textbf{推出} $P(k+1)$ 也成立。（任一張倒會撞倒下一張。）
+\end{enumerate}
+兩步都完成，即可斷言 $P(n)$ 對所有正整數 $n$ 成立。
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 「假設 $P(k)$ 成立」\textbf{不是}「假設結論」，也不是循環論證。我們不是假設「對所有 $n$ 都成立」，而是只假設「\textbf{某一個} $k$ 成立」，再去推「下一個」也成立——這是合法的推理。
+\item \textbf{基底不可省}。少了「第一張倒」，骨牌再會互推也不會倒。一個經典反例是「$P(n)$：$n=n+1$」，它滿足『若 $P(k)$ 則 $P(k+1)$』（兩邊同加 $1$），但 $P(1)$ 為假，所以整個敘述全錯——這正說明基底為何不可少。
+\item 基底不一定從 $n=1$ 開始；若敘述是「對所有 $n\ge3$」，基底就驗 $n=3$。
+\end{itemize}
+
+\begin{延伸框}{只驗了「第一個」加「一步推一步」，憑什麼斷言「無窮多個」都對？}
+真正的理由，藏在\textbf{正整數本身的一條基本性質}裡。歸納法不是被證明出來的定理，而是正整數結構的\textbf{內建公理}，與下面這條同樣基本的性質等價：
+
+\textbf{良序性（well-ordering principle）}：正整數的任何非空子集，都有一個\textbf{最小元素}。
+
+用良序性可以「反證」歸納法為何有效。假設基底 $P(1)$ 與遞推 $P(k)\Rightarrow P(k+1)$ 都成立，卻\textbf{仍有某些 $n$ 使 $P(n)$ 為假}。把所有「反例」收成一個集合 $S=\{\,n\in\mathbb{Z}^+ : P(n)\text{ 為假}\,\}$。若 $S$ 非空，由良序性它有\textbf{最小元素} $m$：
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item $m\neq1$，因為 $P(1)$ 為真（基底），故 $1\notin S$。所以 $m\ge2$，於是 $m-1$ 仍是正整數。
+\item $m$ 是反例中最小的，所以 $m-1$ \textbf{不是}反例，即 $P(m-1)$ 為真。
+\item 但由遞推，$P(m-1)$ 真 $\Rightarrow$ $P(m)$ 真——這與「$m$ 是反例（$P(m)$ 假）」\textbf{矛盾}。
+\end{itemize}
+
+矛盾來自「$S$ 非空」這個假設，所以 $S$ 必為空：沒有任何反例，$P(n)$ 對所有正整數成立。換句話說，\textbf{最小的反例一定會被遞推往前一步推翻}，於是反例根本不可能存在。在公理化觀點下（皮亞諾公理，Peano axioms），歸納原理本身就是定義正整數的公理之一，與良序性互相等價，這部分\textbf{已是定論、沒有爭議}。
+
+附帶一提，歸納法只適用於有「良序」結構的對象（如正整數）。對\textbf{實數}就不能這樣做——實數沒有「下一個數」，「$P(k)\Rightarrow P(k+1)$」無從談起。
+\end{延伸框}
+
+\section*{\sffamily 2-4\quad 邏輯：證明的語言}
+
+前面整章都在「證明某敘述成立」。這一節把證明用到的\textbf{語言工具}講清楚：什麼是命題、怎麼否定、「且／或」怎麼運作、條件命題，以及最重要的\textbf{充分／必要條件}。
+
+\subsection*{\sffamily A.\ 命題與其否定}
+
+\textbf{能明確判斷真假}的敘述句叫\textbf{命題（proposition）}。例如「$3$ 是質數」（真）、「$2>5$」（假）都是命題；「今天好熱」「請關門」則不是命題（無法客觀判真假）。命題 $p$ 的\textbf{否定（negation）}記作 $\sim p$，意思是「$p$ 不成立」；$p$ 真則 $\sim p$ 假，反之亦然。
+
+否定最容易出錯的，是含「\textbf{所有／存在}」的句子。原則是：否定會把「全部」翻成「存在反例」、把「存在」翻成「全部都不」：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{0.44\linewidth} p{0.46\linewidth}}
+\hline
+\textbf{原命題} & \textbf{否定} \\
+\hline
+所有 $x$ 都滿足 $P(x)$ & \textbf{存在}某個 $x$ \textbf{不}滿足 $P(x)$ \\
+存在某個 $x$ 滿足 $P(x)$ & 所有 $x$ 都\textbf{不}滿足 $P(x)$ \\
+$a>0$ & $a\le0$（\textbf{不是} $a<0$，別漏掉等號） \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 「所有同學都及格」的否定\textbf{不是}「所有同學都不及格」，而是「\textbf{有同學不及格}」（哪怕只有一個）。把「全部對」的反面錯當成「全部錯」，是最常見的錯誤。
+\item 否定不等式要\textbf{連邊界一起翻}：$x>3$ 的否定是 $x\le3$，不是 $x<3$；$x\ge5$ 的否定是 $x<5$。漏等號是丟分重災區。
+\end{itemize}
+
+\begin{補充框}{為什麼否定會把「所有」變成「存在」？}
+這條規則\textbf{不是規定，而是定義的必然}。先把兩個量詞講清楚：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{全稱量詞（universal quantifier）} $\forall$：「$\forall x,\ P(x)$」意思是「\textbf{對每一個} $x$，$P(x)$ 都成立」。
+\item \textbf{存在量詞（existential quantifier）} $\exists$：「$\exists x,\ P(x)$」意思是「\textbf{至少有一個} $x$ 使 $P(x)$ 成立」。
+\end{itemize}
+
+一句「全部都對」要為假，\textbf{唯一}的可能就是「\textbf{有某個 $x$ 不對}」——哪怕只有一個反例，整句「全部都對」就垮了。所以
+$$
+\sim\bigl(\forall x,\ P(x)\bigr)\ \equiv\ \exists x,\ \sim P(x).
+$$
+同理，「至少有一個」何時為假？只有「一個都沒有」，也就是「每一個 $x$ 都不滿足」：
+$$
+\sim\bigl(\exists x,\ P(x)\bigr)\ \equiv\ \forall x,\ \sim P(x).
+$$
+
+\textbf{邊界（等號）為什麼會跑？}因為否定要涵蓋它「不成立」的\textbf{所有}情況。例如「$a>0$」不成立，包含 $a=0$ 與 $a<0$ 兩種，合起來是「$a\le0$」，不能漏掉 $a=0$。實數三一律保證 $a>0$、$a=0$、$a<0$ 恰有一個成立，否定「$a>0$」就是另外兩個的聯集。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 且、或與狄摩根律}
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{$p$ 且 $q$}（記 $p\wedge q$）：$p$、$q$ \textbf{兩者都真}時才真，否則為假。
+\item \textbf{$p$ 或 $q$}（記 $p\vee q$）：\textbf{至少一個真}就為真，\textbf{兩者皆假}才為假。（數學的「或」是\textbf{可兼}的「或」：兩者都真時 $p\vee q$ 也真。）
+\end{itemize}
+
+否定「且／或」時遵循\textbf{狄摩根律（De Morgan's laws）}——否定會把「且」「或」互換，並把否定傳進每一項：
+$$
+\boxed{\ \sim(p\wedge q)=(\sim p)\vee(\sim q),\qquad \sim(p\vee q)=(\sim p)\wedge(\sim q)\ }.
+$$
+例如「$x>0$ 且 $x<5$」（即 $0<x<5$）的否定，是「$x\le0$ \textbf{或} $x\ge5$」（落在區間外）。
+
+\begin{補充框}{狄摩根律與量詞否定其實是同一回事}
+把全稱「對範圍裡每個 $x$ 都成立」想成一連串用「且」串起來的條件 $P(x_1)\wedge P(x_2)\wedge\cdots$。由狄摩根律，否定「且」會變「或」、並傳進每一項：
+$$
+\sim\bigl(P(x_1)\wedge P(x_2)\wedge\cdots\bigr)=\sim P(x_1)\vee\sim P(x_2)\vee\cdots,
+$$
+而「或」就是「至少有一個」＝存在。所以可以這樣理解：\textbf{$\forall$ 是一連串的「且」、$\exists$ 是一連串的「或」}，前面的量詞否定規則，正是狄摩根律推廣到「無窮多項」的版本。
+\end{補充框}
+
+\subsection*{\sffamily C.\ 條件命題與逆、否、逆否}
+
+「\textbf{若 $p$ 則 $q$}」記作 $p\to q$，意思是「只要 $p$ 成立，$q$ 就成立」。$p$ 叫\textbf{前提（假設）}，$q$ 叫\textbf{結論}。由 $p\to q$ 可造出三個相關命題：
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{逆命題（converse）}：$q\to p$。
+\item \textbf{否命題（inverse）}：$\sim p\to\sim q$。
+\item \textbf{逆否命題（contrapositive）}：$\sim q\to\sim p$。
+\end{itemize}
+
+關鍵事實：\textbf{一個條件命題與它的逆否命題「同真同假」}（邏輯等價）：
+$$
+\boxed{\,(p\to q)\ \equiv\ (\sim q\to\sim p)\,}.
+$$
+但\textbf{原命題與逆命題、否命題不一定同真假}。這是「反證法」的依據——要證 $p\to q$，可以改證等價的 $\sim q\to\sim p$。（此外，逆命題與否命題彼此互為逆否，所以這兩者必定同真假。）
+
+\subsection*{\sffamily D.\ 充分條件、必要條件、充要條件}
+
+這是本章（也是全高中邏輯）最容易混淆的觀念。若 $p\to q$ 成立，我們說：
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{$p$ 是 $q$ 的充分條件（sufficient condition）}：有了 $p$ 就「足夠」保證 $q$。（$p$ 比較強。）
+\item \textbf{$q$ 是 $p$ 的必要條件（necessary condition）}：要有 $p$，就「非有 $q$ 不可」（沒有 $q$ 就不可能有 $p$）。（$q$ 比較弱。）
+\end{itemize}
+若 $p\to q$ 且 $q\to p$（記 $p\leftrightarrow q$），則 $p$、$q$ \textbf{互為充要條件（necessary and sufficient）}，兩者完全等價。
+
+一句口訣：\textbf{箭頭出去的是充分，箭頭進來的是必要}（對 $p\to q$，$p$ 充分、$q$ 必要）。
+
+用「\textbf{範圍包含}」最容易判斷：把每個條件想成「滿足它的所有 $x$ 構成的集合（範圍）」。$p\to q$ 等於「滿足 $p$ 的 $x$ 一定也滿足 $q$」，即 \textbf{$p$ 的範圍 $\subseteq$ $q$ 的範圍}（$p$ 的圈在 $q$ 的圈內）。
+
+\fig{d22-suff-nec}{0.62}{圖 2-4：$p\to q$ 表示 $p$ 的範圍（小圈）包含於 $q$ 的範圍（大圈）。落進小圈就一定在大圈內，故小圈\textbf{充分}；要進小圈必先在大圈內，故大圈\textbf{必要}。}
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{範圍小 $=$ 條件強 $=$ 充分}（小圈 $p$，落在裡面就足以保證落在大圈 $q$）。
+\item \textbf{範圍大 $=$ 條件弱 $=$ 必要}（大圈 $q$，不在大圈裡就絕不可能在小圈裡）。
+\end{itemize}
+
+判 $p$ 是 $q$ 的什麼條件，可直接比範圍：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{p{0.52\linewidth} p{0.38\linewidth}}
+\hline
+\textbf{範圍關係} & \textbf{$p$ 是 $q$ 的} \\
+\hline
+$p$ 範圍 $\subsetneq$ $q$ 範圍（$p$ 較小） & 充分但不必要 \\
+$p$ 範圍 $\supsetneq$ $q$ 範圍（$p$ 較大） & 必要但不充分 \\
+$p$ 範圍 $=$ $q$ 範圍 & 充要 \\
+兩範圍互不包含 & 既不充分也不必要 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{補充框}{用生活例子破解「背反」：氧氣與燃燒}
+「充分」「必要」這兩個中文詞的語感，跟它們在數學裡的角色不一致，所以學生常常背反。用一個生活例子最能釐清：
+
+「\textbf{氧氣}」是「\textbf{燃燒}」的什麼條件？
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 沒有氧氣，絕對燒不起來 $\Rightarrow$ 氧氣是燃燒的\textbf{必要}條件。
+\item 但有氧氣不一定就燒（還要有可燃物、達到燃點）$\Rightarrow$ 氧氣\textbf{不是充分}條件。
+\end{itemize}
+反過來，「\textbf{汽油遇到明火}」是燃燒的\textbf{充分}條件（這組合一出現，火必然燒），但不是必要（沒有汽油也能燒木頭）。
+
+關鍵反差在這裡：「必要」聽起來很強、很重要，但在數學裡它對應的是\textbf{範圍大、條件弱}的那一個；「充分」對應\textbf{範圍小、條件強}的那一個——中文語感正好把人帶歪。最可靠的辦法是不要硬背詞，而是\textbf{一律畫兩個圈}核對誰包含誰：小圈充分、大圈必要。
+
+最後，「充要」只是「兩個圈完全重合」（$p$ 範圍 $=$ $q$ 範圍，$p\leftrightarrow q$），也就是兩條件其實\textbf{等價}，例如「$ab=0$」與「$a=0$ 或 $b=0$」。
+\end{補充框}
+
+\section*{\sffamily 2-5\quad 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\textbf{數列}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 等差：$a_{n+1}-a_n=d$，一般項 $a_n=a_1+(n-1)d$（圖形落在直線上）。
+\item 等比：$\dfrac{a_{n+1}}{a_n}=r\ (r\neq0)$，一般項 $a_n=a_1r^{\,n-1}$（圖形像指數）。
+\item 遞迴：給首項＋「前項 $\to$ 後項」規則；由和反推項 $a_n=S_n-S_{n-1}\ (n\ge2)$。
+\end{itemize}
+
+\textbf{級數（前 $n$ 項和 $S_n$）}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 等差和：$S_n=\dfrac{n(a_1+a_n)}{2}=\dfrac{n[\,2a_1+(n-1)d\,]}{2}$（高斯配對）。
+\item 等比和：$S_n=\dfrac{a_1(r^{n}-1)}{r-1}\ (r\neq1)$；$\ r=1$ 時 $S_n=na_1$（錯位相減）。
+\item 常用：$\displaystyle\sum k=\dfrac{n(n+1)}{2}$、$\displaystyle\sum k^2=\dfrac{n(n+1)(2n+1)}{6}$；$\sum$ 有線性性質。
+\end{itemize}
+
+\textbf{數學歸納法}（證「對所有正整數成立」）
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item （一）基底 $P(1)$ 真；（二）假設 $P(k)$ 真 $\to$ 推 $P(k+1)$ 真。兩步缺一不可（基底像第一張骨牌）。
+\end{itemize}
+
+\textbf{邏輯}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 否定：「所有」$\leftrightarrow$「存在」；不等式否定要連邊界翻（$a>0$ 否定為 $a\le0$）。
+\item 狄摩根律：$\sim(p\wedge q)=\sim p\vee\sim q$、$\sim(p\vee q)=\sim p\wedge\sim q$。
+\item 條件命題 $p\to q$ 與逆否 $\sim q\to\sim p$ \textbf{同真假}；與逆、否不一定同真假。
+\item $p\to q$：$p$ \textbf{充分}、$q$ \textbf{必要}；雙向成立為\textbf{充要}。範圍小 $=$ 充分、範圍大 $=$ 必要。
+\end{itemize}
+\end{補充框}
+
+\end{document}
