@@ -396,9 +396,71 @@ def fig_screening():
     F.save_to(fig, CH, "數A4-3-篩檢")
 
 
+# =====================================================================
+# 圖五：相對次數的穩定（頻率觀的客觀機率／大數法則直覺）
+# =====================================================================
+def fig_relative_frequency():
+    """模擬擲一顆「尖朝上機率 0.63 的圖釘」，畫出累計相對次數隨試驗次數的變化：
+    次數少時劇烈跳動（不能定機率），次數多時逐漸穩定在 0.63（這個穩定值才是機率）。"""
+    rng = np.random.default_rng(20240618)
+    p_true = 0.63
+    N = 1000
+    outcomes = (rng.random(N) < p_true).astype(float)  # 1 = 尖朝上
+    n = np.arange(1, N + 1)
+    rel = np.cumsum(outcomes) / n  # 累計相對次數
+
+    fig, ax = F.canvas(8.6, 4.8)
+    F.clean_grid(ax)
+
+    # 真值水平線
+    ax.axhline(p_true, color=F.RED, lw=1.8, ls="--", zorder=3)
+    ax.text(
+        N * 1.005,
+        p_true,
+        "穩定值 0.63\n（這才是機率）",
+        color=F.RED,
+        fontsize=11,
+        ha="left",
+        va="center",
+    )
+
+    # 相對次數曲線
+    ax.plot(n, rel, color=F.BLUE, lw=1.6, zorder=4)
+
+    # 「少數幾次劇烈跳動」的警示區（前 50 次）
+    ax.axvspan(1, 50, color=F.AMBER, alpha=0.12, zorder=1)
+    ax.text(
+        26,
+        0.96,
+        "次數少：劇烈跳動\n不能當機率",
+        color=F.AMBER,
+        fontsize=10.5,
+        ha="center",
+        va="top",
+    )
+    ax.annotate(
+        "次數越多越穩定",
+        xy=(720, rel[719]),
+        xytext=(430, 0.30),
+        color=F.INK,
+        fontsize=11,
+        ha="center",
+        arrowprops=dict(arrowstyle="->", color=F.INK, lw=1.3),
+    )
+
+    ax.set_xlim(1, N)
+    ax.set_ylim(0.0, 1.0)
+    ax.set_xlabel("試驗次數 $n$")
+    ax.set_ylabel("累計相對次數")
+    ax.set_title("相對次數逐漸穩定：頻率觀下的客觀機率", fontsize=14)
+    fig.tight_layout()
+    F.save_to(fig, CH, "數A4-3-相對次數")
+
+
 if __name__ == "__main__":
     fig_conditional()
     fig_indep_vs_exclusive()
     fig_bayes_tree()
     fig_screening()
+    fig_relative_frequency()
     print("done.")

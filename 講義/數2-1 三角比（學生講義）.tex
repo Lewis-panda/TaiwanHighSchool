@@ -247,6 +247,8 @@ $a\ge b$ & $a$ 已不短於 $b$ & \textbf{恰一解} \\
 \end{itemize}
 若 $A$ 為\textbf{直角或鈍角}：此時 $a$ 必須是最大邊（大角對大邊），只有 $a>b$ 時才有解，且\textbf{恰一解}（$B$ 必為銳角，不會有鈍角的第二解）。
 
+\fig{d21-ssa-cases}{0.96}{圖 1-4：SSA 模糊情況。固定角 $A$ 與邊 $b$，以 $C$ 為圓心、半徑 $a$ 畫弧（紅），弧與底邊的交點（綠）即三角形解。$a<b\sin A$（短於高 $h$）搆不到底邊故無解；$a=b\sin A$ 恰碰底邊一點（直角三角形）為一解；$b\sin A<a<b$ 弧穿過底邊兩點為兩解。}
+
 \subsection*{\sffamily C.\ 餘弦定理}
 
 當已知的是「兩邊夾一角（SAS）」或「三邊（SSS）」時，正弦定理使不上力（沒有現成的「角配對邊」），這時要用餘弦定理：
@@ -335,6 +337,8 @@ $$\boxed{\;\tan\theta=\left|\frac{m_1-m_2}{1+m_1m_2}\right|\;}$$
 \end{itemize}
 兩者都從「水平線」量起，不是從鉛直線。一個常用幾何事實：A 看 B 的俯角，等於 B 看 A 的仰角（兩條水平線平行，內錯角相等）。解題時常靠這點把俯角「搬到」三角形內部變成可用的內角。
 
+\fig{d21-elevation-depression}{0.62}{圖 1-5：仰角與俯角。觀測者由\textbf{水平線}量起：目標在上方、視線上抬的夾角是仰角；目標在下方、視線下俯的夾角是俯角。兩者都不是從鉛直線量。}
+
 \subsection*{\sffamily D.\ 正射影}
 
 把線段 $\overline{AB}$（長 $L$，與某方向夾角 $\theta$）投影到那個方向上，影子的長度是 $L\cos\theta$。這個「打在某方向上的影子長」叫\textbf{正射影（orthogonal projection）}：
@@ -349,7 +353,7 @@ $$\boxed{\;\text{正射影長}=L\cos\theta\;}$$
 $$\boxed{\;x=r\cos\theta,\qquad y=r\sin\theta\;}\qquad\boxed{\;r=\sqrt{x^2+y^2},\qquad \tan\theta=\frac{y}{x}\;}$$
 這兩條互換式正是 1-2 廣義角定義 $\cos\theta=\dfrac{x}{r}$、$\sin\theta=\dfrac{y}{r}$ 移項而來，極坐標其實就是「把三角比反過來用」。
 
-\fig{d21-polar}{0.62}{圖 1-4：極坐標與直角坐標互換。點 $P$ 既可記為直角坐標 $(x,y)$，也可記為極坐標 $(r,\theta)$，兩者由 $x=r\cos\theta$、$y=r\sin\theta$ 相連。}
+\fig{d21-polar}{0.62}{圖 1-6：極坐標與直角坐標互換。點 $P$ 既可記為直角坐標 $(x,y)$，也可記為極坐標 $(r,\theta)$，兩者由 $x=r\cos\theta$、$y=r\sin\theta$ 相連。}
 
 \textbf{注意：}
 \begin{itemize}\setlength{\itemsep}{1pt}

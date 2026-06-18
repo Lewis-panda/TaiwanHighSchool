@@ -199,8 +199,118 @@ def fig_abs_function():
     F.save_to(fig, CH, "數1-1-絕對值函數")
 
 
+def fig_casework():
+    """分段討論法：以 |x−1|+|x−4| 為例，標出變號點 x=1、x=4，
+    把數線切成三段，逐段寫出每個絕對值如何去號。"""
+    fig, ax = plt.subplots(figsize=(9.6, 4.2))
+
+    x0, x1 = -1.5, 6.5
+    y = 0.0
+    p, q = 1, 4  # 兩個變號點
+
+    # 主數線
+    ax.annotate(
+        "",
+        xy=(x1, y),
+        xytext=(x0, y),
+        arrowprops=dict(arrowstyle="-|>", color=F.INK, lw=1.8),
+    )
+    # 整數刻度
+    for n in range(-1, 7):
+        ax.plot([n, n], [y - 0.10, y + 0.10], color=F.INK, lw=1.1)
+        ax.text(
+            n, y - 0.34, f"${n}$", ha="center", va="top", color=F.INK, fontsize=10.5
+        )
+    ax.text(x1 - 0.05, y + 0.20, "$x$", color=F.INK, fontsize=12, ha="right")
+
+    # 三段底色（用透明色塊標出每段範圍）
+    seg_colors = [F.BLUE, F.GREEN, F.RED]
+    seg_spans = [(x0, p), (p, q), (q, x1)]
+    for (sa, sb), c in zip(seg_spans, seg_colors):
+        ax.add_patch(
+            plt.Rectangle(
+                (sa, y - 0.05), sb - sa, 0.10, color=c, alpha=0.16, lw=0, zorder=1
+            )
+        )
+
+    # 變號點（實心、標紅，標出內部=0）
+    for xv, lab in [(p, "$x=1$"), (q, "$x=4$")]:
+        ax.add_patch(Circle((xv, y), 0.11, color=F.AMBER, zorder=7))
+        ax.plot([xv, xv], [y, y + 1.05], color=F.AMBER, lw=1.2, ls="--", zorder=2)
+        ax.text(
+            xv, y + 1.18, lab, ha="center", va="bottom", color=F.AMBER, fontsize=12.5
+        )
+    ax.text(
+        (p + q) / 2,
+        y + 1.62,
+        "變號點：絕對值內部 = 0 的位置",
+        ha="center",
+        va="bottom",
+        color=F.AMBER,
+        fontsize=11.5,
+    )
+
+    # 每段範圍標籤（段名 + 範圍）
+    seg_names = [
+        (x0 + (p - x0) / 2, "段一", "$x<1$"),
+        ((p + q) / 2, "段二", r"$1\leq x\leq 4$"),
+        (q + (x1 - q) / 2, "段三", "$x>4$"),
+    ]
+    for (xc, name, rng), c in zip(seg_names, seg_colors):
+        ax.text(xc, y - 0.78, name, ha="center", va="center", color=c, fontsize=12.5)
+        ax.text(xc, y - 1.12, rng, ha="center", va="center", color=c, fontsize=11.5)
+
+    # 每段「去號規則」表（兩列：|x−1| 與 |x−4| 如何去號）
+    row1_y = y - 1.70
+    row2_y = y - 2.16
+    ax.text(
+        x0 - 0.35,
+        row1_y,
+        r"$|x-1|=$",
+        ha="right",
+        va="center",
+        color=F.INK,
+        fontsize=11,
+    )
+    ax.text(
+        x0 - 0.35,
+        row2_y,
+        r"$|x-4|=$",
+        ha="right",
+        va="center",
+        color=F.INK,
+        fontsize=11,
+    )
+    # 段一 x<1：兩者皆負 → 取相反數
+    # 段二 1≤x≤4：x−1≥0、x−4≤0
+    # 段三 x>4：兩者皆正
+    rules = [
+        # (xc, |x-1|去號, |x-4|去號)
+        (seg_names[0][0], "$1-x$", "$4-x$"),
+        (seg_names[1][0], "$x-1$", "$4-x$"),
+        (seg_names[2][0], "$x-1$", "$x-4$"),
+    ]
+    for (xc, r1, r2), c in zip(rules, seg_colors):
+        ax.text(xc, row1_y, r1, ha="center", va="center", color=c, fontsize=11.5)
+        ax.text(xc, row2_y, r2, ha="center", va="center", color=c, fontsize=11.5)
+
+    # 分隔虛線（把表格三段豎直切開）
+    for xv in (p, q):
+        ax.plot(
+            [xv, xv], [row2_y - 0.28, y - 0.50], color=F.GRID, lw=1.0, ls=":", zorder=1
+        )
+
+    ax.set_xlim(x0 - 1.6, x1 + 0.2)
+    ax.set_ylim(row2_y - 0.45, y + 2.0)
+    ax.axis("off")
+    ax.set_title("分段討論法：用變號點把數線切段，逐段去絕對值", fontsize=14)
+    fig.tight_layout()
+    F.save_to(fig, CH, "數1-1-分段討論")
+
+
 if __name__ == "__main__":
     fig_number_line()
     fig_abs_distance()
     fig_abs_function()
+    fig_casework()
     print("done.")

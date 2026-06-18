@@ -141,6 +141,215 @@ def fig_operations():
     F.save_to(fig, CH, "數A3-3-向量運算")
 
 
+def fig_linear_combination():
+    """線性組合（兩不平行向量張出平面）與內分點。"""
+    fig, axes = plt.subplots(1, 2, figsize=(11.0, 4.6))
+
+    # --- (1) 線性組合：以 a、b 為基底，s a + t b 拼出 P ---
+    ax = axes[0]
+    ax.set_aspect("equal")
+    O = np.array([0.0, 0.0])
+    a = np.array([2.6, 0.6])
+    b = np.array([0.8, 2.2])
+    s, t = 1.5, 1.0
+    P = s * a + t * b
+
+    # 平行四邊形格線：sa、tb 與其平移後的對邊
+    sa = s * a
+    tb = t * b
+    ax.plot([sa[0], P[0]], [sa[1], P[1]], color=F.GREEN, lw=1.4, ls="--", zorder=2)
+    ax.plot([tb[0], P[0]], [tb[1], P[1]], color=F.BLUE, lw=1.4, ls="--", zorder=2)
+
+    F.arrow(ax, O, a, color=F.BLUE, lw=2.6)
+    F.arrow(ax, O, b, color=F.GREEN, lw=2.6)
+    F.arrow(ax, O, sa, color=F.BLUE, ls=":", lw=2.0)
+    F.arrow(ax, O, P, color=F.RED, lw=2.8)
+
+    ax.text(
+        a[0] * 0.55 + 0.05,
+        a[1] * 0.55 - 0.34,
+        "a",
+        color=F.BLUE,
+        fontsize=15,
+        ha="center",
+    )
+    ax.text(
+        b[0] * 0.5 - 0.32, b[1] * 0.55, "b", color=F.GREEN, fontsize=15, ha="center"
+    )
+    ax.text(
+        sa[0] * 0.92,
+        sa[1] * 0.5 - 0.40,
+        "1.5 a",
+        color=F.BLUE,
+        fontsize=12,
+        ha="center",
+    )
+    ax.text(
+        P[0] + 0.12,
+        P[1] + 0.12,
+        "P = 1.5 a + 1.0 b",
+        color=F.RED,
+        fontsize=12,
+        ha="left",
+    )
+    ax.set_title("線性組合：兩不平行向量張出平面", fontsize=13)
+    ax.set_xlim(-0.7, 5.6)
+    ax.set_ylim(-0.7, 3.6)
+    F.clean_grid(ax)
+
+    # --- (2) 內分點：AP:PB = m:n ---
+    ax = axes[1]
+    ax.set_aspect("equal")
+    O = np.array([0.0, 0.0])
+    A = np.array([1.0, 0.6])
+    B = np.array([4.2, 2.4])
+    m, n = 2.0, 1.0  # AP:PB = 2:1
+    P = (n * A + m * B) / (m + n)
+
+    # 線段 AB
+    ax.plot([A[0], B[0]], [A[1], B[1]], color=F.INK, lw=2.2, zorder=3)
+    # 位置向量
+    F.arrow(ax, O, A, color=F.BLUE, lw=2.2)
+    F.arrow(ax, O, B, color=F.GREEN, lw=2.2)
+    F.arrow(ax, O, P, color=F.RED, lw=2.6)
+
+    for pt, name, col, dx, dy in [
+        (A, "A", F.BLUE, -0.22, 0.10),
+        (B, "B", F.GREEN, 0.12, 0.10),
+        (P, "P", F.RED, 0.02, 0.26),
+    ]:
+        ax.add_patch(Circle(pt, 0.07, color=col, zorder=5))
+        ax.text(pt[0] + dx, pt[1] + dy, name, color=col, fontsize=14, ha="center")
+
+    # m:n 比例標註
+    midAP = (A + P) / 2
+    midPB = (P + B) / 2
+    ax.text(
+        midAP[0] - 0.10, midAP[1] + 0.22, "m = 2", color=F.INK, fontsize=12, ha="center"
+    )
+    ax.text(
+        midPB[0] + 0.12, midPB[1] - 0.28, "n = 1", color=F.INK, fontsize=12, ha="center"
+    )
+    ax.text(
+        2.3, 0.05, "OP = (n·OA + m·OB) / (m + n)", color=F.RED, fontsize=11, ha="center"
+    )
+    ax.set_title("內分點：AP : PB = m : n（離得遠權重大）", fontsize=13)
+    ax.set_xlim(-0.7, 5.4)
+    ax.set_ylim(-0.7, 3.4)
+    F.clean_grid(ax)
+
+    fig.tight_layout()
+    F.save_to(fig, CH, "數A3-3-線性組合分點")
+
+
+def fig_cauchy():
+    """柯西不等式的幾何意義：|a·b| = |a|·(b 的投影長) ≤ |a||b|，等號⇔平行。"""
+    fig, axes = plt.subplots(1, 2, figsize=(11.0, 4.6))
+
+    # --- (1) 一般情形：投影長 ≤ |b| ---
+    ax = axes[0]
+    ax.set_aspect("equal")
+    O = np.array([0.0, 0.0])
+    a = np.array([4.0, 0.0])
+    b = np.array([2.3, 2.4])
+    ua = a / np.linalg.norm(a)
+    projlen = np.dot(b, ua)
+    foot = O + projlen * ua
+
+    F.arrow(ax, O, a, color=F.BLUE, lw=2.6)
+    F.arrow(ax, O, b, color=F.GREEN, lw=2.8)
+    # 投影長（琥珀粗線）
+    ax.plot(
+        [O[0], foot[0]],
+        [O[1], foot[1]],
+        color=F.AMBER,
+        lw=5.0,
+        alpha=0.55,
+        zorder=2,
+        solid_capstyle="butt",
+    )
+    ax.plot([b[0], foot[0]], [b[1], foot[1]], color=F.INK, lw=1.2, ls="--", zorder=3)
+    # 直角記號
+    rs = 0.22
+    perp = np.array([0.0, 1.0])
+    ax.add_patch(
+        Polygon(
+            [foot, foot - rs * ua, foot - rs * ua + rs * perp, foot + rs * perp],
+            closed=True,
+            fill=False,
+            edgecolor=F.INK,
+            lw=1.0,
+        )
+    )
+    th = np.degrees(np.arctan2(b[1], b[0]))
+    ax.add_patch(Arc(O, 1.3, 1.3, angle=0, theta1=0, theta2=th, color=F.INK, lw=1.3))
+    ax.text(0.85, 0.36, "θ", color=F.INK, fontsize=14)
+
+    ax.text(a[0] * 0.6, -0.36, "a", color=F.BLUE, fontsize=15, ha="center")
+    ax.text(
+        b[0] * 0.5 - 0.30,
+        b[1] * 0.5 + 0.10,
+        "b",
+        color=F.GREEN,
+        fontsize=15,
+        ha="center",
+    )
+    ax.text(
+        foot[0] * 0.5,
+        -0.40,
+        "投影長 |b| cosθ < |b|",
+        color=F.AMBER,
+        fontsize=11,
+        ha="center",
+    )
+    ax.set_title("一般情形（θ≠0）：|cosθ| < 1，嚴格小於", fontsize=12)
+    ax.set_xlim(-0.7, 4.8)
+    ax.set_ylim(-0.8, 3.4)
+    F.clean_grid(ax)
+
+    # --- (2) 等號：b 與 a 平行，投影長 = |b| ---
+    ax = axes[1]
+    ax.set_aspect("equal")
+    a2 = np.array([4.0, 0.0])
+    b2 = np.array([2.6, 0.0])  # 與 a 同向（平行）
+
+    F.arrow(ax, O, a2, color=F.BLUE, lw=2.6)
+    # b 稍微抬高畫，避免完全重疊，但標明同向
+    b2d = np.array([2.6, 0.32])
+    ax.plot(
+        [O[0], b2[0]],
+        [O[1], b2[1]],
+        color=F.AMBER,
+        lw=5.0,
+        alpha=0.55,
+        zorder=2,
+        solid_capstyle="butt",
+    )
+    F.arrow(ax, np.array([0.0, 0.32]), b2d, color=F.GREEN, lw=2.8)
+
+    ax.text(a2[0] * 0.85, -0.36, "a", color=F.BLUE, fontsize=15, ha="center")
+    ax.text(
+        b2[0] * 0.5, 0.55, "b（與 a 同向）", color=F.GREEN, fontsize=12, ha="center"
+    )
+    ax.text(
+        b2[0] * 0.5,
+        -0.40,
+        "投影長 = |b|（θ=0）",
+        color=F.AMBER,
+        fontsize=11,
+        ha="center",
+    )
+    ax.text(2.0, 2.1, "等號 ⇔ a // b", color=F.RED, fontsize=14, ha="center")
+    ax.text(2.0, 1.5, "(a·b)² ≤ |a|² |b|²", color=F.RED, fontsize=13, ha="center")
+    ax.set_title("等號情形：a // b（|cosθ| = 1）", fontsize=12)
+    ax.set_xlim(-0.7, 4.8)
+    ax.set_ylim(-0.8, 3.4)
+    F.clean_grid(ax)
+
+    fig.tight_layout()
+    F.save_to(fig, CH, "數A3-3-柯西不等式")
+
+
 def fig_dot_product():
     """內積的幾何意義：|a||b|cosθ，b 在 a 上的投影。"""
     fig, ax = F.canvas(6.4, 4.8)
@@ -321,7 +530,9 @@ def fig_determinant_area():
 
 if __name__ == "__main__":
     fig_operations()
+    fig_linear_combination()
     fig_dot_product()
     fig_projection()
     fig_determinant_area()
+    fig_cauchy()
     print("done.")

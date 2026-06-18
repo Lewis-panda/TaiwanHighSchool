@@ -177,8 +177,133 @@ def fig_quadratic_inequality():
     F.save_to(fig, CH, "數1-2-二次不等式")
 
 
+def fig_interval_extremum():
+    """閉區間 [p,q] 上的二次極值：對稱軸落在區間內 vs 區間外。
+    用例題 2-6.5 的同一函數 f(x)=x^2-4x+1=(x-2)^2-3，頂點 (2,-3)，開口向上。
+    左：區間 [0,3]，對稱軸 x=2 在區間內 → 最小值在頂點、最大值在較遠端點 x=0。
+    右：區間 [3,5]，對稱軸 x=2 在區間外（左側）→ 區段單調，最值都在兩端點。"""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10.4, 4.6))
+    h, k = 2.0, -3.0  # 頂點
+
+    def f(t):
+        return (t - h) ** 2 + k
+
+    xfull = np.linspace(-1.0, 6.0, 500)
+    yfull = f(xfull)
+
+    for ax, (p, q), inside in [(ax1, (0.0, 3.0), True), (ax2, (3.0, 5.0), False)]:
+        # 整條拋物線（淡色），凸顯定義域外不算
+        ax.plot(xfull, yfull, color="#9aa4b2", lw=1.6, ls="--", zorder=2)
+        # 區間 [p,q] 上的圖形（粗藍實線）
+        xs = np.linspace(p, q, 300)
+        ax.plot(xs, f(xs), color=F.BLUE, lw=3.0, zorder=4)
+
+        # 對稱軸 x=h
+        ax.plot([h, h], [-4.0, 9.0], color=F.AMBER, lw=1.5, ls=":", zorder=3)
+        ax.text(h + 0.1, 8.4, "對稱軸 $x=2$", color=F.AMBER, fontsize=11.5, ha="left")
+
+        # 區間端點鉛直虛線 + 區間底部標示
+        for r in (p, q):
+            ax.plot([r, r], [-4.0, f(r)], color="#6b7280", lw=1.0, ls=":", zorder=3)
+        yb = -5.4
+        ax.plot([p, q], [yb, yb], color=F.GREEN, lw=4, solid_capstyle="butt", zorder=4)
+        for r in (p, q):
+            ax.add_patch(Circle((r, yb), 0.10, color=F.GREEN, zorder=6))
+        ax.text(
+            (p + q) / 2,
+            yb - 0.9,
+            "定義域 $[%d,\\,%d]$" % (int(p), int(q)),
+            color=F.GREEN,
+            fontsize=11.5,
+            ha="center",
+            va="top",
+        )
+
+        # 端點函數值的點
+        for r in (p, q):
+            ax.add_patch(Circle((r, f(r)), 0.11, color=F.INK, zorder=6))
+
+        if inside:
+            # 頂點是最小值
+            ax.add_patch(Circle((h, k), 0.13, color=F.RED, zorder=7))
+            ax.text(
+                h + 0.2,
+                k - 0.2,
+                "最小值 $f(2)=-3$",
+                color=F.RED,
+                fontsize=11.5,
+                ha="left",
+                va="top",
+            )
+            # 最大值在較遠端點 x=0（距軸 2 > x=3 距軸 1）
+            ax.add_patch(
+                Circle((p, f(p)), 0.15, fill=False, ec=F.RED, lw=2.2, zorder=7)
+            )
+            ax.text(
+                p + 0.15,
+                f(p) + 0.4,
+                "最大值 $f(0)=1$\n（離軸較遠端）",
+                color=F.RED,
+                fontsize=11,
+                ha="left",
+                va="bottom",
+            )
+            ax.text(
+                3.0,
+                6.6,
+                "對稱軸在區間內\n頂點即最小值",
+                color=F.INK,
+                fontsize=11.5,
+                ha="center",
+                va="center",
+            )
+            ax.set_title("對稱軸落在區間內（$[0,3]$）", fontsize=12.5)
+        else:
+            # 區間單調遞增，最值都在端點
+            ax.add_patch(
+                Circle((p, f(p)), 0.15, fill=False, ec=F.RED, lw=2.2, zorder=7)
+            )
+            ax.text(
+                p - 0.15,
+                f(p) - 0.3,
+                "最小值 $f(3)=-2$",
+                color=F.RED,
+                fontsize=11,
+                ha="right",
+                va="top",
+            )
+            ax.add_patch(
+                Circle((q, f(q)), 0.15, fill=False, ec=F.RED, lw=2.2, zorder=7)
+            )
+            ax.text(
+                q - 0.1,
+                f(q) + 0.3,
+                "最大值 $f(5)=6$",
+                color=F.RED,
+                fontsize=11,
+                ha="right",
+                va="bottom",
+            )
+            ax.text(
+                4.0,
+                -2.2,
+                "對稱軸在區間外\n區段單調，最值都在端點\n（頂點取不到）",
+                color=F.INK,
+                fontsize=11,
+                ha="center",
+                va="center",
+            )
+            ax.set_title("對稱軸落在區間外（$[3,5]$）", fontsize=12.5)
+
+        _origin_axes(ax, (-1.2, 6.2), (-6.6, 9.0))
+
+    fig.tight_layout()
+    F.save_to(fig, CH, "數1-2-區間極值")
+
+
 if __name__ == "__main__":
     fig_completing_square()
     fig_cubic_features()
     fig_quadratic_inequality()
+    fig_interval_extremum()
     print("done.")

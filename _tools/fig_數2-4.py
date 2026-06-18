@@ -153,6 +153,124 @@ def fig_best_fit():
     F.save_to(fig, CH, "數2-4-最適直線")
 
 
+def fig_boxplot():
+    """盒鬚圖：以例題 4-2a 的 11 筆資料標出 Q1、Q2、Q3、IQR 與全距的對照。"""
+    data = np.array([3, 5, 6, 8, 9, 10, 12, 13, 15, 18, 21], dtype=float)
+    q1, q2, q3 = 6.0, 10.0, 15.0  # 高中作法（中位數切半、左右半取中位數）
+    lo, hi = data.min(), data.max()  # 3, 21
+    iqr = q3 - q1  # 9
+    rng = hi - lo  # 18
+
+    fig, ax = F.canvas(9.4, 4.6)
+
+    yc = 0.0  # 盒鬚圖中心高度
+    bh = 0.42  # 盒子半高
+
+    # ---- 盒子（Q1 到 Q3）----
+    from matplotlib.patches import Rectangle
+
+    ax.add_patch(
+        Rectangle(
+            (q1, yc - bh),
+            iqr,
+            2 * bh,
+            facecolor=F.BLUE,
+            alpha=0.18,
+            edgecolor=F.BLUE,
+            lw=1.8,
+            zorder=3,
+        )
+    )
+    # 中位數線（Q2）
+    ax.plot([q2, q2], [yc - bh, yc + bh], color=F.RED, lw=2.6, zorder=5)
+    # ---- 鬚（whisker）到最小、最大值 ----
+    ax.plot([lo, q1], [yc, yc], color=F.INK, lw=1.6, zorder=4)
+    ax.plot([q3, hi], [yc, yc], color=F.INK, lw=1.6, zorder=4)
+    for xv in (lo, hi):
+        ax.plot(
+            [xv, xv], [yc - bh * 0.55, yc + bh * 0.55], color=F.INK, lw=1.6, zorder=4
+        )
+
+    # ---- 原始資料點（沿底部排開，看出盒鬚圖如何摘要）----
+    ax.scatter(
+        data, np.full_like(data, yc - 1.05), color=F.INK, s=30, alpha=0.7, zorder=4
+    )
+    for xv in data:
+        ax.plot([xv, xv], [yc - 1.0, yc - bh], color=F.GRID, lw=0.8, ls=":", zorder=1)
+    ax.text(
+        lo,
+        yc - 1.42,
+        "原始 11 筆資料（由小到大）",
+        color=F.INK,
+        fontsize=10.5,
+        ha="left",
+        va="top",
+    )
+
+    # ---- 五數標註（最小、Q1、Q2、Q3、最大）----
+    marks = [
+        (lo, "最小 3", F.INK),
+        (q1, "Q1 = 6", F.BLUE),
+        (q2, "Q2（中位數）= 10", F.RED),
+        (q3, "Q3 = 15", F.BLUE),
+        (hi, "最大 21", F.INK),
+    ]
+    for i, (xv, txt, col) in enumerate(marks):
+        dy = bh + 0.22 if i % 2 == 0 else bh + 0.72
+        ax.text(xv, yc + dy, txt, color=col, fontsize=11, ha="center", va="bottom")
+        ax.plot(
+            [xv, xv], [yc + bh, yc + dy - 0.05], color=col, lw=0.8, ls="--", zorder=2
+        )
+
+    # ---- IQR 區間標尺（盒子下方）----
+    ybar = yc - 0.62
+    ax.annotate(
+        "",
+        xy=(q1, ybar),
+        xytext=(q3, ybar),
+        arrowprops=dict(arrowstyle="<->", color=F.BLUE, lw=1.6),
+    )
+    ax.text(
+        q2,
+        ybar - 0.04,
+        "IQR = Q3 − Q1 = 9",
+        color=F.BLUE,
+        fontsize=11,
+        ha="center",
+        va="top",
+    )
+
+    # ---- 全距標尺（最上方）----
+    ytop = yc + bh + 1.18
+    ax.annotate(
+        "",
+        xy=(lo, ytop),
+        xytext=(hi, ytop),
+        arrowprops=dict(arrowstyle="<->", color=F.AMBER, lw=1.6),
+    )
+    ax.text(
+        (lo + hi) / 2,
+        ytop + 0.04,
+        "全距 = 最大 − 最小 = 18",
+        color=F.AMBER,
+        fontsize=11,
+        ha="center",
+        va="bottom",
+    )
+
+    ax.set_xlim(0, 24)
+    ax.set_ylim(yc - 1.75, ytop + 0.6)
+    ax.set_yticks([])
+    ax.set_xlabel("數值")
+    ax.spines["left"].set_visible(False)
+    ax.set_title("盒鬚圖：用五個數摘要一組資料的分布與離散", fontsize=14)
+    ax.grid(True, axis="x", color=F.GRID, lw=0.9)
+    ax.set_axisbelow(True)
+    for s in ("top", "right"):
+        ax.spines[s].set_visible(False)
+    F.save_to(fig, CH, "數2-4-盒鬚圖")
+
+
 def fig_standardize():
     """標準化示意：原始分布與標準化後（平均0、標準差1）的對照，標出 z 分數。"""
     fig, axes = plt.subplots(1, 2, figsize=(11.4, 4.4))
@@ -230,4 +348,5 @@ if __name__ == "__main__":
     fig_scatter_corr()
     fig_best_fit()
     fig_standardize()
+    fig_boxplot()
     print("done.")

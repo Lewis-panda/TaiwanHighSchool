@@ -323,9 +323,82 @@ def fig_three_perpendicular():
     F.save_to(fig, CH, "數A3-4-三垂線")
 
 
+# ---------------------------------------------------------------------------
+def fig_line_relations():
+    """空間中兩直線的三種位置關係：平行、相交、歪斜（不共面）。"""
+    from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+
+    fig = plt.figure(figsize=(11.4, 4.4))
+
+    def _seg(ax, p0, p1, color, lw=2.6, z=6):
+        ax.plot(
+            [p0[0], p1[0]], [p0[1], p1[1]], [p0[2], p1[2]], color=color, lw=lw, zorder=z
+        )
+
+    def _plane(ax, corners, color=F.GRID, alpha=0.32):
+        pc = Poly3DCollection(
+            [[(p[0], p[1], p[2]) for p in corners]],
+            facecolor=color,
+            alpha=alpha,
+            edgecolor=F.INK,
+            lw=0.8,
+        )
+        ax.add_collection3d(pc)
+
+    # (1) 平行：兩線同方向，共平面
+    ax = fig.add_subplot(1, 3, 1, projection="3d")
+    _plane(ax, [(-0.3, -0.3, 0), (4.3, -0.3, 0), (4.3, 3.3, 0), (-0.3, 3.3, 0)])
+    _seg(ax, (0.2, 0.6, 0), (4.0, 1.4, 0), F.BLUE)
+    _seg(ax, (0.2, 2.2, 0), (4.0, 3.0, 0), F.GREEN)
+    ax.text(4.05, 1.4, 0.05, "L1", color=F.BLUE, fontsize=12)
+    ax.text(4.05, 3.0, 0.05, "L2", color=F.GREEN, fontsize=12)
+    ax.text(0.4, 1.4, 0.0, "同一平面上", color=F.INK, fontsize=10)
+    _line_panel(ax, "平行：方向相同，永不相交")
+
+    # (2) 相交：兩線交於一點，共平面
+    ax = fig.add_subplot(1, 3, 2, projection="3d")
+    _plane(ax, [(-0.3, -0.3, 0), (4.3, -0.3, 0), (4.3, 3.3, 0), (-0.3, 3.3, 0)])
+    _seg(ax, (0.2, 0.4, 0), (4.0, 2.8, 0), F.BLUE)
+    _seg(ax, (0.4, 2.8, 0), (3.8, 0.4, 0), F.GREEN)
+    X = np.array([2.07, 1.58, 0.0])  # 交點（兩線約略交會處）
+    ax.scatter(*X, color=F.RED, s=46, zorder=9)
+    ax.text(X[0] + 0.15, X[1] + 0.1, 0.25, "交點", color=F.RED, fontsize=10)
+    ax.text(3.9, 2.8, 0.05, "L1", color=F.BLUE, fontsize=12)
+    ax.text(3.7, 0.4, 0.05, "L2", color=F.GREEN, fontsize=12)
+    _line_panel(ax, "相交：恰有一個公共點")
+
+    # (3) 歪斜：一線在底面，一線架在上方，既不平行也不相交
+    ax = fig.add_subplot(1, 3, 3, projection="3d")
+    _plane(ax, [(-0.3, -0.3, 0), (4.3, -0.3, 0), (4.3, 3.3, 0), (-0.3, 3.3, 0)])
+    _seg(ax, (0.2, 0.5, 0), (4.0, 2.6, 0), F.BLUE)  # 底面上的線
+    _seg(ax, (0.6, 2.8, 2.4), (3.6, 0.4, 2.4), F.GREEN)  # 上方錯開的線
+    # 公垂線（示意兩線不相交、有最近距離）
+    ax.plot([2.1, 2.1], [1.55, 1.6], [0, 2.4], color=F.AMBER, lw=1.6, ls="--", zorder=5)
+    ax.text(2.2, 1.6, 1.2, "最近距離", color=F.AMBER, fontsize=9)
+    ax.text(3.95, 2.6, 0.05, "L1", color=F.BLUE, fontsize=12)
+    ax.text(3.6, 0.4, 2.6, "L2", color=F.GREEN, fontsize=12)
+    _line_panel(ax, "歪斜：不平行也不相交，不共面")
+
+    fig.suptitle("空間中兩直線的三種位置關係", fontsize=14, y=0.98)
+    fig.subplots_adjust(left=0.0, right=1.0, top=0.9, bottom=0.0, wspace=0.02)
+    F.save_to(fig, CH, "數A3-4-兩直線位置")
+
+
+def _line_panel(ax, title):
+    """兩直線位置關係子圖的共用視角與外觀設定。"""
+    ax.set_xlim(-0.3, 4.3)
+    ax.set_ylim(-0.3, 3.3)
+    ax.set_zlim(0, 2.6)
+    ax.set_box_aspect((1.3, 1.0, 0.85))
+    _clean3d(ax)
+    ax.view_init(elev=22, azim=-66)
+    ax.set_title(title, fontsize=11)
+
+
 if __name__ == "__main__":
     fig_space_coords()
     fig_cross_product()
     fig_parallelepiped()
     fig_three_perpendicular()
+    fig_line_relations()
     print("done.")

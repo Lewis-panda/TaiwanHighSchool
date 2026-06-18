@@ -378,6 +378,63 @@ def fig_line_plane_relation():
     F.save_to(fig, CH, "數A4-1-直線與平面關係")
 
 
+def fig_two_lines_relation():
+    """空間中兩直線的三種關係：平行 / 相交 / 歪斜。"""
+    fig = plt.figure(figsize=(11.0, 4.2))
+
+    def draw_line(ax, A, d, col, t0=-2.6, t1=2.6, n=30, lw=2.6, z=5):
+        A = np.array(A, dtype=float)
+        d = np.array(d, dtype=float)
+        d = d / np.linalg.norm(d)
+        ts = np.linspace(t0, t1, n)
+        pts = np.array([A + t * d for t in ts])
+        ax.plot(pts[:, 0], pts[:, 1], pts[:, 2], color=col, lw=lw, zorder=z)
+
+    def setup(ax, title):
+        ax.set_xlim(-2.6, 2.6)
+        ax.set_ylim(-2.6, 2.6)
+        ax.set_zlim(-2.2, 2.2)
+        ax.set_box_aspect((1, 1, 0.85))
+        ax.set_xticks([])
+        ax.set_yticks([])
+        ax.set_zticks([])
+        ax.set_title(title, fontsize=12)
+        ax.view_init(elev=18, azim=-58)
+        _clean3d(ax)
+
+    # (1) 平行：方向相同、錯開不重合，兩線共平面
+    ax1 = fig.add_subplot(1, 3, 1, projection="3d")
+    dpar = np.array([1.0, 0.5, 0.2])
+    draw_line(ax1, [-0.2, 0.9, 0.4], dpar, F.BLUE)
+    draw_line(ax1, [0.3, -1.0, -0.5], dpar, F.GREEN)
+    ax1.text(1.9, 1.2, 0.7, "L1", color=F.BLUE, fontsize=12)
+    ax1.text(1.9, -0.6, -0.2, "L2", color=F.GREEN, fontsize=12)
+    setup(ax1, "平行：方向相同、不相交（共平面）")
+
+    # (2) 相交：方向不同，交於一點，兩線共平面
+    ax2 = fig.add_subplot(1, 3, 2, projection="3d")
+    C = np.array([0.0, 0.0, 0.0])
+    draw_line(ax2, C, [1.0, 0.6, 0.3], F.BLUE)
+    draw_line(ax2, C, [-0.7, 1.0, 0.2], F.GREEN)
+    ax2.scatter(*C, color=F.RED, s=45, zorder=9)
+    ax2.text(0.15, 0.15, -0.6, "交點", color=F.RED, fontsize=11)
+    ax2.text(2.0, 1.2, 0.7, "L1", color=F.BLUE, fontsize=12)
+    ax2.text(-1.6, 2.0, 0.5, "L2", color=F.GREEN, fontsize=12)
+    setup(ax2, "相交：方向不同、有交點（共平面）")
+
+    # (3) 歪斜：方向不同、錯開在不同高度，不相交也不共面
+    ax3 = fig.add_subplot(1, 3, 3, projection="3d")
+    draw_line(ax3, [0.0, 0.0, -1.2], [1.0, 0.0, 0.0], F.BLUE)
+    draw_line(ax3, [0.0, 0.0, 1.2], [0.0, 1.0, 0.0], F.GREEN)
+    ax3.text(2.0, 0.0, -1.5, "L1", color=F.BLUE, fontsize=12)
+    ax3.text(0.0, 2.0, 1.5, "L2", color=F.GREEN, fontsize=12)
+    setup(ax3, "歪斜：方向不同、不相交（不共平面）")
+
+    fig.suptitle("空間中兩直線的三種位置關係", fontsize=13)
+    fig.tight_layout()
+    F.save_to(fig, CH, "數A4-1-兩直線關係")
+
+
 if __name__ == "__main__":
     fig_plane_normal()
     fig_dihedral_angle()
@@ -385,4 +442,5 @@ if __name__ == "__main__":
     fig_point_to_plane()
     fig_skew_lines()
     fig_line_plane_relation()
+    fig_two_lines_relation()
     print("done.")

@@ -392,9 +392,140 @@ def fig_prob():
     F.save_to(fig, CH, "數2-3-機率")
 
 
+# =====================================================================
+# 圖五：三集合取捨原理（三圓相交的文氏圖，標各區塊被加減的次數）
+# =====================================================================
+def fig_venn3():
+    """三集合文氏圖：左圖標各區塊在『加單、減雙、加三』下被淨數幾次，
+    右圖以『$2,3,5$ 的倍數』實例對照（例題 3-3b）。"""
+    fig, axes = plt.subplots(1, 2, figsize=(12.4, 5.6))
+
+    # 三圓中心（正三角形排列）與半徑
+    R = 1.35
+    cA = (-0.78, 0.46)
+    cB = (0.78, 0.46)
+    cC = (0.0, -0.92)
+    circ = [(cA, F.BLUE), (cB, F.RED), (cC, F.GREEN)]
+
+    def draw_three_circles(ax, fill_alpha=0.12):
+        for c, col in circ:
+            ax.add_patch(Circle(c, R, fc=col, ec=col, lw=2.2, alpha=fill_alpha))
+        for c, col in circ:
+            ax.add_patch(Circle(c, R, fill=False, ec=col, lw=2.2))
+
+    # 各區塊的代表座標（七個區塊：三單、三雙、一三）
+    # 只在 A、只在 B、只在 C
+    pA = (cA[0] - 0.62, cA[1] + 0.30)
+    pB = (cB[0] + 0.62, cB[1] + 0.30)
+    pC = (cC[0], cC[1] - 0.66)
+    # 恰兩兩交（不含三交）
+    pAB = ((cA[0] + cB[0]) / 2, cA[1] + 0.56)
+    pBC = (0.56, -0.42)
+    pCA = (-0.56, -0.42)
+    # 三交
+    pABC = (0.0, 0.04)
+
+    def set_labels(ax):
+        for c, col, name, dx, dy in [
+            (cA, F.BLUE, "$A$", -1.06, 0.92),
+            (cB, F.RED, "$B$", 1.06, 0.92),
+            (cC, F.GREEN, "$C$", 0.0, -1.30),
+        ]:
+            ax.text(
+                c[0] + dx,
+                c[1] + dy,
+                name,
+                color=col,
+                fontsize=16,
+                ha="center",
+                va="center",
+                fontweight="bold",
+            )
+
+    # ---- (左) 標「淨數幾次」----
+    ax = axes[0]
+    draw_three_circles(ax)
+    set_labels(ax)
+    # 三單區：加單一次 → 淨 +1
+    for p in (pA, pB, pC):
+        ax.text(p[0], p[1], "$+1$", color=F.INK, fontsize=13, ha="center", va="center")
+    # 三雙區：加單兩次、減雙一次 → 2-1 = +1
+    for p in (pAB, pBC, pCA):
+        ax.text(
+            p[0], p[1], "$2-1$", color="#8a3b00", fontsize=12, ha="center", va="center"
+        )
+    # 三交區：加單三次、減雙三次、加三一次 → 3-3+1 = +1
+    ax.text(
+        pABC[0],
+        pABC[1] + 0.05,
+        "$3-3+1$",
+        color=F.PURPLE,
+        fontsize=11.5,
+        ha="center",
+        va="center",
+        fontweight="bold",
+    )
+    ax.set_title("每個區塊最後都「淨數恰好 1 次」", fontsize=13.5)
+
+    # ---- (右) 以 1~100 中 2、3、5 的倍數實例對照（例題 3-3b）----
+    ax = axes[1]
+    draw_three_circles(ax)
+    # 以 A=2 的倍數、B=3 的倍數、C=5 的倍數標各區個數
+    # 三交 |A∩B∩C|=3；兩兩交（含三交）：AB=16, BC=6, CA=10
+    # 恰兩兩交（不含三交）：AB' = 16-3=13, BC'=6-3=3, CA'=10-3=7
+    # 三單（恰一）：A 只=50-13-7-3=27, B 只=33-13-3-3=14, C 只=20-7-3-3=7
+    ax.text(
+        cA[0] - 0.96,
+        cA[1] + 1.18,
+        "$A$：2 的倍數",
+        color=F.BLUE,
+        fontsize=11.5,
+        ha="center",
+    )
+    ax.text(
+        cB[0] + 0.96,
+        cB[1] + 1.18,
+        "$B$：3 的倍數",
+        color=F.RED,
+        fontsize=11.5,
+        ha="center",
+    )
+    ax.text(
+        cC[0], cC[1] - 1.34, "$C$：5 的倍數", color=F.GREEN, fontsize=11.5, ha="center"
+    )
+    nums = {pA: "27", pB: "14", pC: "7", pAB: "13", pBC: "3", pCA: "7", pABC: "3"}
+    for p, n in nums.items():
+        ax.text(p[0], p[1], n, color=F.INK, fontsize=12.5, ha="center", va="center")
+    ax.set_title("實例：$1\\sim100$ 中 2、3、5 的倍數個數", fontsize=13.5)
+    ax.text(
+        0.0,
+        -2.62,
+        "$|A\\cup B\\cup C|=27+14+7+13+3+7+3=74$",
+        color=F.PURPLE,
+        fontsize=12.5,
+        ha="center",
+    )
+
+    for ax in axes:
+        ax.set_xlim(-2.5, 2.5)
+        ax.set_ylim(-2.9, 2.2)
+        ax.set_aspect("equal")
+        ax.axis("off")
+
+    fig.suptitle(
+        "三集合取捨原理：$|A\\cup B\\cup C|=\\sum|A|-\\sum|A\\cap B|+|A\\cap B\\cap C|$"
+        "（加單、減雙、加三）",
+        fontsize=14,
+        y=1.02,
+    )
+    fig.tight_layout()
+    F.save_to(fig, CH, "數2-3-三集合取捨")
+
+
 if __name__ == "__main__":
     fig_venn()
     fig_tree()
     fig_perm_comb()
     fig_prob()
+    fig_venn3()
     print("done.")

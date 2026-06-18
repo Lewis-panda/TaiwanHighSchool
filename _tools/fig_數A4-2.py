@@ -177,6 +177,86 @@ def fig_rotation_reflection():
     F.save_to(fig, CH, "數A4-2-旋轉鏡射")
 
 
+def fig_four_transforms():
+    """四種標準線性變換對同一個單位方格的作用對比：伸縮、推移、旋轉、鏡射。"""
+    fig, axes = plt.subplots(1, 4, figsize=(14.6, 4.2))
+
+    unit = np.array([[0, 0], [1, 0], [1, 1], [0, 1]], dtype=float)
+
+    def apply(M):
+        M = np.asarray(M, dtype=float)
+        return np.array([M @ p for p in unit])
+
+    panels = [
+        # (矩陣, 標題, 矩陣文字)
+        ([[2, 0], [0, 1]], "伸縮（沿 x 放大 2 倍）", "[[2, 0], [0, 1]]"),
+        ([[1, 1], [0, 1]], "推移（shear，沿 x 錯切）", "[[1, 1], [0, 1]]"),
+        (
+            [
+                [np.cos(np.deg2rad(40)), -np.sin(np.deg2rad(40))],
+                [np.sin(np.deg2rad(40)), np.cos(np.deg2rad(40))],
+            ],
+            "旋轉（逆時針 40°）",
+            "[[cos θ, −sin θ], [sin θ, cos θ]]",
+        ),
+        ([[1, 0], [0, -1]], "鏡射（對 x 軸）", "[[1, 0], [0, −1]]"),
+    ]
+
+    for ax, (M, title, mtxt) in zip(axes, panels):
+        ax.set_aspect("equal")
+        # 原單位方格（藍，淡）
+        ax.add_patch(
+            Polygon(
+                unit,
+                closed=True,
+                facecolor=F.BLUE,
+                alpha=0.16,
+                edgecolor=F.BLUE,
+                lw=1.6,
+                ls="--",
+                zorder=2,
+            )
+        )
+        # 變換後（紅）
+        tcell = apply(M)
+        ax.add_patch(
+            Polygon(
+                tcell,
+                closed=True,
+                facecolor=F.RED,
+                alpha=0.26,
+                edgecolor=F.RED,
+                lw=2.2,
+                zorder=3,
+            )
+        )
+        # 基底像 e1', e2'
+        Mn = np.asarray(M, dtype=float)
+        F.arrow(ax, [0, 0], Mn[:, 0], color=F.RED, lw=2.4, z=6)
+        F.arrow(ax, [0, 0], Mn[:, 1], color=F.RED, lw=2.4, z=6)
+        ax.axhline(0, color=F.GRID, lw=1.0, zorder=0)
+        ax.axvline(0, color=F.GRID, lw=1.0, zorder=0)
+        ax.set_title(title + "\n" + mtxt, fontsize=12, pad=8)
+        ax.set_xlim(-1.6, 2.4)
+        ax.set_ylim(-1.6, 2.0)
+        F.clean_grid(ax)
+
+    # 圖例（在第一張圖角落標出虛線藍＝原方格）
+    axes[0].text(
+        0.5,
+        0.5,
+        "原方格",
+        color=F.BLUE,
+        fontsize=10.5,
+        ha="center",
+        va="center",
+        zorder=7,
+    )
+
+    fig.tight_layout()
+    F.save_to(fig, CH, "數A4-2-四種變換")
+
+
 def fig_three_cases():
     """二元一次方程組解的三種情況：交於一點 / 重合 / 平行。"""
     fig, axes = plt.subplots(1, 3, figsize=(13.2, 4.6))
@@ -254,6 +334,7 @@ def fig_markov():
 if __name__ == "__main__":
     fig_linear_transform()
     fig_rotation_reflection()
+    fig_four_transforms()
     fig_three_cases()
     fig_markov()
     print("done.")

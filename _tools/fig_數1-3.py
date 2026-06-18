@@ -160,8 +160,106 @@ def fig_amgm():
     F.save_to(fig, CH, "數1-3-算幾不等式")
 
 
+def fig_amgm_sumfixed():
+    """和定積最大：半周長固定的長方形，面積在正方形（a=b）時最大。
+    畫三個半周長相同（a+b=10）的長方形，邊長越接近、面積越大。"""
+    fig, ax = F.schematic(7.2, 4.2)
+
+    s = 10.0  # 固定的「半周長」a+b（長＋寬）
+    cases = [
+        (1.0, 9.0, F.AMBER),  # 細長：面積小
+        (3.0, 7.0, F.GREEN),  # 較接近
+        (5.0, 5.0, F.BLUE),  # 正方形：面積最大
+    ]
+    gap = 1.3
+    x0 = 0.0
+    scale = 0.42  # 邊長縮放，避免圖太高
+    base_y = 0.0
+    centers = []
+    for a, b in [(c[0], c[1]) for c in cases]:
+        centers.append(x0 + a * scale / 2.0)
+        x0 += a * scale + gap
+
+    x0 = 0.0
+    for (a, b, col), cx in zip(cases, centers):
+        w = a * scale
+        h = b * scale
+        rect = Polygon(
+            [
+                (x0, base_y),
+                (x0 + w, base_y),
+                (x0 + w, base_y + h),
+                (x0, base_y + h),
+            ],
+            closed=True,
+            facecolor=col,
+            edgecolor=F.INK,
+            lw=1.6,
+            alpha=0.22,
+            zorder=3,
+        )
+        ax.add_patch(rect)
+        # 邊長標註（長、寬）
+        ax.text(
+            x0 + w / 2,
+            base_y - 0.32,
+            f"$a={a:.0f}$",
+            color=col,
+            fontsize=12,
+            ha="center",
+            va="top",
+        )
+        ax.text(
+            x0 - 0.18,
+            base_y + h / 2,
+            f"$b={b:.0f}$",
+            color=col,
+            fontsize=12,
+            ha="right",
+            va="center",
+            rotation=90,
+        )
+        # 面積數值
+        ax.text(
+            x0 + w / 2,
+            base_y + h + 0.30,
+            f"$ab={a * b:.0f}$",
+            color=F.INK,
+            fontsize=13,
+            ha="center",
+            va="bottom",
+            zorder=6,
+        )
+        x0 += w + gap
+
+    total_w = x0 - gap
+    ax.text(
+        total_w / 2,
+        base_y + 9.0 * scale + 1.05,
+        r"和固定 $a+b=10$：邊長越接近，面積 $ab$ 越大",
+        color=F.INK,
+        fontsize=13.5,
+        ha="center",
+        va="bottom",
+    )
+    ax.text(
+        total_w / 2,
+        base_y - 1.05,
+        r"正方形（$a=b=5$）時面積最大 $=25=\left(\frac{a+b}{2}\right)^2$",
+        color=F.BLUE,
+        fontsize=12.5,
+        ha="center",
+        va="top",
+    )
+    ax.set_title("和定積最大：半周長固定，面積在正方形時最大", fontsize=14)
+    ax.set_xlim(-0.9, total_w + 0.5)
+    ax.set_ylim(-1.7, base_y + 9.0 * scale + 1.7)
+    F.save_to(fig, CH, "數1-3-和定積最大")
+
+
 if __name__ == "__main__":
     fig_exponential()
     fig_logarithm()
     fig_amgm()
+    fig_amgm_sumfixed()
     print("done.")

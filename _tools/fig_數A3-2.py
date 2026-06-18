@@ -241,9 +241,97 @@ def fig_log_scale():
     F.save_to(fig, CH, "數A3-2-對數尺度")
 
 
+# ---------------------------------------------------------------------------
+def fig_inequality_flip():
+    """底數 0<a<1 時，遞減函數讓不等號反向的圖解。
+    左：指數不等式——自變數 f<g，但 a^f > a^g。
+    右：對數不等式——真數 A<B，但 log_a A > log_a B。
+    """
+    fig, axes = plt.subplots(1, 2, figsize=(11.6, 4.9))
+
+    # --- 左：指數 y=(1/2)^x 遞減 → a^f > a^g 雖然 f<g ---
+    ax = axes[0]
+    x = np.linspace(-0.3, 3.3, 300)
+    y = (0.5) ** x
+    ax.plot(x, y, color=F.RED, lw=2.6, zorder=4)
+
+    xf, xg = 1.0, 2.5  # f < g
+    yf, yg = 0.5**xf, 0.5**xg
+    # 對應的投影虛線
+    for xv, yv in ((xf, yf), (xg, yg)):
+        ax.plot([xv, xv], [0, yv], color="#9aa0a6", lw=1.0, ls=":", zorder=2)
+        ax.plot([0, xv], [yv, yv], color="#9aa0a6", lw=1.0, ls=":", zorder=2)
+        ax.plot(xv, yv, marker="o", ms=7, color=F.RED, zorder=6)
+
+    ax.text(xf, -0.075, "f", color=F.INK, fontsize=13, ha="center", va="top")
+    ax.text(xg, -0.075, "g", color=F.INK, fontsize=13, ha="center", va="top")
+    ax.text(2.95, 0.40, "f < g", color=F.INK, fontsize=12.5, ha="left")
+    ax.text(-0.12, yf, "$a^{f}$", color=F.RED, fontsize=13, ha="right", va="center")
+    ax.text(-0.12, yg, "$a^{g}$", color=F.RED, fontsize=13, ha="right", va="center")
+    # 反向箭頭：函數值大小相反
+    ax.annotate(
+        "",
+        xy=(-0.05, yf - 0.02),
+        xytext=(-0.05, yg + 0.02),
+        arrowprops=dict(arrowstyle="-|>", color=F.RED, lw=1.6),
+    )
+    ax.text(1.55, 0.78, "$a^{f} > a^{g}$（反向）", color=F.RED, fontsize=13, ha="left")
+    ax.text(2.15, 0.93, "$y=a^{x},\\ 0<a<1$", color=F.RED, fontsize=12, ha="center")
+    ax.set_xlim(-0.55, 3.4)
+    ax.set_ylim(0, 1.06)
+    F.clean_grid(ax)
+    ax.set_title("指數不等式：底數 < 1 → 不等號反向", fontsize=12.5, color=F.RED)
+
+    # --- 右：對數 y=log_{1/2} x 遞減 → log_a A > log_a B 雖然 A<B ---
+    ax = axes[1]
+    xl = np.linspace(0.06, 6.2, 400)
+    yl = np.log(xl) / np.log(0.5)
+    ax.plot(xl, yl, color=F.RED, lw=2.6, zorder=4)
+
+    xA, xB = 1.5, 4.0  # A < B
+    yA, yB = np.log(xA) / np.log(0.5), np.log(xB) / np.log(0.5)
+    for xv, yv in ((xA, yA), (xB, yB)):
+        ax.plot([xv, xv], [0, yv], color="#9aa0a6", lw=1.0, ls=":", zorder=2)
+        ax.plot([0, xv], [yv, yv], color="#9aa0a6", lw=1.0, ls=":", zorder=2)
+        ax.plot(xv, yv, marker="o", ms=7, color=F.RED, zorder=6)
+
+    ax.axhline(0, color=F.GRID, lw=0.9, zorder=1)
+    ax.text(xA, 0.18, "A", color=F.INK, fontsize=13, ha="center", va="bottom")
+    ax.text(xB, 0.18, "B", color=F.INK, fontsize=13, ha="center", va="bottom")
+    ax.text(2.55, 0.30, "A < B", color=F.INK, fontsize=12.5, ha="left")
+    ax.text(0.12, yA, "$\\log_a A$", color=F.RED, fontsize=12.5, ha="left", va="center")
+    ax.text(0.12, yB, "$\\log_a B$", color=F.RED, fontsize=12.5, ha="left", va="center")
+    ax.annotate(
+        "",
+        xy=(0.05, yA - 0.05),
+        xytext=(0.05, yB + 0.05),
+        arrowprops=dict(arrowstyle="-|>", color=F.RED, lw=1.6),
+    )
+    ax.text(
+        3.2,
+        1.35,
+        "$\\log_a A > \\log_a B$\n（反向）",
+        color=F.RED,
+        fontsize=12.5,
+        ha="left",
+    )
+    ax.text(4.9, 2.05, "$y=\\log_a x,\\ 0<a<1$", color=F.RED, fontsize=12, ha="center")
+    ax.set_xlim(0, 6.4)
+    ax.set_ylim(-2.4, 2.4)
+    F.clean_grid(ax)
+    ax.set_title("對數不等式：底數 < 1 → 不等號反向", fontsize=12.5, color=F.RED)
+
+    fig.suptitle(
+        "為什麼底數 < 1 要把不等號反過來：遞減函數讓大小關係對調", fontsize=13.5, y=1.02
+    )
+    fig.tight_layout()
+    F.save_to(fig, CH, "數A3-2-不等式變號")
+
+
 if __name__ == "__main__":
     fig_exponential()
     fig_logarithm()
     fig_growth_decay()
     fig_log_scale()
+    fig_inequality_flip()
     print("done.")

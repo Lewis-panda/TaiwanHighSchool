@@ -227,8 +227,157 @@ def fig_line_circle():
     F.save_to(fig, CH, "數1-4-直線與圓")
 
 
+def fig_circle_degenerate():
+    """圓的一般式退化三情況：同一圓心 (h,k)，右邊常數 k0 取 正/零/負。
+    k0>0 圓、k0=0 一點、k0<0 空集合（無圖形）。"""
+    fig, axes = plt.subplots(1, 3, figsize=(11.4, 4.4))
+    th = np.linspace(0, 2 * np.pi, 400)
+    cx, cy = 0.0, 0.0  # 三圖共用同一圓心
+    r = 1.6  # k0>0 那張的半徑
+
+    LIM = 2.6
+
+    cases = [
+        (
+            axes[0],
+            "k0",
+            F.BLUE,
+            "右邊常數 $>0$：圓",
+            r"$(x-h)^2+(y-k)^2=k_0>0$",
+        ),
+        (
+            axes[1],
+            "zero",
+            F.GREEN,
+            "右邊常數 $=0$：一點",
+            r"$(x-h)^2+(y-k)^2=0$",
+        ),
+        (
+            axes[2],
+            "neg",
+            F.RED,
+            "右邊常數 $<0$：空集合",
+            r"$(x-h)^2+(y-k)^2<0$",
+        ),
+    ]
+
+    for ax, kind, col, title, eq in cases:
+        # 淡十字參考軸（過圓心）
+        ax.axhline(cy, color=F.GRID, lw=1.0, zorder=1)
+        ax.axvline(cx, color=F.GRID, lw=1.0, zorder=1)
+
+        # 圓心位置標記（三圖共用同一圓心 (h,k)）。
+        # 空集合那張沒有任何實點，圓心僅作位置參考，標籤移到右上避免與叉重疊。
+        if kind == "neg":
+            ax.text(
+                cx + 0.70,
+                cy + 0.70,
+                "$(h,\\,k)$",
+                color=F.INK,
+                fontsize=12,
+                ha="left",
+                va="bottom",
+                zorder=9,
+            )
+        else:
+            ax.add_patch(Circle((cx, cy), 0.07, color=F.INK, zorder=6))
+            ax.text(
+                cx + 0.16,
+                cy - 0.14,
+                "$(h,\\,k)$",
+                color=F.INK,
+                fontsize=12,
+                ha="left",
+                va="top",
+                zorder=7,
+            )
+
+        if kind == "k0":
+            # 整圈解：實線圓 + 半徑
+            ax.plot(
+                cx + r * np.cos(th), cy + r * np.sin(th), color=col, lw=2.6, zorder=4
+            )
+            ax.plot([cx, cx + r], [cy, cy], color=col, lw=1.6, ls="--", zorder=3)
+            ax.text(
+                cx + r / 2,
+                cy + 0.20,
+                "$r=\\sqrt{k_0}$",
+                color=col,
+                fontsize=12,
+                ha="center",
+                zorder=7,
+            )
+            note = "整圈的點：到圓心距離平方等於正數"
+        elif kind == "zero":
+            # 退化成一點：只有圓心本身，畫一個實心點並標記
+            ax.add_patch(Circle((cx, cy), 0.13, color=col, zorder=7))
+            # 用淡虛線畫出「半徑已縮為 0」的示意圈（極小）
+            ax.plot(
+                cx + 0.0 * np.cos(th),
+                cy + 0.0 * np.sin(th),
+                color=col,
+                lw=0.0,
+                zorder=2,
+            )
+            note = "只有圓心一點：距離平方等於零"
+        else:
+            # 空集合：無任何點。畫一個淡虛線圓示意「本想是圓卻無解」並加叉
+            ax.plot(
+                cx + r * np.cos(th),
+                cy + r * np.sin(th),
+                color=col,
+                lw=1.6,
+                ls=(0, (4, 4)),
+                alpha=0.45,
+                zorder=3,
+            )
+            # 大叉表「無圖形」
+            s = 0.55
+            ax.plot([cx - s, cx + s], [cy - s, cy + s], color=col, lw=2.6, zorder=8)
+            ax.plot([cx - s, cx + s], [cy + s, cy - s], color=col, lw=2.6, zorder=8)
+            note = "沒有任何實點：距離平方不可能為負"
+
+        # 圖內方程式（上方）
+        ax.text(
+            cx,
+            LIM - 0.18,
+            eq,
+            color=col,
+            fontsize=12.5,
+            ha="center",
+            va="top",
+            zorder=7,
+        )
+        # 圖內說明（下方）
+        ax.text(
+            cx,
+            -LIM + 0.16,
+            note,
+            color="#4b5563",
+            fontsize=10.5,
+            ha="center",
+            va="bottom",
+            zorder=7,
+        )
+
+        ax.set_xlim(-LIM, LIM)
+        ax.set_ylim(-LIM, LIM)
+        ax.set_aspect("equal")
+        ax.axis("off")
+        ax.set_title(title, fontsize=13, color=col)
+
+    fig.suptitle(
+        "圓的一般式配方後：同一圓心，右邊常數 $k_0=\\frac{D^2+E^2}{4}-F$ 的三種情況",
+        fontsize=13.5,
+        y=1.02,
+    )
+    fig.tight_layout()
+    F.save_to(fig, CH, "數1-4-圓退化三情況")
+
+
 if __name__ == "__main__":
     fig_symmetry()
     fig_point_line_distance()
     fig_line_circle()
+    fig_circle_degenerate()
     print("done.")

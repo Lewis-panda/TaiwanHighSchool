@@ -362,9 +362,270 @@ def fig_polar():
     F.save_to(fig, CH, "數2-1-極坐標")
 
 
+def fig_ssa_cases():
+    """正弦定理 SSA 模糊情況：固定 A 與 b，邊 a 長短不同造成 0/1/2 解。
+    以 C 為圓心、半徑 a 畫弧，與底邊（A 的另一條邊所在射線）的交點數即解數。
+    """
+    fig, ax = F.canvas(8.6, 4.4)
+
+    # 三個子情形並排，各自一個局部坐標原點（A 的位置）
+    A_deg = 30.0
+    A = np.deg2rad(A_deg)
+    b = 2.6  # 固定邊 b（從 A 沿斜射線到 C）
+    h = b * np.sin(A)  # 高 = b sin A
+    Cx, Cy = b * np.cos(A), b * np.sin(A)  # C 相對該子圖原點
+
+    panels = [
+        (0.0, 0.85, "無解", "a < b·sin A"),  # a 比高短（h=1.3）
+        (5.2, h, "一解（直角）", "a = b·sin A"),  # a 恰等於高
+        (10.4, 2.05, "兩解（一銳一鈍）", "b·sin A < a < b"),  # 介於高與 b 之間
+    ]
+
+    base_len = 4.2  # 底邊畫多長
+    for ox, a_val, title, cond in panels:
+        Ox, Oy = ox, 0.0  # 該子圖的 A 點
+        C = np.array([Ox + Cx, Oy + Cy])
+
+        # 底邊（A 的另一條邊所在的水平射線，往右）
+        ax.annotate(
+            "",
+            xy=(Ox + base_len, Oy),
+            xytext=(Ox - 0.15, Oy),
+            arrowprops=dict(arrowstyle="-|>", color=F.INK, lw=1.5),
+        )
+        # 斜射線 AC（固定邊 b 方向，畫長一點）
+        ax.plot(
+            [Ox, Ox + (base_len) * np.cos(A)],
+            [Oy, Oy + (base_len) * np.sin(A)],
+            color=F.GRID,
+            lw=1.4,
+            zorder=1,
+        )
+        # 固定邊 b：A 到 C（藍）
+        ax.plot([Ox, C[0]], [Oy, C[1]], color=F.BLUE, lw=2.6, zorder=4)
+        ax.text(
+            (Ox + C[0]) / 2 - 0.18,
+            (Oy + C[1]) / 2 + 0.18,
+            "$b$",
+            color=F.BLUE,
+            fontsize=13,
+            ha="right",
+        )
+
+        # 角 A 弧
+        ax.add_patch(
+            Arc(
+                (Ox, Oy),
+                0.95,
+                0.95,
+                angle=0,
+                theta1=0,
+                theta2=A_deg,
+                color=F.AMBER,
+                lw=1.8,
+                zorder=3,
+            )
+        )
+        ax.text(Ox + 0.66, Oy + 0.16, "$A$", color=F.AMBER, fontsize=12, ha="center")
+
+        # 高 h（從 C 鉛直落到底邊）—虛線
+        ax.plot([C[0], C[0]], [C[1], 0.0], color="#9aa0a6", lw=1.2, ls="--", zorder=2)
+        _right_angle_mark(
+            ax, np.array([C[0], 0.0]), [-1, 0], [0, 1], s=0.16, color="#9aa0a6", lw=1.0
+        )
+        ax.text(
+            C[0] - 0.12,
+            C[1] / 2,
+            "$h$",
+            color="#6b7280",
+            fontsize=12,
+            ha="right",
+        )
+
+        # C 點
+        ax.add_patch(Circle(C, 0.07, color=F.INK, zorder=7))
+        ax.text(C[0], C[1] + 0.20, "$C$", color=F.INK, fontsize=12, ha="center")
+        ax.text(Ox - 0.10, -0.28, "$A$", color=F.INK, fontsize=12, ha="center")
+
+        # 以 C 為圓心、半徑 a 的弧（代表「邊 a 擺動」），紅色
+        # 找弧與底邊（y=0）的交點：x = Cx ± sqrt(a^2 - h^2)
+        disc = a_val**2 - C[1] ** 2
+        # 弧只畫朝底邊那側（下半，約 200°~340°），凸顯擺動
+        ax.add_patch(
+            Arc(
+                C,
+                2 * a_val,
+                2 * a_val,
+                angle=0,
+                theta1=192,
+                theta2=348,
+                color=F.RED,
+                lw=2.0,
+                ls=(0, (4, 2)),
+                zorder=4,
+            )
+        )
+        # 標 a 在弧上一點（往左下拉一條代表半徑的細線，避開 h 標籤）
+        ang_a = np.deg2rad(232)
+        ra_end = C + a_val * np.array([np.cos(ang_a), np.sin(ang_a)])
+        ax.plot([C[0], ra_end[0]], [C[1], ra_end[1]], color=F.RED, lw=2.4, zorder=5)
+        ax.text(
+            (C[0] + ra_end[0]) / 2 - 0.14,
+            (C[1] + ra_end[1]) / 2 + 0.05,
+            "$a$",
+            color=F.RED,
+            fontsize=13,
+            ha="right",
+        )
+
+        # 交點
+        if disc > 1e-6:
+            dx = np.sqrt(disc)
+            xs = [C[0] - dx, C[0] + dx]
+            xs = [
+                x for x in xs if Ox - 0.05 <= x <= Ox + base_len
+            ]  # 只取落在底邊射線上的
+            for x in xs:
+                ax.add_patch(
+                    Circle((x, 0.0), 0.075, fc=F.GREEN, ec=F.INK, lw=1.0, zorder=8)
+                )
+                # 連 C 到交點（成形的三角形第三邊，淡紅實線）
+                ax.plot(
+                    [C[0], x], [C[1], 0.0], color=F.RED, lw=1.4, alpha=0.45, zorder=3
+                )
+        elif abs(disc) <= 1e-6:
+            ax.add_patch(
+                Circle((C[0], 0.0), 0.075, fc=F.GREEN, ec=F.INK, lw=1.0, zorder=8)
+            )
+
+        # 標題與條件
+        ax.text(
+            (Ox + base_len / 2) - 0.2,
+            3.55,
+            title,
+            color=F.INK,
+            fontsize=12.5,
+            ha="center",
+            fontweight="bold",
+        )
+        ax.text(
+            (Ox + base_len / 2) - 0.2,
+            3.12,
+            cond,
+            color=F.RED,
+            fontsize=11.5,
+            ha="center",
+        )
+
+    # 底部說明：h 的意義與「綠點＝可成形的三角形」
+    ax.text(
+        7.1,
+        -1.15,
+        "固定角 A 與邊 b；以 C 為圓心、半徑 a 畫弧（紅）。"
+        "弧與底邊的交點（綠點）即三角形解；高 h = b·sin A。",
+        color="#6b7280",
+        fontsize=10.5,
+        ha="center",
+    )
+
+    ax.set_xlim(-0.7, 14.9)
+    ax.set_ylim(-1.4, 3.9)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    ax.set_title("正弦定理 SSA：邊 a 擺動造成無解／一解／兩解", fontsize=14)
+    F.save_to(fig, CH, "數2-1-SSA分類")
+
+
+def fig_elevation_depression():
+    """仰角與俯角對照：觀測者、水平線、上方目標（仰角）、下方目標（俯角），
+    以及「A 看 B 的俯角＝B 看 A 的仰角」（內錯角）。"""
+    fig, ax = F.canvas(7.2, 4.8)
+
+    O = np.array([1.0, 2.4])  # 觀測者眼睛位置
+    # 水平線（過 O）
+    ax.annotate(
+        "",
+        xy=(6.6, O[1]),
+        xytext=(0.2, O[1]),
+        arrowprops=dict(arrowstyle="-|>", color=F.INK, lw=1.4),
+    )
+    ax.text(6.45, O[1] + 0.20, "水平線", color=F.INK, fontsize=11, ha="right")
+    ax.add_patch(Circle(O, 0.09, color=F.INK, zorder=6))
+    ax.text(
+        O[0] - 0.18,
+        O[1] + 0.02,
+        "觀測者",
+        color=F.INK,
+        fontsize=11,
+        ha="right",
+        va="center",
+    )
+
+    # 上方目標 U（仰角）
+    U = np.array([5.6, 4.0])
+    ax.plot([O[0], U[0]], [O[1], U[1]], color=F.BLUE, lw=2.4, zorder=4)
+    ax.add_patch(Circle(U, 0.10, color=F.BLUE, zorder=6))
+    ax.text(
+        U[0] + 0.18,
+        U[1],
+        "目標（上方）",
+        color=F.BLUE,
+        fontsize=11,
+        ha="left",
+        va="center",
+    )
+    elev = np.rad2deg(np.arctan2(U[1] - O[1], U[0] - O[0]))
+    ax.add_patch(
+        Arc(O, 2.2, 2.2, angle=0, theta1=0, theta2=elev, color=F.BLUE, lw=1.8, zorder=3)
+    )
+    ax.text(O[0] + 1.45, O[1] + 0.30, "仰角", color=F.BLUE, fontsize=12, ha="left")
+
+    # 下方目標 D（俯角）
+    D = np.array([5.6, 0.7])
+    ax.plot([O[0], D[0]], [O[1], D[1]], color=F.RED, lw=2.4, zorder=4)
+    ax.add_patch(Circle(D, 0.10, color=F.RED, zorder=6))
+    ax.text(
+        D[0] + 0.18,
+        D[1],
+        "目標（下方）",
+        color=F.RED,
+        fontsize=11,
+        ha="left",
+        va="center",
+    )
+    dep = np.rad2deg(np.arctan2(D[1] - O[1], D[0] - O[0]))  # 負值
+    ax.add_patch(
+        Arc(O, 2.2, 2.2, angle=0, theta1=dep, theta2=0, color=F.RED, lw=1.8, zorder=3)
+    )
+    ax.text(O[0] + 1.45, O[1] - 0.45, "俯角", color=F.RED, fontsize=12, ha="left")
+
+    # 鉛直虛線輔助（顯示「從水平線量起，不是鉛直線」）
+    ax.plot([U[0], U[0]], [O[1], U[1]], color=F.GRID, lw=1.0, ls=":", zorder=1)
+    ax.plot([D[0], D[0]], [D[1], O[1]], color=F.GRID, lw=1.0, ls=":", zorder=1)
+
+    # 說明：都從水平線量起
+    ax.text(
+        3.5,
+        -0.25,
+        "仰角、俯角都從「水平線」量起（不是鉛直線）",
+        color="#6b7280",
+        fontsize=11,
+        ha="center",
+    )
+
+    ax.set_xlim(-0.3, 8.4)
+    ax.set_ylim(-0.6, 4.5)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    ax.set_title("仰角與俯角（皆自水平線量起）", fontsize=14)
+    F.save_to(fig, CH, "數2-1-仰角俯角")
+
+
 if __name__ == "__main__":
     fig_right_triangle()
     fig_general_angle()
     fig_laws()
     fig_polar()
+    fig_ssa_cases()
+    fig_elevation_depression()
     print("done.")

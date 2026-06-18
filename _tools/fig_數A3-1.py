@@ -265,6 +265,169 @@ def fig_transform():
     F.save_to(fig, CH, "數A3-1-圖形變換")
 
 
+def fig_sum_diff_circle():
+    """和差角公式的單位圓推導：P=(cosA,sinA)、Q=(cosB,sinB)，
+    夾角 A-B，弦長 PQ 用兩種方式算 → cos(A-B)=cosAcosB+sinAsinB。"""
+    fig, ax = F.canvas(6.6, 6.6)
+    r = 1.0
+    A = np.deg2rad(72.0)
+    B = np.deg2rad(26.0)
+
+    # 單位圓
+    ft = np.linspace(0, 2 * np.pi, 400)
+    ax.plot(r * np.cos(ft), r * np.sin(ft), color=F.GRID, lw=1.6, zorder=0)
+
+    # 兩個半徑 OP、OQ
+    Px, Py = np.cos(A), np.sin(A)
+    Qx, Qy = np.cos(B), np.sin(B)
+    ax.plot([0, Px], [0, Py], color=F.INK, lw=2.0, zorder=4)
+    ax.plot([0, Qx], [0, Qy], color=F.INK, lw=2.0, zorder=4)
+
+    # 弦 PQ（紅、加粗）
+    ax.plot([Px, Qx], [Py, Qy], color=F.RED, lw=3.0, zorder=5)
+
+    # 夾角 A-B 弧（琥珀）
+    ax.add_patch(
+        Arc(
+            (0, 0),
+            0.66,
+            0.66,
+            angle=0,
+            theta1=np.rad2deg(B),
+            theta2=np.rad2deg(A),
+            color=F.AMBER,
+            lw=2.4,
+            zorder=4,
+        )
+    )
+    amid = (A + B) / 2
+    ax.text(
+        0.46 * np.cos(amid),
+        0.46 * np.sin(amid),
+        r"$A-B$",
+        color=F.AMBER,
+        fontsize=14,
+        ha="center",
+        va="center",
+    )
+
+    # A、B 角（自 x 軸量起，淡藍細弧）
+    ax.add_patch(
+        Arc(
+            (0, 0),
+            0.34,
+            0.34,
+            angle=0,
+            theta1=0,
+            theta2=np.rad2deg(B),
+            color=F.BLUE,
+            lw=1.6,
+            zorder=4,
+        )
+    )
+    ax.text(
+        0.255 * np.cos(B / 2),
+        0.255 * np.sin(B / 2) - 0.02,
+        "$B$",
+        color=F.BLUE,
+        fontsize=12.5,
+        ha="center",
+        va="center",
+    )
+    ax.add_patch(
+        Arc(
+            (0, 0),
+            0.96,
+            0.96,
+            angle=0,
+            theta1=0,
+            theta2=np.rad2deg(A),
+            color=F.GREEN,
+            lw=1.6,
+            zorder=4,
+        )
+    )
+    ax.text(
+        0.56 * np.cos(A - 0.18),
+        0.56 * np.sin(A - 0.18),
+        "$A$",
+        color=F.GREEN,
+        fontsize=12.5,
+        ha="center",
+        va="center",
+    )
+
+    # 點 P、Q（紅點，名稱併入下方坐標標籤避免重疊）
+    ax.add_patch(Circle((Px, Py), 0.026, color=F.RED, zorder=6))
+    ax.add_patch(Circle((Qx, Qy), 0.026, color=F.RED, zorder=6))
+    ax.text(
+        Px - 0.02,
+        Py + 0.09,
+        r"$P=(\cos A,\ \sin A)$",
+        color=F.RED,
+        fontsize=12,
+        ha="center",
+        va="bottom",
+    )
+    ax.text(
+        Qx + 0.10,
+        Qy + 0.02,
+        r"$Q=(\cos B,\ \sin B)$",
+        color=F.RED,
+        fontsize=12,
+        ha="left",
+        va="center",
+    )
+
+    # 半徑長度 1 標示
+    ax.text(
+        0.5 * np.cos(A) - 0.10,
+        0.5 * np.sin(A) + 0.02,
+        "$1$",
+        color=F.INK,
+        fontsize=12,
+        ha="center",
+    )
+    ax.text(
+        0.5 * np.cos(B) + 0.02,
+        0.5 * np.sin(B) - 0.11,
+        "$1$",
+        color=F.INK,
+        fontsize=12,
+        ha="center",
+    )
+
+    # 原點與 x 軸
+    ax.axhline(0, color=F.INK, lw=1.0, zorder=1)
+    ax.add_patch(Circle((0, 0), 0.022, color=F.INK, zorder=6))
+    ax.text(-0.06, -0.08, "$O$", color=F.INK, fontsize=12, ha="right", va="top")
+    ax.text(1.16, 0.0, "$x$", color=F.INK, fontsize=12, ha="left", va="center")
+
+    # 兩種算弦長的對照框
+    ax.text(
+        0.0,
+        -1.46,
+        r"距離公式：$\overline{PQ}^2=2-2(\cos A\cos B+\sin A\sin B)$"
+        "\n"
+        r"餘弦定理：$\overline{PQ}^2=2-2\cos(A-B)$"
+        "\n"
+        r"$\Rightarrow\ \cos(A-B)=\cos A\cos B+\sin A\sin B$",
+        color=F.INK,
+        fontsize=12,
+        ha="center",
+        va="center",
+        linespacing=1.6,
+        bbox=dict(boxstyle="round,pad=0.4", fc="white", ec=F.GRID, lw=1.2),
+    )
+
+    ax.set_xlim(-1.25, 1.45)
+    ax.set_ylim(-1.85, 1.25)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    ax.set_title("和差角公式的單位圓推導：弦長算兩次", fontsize=14)
+    F.save_to(fig, CH, "數A3-1-和差角推導")
+
+
 def fig_superpose():
     """正餘弦疊合：a sinθ + b cosθ 合成單一正弦波。"""
     fig, ax = F.canvas(8.4, 5.0)
@@ -311,5 +474,6 @@ if __name__ == "__main__":
     fig_radian_sector()
     fig_three_graphs()
     fig_transform()
+    fig_sum_diff_circle()
     fig_superpose()
     print("done.")

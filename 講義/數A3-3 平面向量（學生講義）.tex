@@ -89,6 +89,8 @@ $$\boxed{\;\overrightarrow{OP}=\frac{n\,\overrightarrow{OA}+m\,\overrightarrow{O
 
 \textbf{注意：}分點公式的「\textbf{係數要交叉配}」：靠近 $B$ 的比例 $m$ 乘的是 $\overrightarrow{OB}$，靠近 $A$ 的比例 $n$ 乘 $\overrightarrow{OA}$，分母則是 $m+n$。穩做法是記「\textbf{離得越遠權重越大}」：$P$ 離 $A$ 越遠（$m$ 越大），$B$ 的權重就越大。
 
+\fig{d33-linear-combination}{0.92}{圖 3-2：左——線性組合，以兩個不平行向量 $\vec a$、$\vec b$ 為基底，調整係數 $s$、$t$ 即可張出（拼出）平面上任一向量 $P=s\vec a+t\vec b$；右——內分點 $P$ 把 $\overline{AB}$ 分成 $\overline{AP}:\overline{PB}=m:n$，其位置向量 $\overrightarrow{OP}=\dfrac{n\,\overrightarrow{OA}+m\,\overrightarrow{OB}}{m+n}$（離得遠的端點權重大）。}
+
 \section*{\sffamily 3-2\quad 內積}
 
 \subsection*{\sffamily A.\ 為什麼需要一種「乘法」}
@@ -104,7 +106,7 @@ $$\boxed{\;\overrightarrow{OP}=\frac{n\,\overrightarrow{OA}+m\,\overrightarrow{O
 
 兩式恆相等。內積結果是一個\textbf{數（純量）}，故又稱\textbf{純量積（scalar product）}。
 
-\fig{d33-dot-product}{0.62}{圖 3-2：內積的幾何意義。$\vec b$ 在 $\vec a$ 方向上的投影長為 $|\vec b|\cos\theta$，乘上 $|\vec a|$ 即得內積 $\vec a\cdot\vec b=|\vec a||\vec b|\cos\theta$。}
+\fig{d33-dot-product}{0.62}{圖 3-3：內積的幾何意義。$\vec b$ 在 $\vec a$ 方向上的投影長為 $|\vec b|\cos\theta$，乘上 $|\vec a|$ 即得內積 $\vec a\cdot\vec b=|\vec a||\vec b|\cos\theta$。}
 
 \begin{補充框}{內積為什麼定義成 $|\vec a||\vec b|\cos\theta$？兩條公式為什麼相等？}
 \textbf{為什麼這樣定義「有用」。}很多問題問的不是「兩向量加起來多少」，而是「\textbf{一個向量在另一個方向上有多少貢獻}」。物理的\textbf{功}：力 $\vec F$ 推物體位移 $\vec d$，只有沿位移方向的分力 $|\vec F|\cos\theta$ 才做功，功 $=|\vec F||\vec d|\cos\theta$。幾何的\textbf{投影}：$\vec b$ 在 $\vec a$ 上的影子長就是 $|\vec b|\cos\theta$。這些都長著 $|\;||\;|\cos\theta$ 的樣子，把它抽出來命名為「內積」，往後一勞永逸。
@@ -164,7 +166,7 @@ $$\boxed{\;\operatorname{proj}_{\vec a}\vec b=\left(\frac{\vec a\cdot\vec b}{|\v
 即「正射影量」乘上 $\vec a$ 的單位向量 $\dfrac{\vec a}{|\vec a|}$。
 \end{itemize}
 
-\fig{d33-projection}{0.60}{圖 3-3：$\vec b$ 在 $\vec a$ 上的正射影。從 $\vec b$ 的尖端對 $\vec a$ 所在直線作垂線，落點與原點之間沿 $\vec a$ 方向的那支紅色向量，即正射影向量 $\left(\dfrac{\vec a\cdot\vec b}{|\vec a|^2}\right)\vec a$。}
+\fig{d33-projection}{0.60}{圖 3-4：$\vec b$ 在 $\vec a$ 上的正射影。從 $\vec b$ 的尖端對 $\vec a$ 所在直線作垂線，落點與原點之間沿 $\vec a$ 方向的那支紅色向量，即正射影向量 $\left(\dfrac{\vec a\cdot\vec b}{|\vec a|^2}\right)\vec a$。}
 
 \textbf{注意：}
 \begin{itemize}\setlength{\itemsep}{1pt}
@@ -198,7 +200,7 @@ $$\boxed{\;\det(\vec a,\vec b)=\begin{vmatrix} a_1 & a_2\\ b_1 & b_2\end{vmatrix
 
 取絕對值是因為面積非負；行列式本身的正負號代表 $\vec a$、$\vec b$ 的\textbf{排列方向}（逆時針為正、順時針為負）。
 
-\fig{d33-determinant-area}{0.58}{圖 3-4：以 $\vec a=(x_1,y_1)$、$\vec b=(x_2,y_2)$ 為鄰邊的平行四邊形，其面積等於二階行列式的絕對值 $|x_1y_2-x_2y_1|$。}
+\fig{d33-determinant-area}{0.58}{圖 3-5：以 $\vec a=(x_1,y_1)$、$\vec b=(x_2,y_2)$ 為鄰邊的平行四邊形，其面積等於二階行列式的絕對值 $|x_1y_2-x_2y_1|$。}
 
 \begin{補充框}{行列式 $a_1b_2-a_2b_1$ 為什麼剛好等於面積？}
 平行四邊形以 $\vec a$ 為底，底長 $=|\vec a|$，高 $=\vec b$ 在垂直 $\vec a$ 方向上的分量 $=|\vec b|\sin\theta$，所以面積 $A=|\vec a||\vec b|\sin\theta$。把 $\sin\theta$ 換成坐標：用 $\sin^2\theta=1-\cos^2\theta$，並代入內積 $|\vec a||\vec b|\cos\theta=a_1b_1+a_2b_2$，得
@@ -224,6 +226,8 @@ $$\boxed{\;(\vec a\cdot\vec b)^2\le|\vec a|^2\,|\vec b|^2\;}$$
 寫成坐標就是
 $$\boxed{\;(a_1 b_1+a_2 b_2)^2\le(a_1^2+a_2^2)(b_1^2+b_2^2)\;}$$
 \textbf{等號成立 $\iff$ $\vec a$、$\vec b$ 平行}（同向或反向，即 $\cos\theta=\pm1$）。
+
+\fig{d33-cauchy}{0.92}{圖 3-6：柯西不等式的幾何意義。左——當 $\vec a$、$\vec b$ 夾角 $\theta\ne0$ 時，$\vec b$ 在 $\vec a$ 上的投影長 $|\vec b|\cos\theta$ 嚴格小於 $|\vec b|$（因 $|\cos\theta|<1$），故 $(\vec a\cdot\vec b)^2<|\vec a|^2|\vec b|^2$；右——當 $\vec a\parallel\vec b$（$\theta=0$）時投影長等於 $|\vec b|$，不等式取\textbf{等號}。柯西不等式正是「$|\cos\theta|\le1$」的代數化身。}
 
 \begin{補充框}{柯西不等式是什麼？為什麼到處都在用它？}
 \textbf{它其實就是「$|\cos\theta|\le1$」。}把幾何定義兩邊平方：$(\vec a\cdot\vec b)^2=|\vec a|^2|\vec b|^2\cos^2\theta$。因為 $\cos^2\theta\le1$，所以 $(\vec a\cdot\vec b)^2\le|\vec a|^2|\vec b|^2$。柯西不等式的全部內容，就是「$\cos^2\theta\le1$」披上向量的外衣——一條再普通不過的三角事實，威力卻很大。等號在 $\cos^2\theta=1$，即 $\theta=0$ 或 $180^\circ$（兩向量\textbf{平行}）時成立。

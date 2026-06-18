@@ -40,6 +40,8 @@
 \textbf{注意：}「兩直線不平行就一定相交」是\textbf{平面}的性質，在空間中是錯的——還有歪斜線。電線桿與遠處天橋的邊緣，就是一組常見的歪斜線。
 \end{補充框}
 
+\fig{d34-line-relations}{0.98}{圖 4-1：空間中兩直線的三種位置關係。平行與相交都\textbf{共平面}；歪斜線既不平行也不相交，無法落在同一平面上（虛線標出兩線的最近距離）——這是平面上沒有的新情形。}
+
 \begin{補充框}{兩平面、直線與平面的位置關係}
 \textbf{兩相異平面 $E_1$、$E_2$}：\textbf{平行}（無交點）、或\textbf{相交於一條直線}。（注意：兩相異平面若相交，交集是\textbf{一條直線}，不是一個點。想像兩張紙互相切過。）
 
@@ -69,7 +71,7 @@ $$\vec{PB}\cdot\vec d=(\vec{PA}+\vec{AB})\cdot\vec d=0+0=0,$$
 \textbf{注意：}$P$ 到 $L$ 的距離不是 $\overline{PA}$，也不是隨便一點——垂足必須落在 $L$ 上，而三垂線定理告訴你它就是 $B$。
 \end{補充框}
 
-\fig{d34-three-perp}{0.62}{圖 4-1：三垂線定理。$PA$ 垂直於地面，$A$ 是 $P$ 的正射影；在地面上 $AB\perp L$，則斜拉線 $PB$ 也垂直於 $L$。$\overline{PB}$ 即點 $P$ 到直線 $L$ 的距離。}
+\fig{d34-three-perp}{0.62}{圖 4-2：三垂線定理。$PA$ 垂直於地面，$A$ 是 $P$ 的正射影；在地面上 $AB\perp L$，則斜拉線 $PB$ 也垂直於 $L$。$\overline{PB}$ 即點 $P$ 到直線 $L$ 的距離。}
 
 \subsection*{\sffamily C.\ 空間直角坐標系}
 
@@ -77,7 +79,7 @@ $$\vec{PB}\cdot\vec d=(\vec{PA}+\vec{AB})\cdot\vec d=0+0=0,$$
 
 三個坐標平面——$xy$ 平面（$z=0$）、$yz$ 平面（$x=0$）、$zx$ 平面（$y=0$）——把空間分成 \textbf{8 個卦限（octant）}。一個點到坐標平面或坐標軸的\textbf{投影}有簡單規則：投到某個坐標平面，就把缺的那一個坐標歸零（如 $P(a,b,c)$ 到 $xy$ 平面的投影是 $(a,b,0)$）；投到某條坐標軸，就只留那一個坐標（如到 $x$ 軸的投影是 $(a,0,0)$）。
 
-\fig{d34-coords}{0.6}{圖 4-2：空間直角坐標系。三軸兩兩垂直，點 $P(a,b,c)$ 由三個坐標定位；虛線顯示 $P$ 到各坐標平面的投影。}
+\fig{d34-coords}{0.6}{圖 4-3：空間直角坐標系。三軸兩兩垂直，點 $P(a,b,c)$ 由三個坐標定位；虛線顯示 $P$ 到各坐標平面的投影。}
 
 空間中兩點的距離，是把平面的距離公式多補一個 $z$ 方向的平方而已（本質都是畢氏定理）。
 
@@ -204,7 +206,7 @@ $$\boxed{\;\vec a\times\vec b=\bigl(a_2b_3-a_3b_2,\ \ a_3b_1-a_1b_3,\ \ a_1b_2-a
 \end{enumerate}
 \end{補充框}
 
-\fig{d34-cross-product}{0.6}{圖 4-3：外積 $\vec a\times\vec b$ 垂直於 $\vec a,\vec b$ 所在的平面（右手定則決定朝向），其長度等於以 $\vec a,\vec b$ 為鄰邊的平行四邊形面積。}
+\fig{d34-cross-product}{0.6}{圖 4-4：外積 $\vec a\times\vec b$ 垂直於 $\vec a,\vec b$ 所在的平面（右手定則決定朝向），其長度等於以 $\vec a,\vec b$ 為鄰邊的平行四邊形面積。}
 
 \begin{補充框}{外積的記憶法：符號行列式}
 不必硬背那三個分量，可用「符號行列式」展開：
@@ -258,7 +260,7 @@ $$\boxed{\;V=\bigl|(\vec a\times\vec b)\cdot\vec c\bigr|=\left|\det\begin{pmatri
 \textbf{共面判定}：三向量共面 $\iff$ 此行列式 $=0$（撐不出體積，被壓扁成一個面）。
 \end{補充框}
 
-\fig{d34-parallelepiped}{0.6}{圖 4-4：以 $\vec a,\vec b,\vec c$ 為鄰邊的平行六面體。底面是 $\vec a,\vec b$ 撐的平行四邊形（面積 $=|\vec a\times\vec b|$），高是 $\vec c$ 在法向量 $\vec a\times\vec b$ 方向上的投影長。}
+\fig{d34-parallelepiped}{0.6}{圖 4-5：以 $\vec a,\vec b,\vec c$ 為鄰邊的平行六面體。底面是 $\vec a,\vec b$ 撐的平行四邊形（面積 $=|\vec a\times\vec b|$），高是 $\vec c$ 在法向量 $\vec a\times\vec b$ 方向上的投影長。}
 
 \begin{補充框}{為什麼一個行列式剛好等於體積？（底面積 $\times$ 高）}
 這不是巧合，背後就是「底面積 $\times$ 高」，可分四步看清楚：
