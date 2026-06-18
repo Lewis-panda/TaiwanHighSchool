@@ -457,6 +457,64 @@ def fig_doppler():
     F.save_to(fig, CH, "必物-4-都卜勒")
 
 
+def fig_doppler_observer():
+    """情形二：波源不動、觀察者移動。同心圓等間距（波長不變），
+    觀察者迎面→單位時間多遇波前→升頻；遠離→少遇→降頻。"""
+    fig, ax = F.schematic(7.8, 4.8)
+    # 波源固定在原點，發出等間距同心圓（波長不變）
+    for r in [0.8, 1.6, 2.4, 3.2, 4.0]:
+        th = np.linspace(0, 2 * np.pi, 200)
+        ax.plot(r * np.cos(th), r * np.sin(th), color=F.BLUE, lw=1.5, zorder=2)
+    ax.add_patch(Circle((0, 0), 0.16, color=F.RED, zorder=6))
+    ax.text(0, -0.5, "波源不動", color=F.RED, fontsize=11, ha="center", va="top")
+    ax.annotate(
+        "波長不變\n（同心圓等間距）",
+        xy=(0.4 * np.cos(0.6), 0.4 * 4 + 0.4),
+        xytext=(0, 4.55),
+        color=F.BLUE,
+        fontsize=10.5,
+        ha="center",
+        va="bottom",
+    )
+
+    # 迎面前進的觀察者（右側，朝波源移動）→ 升頻
+    obsA = (3.6, 0)
+    ax.add_patch(
+        Circle(obsA, 0.18, facecolor="#ffe9b0", edgecolor=F.INK, lw=1.4, zorder=6)
+    )
+    F.arrow(ax, obsA, (obsA[0] - 1.0, 0), color=F.GREEN, lw=2.2, mutation=16, z=6)
+    ax.text(
+        3.6,
+        -0.7,
+        "迎面前進去「接」波\n單位時間多遇波前 $\\to$ 頻率變高（藍移）",
+        color=F.GREEN,
+        fontsize=10,
+        ha="center",
+        va="top",
+    )
+
+    # 順向遠離的觀察者（左側，背離波源移動）→ 降頻
+    obsB = (-3.6, 0)
+    ax.add_patch(
+        Circle(obsB, 0.18, facecolor="#ffe9b0", edgecolor=F.INK, lw=1.4, zorder=6)
+    )
+    F.arrow(ax, obsB, (obsB[0] - 1.0, 0), color=F.AMBER, lw=2.2, mutation=16, z=6)
+    ax.text(
+        -3.6,
+        -0.7,
+        "順向遠離、波前要追上他\n單位時間少遇波前 $\\to$ 頻率變低（紅移）",
+        color=F.AMBER,
+        fontsize=10,
+        ha="center",
+        va="top",
+    )
+
+    ax.set_title("都卜勒效應：波源不動、觀察者移動（波長不變）", fontsize=13)
+    ax.set_xlim(-5.6, 5.6)
+    ax.set_ylim(-3.6, 5.2)
+    F.save_to(fig, CH, "必物-4-都卜勒觀察者")
+
+
 if __name__ == "__main__":
     fig_field_lines()
     fig_current_magnetic()
@@ -464,4 +522,5 @@ if __name__ == "__main__":
     fig_em_wave()
     fig_em_spectrum()
     fig_doppler()
+    fig_doppler_observer()
     print("done.")
