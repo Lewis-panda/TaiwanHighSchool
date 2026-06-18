@@ -1,0 +1,275 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\Huge\bfseries 數A4-2 矩陣}\\[3pt]
+{\sffamily\large 普通高中 數學（數學A・第四冊）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+本章的主角是\textbf{矩陣（matrix）}——一組數整齊排成的長方形表格。它的價值在於：能把「很多個線性關係」打包成單一物件來運算。我們從最古老的需求切入：解\textbf{二元一次方程組}。把係數抽出來排成\textbf{方陣（square matrix）}，用\textbf{行列式（determinant）}判斷解是唯一、無窮多組、還是無解，並用\textbf{克拉瑪公式（Cramer's rule）}一次算出答案。
+
+接著把矩陣本身當主角，學它的加減、係數積與相乘——其中乘法\textbf{不能交換}，是本章最大的觀念地雷。再學 2 階矩陣的「除法」——\textbf{反方陣（inverse matrix）}，並看清它在「行列式為 $0$」時為何不存在。最後把矩陣真正的威力亮出來：一個 2 階方陣就是平面上的一個\textbf{線性變換（linear transformation）}，旋轉、鏡射、伸縮都能寫成「乘一個矩陣」，而\textbf{轉移方陣（transition matrix）}還能描述狀態隨時間的演化。
+
+矩陣是大學線性代數、計算機圖學、機器學習、馬可夫鏈的共同地基；本章的二階行列式直接承接「平面向量」裡「行列式＝面積、行列式為 $0$＝平行」的結果。
+
+\medskip
+本章主線：
+
+\begin{center}
+線性方程組與行列式 $\rightarrow$ 矩陣的加減、係數積與相乘 $\rightarrow$ 反方陣 $\rightarrow$ 線性變換與轉移方陣
+\end{center}
+
+\section*{\sffamily 2-1\quad 線性方程組與矩陣}
+
+\subsection*{\sffamily A.\ 從消去法到「把係數抽出來」}
+
+解二元一次方程組是國中就會的事。看這一組：
+$$\begin{cases} 2x+3y=8\\ x-y=-1 \end{cases}$$
+我們其實只是在對六個數字 $2,3,8,1,-1,-1$ 做運算，$x$、$y$ 只是「位置的標記」。既然如此，何不把\textbf{係數}單獨抽出來，整齊排成一個表格？
+$$\underbrace{\begin{bmatrix} 2 & 3\\ 1 & -1 \end{bmatrix}}_{\text{係數方陣 }A}\underbrace{\begin{bmatrix} x\\ y \end{bmatrix}}_{\vec x}=\underbrace{\begin{bmatrix} 8\\ -1 \end{bmatrix}}_{\vec b}$$
+這就是把方程組寫成 $A\vec x=\vec b$ 的\textbf{矩陣形式}。其中由係數排成的 $2\times2$ 表格叫\textbf{係數方陣（coefficient matrix）}。
+
+要讓這個寫法成立，須先定義「方陣怎麼乘上一個向量」：
+$$\begin{bmatrix} a & b\\ c & d \end{bmatrix}\begin{bmatrix} x\\ y \end{bmatrix}=\begin{bmatrix} ax+by\\ cx+dy \end{bmatrix}.$$
+這個結果還可以讀成「\textbf{行向量的線性組合}」：
+$$A\vec x=x\begin{bmatrix} a\\ c \end{bmatrix}+y\begin{bmatrix} b\\ d \end{bmatrix},$$
+也就是把第一行 $\begin{bmatrix} a\\ c \end{bmatrix}$ 乘 $x$、第二行 $\begin{bmatrix} b\\ d \end{bmatrix}$ 乘 $y$，再相加。這個「線性組合」的觀點，是後面理解\textbf{解的三種情況}的鑰匙。
+
+\subsection*{\sffamily B.\ 行列式與克拉瑪公式}
+
+要「一步」算出答案，需要一個由係數決定的關鍵數字——\textbf{行列式}。它和平面向量裡的二階行列式是同一個東西。
+
+\textbf{二階行列式}：方陣 $A=\begin{bmatrix} a & b\\ c & d \end{bmatrix}$ 的行列式記為 $\det A$ 或 $|A|$，定義為
+$$\det A=\begin{vmatrix} a & b\\ c & d \end{vmatrix}=ad-bc.$$
+規則是\textbf{主對角線乘積 減 副對角線乘積}（左上 $\times$ 右下 $-$ 右上 $\times$ 左下）。
+
+對一般的方程組 $\begin{cases} ax+by=e\\ cx+dy=f \end{cases}$，用消去法把 $x$、$y$ 各自解出來，會得到一組對稱又好記的公式：
+
+\textbf{克拉瑪公式（Cramer's rule）}：設係數行列式 $\Delta=\begin{vmatrix} a & b\\ c & d \end{vmatrix}=ad-bc$。當 $\Delta\ne0$ 時，方程組有\textbf{唯一解}：
+$$\boxed{\;x=\frac{\Delta_x}{\Delta}=\frac{1}{\Delta}\begin{vmatrix} e & b\\ f & d \end{vmatrix},\qquad y=\frac{\Delta_y}{\Delta}=\frac{1}{\Delta}\begin{vmatrix} a & e\\ c & f \end{vmatrix}\;}$$
+口訣：求 $x$ 就把第一行（$x$ 的係數）換成常數行 $\begin{bmatrix} e\\ f \end{bmatrix}$，再除以 $\Delta$；求 $y$ 就把第二行換成常數行。
+
+\begin{補充框}{克拉瑪公式為什麼長這樣？分母為何偏偏是行列式？}
+這條公式不是規定，而是消去法的必然結果。把 $\begin{cases} ax+by=e\\ cx+dy=f \end{cases}$ 解 $x$：第一式 $\times d$、第二式 $\times b$ 相減以消去 $y$，得
+$$(ad-bc)\,x=ed-bf\ \Longrightarrow\ x=\frac{ed-bf}{ad-bc}=\frac{\begin{vmatrix} e & b\\ f & d \end{vmatrix}}{\begin{vmatrix} a & b\\ c & d \end{vmatrix}}.$$
+分母自然冒出 $ad-bc=\Delta$，分子正是「把 $x$ 那一行換成常數行」的行列式；$y$ 同理。這也立刻解釋了「$\Delta=0$ 為何失效」——分母為 $0$，除不下去。
+\end{補充框}
+
+\subsection*{\sffamily C.\ 解的三種情況：唯一解、無窮多組、無解}
+
+兩條二元一次方程，幾何上就是平面上\textbf{兩條直線}。兩條直線的關係只有三種，這恰好對應方程組解的三種情況。
+
+\fig{d42-three-cases}{0.95}{圖 2-1：方程組解的三種情況。左——兩線交於一點（$\Delta\ne0$，唯一解）；中——兩線重合（$\Delta=0$ 且兩式成比例，無窮多組解）；右——兩線平行（$\Delta=0$ 但常數項矛盾，無解）。}
+
+\textbf{用行列式判斷解的型態}：對 $\begin{cases} ax+by=e\\ cx+dy=f \end{cases}$，設係數行列式 $\Delta=ad-bc$：
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item $\Delta\ne0$（兩線斜率不同，交於一點）：\textbf{恰有唯一解}，由克拉瑪公式給出。
+\item $\Delta=0$（兩線斜率相同，平行或重合）：克拉瑪公式失效（不能除以 $0$），須進一步看常數項：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 兩式\textbf{成同一比例}（含常數項）$\Rightarrow$ 兩線\textbf{重合} $\Rightarrow$ \textbf{無窮多組解}。
+\item 係數成比例但\textbf{常數項不成同一比例}（矛盾）$\Rightarrow$ 兩線\textbf{平行不相交} $\Rightarrow$ \textbf{無解}。
+\end{itemize}
+\end{itemize}
+一句話：$\boxed{\Delta\ne0\Rightarrow\text{唯一解};\quad \Delta=0\Rightarrow\text{無窮多組解 或 無解}}$。
+
+\textbf{注意：}「$\Delta=0$」並不等於「無解」。$\Delta=0$ 只代表「不是唯一解」，接下來可能是無窮多組（重合），也可能是無解（平行），必須再看常數項才能斷定，這是最常見的陷阱。此外，克拉瑪公式\textbf{只能用在 $\Delta\ne0$}；$\Delta=0$ 時 $x=\Delta_x/\Delta$ 變成「除以 $0$」，沒有意義，這時要改用觀察或消去法討論。
+
+\subsection*{\sffamily D.\ 三元一次聯立：高斯消去法}
+
+三元一次方程組（三個未知數 $x,y,z$）也能寫成矩陣形式 $A\vec x=\vec b$，其中 $A$ 是 $3\times3$ 方陣。三階的克拉瑪公式存在但計算繁瑣，實務上多用\textbf{高斯消去法（Gaussian elimination）}：用「某式乘一個數加到另一式」把未知數一個一個消掉，化成「階梯形」後由下往上回代。
+
+它的精神是「\textbf{有系統地一次消掉一個未知數}」，比隨意加減不易出錯。三元的解同樣有唯一解／無窮多組／無解三種情況：消到最後若出現「$0=0$」是無窮多組（少一條獨立方程），出現「$0=$ 非零數」就是無解。電腦求解大型線性方程組用的正是這套消去法的程式化版本。
+
+\section*{\sffamily 2-2\quad 矩陣的運算}
+
+\subsection*{\sffamily A.\ 矩陣是什麼：把資料排成表格}
+
+跳出方程組，矩陣本身就是一個有用的物件——\textbf{一張資料表}。
+
+\textbf{矩陣（matrix）}：把 $m\times n$ 個數排成 $m$ 列（橫，row）、$n$ 行（直，column）的矩形陣列，稱為一個 $m\times n$ 矩陣，記為 $A=[a_{ij}]$，其中 $a_{ij}$ 是第 $i$ 列、第 $j$ 行的元素（entry）。
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 列數等於行數（$m=n$）的矩陣稱為 $n$ 階\textbf{方陣（square matrix）}。
+\item 只有一行的矩陣 $\begin{bmatrix} x\\ y \end{bmatrix}$ 就是\textbf{行向量}；只有一列的 $\begin{bmatrix} x & y \end{bmatrix}$ 是\textbf{列向量}。
+\end{itemize}
+例如某店三天賣出兩種商品的數量，就能排成一個 $3\times2$ 矩陣：列代表「日期」、行代表「商品」。把資料這樣排好，下面的加法、係數積就有了現實意義（兩天合計、整體打折）。
+
+\subsection*{\sffamily B.\ 加減與係數積}
+
+兩矩陣\textbf{形狀（列數、行數）相同}時才能比較與相加。設 $A=[a_{ij}]$、$B=[b_{ij}]$ 同形，$k$ 為實數：
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{相等}：$A=B\iff$ 每個對應位置 $a_{ij}=b_{ij}$。
+\item \textbf{加減}（對應位置相加減）：$A\pm B=[\,a_{ij}\pm b_{ij}\,]$。
+\item \textbf{係數積}（每個元素都乘 $k$）：$kA=[\,k\,a_{ij}\,]$。
+\end{itemize}
+形狀不同的矩陣\textbf{不能相加}。加減與係數積都是「逐元素」進行，跟向量一模一樣，沒有什麼陷阱。真正的重頭戲是乘法。
+
+\subsection*{\sffamily C.\ 矩陣相乘：列乘行}
+
+矩陣乘法\textbf{不是}逐元素相乘——那樣定義毫無用處。它真正的設計目的，是讓「\textbf{先做變換 $B$、再做變換 $A$}」這個合成，恰好等於「乘上矩陣 $AB$」。所以乘法定義成「左矩陣的\textbf{列}去配右矩陣的\textbf{行}，對應相乘再相加」。
+
+\textbf{矩陣相乘}：設 $A$ 是 $m\times n$、$B$ 是 $n\times p$ 矩陣（\textbf{左矩陣的行數 $=$ 右矩陣的列數}才能相乘），則乘積 $AB$ 是 $m\times p$ 矩陣，其第 $i$ 列、第 $j$ 行的元素為「$A$ 的第 $i$ 列 與 $B$ 的第 $j$ 行 對應相乘後相加」：
+$$(AB)_{ij}=\sum_{k} a_{ik}\,b_{kj}.$$
+以 $2\times2$ 為例：
+$$\boxed{\;\begin{bmatrix} a & b\\ c & d \end{bmatrix}\begin{bmatrix} p & q\\ r & s \end{bmatrix}=\begin{bmatrix} ap+br & aq+bs\\ cp+dr & cq+ds \end{bmatrix}\;}$$
+
+\begin{補充框}{為什麼定義成「列乘行」？又為什麼不能交換？}
+把矩陣 $A$ 想成「吃一個向量、吐一個向量」的機器。若要「先用 $B$ 變換，再用 $A$ 變換」，把 $\vec u=B\vec x$ 的結果代進 $A$，一路展開後會發現新機器的係數，恰好是「$A$ 的某一列、與 $B$ 的某一行對應相乘再相加」，也就是
+$$A(B\vec x)=(AB)\vec x,\qquad (AB)_{ij}=\sum_k a_{ik}b_{kj}.$$
+所以「列乘行」不是憑空規定，而是\textbf{唯一能讓「機器接機器」對應「矩陣乘矩陣」的定義}。若改成逐元素相乘，這個合成性質就會壞掉，矩陣也就失去存在的意義。
+
+至於\textbf{為什麼不能交換}：既然 $AB$ 代表「先 $B$ 後 $A$」、$BA$ 代表「先 $A$ 後 $B$」，問題就變成「做事的先後順序會影響結果嗎」。當然會——「先照鏡子、再轉 $90^\circ$」和「先轉 $90^\circ$、再照鏡子」方位完全不同；「先穿襪再穿鞋」和「先穿鞋再穿襪」更是天差地別。順序會影響結果，所以 $AB\ne BA$ 是常態，不是例外。
+\end{補充框}
+
+\textbf{注意（本章最重要）：}矩陣乘法的這些性質和實數很不一樣，整理式子時必須處處小心：
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{乘法不可交換}：一般而言 $AB\ne BA$，甚至可能一個算得出來、另一個形狀根本不合。所有「移項、把矩陣搬到另一邊」的動作都不准隨意進行。
+\item \textbf{不可逆推}：$AB=AC$ \textbf{不能}消去 $A$ 推出 $B=C$（除非 $A$ 可逆）；$AB=O$（零矩陣）也\textbf{不代表} $A=O$ 或 $B=O$——兩個非零矩陣相乘可以是零矩陣。
+\item \textbf{平方公式失效}：$(A+B)^2=A^2+AB+BA+B^2$，\textbf{不能}併成 $A^2+2AB+B^2$（因為 $AB\ne BA$）。
+\end{itemize}
+
+\subsection*{\sffamily D.\ 單位方陣}
+
+實數裡的 $1$ 滿足「乘任何數都不變」。矩陣裡也有這樣的角色——\textbf{單位方陣}。
+
+\textbf{單位方陣（identity matrix）}：主對角線全為 $1$、其餘為 $0$ 的方陣，$2$ 階的記為
+$$I=\begin{bmatrix} 1 & 0\\ 0 & 1 \end{bmatrix}.$$
+它是矩陣乘法的「$1$」：對任意同階方陣 $A$，
+$$\boxed{\;AI=IA=A\;}$$
+$I$ 是少數\textbf{和任何方陣都可交換}的矩陣。對應地，元素全為 $0$ 的\textbf{零矩陣 $O$} 像實數的 $0$，但要記得它比較危險：$AB=O$ 不代表 $A$ 或 $B$ 是 $O$。
+
+\section*{\sffamily 2-3\quad 反方陣}
+
+\subsection*{\sffamily A.\ 矩陣的「除法」}
+
+實數裡，$a\ne0$ 才有倒數 $a^{-1}$，滿足 $a\cdot a^{-1}=1$。矩陣世界裡對應的角色是\textbf{反方陣}：給定方陣 $A$，找一個 $A^{-1}$ 使得「乘起來變成單位方陣 $I$」。一旦有了 $A^{-1}$，解 $A\vec x=\vec b$ 就像解 $ax=b$ 一樣，左乘 $A^{-1}$ 得 $\vec x=A^{-1}\vec b$。
+
+\textbf{反方陣（inverse matrix）}：設 $A$ 是 $n$ 階方陣。若存在同階方陣 $A^{-1}$ 使得
+$$\boxed{\;AA^{-1}=A^{-1}A=I\;}$$
+則稱 $A$ \textbf{可逆（invertible）}，$A^{-1}$ 為 $A$ 的反方陣。不存在這樣的矩陣時，稱 $A$ \textbf{不可逆（奇異，singular）}。
+
+\subsection*{\sffamily B.\ 2 階反方陣公式與可逆條件}
+
+對 $2$ 階方陣，反方陣有一條極好記的公式，而它能不能用，完全由\textbf{行列式}把關。
+
+\textbf{2 階反方陣公式}：設 $A=\begin{bmatrix} a & b\\ c & d \end{bmatrix}$，$\det A=ad-bc$。
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item 當 $\boxed{\det A\ne0}$ 時，$A$ \textbf{可逆}，且
+$$A^{-1}=\frac{1}{ad-bc}\begin{bmatrix} d & -b\\ -c & a \end{bmatrix}.$$
+口訣：「\textbf{主對角線對調、副對角線變號，再除以行列式}」（$a\leftrightarrow d$ 互換，$b$、$c$ 加負號）。
+\item 當 $\boxed{\det A=0}$ 時，$A$ \textbf{不可逆}（沒有反方陣）。因為公式裡要除以 $ad-bc=0$，無法進行。
+\end{itemize}
+
+\begin{延伸框}{行列式為 $0$ 到底代表什麼？一條主線串起四件事}
+$\det A=0$ 在本章反覆出現：克拉瑪公式失效、反方陣消失、解不唯一。它們其實是\textbf{同一件事}。
+
+\textbf{幾何意義——把平面壓扁。}以方陣兩行 $\begin{bmatrix} a\\ c \end{bmatrix}$、$\begin{bmatrix} b\\ d \end{bmatrix}$ 為鄰邊的平行四邊形，面積 $=|ad-bc|=|\det A|$。把 $A$ 看成線性變換，它把單位方格（面積 $1$）變成這個平行四邊形，所以 $|\det A|$ 就是「變換後單位面積的放大率」。於是 $\det A=0$ 表示\textbf{變換把整個平面壓扁成一條線（或一個點）}，面積放大率變成 $0$，兩行向量共線（成比例）。
+
+\textbf{為什麼壓扁就不可逆。}反方陣的任務是「把變換還原」。但若 $A$ 已把整個平面壓成一條線，就有一大堆原本不同的點被擠到同一位置，資訊\textbf{遺失}了，無法還原（你無法從影子反推出立體形狀）。所以
+$$\det A=0\ \Longleftrightarrow\ \text{變換壓扁、不可逆、沒有 }A^{-1}.$$
+
+\textbf{為什麼解不唯一。}解 $A\vec x=\vec b$ 就是問「哪個 $\vec x$ 被送到 $\vec b$」。$\det A\ne0$ 時變換可逆，每個 $\vec b$ 恰有唯一來源；$\det A=0$ 時平面被壓成一條線 $L$：若 $\vec b$ 落在 $L$ 上，有一整排 $\vec x$ 都被送到它（無窮多組解，兩線重合）；若 $\vec b$ 不在 $L$ 上，沒有任何 $\vec x$ 能到達它（無解，兩線平行）。
+
+\textbf{一句話總結：}行列式為 $0$ $\Longleftrightarrow$ 兩行成比例 $\Longleftrightarrow$ 變換把平面壓扁、面積為 $0$ $\Longleftrightarrow$ 不可逆、解不唯一。這是本章最有「結構感」的一刻。
+\end{延伸框}
+
+\subsection*{\sffamily C.\ 用反方陣解方程組}
+
+若 $A$ 可逆（$\det A\ne0$），方程組 $A\vec x=\vec b$ 兩邊\textbf{左乘} $A^{-1}$：
+$$A^{-1}A\vec x=A^{-1}\vec b\ \Rightarrow\ I\vec x=A^{-1}\vec b\ \Rightarrow\ \boxed{\;\vec x=A^{-1}\vec b\;}$$
+這與克拉瑪公式給出\textbf{同一個唯一解}，只是換個工具。注意一定\textbf{左乘}：因為乘法不可交換，右乘 $\vec b\,A^{-1}$ 根本不合形狀。
+
+\textbf{注意：}
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 反方陣公式\textbf{只對 $2$ 階}這麼簡單；$\det A=0$ 時公式不能硬套（會除以 $0$），要直接判「不可逆」。
+\item $(AB)^{-1}=B^{-1}A^{-1}$，\textbf{順序要反過來}（像穿脫衣服：先穿的後脫）。寫成 $A^{-1}B^{-1}$ 是錯的。
+\item 「不可逆」不代表「方程組無解」。$\det A=0$ 時方程組是\textbf{無窮多組解或無解}——只是少了反方陣這個工具，要回到 2-1 的三情況討論。
+\end{itemize}
+
+\section*{\sffamily 2-4\quad 矩陣的應用：線性變換與轉移方陣}
+
+\subsection*{\sffamily A.\ 平面上的線性變換}
+
+矩陣最深刻的身分，是一個\textbf{平面上的變換}：把每個點 $(x,y)$ 送到新位置 $(x',y')$。一個 $2$ 階方陣 $A$ 作用在位置向量上，$\begin{bmatrix} x'\\ y' \end{bmatrix}=A\begin{bmatrix} x\\ y \end{bmatrix}$，就把整個平面「重新排布」。
+
+\textbf{線性變換（linear transformation）}：由 $2$ 階方陣 $A=\begin{bmatrix} a & b\\ c & d \end{bmatrix}$ 定義的映射 $\begin{bmatrix} x\\ y \end{bmatrix}\mapsto A\begin{bmatrix} x\\ y \end{bmatrix}$，稱為平面上的線性變換。它的關鍵性質：把原點固定、把直線仍變成直線、把方格仍變成（平行的）方格。
+
+\textbf{看穿一個變換矩陣的訣竅}：$A$ 的\textbf{第一行就是 $(1,0)$ 變到哪、第二行就是 $(0,1)$ 變到哪}。把兩個基底的去處填進兩行，就得到整個變換矩陣。
+
+\fig{d42-linear-transform}{0.92}{圖 2-2：線性變換把單位方格（兩基底 $(1,0)$、$(0,1)$）送到一個平行四邊形。矩陣的第一行是 $(1,0)$ 的像、第二行是 $(0,1)$ 的像；平行四邊形面積即 $|\det A|$。}
+
+\subsection*{\sffamily B.\ 旋轉、鏡射、伸縮、推移}
+
+四種最常見的變換，各有標準矩陣。
+
+\begin{itemize}\setlength{\itemsep}{3pt}
+\item \textbf{旋轉（rotation）}繞原點逆時針轉 $\theta$：
+$$R_\theta=\begin{bmatrix} \cos\theta & -\sin\theta\\ \sin\theta & \cos\theta \end{bmatrix}$$
+\item \textbf{鏡射（reflection）}對 $x$ 軸、$y$ 軸、直線 $y=x$：
+$$\begin{bmatrix} 1 & 0\\ 0 & -1 \end{bmatrix}\ (\text{對 }x\text{ 軸}),\quad \begin{bmatrix} -1 & 0\\ 0 & 1 \end{bmatrix}\ (\text{對 }y\text{ 軸}),\quad \begin{bmatrix} 0 & 1\\ 1 & 0 \end{bmatrix}\ (\text{對 }y=x)$$
+\item \textbf{伸縮（scaling）}沿 $x$ 方向放大 $k$ 倍、$y$ 方向放大 $\ell$ 倍：$\begin{bmatrix} k & 0\\ 0 & \ell \end{bmatrix}$。
+\item \textbf{推移（shear）}沿 $x$ 方向錯切：$\begin{bmatrix} 1 & k\\ 0 & 1 \end{bmatrix}$（把方格推成平行四邊形）。
+\end{itemize}
+
+\fig{d42-rotation-reflection}{0.92}{圖 2-3：旋轉（繞原點逆時針轉 $\theta$）與鏡射（對 $x$ 軸、對 $y=x$）。旋轉的 $\det=1$、鏡射的 $\det=-1$（負號代表把定向翻面），兩者都不改變面積。}
+
+\begin{延伸框}{旋轉、鏡射憑什麼能寫成矩陣？那些 $\cos\theta$、$\sin\theta$ 哪來的}
+\textbf{關鍵事實：}線性變換被「兩個基底的去向」完全決定。平面上任何向量都能寫成
+$$\begin{bmatrix} x\\ y \end{bmatrix}=x\begin{bmatrix} 1\\ 0 \end{bmatrix}+y\begin{bmatrix} 0\\ 1 \end{bmatrix}=x\,\vec e_1+y\,\vec e_2.$$
+旋轉、鏡射這類變換\textbf{保持線性組合}，於是只要知道 $\vec e_1=(1,0)$、$\vec e_2=(0,1)$ 各自被送到哪，整個變換就定了：把「$\vec e_1$ 的像」放第一行、「$\vec e_2$ 的像」放第二行即可。
+
+\textbf{推出旋轉矩陣。}把「繞原點逆時針轉 $\theta$」套上去：$\vec e_1=(1,0)$ 在單位圓上從 $0^\circ$ 轉到 $\theta$，落在 $(\cos\theta,\sin\theta)$；$\vec e_2=(0,1)$ 從 $90^\circ$ 轉到 $90^\circ+\theta$，落在 $(-\sin\theta,\cos\theta)$。把兩個像填進兩行，正好得到
+$$R_\theta=\begin{bmatrix} \cos\theta & -\sin\theta\\ \sin\theta & \cos\theta \end{bmatrix}.$$
+那些三角函數不是憑空出現的，它們就是\textbf{兩個基底轉動後的坐標}，是單位圓的定義直接搬過來的。鏡射用完全相同的方法：例如對 $y=x$ 鏡射，$\vec e_1=(1,0)\mapsto(0,1)$、$\vec e_2=(0,1)\mapsto(1,0)$，得 $\begin{bmatrix} 0 & 1\\ 1 & 0 \end{bmatrix}$。
+
+\textbf{為什麼只看兩個基底就夠？}因為這些變換保持線性組合（原點固定、直線仍是直線）。\textbf{平移就不行}——平移會把原點移走，不是線性變換，無法只用 $2\times2$ 矩陣表示（大學會用「齊次坐標」處理）。
+\end{延伸框}
+
+\textbf{合成 $=$ 矩陣相乘。}把「先做變換 $S$、再做變換 $R$」合成起來，等於乘上矩陣 $RS$——\textbf{後做的寫在左邊}。因為作用在向量上是 $R(S\vec x)=(RS)\vec x$。順序寫反，因乘法不可交換，答案通常會錯。也別把旋轉矩陣的負號位置記錯：逆時針是右上角為負；順時針把 $\theta$ 換成 $-\theta$，負號跑到左下。
+
+\subsection*{\sffamily C.\ 二階轉移方陣}
+
+矩陣還能描述「狀態隨時間怎麼變」。設一個系統在每一步都按固定機率在幾個狀態間轉移，把這些機率排成一個方陣，就是\textbf{轉移方陣}。
+
+\textbf{轉移方陣（transition matrix）}：設系統有兩個狀態，第 $n$ 步的分布寫成行向量 $\vec v_n=\begin{bmatrix} p_n\\ q_n \end{bmatrix}$（$p_n+q_n=1$）。若每一步的轉移機率固定，排成方陣 $P$，則
+$$\boxed{\;\vec v_{n+1}=P\,\vec v_n\quad\Rightarrow\quad \vec v_n=P^n\,\vec v_0\;}$$
+$P$ 的每一\textbf{行}是「從某狀態出發、轉到各狀態的機率」，每行的元素相加為 $1$。
+
+\fig{d42-transition}{0.86}{圖 2-4：二階轉移方陣的演化。反覆作用 $\vec v_n=P^n\vec v_0$，分布逐步收斂到一個固定的穩定分布 $\vec v_*$，且與起點無關。}
+
+\begin{延伸框}{轉移方陣在算什麼？為什麼一直乘下去會「趨向穩定」}
+\textbf{它在記錄「機率的流動」。}$P$ 的每個元素是「從某狀態流向某狀態的機率」。算 $\vec v_{n+1}=P\vec v_n$ 時，新的「晴」比例 $=$（原本是晴、且留下的）$+$（原本是雨、卻轉成晴的），這正是矩陣乘法那一列在做的「對應相乘再相加」。所以 $P\vec v_n$ 就是把這一步的機率流動算完一次；乘 $n$ 次即走 $n$ 步後的分布。$P$ 的每個元素其實就是條件機率 $P(\text{明天某狀態}\mid\text{今天某狀態})$，每一行加起來為 $1$（明天總得是某個狀態）。
+
+\textbf{穩定分布。}「穩定分布」$\vec v_*$ 是一個特別的分布，它走一步後\textbf{自己回到自己}：
+$$P\,\vec v_*=\vec v_*,$$
+即「流入某狀態的機率」恰好等於「流出的機率」，達成動態平衡，分布從此不再變。例如 $P=\begin{bmatrix} 0.8 & 0.4\\ 0.2 & 0.6 \end{bmatrix}$，設 $\vec v_*=\begin{bmatrix} p\\ 1-p \end{bmatrix}$，由「晴」那一列 $0.8p+0.4(1-p)=p$ 解得 $p=\tfrac23$，故 $\vec v_*=\begin{bmatrix} 2/3\\ 1/3 \end{bmatrix}$。
+
+\textbf{為什麼會收斂、且與起點無關。}直觀地說，只要從任何狀態走幾步都有機會到達任何狀態（沒有「卡死」的角落），每一步的轉移都在把不同起點的差異「抹平」一點點，差異以固定比率縮小，久了就趨於同一個平衡分布。
+
+\textbf{適用範圍（注意）：}不是每個轉移方陣都收斂到唯一穩定分布。若狀態會卡死（吸收態），或系統嚴格地來回硬切換（週期性），就不會趨於單一穩定值。此外，穩定的是\textbf{比例}，不是「每個個體都不動」——天氣仍天天在晴雨間切換，只是長期看晴佔 $2/3$、雨佔 $1/3$ 的比例固定下來。嚴格的條件與證明（正則馬可夫鏈、特徵值）屬大學內容。
+\end{延伸框}
+
+\section*{\sffamily 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{方陣乘向量}：$\begin{bmatrix} a & b\\ c & d \end{bmatrix}\begin{bmatrix} x\\ y \end{bmatrix}=\begin{bmatrix} ax+by\\ cx+dy \end{bmatrix}=x\begin{bmatrix} a\\ c \end{bmatrix}+y\begin{bmatrix} b\\ d \end{bmatrix}$（行向量的線性組合）。
+\item \textbf{行列式}：$\det A=ad-bc$。\textbf{克拉瑪公式}（$\Delta\ne0$）：$x=\Delta_x/\Delta$、$y=\Delta_y/\Delta$（把對應的行換成常數行）。
+\item \textbf{解的三情況}：$\Delta\ne0$ 唯一解（交一點）；$\Delta=0$ 且兩式成比例 $\rightarrow$ 無窮多組（重合）；$\Delta=0$ 但常數項矛盾 $\rightarrow$ 無解（平行）。
+\item \textbf{矩陣運算}：加減、係數積逐元素；相乘\textbf{列乘行}，$(AB)_{ij}=\sum_k a_{ik}b_{kj}$；\textbf{乘法不可交換 $AB\ne BA$}；單位方陣 $I$ 滿足 $AI=IA=A$。
+\item \textbf{反方陣}（2 階）：$\det A\ne0$ 時 $A^{-1}=\dfrac{1}{ad-bc}\begin{bmatrix} d & -b\\ -c & a \end{bmatrix}$；\textbf{$\det A=0$ 不可逆}。用反方陣解：$\vec x=A^{-1}\vec b$（左乘）；$(AB)^{-1}=B^{-1}A^{-1}$。
+\item \textbf{線性變換}：$A$ 兩行 $=$ 兩基底 $(1,0)$、$(0,1)$ 的像。旋轉 $\begin{bmatrix} \cos\theta & -\sin\theta\\ \sin\theta & \cos\theta \end{bmatrix}$、鏡射、伸縮、推移；合成 $=$ 矩陣相乘（後做的在左）。
+\item \textbf{轉移方陣}：$\vec v_n=P^n\vec v_0$，每行機率和為 $1$，良好情形下反覆作用趨向唯一穩定分布 $\vec v_*$（$P\vec v_*=\vec v_*$）。
+\item \textbf{一條主線}：行列式為 $0$ $\Longleftrightarrow$ 兩行成比例 $\Longleftrightarrow$ 變換把平面壓扁、面積為 $0$ $\Longleftrightarrow$ 不可逆、解不唯一。
+\end{itemize}
+\end{補充框}
+
+\end{document}

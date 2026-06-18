@@ -1,0 +1,269 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\Huge\bfseries 數A4-1 空間中的平面與直線}\\[3pt]
+{\sffamily\large 普通高中 數學（數學A・第四冊）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+這一章把前一冊「空間向量」學到的工具——\textbf{向量、內積、外積、法向量}——拿來「寫方程式」。先學\textbf{平面方程式}：只要一個法向量就能釘住一個平面，並由此處理兩平面的夾角、位置關係與點到平面的距離。再學\textbf{空間中的直線}：參數式與比例式兩種寫法、直線與平面的關係、點到直線的距離。最後處理空間特有的\textbf{兩歪斜線（skew lines）}——它們既不平行也不相交，卻仍有一段明確的距離。
+
+\medskip
+全章只有一個核心觀念：\textbf{平面用「法向量（垂直方向）」描述，直線用「方向向量（沿著的方向）」描述}；夾角與垂直靠\textbf{內積}，生法向量與公垂方向靠\textbf{外積}，所有距離都是\textbf{正射影}。把這條主線抓住，本章的公式都是同一招的變形。
+
+\medskip
+本章主線：
+
+\begin{center}
+平面方程式 $\rightarrow$ 兩平面夾角與位置關係 $\rightarrow$ 點到平面距離 $\rightarrow$ 直線參數式與比例式 $\rightarrow$ 線面關係與點到直線距離 $\rightarrow$ 兩直線關係與歪斜線距離
+\end{center}
+
+\section*{\sffamily 1-1\quad 平面方程式}
+
+\subsection*{\sffamily A.\ 一個法向量就能釘住一個平面}
+
+平面是「攤平、向四面八方無限延伸」的東西，看起來要描述它的「朝向」很麻煩。但有一個關鍵觀察：\textbf{一個平面的朝向，可以用一支垂直於它的向量完全代表}——這支向量稱為平面的\textbf{法向量（normal vector）}，記作 $\vec n$。
+
+想像把一支筆直的鉛筆插在桌面上。只要鉛筆指的方向不變，桌面「平著放、斜著放、朝哪邊攤開」就完全固定了；剩下要決定的只是「桌面擺在哪個高度」，那只要再指定平面上\textbf{任何一個點}就好。於是：
+
+$$\boxed{\;\text{一個點} \;+\; \text{一個法向量} \;\Longrightarrow\; \text{唯一一個平面}\;}$$
+
+\fig{d41-plane-normal}{0.62}{圖 1：法向量 $\vec n$ 垂直於平面。平面上任一點 $P$ 都使 $\vec{P_0P}$ 躺在平面內，因而與 $\vec n$ 垂直。}
+
+\begin{補充框}{為什麼「一個法向量」就能定出一個平面？方向那麼多，憑什麼一支向量說了算？}
+平面上明明有\textbf{無限多個方向}，要用它們來描述平面反而抓不住重點——你永遠列舉不完。但反過來看：\textbf{與平面垂直的方向只有一條}（連同它的反向，算同一個方向）。用這個唯一的方向當「代表」，最精簡。
+
+關鍵事實是：\textbf{「都垂直於同一支向量 $\vec n$」的所有方向，恰好攤成一個平面}。所以一旦指定 $\vec n$，就等於指定了「平面要怎麼攤」；再加一個點固定高度，平面就唯一了。手勢上可以這樣記：一隻手掌攤平當平面，另一隻手的食指垂直戳出來當法向量——轉動食指的方向，手掌也被迫跟著轉。
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 法向量\textbf{不必是單位向量}。$(a,b,c)$ 和 $(2a,2b,2c)$ 指同一個平面（方程式只是同乘 2）。只有在算距離、夾角要除以 $|\vec n|$ 時，長度才參與。
+\item \textbf{只給法向量還不夠，一定要再給一個點}。法向量只定「朝向」，不定「高低位置」；兩個平行平面的法向量一模一樣，差別就在那個點。
+\item 法向量是「\textbf{垂直}於平面」的方向，不是平面內某條線。別跟稍後直線的「方向向量（沿著）」搞混。
+\end{itemize}
+\end{補充框}
+
+\subsection*{\sffamily B.\ 平面的標準式（點法式）與一般式}
+
+設平面通過定點 $P_0(x_0,y_0,z_0)$，法向量 $\vec n=(a,b,c)$。平面上\textbf{任一點} $P(x,y,z)$ 都使 $\vec{P_0P}$ 躺在平面內，因此 $\vec{P_0P}\perp\vec n$。把「垂直 $\iff$ 內積為 0」寫出來，$\vec n\cdot\vec{P_0P}=0$，就得到平面方程式。
+
+\begin{補充框}{平面方程式（兩種等價寫法）}
+過 $P_0(x_0,y_0,z_0)$、法向量 $\vec n=(a,b,c)$（$\vec n\ne\vec0$）的平面：
+$$\textbf{標準式（點法式）：}\quad a(x-x_0)+b(y-y_0)+c(z-z_0)=0.$$
+展開、令 $d=-(ax_0+by_0+cz_0)$，得
+$$\textbf{一般式（general form）：}\quad ax+by+cz+d=0.$$
+\textbf{最關鍵的讀法：}一般式裡 $x,y,z$ 的係數 $(a,b,c)$ \textbf{就是一個法向量}。看到平面方程式，一眼把係數圈出來就讀到法向量——這是本章後面所有夾角、距離、平行垂直判斷的共同起手式。
+\end{補充框}
+
+要找平面的法向量還有一招：若已知平面上不共線的三個點，平面內就有兩個方向（例如 $\vec{AB}$、$\vec{AC}$）；它們的\textbf{外積} $\vec{AB}\times\vec{AC}$ 同時垂直兩者，正好是一個法向量。這就是上一冊外積「一鍵生出同時垂直兩向量的向量」的直接應用。
+
+\subsection*{\sffamily C.\ 兩平面的位置關係}
+
+兩個平面在空間中只有三種擺法，全部用\textbf{法向量}判斷。設
+$$E_1:a_1x+b_1y+c_1z+d_1=0,\qquad E_2:a_2x+b_2y+c_2z+d_2=0,$$
+法向量分別為 $\vec n_1=(a_1,b_1,c_1)$、$\vec n_2=(a_2,b_2,c_2)$。
+
+\begin{補充框}{兩平面的三種關係}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{平行（不重合）}：$\vec n_1\parallel\vec n_2$（法向量成比例），但常數項\textbf{不}成同一比例：
+$$\frac{a_1}{a_2}=\frac{b_1}{b_2}=\frac{c_1}{c_2}\ne\frac{d_1}{d_2}.$$
+\item \textbf{重合（同一平面）}：四個係數\textbf{全部}成同一比例：
+$$\frac{a_1}{a_2}=\frac{b_1}{b_2}=\frac{c_1}{c_2}=\frac{d_1}{d_2}.$$
+\item \textbf{相交}：$\vec n_1\not\parallel\vec n_2$（法向量不平行）。此時兩平面的交集是\textbf{一條直線}，不是一個點。
+\end{itemize}
+\end{補充框}
+
+\textbf{注意：}平面平行判的是\textbf{法向量平行}（不是法向量垂直）。容易記錯的對照是：法向量\textbf{平行} $\Rightarrow$ 平面平行（或重合）；法向量\textbf{垂直} $\Rightarrow$ 平面垂直。
+
+\subsection*{\sffamily D.\ 兩平面的夾角}
+
+兩平面相交時會夾出一個角。既然「平面的朝向 ＝ 法向量」，\textbf{兩平面的夾角就用兩個法向量的夾角來算}。
+
+\fig{d41-dihedral-angle}{0.62}{圖 2：兩平面的夾角 $\theta$ 等於兩法向量 $\vec n_1$、$\vec n_2$ 的夾角（取不超過 $90^\circ$ 的那一個）。}
+
+\begin{補充框}{兩平面夾角公式}
+兩平面夾角 $\theta$（習慣取 $0^\circ\le\theta\le 90^\circ$）滿足
+$$\boxed{\;\cos\theta=\frac{|\vec n_1\cdot\vec n_2|}{|\vec n_1|\,|\vec n_2|}\;}$$
+\textbf{分子為什麼加絕對值：}法向量可以指向平面的任一側，$\vec n_1\cdot\vec n_2$ 算出來可能是負的（對應到鈍角）。但我們談「兩平面的夾角」習慣取\textbf{不超過 $90^\circ$ 的那一個}，所以分子加絕對值，自動把鈍角折成它的補角（銳角）。
+特例：$\vec n_1\cdot\vec n_2=0\iff$ 兩平面\textbf{互相垂直}。
+\end{補充框}
+
+\subsection*{\sffamily E.\ 點到平面的距離}
+
+點到平面的距離，量的是\textbf{沿著垂直平面那一段}的長度——而垂直平面的方向就是法向量。所以這個距離，本質上是「一條連線在法向量方向上的正射影長」。
+
+\fig{d41-point-to-plane}{0.60}{圖 3：點 $P_0$ 到平面的距離，是把連線投影到法向量 $\vec n$ 方向後的長度（垂直高度）。}
+
+\begin{補充框}{點到平面的距離公式}
+點 $P_0(x_0,y_0,z_0)$ 到平面 $E:ax+by+cz+d=0$ 的距離
+$$\boxed{\;\operatorname{dist}(P_0,E)=\frac{|ax_0+by_0+cz_0+d|}{\sqrt{a^2+b^2+c^2}}\;}$$
+\textbf{怎麼讀：}分子是「把 $P_0$ 的座標代進平面式」後取絕對值；分母是法向量的長度 $|\vec n|=\sqrt{a^2+b^2+c^2}$。
+\end{補充框}
+
+\begin{補充框}{這條公式是怎麼來的？分母的根號哪來的？}
+它就是「從平面上任一點連到 $P_0$ 的向量，在法向量方向上的正射影長」，分母那個根號正是法向量的長度 $|\vec n|$。三步看清楚：
+
+\textbf{第一步（距離 ＝ 沿法向量投影）。}最短距離量的是垂直平面那一段，方向就是 $\vec n$。就像量頭頂到天花板的距離要\textbf{鉛直}量、不能斜著量——「鉛直」正是天花板的法向量方向。
+
+\textbf{第二步（取一點、投影）。}在平面上任取一點 $Q$，連線向量 $\vec{QP_0}$ 在 $\vec n$ 上的正射影長為
+$$\operatorname{dist}=\frac{|\vec n\cdot\vec{QP_0}|}{|\vec n|}.$$
+
+\textbf{第三步（化簡分子）。}把 $\vec n\cdot\vec{QP_0}$ 展開，並利用「$Q$ 在平面上」這個條件（$aQ_x+bQ_y+cQ_z=-d$），分子恰好化成 $ax_0+by_0+cz_0+d$，也就是「把 $P_0$ 代進平面式」。結果\textbf{不含 $Q$}——不論取平面上哪一點當 $Q$，算出來都一樣，這正說明距離是點與平面之間的固定值。
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 分母只有 $x,y,z$ 三個係數的平方和，\textbf{$d$ 不進分母}（不是 $\sqrt{a^2+b^2+c^2+d^2}$）。
+\item 平面要先寫成 $=0$ 的一般式再代。若給的是 $ax+by+cz=k$，要先搬成 $ax+by+cz-k=0$，分子才是 $|ax_0+by_0+cz_0-k|$。
+\item 它和（必修第一冊）「點到直線距離」$\dfrac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}$ 是\textbf{同一個推導，只差一個 $z$ 項}。二維、三維是同一招，背一個就好。
+\end{itemize}
+\end{補充框}
+
+\section*{\sffamily 1-2\quad 空間中的直線}
+
+\subsection*{\sffamily A.\ 方向向量與參數式}
+
+平面用「法向量（垂直方向）」描述；\textbf{直線剛好相反，用「方向向量（line direction vector）」——沿著它走的那個方向}描述。一條直線由\textbf{一個定點} ＋ \textbf{一個方向向量}唯一決定。
+
+設直線過定點 $A(x_1,y_1,z_1)$、方向向量 $\vec d=(a,b,c)$（$\vec d\ne\vec0$）。直線上的動點 $P$ 必滿足 $\vec{AP}=t\vec d$；讓參數 $t$ 掃過所有實數，就掃出整條直線。
+
+\fig{d41-line-param}{0.60}{圖 4：直線上的動點 $P$ 由「定點 $A$ ＋ $t$ 倍方向向量 $\vec d$」給出。$t=0$ 時回到 $A$，掃過 $t$ 就掃出整條線。}
+
+\begin{補充框}{直線的參數式（parametric form）}
+過 $A(x_1,y_1,z_1)$、方向向量 $\vec d=(a,b,c)$ 的直線：
+$$\boxed{\;\begin{cases}x=x_1+at\\[2pt]y=y_1+bt\\[2pt]z=z_1+ct\end{cases}\quad(t\in\mathbb{R})\;}$$
+每給一個 $t$ 就得到線上一個點；$t=0$ 時回到定點 $A$。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 比例式（對稱式）}
+
+如果方向向量三個分量都不為零，可以從參數式把 $t$ 解出來：$t=\dfrac{x-x_1}{a}=\dfrac{y-y_1}{b}=\dfrac{z-z_1}{c}$。把參數 $t$ 消掉，就得到不含 $t$ 的\textbf{比例式}。
+
+\begin{補充框}{直線的比例式（對稱式，symmetric form）}
+當 $a,b,c$ \textbf{皆不為 0} 時，直線可寫成
+$$\boxed{\;\frac{x-x_1}{a}=\frac{y-y_1}{b}=\frac{z-z_1}{c}\;}$$
+分母 $(a,b,c)$ \textbf{就是方向向量}（剛好對應平面一般式裡「分子的係數是法向量」，方向恰恰相反）。
+
+\textbf{若某分量為 0}（例如 $b=0$，方向 $(a,0,c)$）：那一條 $y=y_1+0\cdot t$ 永遠是 $y=y_1$，不能硬寫成分母為 0 的分數，要把它\textbf{單獨拉出來寫成等式}，其餘兩項仍成比例。例如方向 $(2,0,3)$、過 $(1,4,5)$ 的直線寫成
+$$\frac{x-1}{2}=\frac{z-5}{3},\qquad y=4.$$
+意思是「整條線躺在 $y=4$ 這個高度上，$x,z$ 仍照比例跑」。
+\end{補充框}
+
+\begin{補充框}{同一條線為什麼有「參數式」和「比例式」兩種寫法？}
+它們是\textbf{同一條線的兩種衣服}。參數式是「用一個旋鈕 $t$ 掃出整條線」；比例式是「把旋鈕 $t$ 消掉、只留下 $x,y,z$ 之間該滿足的關係」。從參數式三條式子各自解出 $t$ 再令它們相等，就變成比例式——兩者描述的是\textbf{完全相同}的點集合。
+
+可以用「等速直線行駛」來分工記憶：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{參數式}像\textbf{行車記錄}：第 $t$ 秒車在哪裡，直接報座標。給 $t$ 就立刻知道位置——\textbf{要找線上具體某點、要求交點，用參數式最方便}（代一個 $t$ 進去就好）。
+\item \textbf{比例式}像\textbf{路線描述}：不講時間，只說「每往某方向走 $a$，就配著走 $b$、走 $c$」這個固定比例。它一眼看出\textbf{方向向量}（分母）和\textbf{過哪一點}（分子）——\textbf{要快速讀資訊、做幾何判斷，用比例式最清楚}。
+\end{itemize}
+\textbf{注意：}比例式的分母是\textbf{方向向量}（沿著），不是座標點，也別跟平面一般式的「係數＝法向量」（垂直）搞混。另外，參數 $t$ 本身沒有「長度」意義（除非 $\vec d$ 是單位向量）；$t=2$ 不代表「走了 2 單位」，而是「走了 2 個 $\vec d$」。
+\end{補充框}
+
+\subsection*{\sffamily C.\ 直線與平面的關係}
+
+把直線的「方向向量 $\vec d$」和平面的「法向量 $\vec n$」擺在一起比，就能判斷直線與平面怎麼擺。關鍵直覺：\textbf{方向向量與法向量垂直 $\Rightarrow$ 直線「順著」平面（平行或在面上）；不垂直 $\Rightarrow$ 直線一定戳穿平面（相交於一點）}。
+
+\fig{d41-line-plane}{0.92}{圖 5：直線與平面的三種關係。$\vec d\cdot\vec n\ne0$ 時相交於一點；$\vec d\cdot\vec n=0$ 時平行或內含，再看定點在不在平面上。}
+
+\begin{補充框}{直線 $L$（方向 $\vec d$、過點 $A$）與平面 $E$（法向量 $\vec n$）的三種關係}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{相交於一點}：$\vec d\cdot\vec n\ne 0$（方向與法向量不垂直，直線必穿過平面）。
+\item \textbf{平行（無交點）}：$\vec d\cdot\vec n=0$（$\vec d\perp\vec n$）\textbf{且} $A$ \textbf{不在} $E$ 上。
+\item \textbf{直線在平面上（內含）}：$\vec d\cdot\vec n=0$ \textbf{且} $A$ \textbf{在} $E$ 上（整條線都在平面內）。
+\end{itemize}
+一句話：先看 $\vec d\cdot\vec n$ 是否為 0 分兩大類；若 $=0$，再用「定點在不在平面上」分平行或內含。
+\end{補充框}
+
+\subsection*{\sffamily D.\ 點到直線的距離}
+
+點到直線的距離，是「點到線上最近一點」的長度。用向量算最乾淨：取線上一個定點 $A$，作連線 $\vec{AP_0}$，它在「垂直於直線方向」上的分量長度就是距離。用\textbf{外積}可以一步算出。
+
+\begin{補充框}{點到直線的距離公式}
+點 $P_0$ 到「過 $A$、方向 $\vec d$」的直線的距離
+$$\boxed{\;\operatorname{dist}(P_0,L)=\frac{|\vec{AP_0}\times\vec d|}{|\vec d|}\;}$$
+\textbf{為什麼：}$|\vec{AP_0}\times\vec d|=|\vec{AP_0}|\,|\vec d|\sin\theta$ 是以 $\vec{AP_0}$、$\vec d$ 為鄰邊的\textbf{平行四邊形面積}。這個平行四邊形「以直線為底、以距離為高」，所以面積 $\div$ 底長 $|\vec d|$ $=$ 高 $=$ 距離。
+\end{補充框}
+
+\textbf{對照記憶：}點到\textbf{平面}用\textbf{內積}（投影到法向量）；點到\textbf{直線}用\textbf{外積}（面積 $\div$ 底）。一句話——\textbf{到面找法向量、到線找方向向量}。
+
+\section*{\sffamily 1-3\quad 兩直線的關係與距離}
+
+\subsection*{\sffamily A.\ 兩直線的三種關係}
+
+空間中兩條相異直線的擺法，比平面內多了一種「歪斜」。判斷步驟固定：\textbf{先看方向向量平不平行，再看有沒有交點}。設 $L_1$ 過 $A_1$、方向 $\vec d_1$；$L_2$ 過 $A_2$、方向 $\vec d_2$。
+
+\begin{補充框}{兩直線的三種關係}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{平行}：$\vec d_1\parallel\vec d_2$（方向成比例），但 $A_2$ 不在 $L_1$ 上。兩線\textbf{共平面}、永不相交。
+\item \textbf{相交}：$\vec d_1\not\parallel\vec d_2$，且兩線\textbf{有公共點}。此時兩線\textbf{共平面}。
+\item \textbf{歪斜（skew）}：$\vec d_1\not\parallel\vec d_2$，且兩線\textbf{沒有公共點}。此時兩線\textbf{不共平面}——這是平面內沒有的情形。
+\end{itemize}
+\textbf{共面判準（最快）：}取 $\vec{A_1A_2}$、$\vec d_1$、$\vec d_2$ 三向量，算三重積 $(\vec d_1\times\vec d_2)\cdot\vec{A_1A_2}$。若 $=0$ 則三向量共面 $\Rightarrow$ 兩線\textbf{共面}（平行或相交）；若 $\ne0$ 則 $\Rightarrow$ 兩線\textbf{歪斜}。
+\end{補充框}
+
+\textbf{注意：}「兩線不平行就一定相交」是平面思維，在空間中是錯的——還有歪斜這種可能。判斷務必加算三重積看共不共面。
+
+\subsection*{\sffamily B.\ 兩平行線的距離}
+
+兩平行線之間處處等寬，所以\textbf{在其中一條上隨便取一點，算它到另一條的距離}即可——直接套用 1-2 的「點到直線距離」。
+
+\begin{補充框}{兩平行線的距離}
+$L_1$、$L_2$ 平行、共同方向 $\vec d$，$A_1\in L_1$、$A_2\in L_2$。距離
+$$\boxed{\;\operatorname{dist}(L_1,L_2)=\frac{|\vec{A_1A_2}\times\vec d|}{|\vec d|}\;}$$
+就是把 $L_1$ 上的點 $A_1$ 當成那個外點，求它到 $L_2$ 的距離。
+\end{補充框}
+
+\subsection*{\sffamily C.\ 兩歪斜線的距離}
+
+歪斜線碰不到，但它們之間有一段\textbf{唯一的最短連線}——這條線段同時垂直於兩條直線，稱為\textbf{公垂線（common perpendicular）}，它的長度就是兩歪斜線的距離。
+
+\fig{d41-skew-lines}{0.62}{圖 6：兩歪斜線 $L_1$、$L_2$ 與它們的公垂線段。公垂方向同時垂直 $\vec d_1$、$\vec d_2$，正是外積 $\vec d_1\times\vec d_2$；該線段長度即兩線距離。}
+
+公垂線的\textbf{方向}同時垂直 $\vec d_1$、$\vec d_2$，正是外積 $\vec d_1\times\vec d_2$。於是「歪斜線距離」就是「把跨兩線的連線 $\vec{A_1A_2}$ 投影到公垂方向 $\vec d_1\times\vec d_2$ 上的長度」——又是一個正射影問題。
+
+\begin{補充框}{兩歪斜線的距離公式}
+$L_1$（過 $A_1$、方向 $\vec d_1$）、$L_2$（過 $A_2$、方向 $\vec d_2$）歪斜。距離
+$$\boxed{\;\operatorname{dist}(L_1,L_2)=\frac{\bigl|\,(\vec d_1\times\vec d_2)\cdot\vec{A_1A_2}\,\bigr|}{|\vec d_1\times\vec d_2|}\;}$$
+\textbf{用體積 $\div$ 面積來讀：}把 $\vec d_1,\vec d_2,\vec{A_1A_2}$ 當成平行六面體的三條鄰邊。分子（三重積的絕對值）＝平行六面體的\textbf{體積}；分母 $|\vec d_1\times\vec d_2|$ ＝以 $\vec d_1,\vec d_2$ 為鄰邊的底面\textbf{面積}。體積 $\div$ 底面積 $=$ \textbf{高}，這個高正是兩線之間的垂直間隔，也就是距離。
+\end{補充框}
+
+\begin{補充框}{「歪斜線」到底是什麼？既然碰不到，怎麼還能算距離？}
+\textbf{歪斜線就是「不在同一個平面上」的兩條直線}——正因不共面，它們既無法平行、也無法相交。在\textbf{一個平面內}，兩條直線只有平行或相交兩種命運；但空間多了一個維度，兩條線可以\textbf{錯開在不同高度、又朝不同方向}，於是出現第三種。想像一條貼地的高速公路（東西向）和一座架在半空的天橋（南北向）：方向不同、又分屬不同高度，永遠碰不到——這就是一對歪斜線。
+
+至於「距離」：對任意兩個集合，距離的通用定義是\textbf{所有點對距離的最小值}。在 $L_1$、$L_2$ 上各取一點連起來，這樣的連線有無限多條、長度有長有短，\textbf{其中存在一條最短的}，它就是歪斜線距離。關鍵幾何事實是：\textbf{那條最短連線同時垂直於兩條直線}（公垂線段）。直覺上，只要連線沒有同時垂直兩線，總能沿著某條線「滑動一點點」讓它更短；唯有對兩線都垂直、沒有可滑的方向時，才達到最短。兩歪斜線之間恰有\textbf{唯一}一條這樣的公垂線段，這也是距離唯一的原因。
+
+\textbf{注意：}歪斜線距離不是「隨手連兩個定點 $A_1A_2$ 的長度」（那通常偏大），而是\textbf{最短}那條公垂線段的長度。
+\end{補充框}
+
+\textbf{注意：}歪斜線距離公式\textbf{不能套到平行線上}。平行時 $\vec d_1\parallel\vec d_2$，$\vec d_1\times\vec d_2=\vec0$，分母為 0、公式失效——平行線要用 B 段的「點到直線」公式。所以順序一定是\textbf{先判平行還是歪斜，再選公式}。另外，三重積可能算出負值（左右手定向），距離一定取絕對值。
+
+\section*{\sffamily 1-4\quad 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\textbf{平面}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 點法式 $a(x-x_0)+b(y-y_0)+c(z-z_0)=0$；一般式 $ax+by+cz+d=0$，\textbf{係數 $(a,b,c)$ ＝法向量 $\vec n$}。
+\item 三點求平面：兩向量\textbf{外積}得法向量 $\rightarrow$ 代點法式。
+\item 兩平面：法向量成比例 $\Rightarrow$ 平行（常數不同比）／重合（全同比）；法向量不平行 $\Rightarrow$ 交於\textbf{一直線}。
+\item 兩平面夾角 $\cos\theta=\dfrac{|\vec n_1\cdot\vec n_2|}{|\vec n_1|\,|\vec n_2|}$（加絕對值取銳角）。
+\item 點到平面 $\operatorname{dist}=\dfrac{|ax_0+by_0+cz_0+d|}{\sqrt{a^2+b^2+c^2}}$（$d$ 不進分母）。
+\end{itemize}
+\textbf{直線}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 參數式 $x=x_1+at,\ y=y_1+bt,\ z=z_1+ct$；比例式 $\dfrac{x-x_1}{a}=\dfrac{y-y_1}{b}=\dfrac{z-z_1}{c}$，\textbf{分母 $(a,b,c)$ ＝方向向量 $\vec d$}（某分量為 0 時改寫）。
+\item 線面關係：$\vec d\cdot\vec n\ne0\Rightarrow$ 交一點；$\vec d\cdot\vec n=0$ 且定點不在面上 $\Rightarrow$ 平行；$\vec d\cdot\vec n=0$ 且定點在面上 $\Rightarrow$ 線在面上。
+\item 點到直線 $\operatorname{dist}=\dfrac{|\vec{AP_0}\times\vec d|}{|\vec d|}$。
+\end{itemize}
+\textbf{兩直線}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 平行（$\vec d_1\parallel\vec d_2$）／相交（不平行、共面）／\textbf{歪斜}（不平行、不共面）。
+\item 共面判準：三重積 $(\vec d_1\times\vec d_2)\cdot\vec{A_1A_2}=0\iff$ 共面。
+\item 平行線距離＝點到直線公式；歪斜線距離 $\operatorname{dist}=\dfrac{|(\vec d_1\times\vec d_2)\cdot\vec{A_1A_2}|}{|\vec d_1\times\vec d_2|}$。
+\end{itemize}
+\textbf{一句話統整：}平面用\textbf{法向量（垂直）}、直線用\textbf{方向向量（沿著）}；夾角／垂直用\textbf{內積}，法向量／公垂方向／面積用\textbf{外積}，距離全是\textbf{正射影}。
+\end{補充框}
+
+\end{document}

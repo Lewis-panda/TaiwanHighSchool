@@ -1,0 +1,293 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\Huge\bfseries 數A3-1 三角函數}\\[3pt]
+{\sffamily\large 普通高中 數學（數學A・第三冊）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+高一的三角比，是把一個角放進直角三角形或單位圓，量出一個固定的\textbf{比值}：一個角對應一個值。本章把這件事升級成\textbf{函數（function）}——一旦把角度看成可以連續變動的變數，$\sin$、$\cos$、$\tan$ 就成為真正的函數，有圖形、有定義域、有值域，並且會週期性地重複。
+
+三角函數是描述一切\textbf{週期現象}（聲波、交流電、潮汐、單擺、光波）的共同語言。本章先換上一套更自然的角度單位（\textbf{弧度}），再畫出三條基本圖形，接著學會把圖形任意拉高、壓窄、平移（一般式 $y=a\sin(bx+c)+d$），最後處理兩件「角與角之間」的代數運算：\textbf{和差角／倍角／半角公式}，以及\textbf{正餘弦的疊合}。
+
+\medskip
+本章主線：
+
+\begin{center}
+弧度量 $\rightarrow$ 三角函數圖形 $\rightarrow$ 一般式四種變換 $\rightarrow$ 和差角／倍角／半角公式 $\rightarrow$ 正餘弦疊合
+\end{center}
+
+\section*{\sffamily 1-1\quad 弧度量}
+
+\subsection*{\sffamily A.\ 為什麼要換單位}
+
+把一圈分成 $360$ 等份、每份叫 $1^\circ$，這個 $360$ 是古巴比倫人傳下來的習慣（與一年約 $360$ 天、$360$ 有很多因數有關），它跟圓本身的幾何\textbf{沒有任何必然關係}。數學上更自然的做法是\textbf{用弧長本身來量角}：讓角的大小直接等於它在單位圓上截出的弧長。這套單位叫\textbf{弧度（radian）}。
+
+在半徑為 $r$ 的圓上，一個圓心角所對的弧長為 $s$，則這個角的弧度為
+$$\boxed{\;\theta=\frac{s}{r}\;(\text{rad})\;}$$
+也就是「弧長是半徑的幾倍」。當弧長 $s$ 恰等於半徑 $r$ 時，$\theta=1$ 弧度。因為整個圓周長 $s=2\pi r$，繞一整圈對應的弧度是
+$$\theta_{\text{一圈}}=\frac{2\pi r}{r}=2\pi\ (\text{rad}).$$
+
+\fig{d31-radian-sector}{0.7}{圖 1-1：弧度以「弧長 $s$ 是半徑 $r$ 的幾倍」來量角，$\theta=s/r$；半徑 $r$、圓心角 $\theta$ 的扇形，弧長 $s=r\theta$。}
+
+一整圈是 $360^\circ$，也是 $2\pi$ 弧度，故
+$$\boxed{\;180^\circ=\pi\ \text{rad}\;}$$
+由此得換算規則：
+$$1^\circ=\frac{\pi}{180}\ \text{rad},\qquad 1\ \text{rad}=\frac{180^\circ}{\pi}\approx 57.3^\circ.$$
+「度 $\rightarrow$ 弧度」乘 $\dfrac{\pi}{180}$；「弧度 $\rightarrow$ 度」乘 $\dfrac{180}{\pi}$。
+
+常用特殊角先記熟（之後全章都用弧度）：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{c|cccccccc}
+\hline
+度 & $0^\circ$ & $30^\circ$ & $45^\circ$ & $60^\circ$ & $90^\circ$ & $180^\circ$ & $270^\circ$ & $360^\circ$ \\
+\hline
+弧度 & $0$ & $\dfrac{\pi}{6}$ & $\dfrac{\pi}{4}$ & $\dfrac{\pi}{3}$ & $\dfrac{\pi}{2}$ & $\pi$ & $\dfrac{3\pi}{2}$ & $2\pi$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{補充框}{弧度到底是什麼？為什麼非用它不可？}
+弧度就是\textbf{用弧長本身來量角}：一個角有多大，就看它在單位圓上切出的弧有多長，亦即「角」與「長度」共用同一把尺。
+
+為什麼用「弧長 $\div$ 半徑」這個比？因為這個比值\textbf{與圓的大小無關}：同一個角，畫大圓時弧長也大、半徑也大，比值不變。所以 $\dfrac{s}{r}$ 是「角」最乾淨的數字代表。
+
+\textbf{用它的好處是公式甩掉換算因子：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{弧長}：弧度下 $s=r\theta$，乾淨俐落；若用度數則須寫成 $s=\dfrac{\pi}{180}r\theta_{\deg}$，永遠拖著一個 $\dfrac{\pi}{180}$。
+\item \textbf{扇形面積}：弧度下 $A=\dfrac12 r^2\theta$；度數下要寫成 $A=\dfrac{\pi}{360}r^2\theta_{\deg}$。
+\item \textbf{微積分（高三／大學）}：只有在弧度下才成立 $\displaystyle\lim_{x\to0}\frac{\sin x}{x}=1$ 與 $\dfrac{d}{dx}\sin x=\cos x$。若 $x$ 用度數，微分 $\sin$ 會多出一個 $\dfrac{\pi}{180}$ 係數。這是數學界統一改用弧度的根本原因。
+\end{itemize}
+
+\textbf{注意：}「弧度一定要有 $\pi$」並不正確。$\pi$ 只是因為「整圈是 $2\pi$」才常出現；$1$ 弧度、$2$ 弧度都是合法的弧度。弧度\textbf{不是長度}，而是「沒有單位」的純數（弧長 $\div$ 半徑，單位互相消掉）；寫 rad 只是提醒「這是用弧度量的角」。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 弧長與扇形面積}
+
+把定義 $\theta=\dfrac{s}{r}$ 反解出弧長，再用「扇形是整圓的一部分」算面積。半徑 $r$、圓心角 $\theta$（\textbf{弧度}）的扇形：
+$$\boxed{\;s=r\theta\;}\qquad\boxed{\;A=\frac{1}{2}r^2\theta=\frac{1}{2}rs\;}$$
+\textbf{面積公式的由來}：扇形佔整圓的比例是 $\dfrac{\theta}{2\pi}$，整圓面積 $\pi r^2$，故
+$$A=\frac{\theta}{2\pi}\cdot\pi r^2=\frac{1}{2}r^2\theta.$$
+再把 $s=r\theta$ 代入，得另一個好用的形式 $A=\dfrac{1}{2}rs$（與三角形「$\dfrac12\times$ 底 $\times$ 高」同形，好記）。
+
+\textbf{注意：}這兩條公式裡的 $\theta$ \textbf{一定要用弧度}，不能代入度數。若題目給度數，先換成弧度再代；用度數代 $s=r\theta$ 會整整差一個 $\dfrac{\pi}{180}$ 倍。另外，$A=\dfrac12 r^2\theta$ 的 $r$ 是\textbf{平方}，不要漏掉平方寫成 $\dfrac12 r\theta$。
+
+\section*{\sffamily 1-2\quad 三角函數的圖形}
+
+\subsection*{\sffamily A.\ 從「三角比」到「三角函數」}
+
+讓角 $x$ 連續地變動（用弧度），每給一個 $x$ 就有一個 $\sin x$，這就構成一個函數 $y=\sin x$。把 $(x,\,\sin x)$ 一點一點描出來，就得到圖形。
+
+理解圖形最好的工具是\textbf{單位圓}：一個動點以等速沿單位圓逆時針運動，轉過的角是 $x$，這個點的\textbf{縱坐標就是 $\sin x$、橫坐標就是 $\cos x$}。把縱坐標隨 $x$ 攤平展開，波形就出現了。
+
+\fig{d31-trig-graphs}{0.92}{圖 1-2：$y=\sin x$、$y=\cos x$、$y=\tan x$ 的圖形。$\sin$、$\cos$ 為週期 $2\pi$ 的波形且值域 $[-1,1]$；$\tan$ 週期 $\pi$，並在 $x=\frac{\pi}{2}+k\pi$ 處有鉛直漸近線。}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{c|cccc}
+\hline
+函數 & 定義域 & 值域 & 週期 & 奇偶 \\
+\hline
+$y=\sin x$ & $\mathbb{R}$ & $[-1,\,1]$ & $2\pi$ & 奇函數（對原點對稱） \\
+$y=\cos x$ & $\mathbb{R}$ & $[-1,\,1]$ & $2\pi$ & 偶函數（對 $y$ 軸對稱） \\
+$y=\tan x$ & $x\neq\dfrac{\pi}{2}+k\pi$ & $\mathbb{R}$ & $\pi$ & 奇函數 \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{週期（period）}指使 $f(x+T)=f(x)$ 對所有 $x$ 成立的最小正數 $T$。$\sin$、$\cos$ 因為「轉一整圈 $2\pi$ 回到原狀」，所以週期為 $2\pi$；$\tan x=\dfrac{\sin x}{\cos x}$ 因為「轉半圈 $\pi$ 時分子分母同時變號、比值不變」，所以週期只有 $\pi$。
+
+\begin{補充框}{$\sin$、$\cos$ 的圖形為什麼是波浪形？}
+讓一個點以\textbf{等速沿單位圓逆時針旋轉}，轉過的角是 $x$，圓上的點是 $(\cos x,\,\sin x)$。盯著它的\textbf{縱坐標（高度）}：
+
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{c|ccccc}
+\hline
+轉角 $x$ & $0$ & $\dfrac{\pi}{2}$ & $\pi$ & $\dfrac{3\pi}{2}$ & $2\pi$ \\
+\hline
+高度 $\sin x$ & $0$ & $1$（最高）& $0$ & $-1$（最低）& $0$ \\
+\hline
+\end{tabular}
+\end{center}
+
+點從最右邊 $(1,0)$ 出發，往上轉時高度由 $0$ 升到 $1$（正上方），再降回 $0$（正左方），再降到 $-1$（正下方），又回到 $0$。把這個「上升 $\rightarrow$ 下降 $\rightarrow$ 谷底 $\rightarrow$ 回升」描成圖，就是一個完整的波。因為點在單位圓上，高度永遠夾在 $-1$ 與 $1$ 之間——這是\textbf{值域 $[-1,1]$ 的來源}；轉一整圈 $2\pi$ 後完全回到原狀，下一圈一模一樣重複——這是\textbf{週期 $2\pi$ 的來源}。
+
+\textbf{$\cos$ 為什麼像 $\sin$ 往左推？}$\cos x$ 是同一個點的\textbf{橫坐標}。出發點 $(1,0)$ 的橫坐標是 $1$（最大），所以 $\cos$ 從最高點出發。當 $\sin$ 還在 $0$ 往上爬時，$\cos$ 已在頂點——$\cos$ 的進度永遠領先 $\sin$ 四分之一圈（$\dfrac{\pi}{2}$），寫成式子就是
+$$\cos x=\sin\!\left(x+\frac{\pi}{2}\right),$$
+即「$\cos$ 是 $\sin$ 向左平移 $\dfrac{\pi}{2}$」。兩條圖形長得一樣，只差一個水平位移。
+\end{補充框}
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item $\tan$ 的週期是 $\pi$，不是 $2\pi$；它每隔 $\pi$ 就重複一次。
+\item $\tan x$ 在 $x=\dfrac{\pi}{2},\dfrac{3\pi}{2},\dots$（即 $\cos x=0$）處\textbf{沒有定義}，圖形在那裡是鉛直漸近線，不是連續地接起來。
+\item 奇函數 $\sin(-x)=-\sin x$、偶函數 $\cos(-x)=\cos x$ 不要混淆：$\sin$ 對原點對稱，$\cos$ 對 $y$ 軸對稱。
+\end{itemize}
+
+\subsection*{\sffamily B.\ 一般式 $y=a\sin(bx+c)+d$：四種變換}
+
+實際的週期現象不會剛好是「振幅 $1$、週期 $2\pi$、不偏移」的標準正弦，因此需要能\textbf{自由調整}振幅、快慢、左右位置、上下高度。這四件事分別由 $a,\,b,\,c,\,d$ 控制。把式子整理成 $y=a\sin\!\big(b(x+\tfrac{c}{b})\big)+d$ 來讀（以下取 $a>0,\,b>0$）：
+$$\boxed{\;
+\begin{aligned}
+\textbf{振幅（amplitude）}\ &|a|: && \text{值域變成 } [\,d-|a|,\ d+|a|\,]\text{，即波的高度} \\
+\textbf{週期（period）}\ &T=\frac{2\pi}{b}: && b\,\text{越大波越密（橫向壓縮）} \\
+\textbf{相位移（phase shift）}\ &-\frac{c}{b}: && \text{整條圖形左右平移的量} \\
+\textbf{鉛直平移（vertical shift）}\ &d: && \text{整條圖形上下平移，波的中線為 } y=d
+\end{aligned}
+\;}$$
+
+\fig{d31-transforms}{0.92}{圖 1-3：四種變換各以 $y=\sin x$ 為基準。左上 $y=2\sin x$（振幅變 $2$）；右上 $y=\sin 2x$（週期變 $\pi$，波變密）；左下 $y=\sin(x-\frac{\pi}{2})$（向右移 $\frac{\pi}{2}$）；右下 $y=\sin x+1$（向上移 $1$，中線升到 $y=1$）。}
+
+逐一拆解（皆以 $y=\sin x$ 為基準）：
+
+\begin{enumerate}\setlength{\itemsep}{2pt}
+\item \textbf{振幅 $|a|$}：把整條波在鉛直方向拉高 $|a|$ 倍，值域由 $[-1,1]$ 變成 $[-|a|,|a|]$；$a$ 為負則上下翻轉。
+\item \textbf{週期 $T=\dfrac{2\pi}{b}$}：$b$ 控制「跑多快」。$b=2$ 時跑兩倍快，波長壓縮一半，週期變成 $\pi$。
+\item \textbf{相位移 $-\dfrac{c}{b}$}：整條波左右平移。例如 $y=\sin\!\big(x-\tfrac{\pi}{2}\big)$ 中 $c=-\dfrac{\pi}{2}$、$b=1$，相位移 $-\dfrac{c}{b}=\dfrac{\pi}{2}$，即向\textbf{右}移 $\dfrac{\pi}{2}$。
+\item \textbf{鉛直平移 $d$}：整條波上下平移，波的中線從 $y=0$ 移到 $y=d$。
+\end{enumerate}
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{相位移要先把 $b$ 提到括號外。}$y=\sin(2x-\pi)$ 的相位移\textbf{不是} $\pi$；要先寫成 $\sin\!\big(2(x-\tfrac{\pi}{2})\big)$，相位移才是 $+\dfrac{\pi}{2}$（向右）。直接拿 $c=-\pi$ 當平移量是最常見的錯。
+\item 週期是 $\dfrac{2\pi}{b}$，$b$ 在分母：$b$ 越大週期越\textbf{小}（波越密），不要記反。
+\item $y=a\cos(bx+c)+d$ 的四個參數意義完全相同；$\cos$ 與 $\sin$ 只差一個 $\dfrac{\pi}{2}$ 的相位（$\cos x=\sin\!\big(x+\tfrac{\pi}{2}\big)$）。
+\end{itemize}
+
+\begin{補充框}{由條件反推函數式：四步定四參數}
+許多實際問題（如潮汐、交流電）會給「最高值、最低值、週期、某個已知時刻」，要你寫出對應的 $y=a\sin\!\big(b(t-h)\big)+d$。固定流程是「\textbf{四步定四參數}」：
+\begin{enumerate}\setlength{\itemsep}{1pt}
+\item 看\textbf{最高值與最低值}：中線 $d=\dfrac{\text{最高}+\text{最低}}{2}$，振幅 $a=\dfrac{\text{最高}-\text{最低}}{2}$。
+\item 看\textbf{週期}：由 $T=\dfrac{2\pi}{b}$ 解出 $b$。
+\item 用一個\textbf{已知的特殊時刻}（最高、最低或過中線的瞬間）定出相位（平移量 $h$）。
+\end{enumerate}
+$\sin$ 或 $\cos$ 都可以用，只是相位算法不同；若已知的是「最高點的時刻」，用 $\cos$（在 $0$ 達最高）有時更省事。
+\end{補充框}
+
+\section*{\sffamily 1-3\quad 和差角與倍角半角公式}
+
+\subsection*{\sffamily A.\ 和差角公式}
+
+$\sin(A+B)$ \textbf{不等於} $\sin A+\sin B$（這是要先破除的錯覺）。要把「兩個角的和」拆回「各自角的三角函數」，就需要\textbf{和差角公式}。它是三角學從「查表」邁向「代數運算」的關鍵工具。
+$$\boxed{\;\sin(A\pm B)=\sin A\cos B\pm\cos A\sin B\;}$$
+$$\boxed{\;\cos(A\pm B)=\cos A\cos B\mp\sin A\sin B\;}$$
+$$\boxed{\;\tan(A\pm B)=\frac{\tan A\pm\tan B}{1\mp\tan A\tan B}\;}$$
+\textbf{符號對應規則}（極易記錯，務必盯緊）：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item $\sin$ 展開後\textbf{符號相同}（$+$ 配 $+$、$-$ 配 $-$）。
+\item $\cos$ 展開後\textbf{符號相反}（外面 $+$，裡面變 $-$）。
+\item $\tan$ 的分母符號與分子相反（外面 $+$，分母是 $-$）。
+\end{itemize}
+
+\begin{延伸框}{這些公式怎麼推出來？需要硬背嗎？}
+其實只要\textbf{推出一條} $\cos(A-B)$，其餘全部都能「免費」生出來；理解推法後就不容易記錯符號，甚至忘了也能當場重推。
+
+\textbf{第一步——用單位圓兩點距離推 $\cos(A-B)$。}在單位圓上取 $P=(\cos A,\sin A)$、$Q=(\cos B,\sin B)$，兩者與圓心夾角分別是 $A$、$B$，故 $P$、$Q$ 之間夾角為 $A-B$。用兩種方式算 $\overline{PQ}^2$：
+
+坐標距離公式（並用 $\cos^2+\sin^2=1$）：
+$$\overline{PQ}^2=(\cos A-\cos B)^2+(\sin A-\sin B)^2=2-2(\cos A\cos B+\sin A\sin B).$$
+餘弦定理（兩邊皆為半徑 $1$、夾角 $A-B$）：
+$$\overline{PQ}^2=1^2+1^2-2\cos(A-B)=2-2\cos(A-B).$$
+兩式相等，消去 $2-2(\cdots)$：
+$$\cos(A-B)=\cos A\cos B+\sin A\sin B.$$
+
+\textbf{第二步——其餘公式全部衍生。}把 $B$ 換成 $-B$，用 $\cos(-B)=\cos B$、$\sin(-B)=-\sin B$，得 $\cos(A+B)=\cos A\cos B-\sin A\sin B$（「$\cos$ 反號」的負號正是來自 $\sin(-B)=-\sin B$）。再用餘角關係 $\sin\theta=\cos\!\big(\tfrac{\pi}{2}-\theta\big)$ 即可由 $\cos(A-B)$ 導出 $\sin(A\pm B)$；$\tan(A\pm B)$ 則由 $\dfrac{\sin}{\cos}$ 上下同除以 $\cos A\cos B$ 得到。所以只需真正記住 $\sin(A\pm B)$、$\cos(A\pm B)$ 兩條。
+
+\textbf{注意：}$\sin(A+B)\neq\sin A+\sin B$ 是最致命的錯。代 $A=B=\dfrac{\pi}{2}$ 檢驗：左 $\sin\pi=0$，右 $1+1=2$，相差甚大。
+\end{延伸框}
+
+\subsection*{\sffamily B.\ 倍角公式}
+
+把和角公式中令 $B=A$，就「免費」得到\textbf{倍角公式（double-angle formula）}——它不是新公式，而是和角的特例：
+$$\boxed{\;\sin 2A=2\sin A\cos A\;}$$
+$$\boxed{\;\cos 2A=\cos^2 A-\sin^2 A=1-2\sin^2 A=2\cos^2 A-1\;}$$
+$$\boxed{\;\tan 2A=\frac{2\tan A}{1-\tan^2 A}\;}$$
+$\cos 2A$ 的\textbf{三種寫法}都常用：要把式子只留 $\sin$ 就用 $1-2\sin^2A$，只留 $\cos$ 就用 $2\cos^2A-1$（後者是半角公式的跳板）。
+
+\subsection*{\sffamily C.\ 半角公式}
+
+把 $\cos2A=1-2\sin^2A$ 與 $\cos2A=2\cos^2A-1$ 反解出 $\sin^2A$、$\cos^2A$，再把角 $A$ 換成 $\dfrac{\theta}{2}$（即令 $2A=\theta$），就得到\textbf{半角公式（half-angle formula）}：
+$$\boxed{\;\sin^2\frac{\theta}{2}=\frac{1-\cos\theta}{2}\;}\qquad\boxed{\;\cos^2\frac{\theta}{2}=\frac{1+\cos\theta}{2}\;}$$
+兩者相除得
+$$\boxed{\;\tan^2\frac{\theta}{2}=\frac{1-\cos\theta}{1+\cos\theta}\;}$$
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 半角公式裡用的是 $\cos\theta$（\textbf{整角}的餘弦），不是 $\cos\dfrac{\theta}{2}$；代錯角是最常見的錯。
+\item 開根號取 $\sin\dfrac{\theta}{2}$、$\cos\dfrac{\theta}{2}$ 時\textbf{一定要判正負}，符號由 $\dfrac{\theta}{2}$ 落在哪個象限決定，不能無腦取正。例如 $\theta=300^\circ$ 時 $\dfrac{\theta}{2}=150^\circ$ 在第二象限，$\sin\dfrac{\theta}{2}>0$、$\cos\dfrac{\theta}{2}<0$。
+\item 「降冪」用途：$\sin^2A=\dfrac{1-\cos2A}{2}$ 是把「平方」換成「一次」的標準手法，化簡與積分常用。
+\end{itemize}
+
+\begin{補充框}{一條推導鏈：和角 $\rightarrow$ 倍角 $\rightarrow$ 半角}
+這些公式雖多，但\textbf{結構是一條鏈}：
+$$\text{和角公式}\ \xrightarrow{\ \text{令 } B=A\ }\ \text{倍角公式}\ \xrightarrow{\ \text{反解 }+\text{ 換角}\ }\ \text{半角公式}.$$
+真正需要記住的核心只有 $\sin(A\pm B)$、$\cos(A\pm B)$ 兩條，再加「$\cos2A$ 的三種寫法」；其餘都能由這條鏈現場推出。
+\end{補充框}
+
+\section*{\sffamily 1-4\quad 正餘弦的疊合}
+
+\subsection*{\sffamily A.\ 把 $a\sin\theta+b\cos\theta$ 合成一個波}
+
+物理上常遇到「同一個頻率」的正弦與餘弦相加，例如 $3\sin\theta+4\cos\theta$。它們頻率相同（都隨同一個 $\theta$ 變動），疊起來\textbf{仍是同頻率的正弦波}，只是振幅變大、相位被推移。這件事叫\textbf{正餘弦的疊合（superposition）}。對任意實數 $a,\,b$（不全為 $0$），
+$$\boxed{\;a\sin\theta+b\cos\theta=R\sin(\theta+\varphi)\;}$$
+其中\textbf{振幅} $R$ 與\textbf{相位角} $\varphi$ 為
+$$R=\sqrt{a^2+b^2}\ (>0),\qquad \cos\varphi=\frac{a}{R},\quad\sin\varphi=\frac{b}{R}\ \ \left(\text{即}\ \tan\varphi=\frac{b}{a}\right).$$
+
+\fig{d31-superposition}{0.78}{圖 1-4：兩個同頻的 $\sin$ 與 $\cos$ 相加，合成後仍是同頻率的正弦波，振幅變為 $R=\sqrt{a^2+b^2}$、相位移為 $\varphi$。}
+
+\textbf{推導}：把目標 $R\sin(\theta+\varphi)$ 用和角公式展開，再與原式比對係數：
+$$R\sin(\theta+\varphi)=(R\cos\varphi)\sin\theta+(R\sin\varphi)\cos\theta.$$
+要它恆等於 $a\sin\theta+b\cos\theta$，比對 $\sin\theta$、$\cos\theta$ 的係數：
+$$R\cos\varphi=a,\qquad R\sin\varphi=b.$$
+兩式平方相加：$R^2(\cos^2\varphi+\sin^2\varphi)=a^2+b^2$，故 $R=\sqrt{a^2+b^2}$；相除得 $\tan\varphi=\dfrac{b}{a}$。
+
+\begin{補充框}{為什麼剛好合成單一正弦波？$R=\sqrt{a^2+b^2}$ 是什麼？}
+能合成的根本原因是「\textbf{$\sin\theta$ 與 $\cos\theta$ 同頻率}」（同一個 $\theta$，繞圈速度一樣）。兩個同頻波相加，就像兩個同步擺動的東西疊在一起，合起來仍是同一個節奏，只是擺幅與起始相位變了。
+
+最直觀的理解是\textbf{向量觀點}。因為 $\sin$ 與 $\cos$ 在相位上\textbf{差 $90^\circ$}（回想單位圓的縱、橫坐標互相垂直），可把「$\sin$ 方向出力 $a$、$\cos$ 方向出力 $b$」看成平面上兩個互相垂直的向量 $(a,0)$ 與 $(0,b)$，相加得合向量 $(a,b)$：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 合向量的\textbf{長度} $\sqrt{a^2+b^2}$，正是合成後的振幅 $R$。
+\item 合向量的\textbf{方向角} $\varphi$（$\cos\varphi=\dfrac{a}{R}$、$\sin\varphi=\dfrac{b}{R}$），正是相位 $\varphi$。
+\end{itemize}
+所以 $R=\sqrt{a^2+b^2}$ 不是巧合，它就是「向量 $(a,b)$ 的長度」，由畢氏定理而來。整個疊合，幾何上就是把兩個垂直分量合成一個總向量，與力的合成、速度的合成是同一回事。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 疊合的用途：求極值}
+
+合成成單一正弦後，\textbf{最大最小值一眼可知}：因 $\sin$ 介於 $[-1,1]$，$R\sin(\theta+\varphi)$ 的範圍就是 $[-R,\,R]$。故
+$$a\sin\theta+b\cos\theta\ \text{的最大值}=\sqrt{a^2+b^2},\qquad\text{最小值}=-\sqrt{a^2+b^2}.$$
+求出 $R$ 後，再由 $\sin(\theta+\varphi)=1$ 或 $-1$ 即可回頭找出達到極值的 $\theta$；同理也能把方程式 $a\sin\theta+b\cos\theta=$（常數）化成單一的 $\sin(\theta+\varphi)=$（常數）來解。
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 求 $\varphi$ 時\textbf{只用 $\tan\varphi=\dfrac{b}{a}$ 會掉象限}。例如 $a=-1,b=1$ 與 $a=1,b=-1$ 的 $\tan\varphi$ 同號，但 $\varphi$ 相差 $\pi$。一定要回頭看 $\cos\varphi=\dfrac{a}{R}$、$\sin\varphi=\dfrac{b}{R}$ 的正負來定象限（即看合向量 $(a,b)$ 落在第幾象限）。
+\item 疊合只對「\textbf{同頻率}」的正餘弦成立。$\sin\theta+\cos2\theta$（頻率不同）\textbf{不能}合成單一正弦波。
+\item $R$ 取正：振幅是長度，不會是負的。
+\end{itemize}
+
+\begin{延伸框}{疊合的物理意義：同頻波的合成}
+這正是物理裡「同頻率波的疊合」。兩個頻率相同、相位差 $90^\circ$ 的簡諧振動相加，結果仍是同頻率的簡諧振動，振幅 $\sqrt{a^2+b^2}$。交流電路（電阻與電容／電感的電壓相位差 $90^\circ$，合成阻抗 $\sqrt{R^2+X^2}$）、波的干涉、簡諧運動的合成都用到它。所以這條數學公式背後是一個很實在的物理現象：兩個同頻波相加，還是同頻波，只是振幅與相位變了。
+\end{延伸框}
+
+\section*{\sffamily 1-5\quad 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{弧度}：$\theta=\dfrac{s}{r}$；$180^\circ=\pi$ rad；弧長 $s=r\theta$、扇形面積 $A=\dfrac12 r^2\theta=\dfrac12 rs$（角一律用弧度）。
+\item \textbf{三圖形}：$\sin x$、$\cos x$ 定義域 $\mathbb{R}$、值域 $[-1,1]$、週期 $2\pi$（$\sin$ 奇、$\cos$ 偶）；$\tan x$ 週期 $\pi$、在 $\dfrac{\pi}{2}+k\pi$ 有漸近線、值域 $\mathbb{R}$。
+\item \textbf{一般式 $y=a\sin(bx+c)+d$}：振幅 $|a|$、週期 $\dfrac{2\pi}{b}$、相位移 $-\dfrac{c}{b}$（\textbf{先提 $b$}）、鉛直平移 $d$、值域 $[\,d-|a|,\,d+|a|\,]$。
+\item \textbf{和差角}：$\sin(A\pm B)=\sin A\cos B\pm\cos A\sin B$；$\cos(A\pm B)=\cos A\cos B\mp\sin A\sin B$；$\tan(A\pm B)=\dfrac{\tan A\pm\tan B}{1\mp\tan A\tan B}$。
+\item \textbf{倍角}：$\sin2A=2\sin A\cos A$；$\cos2A=\cos^2A-\sin^2A=1-2\sin^2A=2\cos^2A-1$；$\tan2A=\dfrac{2\tan A}{1-\tan^2A}$。
+\item \textbf{半角}：$\sin^2\dfrac{\theta}{2}=\dfrac{1-\cos\theta}{2}$、$\cos^2\dfrac{\theta}{2}=\dfrac{1+\cos\theta}{2}$（開根號看 $\dfrac{\theta}{2}$ 象限定正負）。
+\item \textbf{疊合}：$a\sin\theta+b\cos\theta=R\sin(\theta+\varphi)$，$R=\sqrt{a^2+b^2}$、$\cos\varphi=\dfrac{a}{R}$、$\sin\varphi=\dfrac{b}{R}$；值域 $[-R,\,R]$，僅限同頻率。
+\end{itemize}
+\textbf{核心串連}：和角 $\rightarrow$ 倍角 $\rightarrow$ 半角是一條推導鏈，真正要背的只有 $\sin(A\pm B)$、$\cos(A\pm B)$ 與 $\cos2A$ 的三種寫法。
+\end{補充框}
+
+\end{document}

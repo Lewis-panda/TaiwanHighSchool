@@ -1,0 +1,256 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\Huge\bfseries 數A3-3 平面向量}\\[3pt]
+{\sffamily\large 普通高中 數學（數學A・第三冊）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+有些量光講「多少」就夠了，例如質量 5 公斤、溫度 25 度；但有些量光講大小還不夠，還得說方向，例如往東走 3 公里、一個 10 牛頓的力「往哪推」。本章把這種\textbf{同時具有大小與方向}的量抽象成一個數學物件——\textbf{向量（vector）}，並建立一整套運算。
+
+主線是這樣的：先學向量怎麼畫、怎麼用坐標寫、怎麼加減與伸縮；再學一種把兩個向量「乘」成一個數的運算——\textbf{內積（inner product，又稱 dot product）}，它一手包辦了「夾角」「垂直」「投影」三件事；最後用\textbf{二階行列式（determinant）}把「面積」與「平行」也納進來，並導出一條應用極廣的不等式——\textbf{柯西不等式（Cauchy–Schwarz inequality）}。向量是把幾何「代數化」的工具：許多原本要用坐標硬算的距離、垂直、點到直線距離，到這裡都會被向量重寫一遍，變得又短又有結構。
+
+\medskip
+本章主線：
+
+\begin{center}
+向量與坐標 $\rightarrow$ 加減與線性組合 $\rightarrow$ 內積（夾角、垂直、平行）$\rightarrow$ 正射影 $\rightarrow$ 行列式與面積 $\rightarrow$ 柯西不等式
+\end{center}
+
+\section*{\sffamily 3-1\quad 向量的概念與運算}
+
+\subsection*{\sffamily A.\ 什麼是向量}
+
+只有大小的量稱為\textbf{純量（scalar）}，例如質量、溫度。\textbf{同時具有大小與方向}的量稱為\textbf{向量（vector）}。把向量畫出來，就是一支\textbf{有向線段}：箭尾是起點、箭頭是終點，箭的長度代表大小、箭的指向代表方向。
+
+記法上，從 $A$ 指到 $B$ 的向量寫成 $\overrightarrow{AB}$；單獨命名時寫成 $\vec a$、$\vec b$。向量 $\vec a$ 的\textbf{大小（長度、模）}記為 $|\vec a|$。
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{相等}：兩向量\textbf{長度相等且方向相同}，就視為\textbf{同一個向量}，與它畫在平面上的哪個位置無關。也就是說，$\overrightarrow{AB}=\overrightarrow{CD}$ 不要求 $A=C$，只要兩支箭「等長、同向」即可。這稱為向量的\textbf{自由性}。
+\item \textbf{零向量} $\vec 0$：長度為 $0$ 的向量，方向不定（視為任意方向）。
+\item \textbf{反向量} $-\vec a$：與 $\vec a$ \textbf{等長、方向相反}的向量。它不是「比 $\vec a$ 小的向量」。
+\end{itemize}
+
+\textbf{注意：}向量相等\textbf{不是}「起點終點都一樣」。向量可以自由平移，只要等長同向，畫在哪裡都是同一個向量。
+
+\subsection*{\sffamily B.\ 向量的坐標表示}
+
+鋪上坐標格子後，向量就能用數來算。把向量 $\vec a$ 平移到起點落在原點 $O$，它的終點坐標 $(a_1,a_2)$ 就拿來當這個向量的\textbf{分量（components）}，記 $\vec a=(a_1,a_2)$。
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 由 $A(x_1,y_1)$ 指到 $B(x_2,y_2)$ 的向量是「\textbf{終點減起點}」：
+$$\boxed{\;\overrightarrow{AB}=(x_2-x_1,\ y_2-y_1)\;}$$
+\item 向量長度由畢氏定理給出：
+$$\boxed{\;|\vec a|=\sqrt{a_1^2+a_2^2}\;}$$
+\end{itemize}
+
+\textbf{注意：}$\overrightarrow{AB}$ 是「終點減起點」（$B-A$），不是「起點減終點」。可用「箭頭指向誰，就被誰減」記：箭頭在 $B$，所以 $B$ 在前面。寫反了方向就整個顛倒（$\overrightarrow{BA}$ 與 $\overrightarrow{AB}$ 等長、反向）。
+
+\begin{補充框}{先釐清：向量 $(3,2)$ 和坐標點 $(3,2)$ 寫法一樣，差在哪？}
+在解析幾何裡 $(3,2)$ 是平面上一個「點」；這裡向量也寫成 $\vec a=(3,2)$。寫法一樣，但它們是不同的東西。
+
+\textbf{點是「位置」，向量是「位移（變化）」。} 點 $(3,2)$ 回答「在哪裡」，它被原點釘死、不能搬；向量 $(3,2)$ 回答「往哪個方向、走多遠」，它是「往右 3、往上 2」這個\textbf{移動}，從平面上任何地方出發都算同一個向量。
+
+\textbf{兩者怎麼搭起橋樑：}一個點 $P(3,2)$ 對應一個從原點指向它的向量 $\overrightarrow{OP}=(3,2)$，稱為 $P$ 的\textbf{位置向量（position vector）}。這就是為什麼寫法一樣——當向量起點固定在原點時，終點坐標恰好就是分量。運算上也有區別：\textbf{點 $+$ 向量 $=$ 點}（把位移貼到位置上得到新位置）、\textbf{向量 $+$ 向量 $=$ 向量}（兩段位移接起來還是位移），但\textbf{點 $+$ 點}沒有意義。
+
+\textbf{注意：}同一組數字 $(3,2)$ 到底是點還是向量，要看上下文——講位置時是點，講移動／力／速度時是向量。
+\end{補充框}
+
+\subsection*{\sffamily C.\ 加法、減法與係數積}
+
+向量的加減算起來只是「分量各自相加減」，但幾何上有清楚的畫法。設 $\vec a=(a_1,a_2)$、$\vec b=(b_1,b_2)$，$k$ 為實數：
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{加法}（分量相加）：$\vec a+\vec b=(a_1+b_1,\ a_2+b_2)$。幾何上有兩種等價畫法：\textbf{三角形法}（把 $\vec b$ 的起點接到 $\vec a$ 的終點，$\vec a+\vec b$ 由 $\vec a$ 起點指向 $\vec b$ 終點）、\textbf{平行四邊形法}（$\vec a$、$\vec b$ 共起點，$\vec a+\vec b$ 是平行四邊形的對角線）。兩種畫法給的是同一個結果。
+\item \textbf{減法}：$\vec a-\vec b=\vec a+(-\vec b)=(a_1-b_1,\ a_2-b_2)$。幾何上，$\vec a-\vec b$ 是「\textbf{由 $\vec b$ 的尖端指向 $\vec a$ 的尖端}」的那支箭。
+\item \textbf{係數積（scalar multiple）}：$k\vec a=(ka_1,\ ka_2)$。長度 $|k\vec a|=|k|\,|\vec a|$；$k>0$ 同向、$k<0$ 反向、$k=0$ 得 $\vec 0$。
+\end{itemize}
+
+\textbf{注意：}減法 $\vec a-\vec b$ 最容易畫反方向，口訣是「\textbf{指向被減的那一個}」，即 $\vec a-\vec b$ 指向 $\vec a$。
+
+\fig{d33-vector-ops}{0.96}{圖 3-1：左——加法（三角形法／平行四邊形法），$\vec a+\vec b$ 是平行四邊形的對角線；中——減法 $\vec a-\vec b$ 由 $\vec b$ 的尖端指向 $\vec a$ 的尖端；右——係數積 $k\vec a$ 沿 $\vec a$ 方向縮放，負號則反向。}
+
+\subsection*{\sffamily D.\ 單位向量}
+
+長度為 $1$ 的向量稱為\textbf{單位向量（unit vector）}。任一非零向量 $\vec a$ 同向的單位向量，是把它「除以自己的長度」：
+$$\boxed{\;\hat a=\frac{\vec a}{|\vec a|}\;}$$
+特別地，沿 $x$、$y$ 軸正向的單位向量記為 $\vec i=(1,0)$、$\vec j=(0,1)$，於是任何向量都能寫成 $(a_1,a_2)=a_1\vec i+a_2\vec j$。
+
+\subsection*{\sffamily E.\ 線性組合與分點公式}
+
+把幾個向量各乘一個係數再相加，就是它們的\textbf{線性組合（linear combination）}：$s\vec a+t\vec b$（$s,t$ 為實數）。平面上只要有兩個\textbf{不平行}的向量 $\vec a$、$\vec b$，任一向量都可\textbf{唯一}寫成 $s\vec a+t\vec b$——這是向量威力的根源：兩個不平行的向量就能「拼」出整個平面。
+
+由線性組合可得\textbf{分點公式}：設 $P$ 在線段 $AB$ 上，且 $\overline{AP}:\overline{PB}=m:n$（內分），則
+$$\boxed{\;\overrightarrow{OP}=\frac{n\,\overrightarrow{OA}+m\,\overrightarrow{OB}}{m+n}\;}$$
+寫成坐標：$P=\left(\dfrac{n x_1+m x_2}{m+n},\ \dfrac{n y_1+m y_2}{m+n}\right)$。當 $m=n$ 時退化為中點公式。
+
+\textbf{注意：}分點公式的「\textbf{係數要交叉配}」：靠近 $B$ 的比例 $m$ 乘的是 $\overrightarrow{OB}$，靠近 $A$ 的比例 $n$ 乘 $\overrightarrow{OA}$，分母則是 $m+n$。穩做法是記「\textbf{離得越遠權重越大}」：$P$ 離 $A$ 越遠（$m$ 越大），$B$ 的權重就越大。
+
+\section*{\sffamily 3-2\quad 內積}
+
+\subsection*{\sffamily A.\ 為什麼需要一種「乘法」}
+
+向量能加、能減、能伸縮，但到目前還不能「相乘」。我們真正想問的是：\textbf{兩個向量的方向差多少（夾角）？它們垂不垂直？一個向量在另一個方向上「有效」多少？} 這三件事可以用同一個運算一次解決，那就是\textbf{內積}。
+
+內積把兩個向量「乘」成一個\textbf{純量}（不是向量），它有兩個等價的面孔——一個幾何、一個坐標。設 $\vec a$、$\vec b$ 為兩非零向量，夾角為 $\theta$（$0\le\theta\le\pi$）：
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{幾何定義}：$\displaystyle\boxed{\;\vec a\cdot\vec b=|\vec a|\,|\vec b|\cos\theta\;}$
+\item \textbf{坐標公式}：若 $\vec a=(a_1,a_2)$、$\vec b=(b_1,b_2)$，則 $\displaystyle\boxed{\;\vec a\cdot\vec b=a_1 b_1+a_2 b_2\;}$
+\end{itemize}
+
+兩式恆相等。內積結果是一個\textbf{數（純量）}，故又稱\textbf{純量積（scalar product）}。
+
+\fig{d33-dot-product}{0.62}{圖 3-2：內積的幾何意義。$\vec b$ 在 $\vec a$ 方向上的投影長為 $|\vec b|\cos\theta$，乘上 $|\vec a|$ 即得內積 $\vec a\cdot\vec b=|\vec a||\vec b|\cos\theta$。}
+
+\begin{補充框}{內積為什麼定義成 $|\vec a||\vec b|\cos\theta$？兩條公式為什麼相等？}
+\textbf{為什麼這樣定義「有用」。}很多問題問的不是「兩向量加起來多少」，而是「\textbf{一個向量在另一個方向上有多少貢獻}」。物理的\textbf{功}：力 $\vec F$ 推物體位移 $\vec d$，只有沿位移方向的分力 $|\vec F|\cos\theta$ 才做功，功 $=|\vec F||\vec d|\cos\theta$。幾何的\textbf{投影}：$\vec b$ 在 $\vec a$ 上的影子長就是 $|\vec b|\cos\theta$。這些都長著 $|\;||\;|\cos\theta$ 的樣子，把它抽出來命名為「內積」，往後一勞永逸。
+
+\textbf{兩條公式為什麼相等（餘弦定理）。}把 $\vec a$、$\vec b$ 共起點放好，第三邊是 $\vec a-\vec b$，三邊構成一個三角形。對夾角 $\theta$ 用\textbf{餘弦定理}，得式 (1)：
+$$|\vec a-\vec b|^2=|\vec a|^2+|\vec b|^2-2|\vec a||\vec b|\cos\theta.$$
+另一方面，用坐標展開左邊，得式 (2)：
+$$|\vec a-\vec b|^2=(a_1-b_1)^2+(a_2-b_2)^2=|\vec a|^2+|\vec b|^2-2(a_1b_1+a_2b_2).$$
+把 (1)、(2) 對照，$|\vec a|^2+|\vec b|^2$ 兩邊都有，消掉後剩下 $a_1b_1+a_2b_2=|\vec a||\vec b|\cos\theta$。坐標式與幾何式\textbf{本來就是同一個數的兩種寫法}，由餘弦定理綁在一起。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 內積的性質}
+
+對任意向量 $\vec a$、$\vec b$、$\vec c$ 與實數 $k$：
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{交換律}：$\vec a\cdot\vec b=\vec b\cdot\vec a$。
+\item \textbf{分配律}：$\vec a\cdot(\vec b+\vec c)=\vec a\cdot\vec b+\vec a\cdot\vec c$。
+\item \textbf{係數}：$(k\vec a)\cdot\vec b=k(\vec a\cdot\vec b)$。
+\item \textbf{自我內積 $=$ 長度平方}：$\vec a\cdot\vec a=|\vec a|^2$（因為自己跟自己夾角 $0$，$\cos0=1$）。
+\end{itemize}
+
+由這幾條性質，配合「自我內積 $=$ 長度平方」，可得向量版的「和的平方公式」：
+$$|\vec a+\vec b|^2=(\vec a+\vec b)\cdot(\vec a+\vec b)=|\vec a|^2+2(\vec a\cdot\vec b)+|\vec b|^2.$$
+這是大量計算的核心技巧。
+
+\subsection*{\sffamily C.\ 夾角與垂直、平行判定}
+
+內積最值錢的用途，是把幾何定義反解出 $\cos\theta$，於是任意兩向量的夾角都能算。設 $\vec a=(a_1,a_2)$、$\vec b=(b_1,b_2)$ 皆非零：
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{夾角公式}（由幾何定義反解）：
+$$\boxed{\;\cos\theta=\frac{\vec a\cdot\vec b}{|\vec a|\,|\vec b|}=\frac{a_1 b_1+a_2 b_2}{\sqrt{a_1^2+a_2^2}\,\sqrt{b_1^2+b_2^2}}\;}$$
+\item \textbf{垂直判定（perpendicular）}：$\vec a\perp\vec b \iff \boxed{\,\vec a\cdot\vec b=0\,}$（即 $a_1b_1+a_2b_2=0$），因為 $\cos90^\circ=0$。
+\item \textbf{平行判定（parallel）}：$\vec a\parallel\vec b \iff$ 存在 $k$ 使 $\vec b=k\vec a$，等價於 $\boxed{\,a_1 b_2-a_2 b_1=0\,}$（分量成比例；這個量正是 3-4 的二階行列式）。
+\end{itemize}
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{判垂直用內積（$\vec a\cdot\vec b=0$）、判平行用行列式（$a_1b_2-a_2b_1=0$）}，兩者剛好相反，別搞混。一句話記：「\textbf{內積零是垂直，行列式零是平行}」。
+\item 「內積為零」不需要任一向量是零向量；兩支都非零、只要互相垂直，內積照樣是零。
+\item 夾角範圍是 $0\le\theta\le180^\circ$。\textbf{內積的正負號就告訴你鈍角還是銳角}：內積為正是銳角（$\cos\theta>0$）、為零是直角、為負是鈍角（$\cos\theta<0$）。
+\end{itemize}
+
+\section*{\sffamily 3-3\quad 正射影}
+
+\subsection*{\sffamily A.\ 影子的長度與向量}
+
+想像太陽從正上方照下來，一支斜放的向量 $\vec b$ 會在 $\vec a$ 的方向上投下一道影子。這道影子的「帶號長度」叫 $\vec b$ 在 $\vec a$ 上的\textbf{正射影量}；而沿著 $\vec a$ 方向、長度等於這道影子的那支向量，叫\textbf{正射影向量（orthogonal projection）}。它其實就是把 $\vec b$ 拆成「沿 $\vec a$ 的分量」與「垂直 $\vec a$ 的分量」後，前面那一塊。設 $\vec a$ 非零：
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{正射影量}（帶正負號的投影長）：
+$$\boxed{\;\text{proj 長}=|\vec b|\cos\theta=\frac{\vec a\cdot\vec b}{|\vec a|}\;}$$
+夾角為鈍角時這個值為負，表示影子落在 $\vec a$ 的反方向側。
+\item \textbf{正射影向量}（沿 $\vec a$ 方向、長度為上式）：
+$$\boxed{\;\operatorname{proj}_{\vec a}\vec b=\left(\frac{\vec a\cdot\vec b}{|\vec a|^2}\right)\vec a\;}$$
+即「正射影量」乘上 $\vec a$ 的單位向量 $\dfrac{\vec a}{|\vec a|}$。
+\end{itemize}
+
+\fig{d33-projection}{0.60}{圖 3-3：$\vec b$ 在 $\vec a$ 上的正射影。從 $\vec b$ 的尖端對 $\vec a$ 所在直線作垂線，落點與原點之間沿 $\vec a$ 方向的那支紅色向量，即正射影向量 $\left(\dfrac{\vec a\cdot\vec b}{|\vec a|^2}\right)\vec a$。}
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 「正射影量」是一個\textbf{數}（可正可負），「正射影向量」是一支\textbf{向量}。題目問哪個要看清楚。
+\item 公式分母不同：正射影\textbf{量}除 $|\vec a|$（一次），正射影\textbf{向量}除 $|\vec a|^2$（因為還要再乘一個 $\vec a$ 把方向補回來）。
+\item 投影是「$\vec b$ 投到 $\vec a$ 上」，方向永遠\textbf{沿著 $\vec a$}。$\operatorname{proj}_{\vec a}\vec b$ 與 $\operatorname{proj}_{\vec b}\vec a$ 通常不一樣。
+\end{itemize}
+
+\subsection*{\sffamily B.\ 應用：點到直線距離的向量法}
+
+解析幾何裡的點到直線距離公式，用正射影可以「看出來」其來歷。直線 $L:\ ax+by+c=0$ 的\textbf{法向量（normal vector）}是 $\vec n=(a,b)$。在 $L$ 上任取一點 $Q$，則點 $P(x_0,y_0)$ 到 $L$ 的距離，就是 $\overrightarrow{QP}$ 在 $\vec n$ 上的正射影量大小：
+$$d=\frac{|\,\vec n\cdot\overrightarrow{QP}\,|}{|\vec n|}=\frac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}}.$$
+那個分母 $\sqrt{a^2+b^2}$，真身就是法向量 $\vec n$ 的長度——和先前用坐標硬背的公式完全吻合，只是現在\textbf{看得到它的來歷}。
+
+\section*{\sffamily 3-4\quad 面積、行列式與柯西不等式}
+
+\subsection*{\sffamily A.\ 二階行列式}
+
+把兩個向量的分量排成一個 $2\times2$ 的方陣，定義一個數叫\textbf{行列式（determinant）}。它一個數就同時編碼了「平行四邊形面積」與「是否平行」兩件事。對 $\vec a=(a_1,a_2)$、$\vec b=(b_1,b_2)$：
+$$\boxed{\;\det(\vec a,\vec b)=\begin{vmatrix} a_1 & a_2\\ b_1 & b_2\end{vmatrix}=a_1 b_2-a_2 b_1\;}$$
+規則是\textbf{主對角線乘積 減 副對角線乘積}（左上 $\times$ 右下 $-$ 右上 $\times$ 左下）。
+
+\subsection*{\sffamily B.\ 平行四邊形與三角形面積}
+
+以 $\vec a=(a_1,a_2)$、$\vec b=(b_1,b_2)$ 為兩鄰邊：
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{平行四邊形面積}：$\displaystyle\boxed{\;A_{\square}=\bigl|\,a_1 b_2-a_2 b_1\,\bigr|\;}$
+\item \textbf{三角形面積}（取一半）：$\displaystyle\boxed{\;A_{\triangle}=\frac12\bigl|\,a_1 b_2-a_2 b_1\,\bigr|\;}$
+\end{itemize}
+
+取絕對值是因為面積非負；行列式本身的正負號代表 $\vec a$、$\vec b$ 的\textbf{排列方向}（逆時針為正、順時針為負）。
+
+\fig{d33-determinant-area}{0.58}{圖 3-4：以 $\vec a=(x_1,y_1)$、$\vec b=(x_2,y_2)$ 為鄰邊的平行四邊形，其面積等於二階行列式的絕對值 $|x_1y_2-x_2y_1|$。}
+
+\begin{補充框}{行列式 $a_1b_2-a_2b_1$ 為什麼剛好等於面積？}
+平行四邊形以 $\vec a$ 為底，底長 $=|\vec a|$，高 $=\vec b$ 在垂直 $\vec a$ 方向上的分量 $=|\vec b|\sin\theta$，所以面積 $A=|\vec a||\vec b|\sin\theta$。把 $\sin\theta$ 換成坐標：用 $\sin^2\theta=1-\cos^2\theta$，並代入內積 $|\vec a||\vec b|\cos\theta=a_1b_1+a_2b_2$，得
+$$A^2=|\vec a|^2|\vec b|^2-(\vec a\cdot\vec b)^2=(a_1^2+a_2^2)(b_1^2+b_2^2)-(a_1b_1+a_2b_2)^2.$$
+把右邊乘開，$a_1^2b_1^2$ 與 $a_2^2b_2^2$ 各自消掉，剩下一個完全平方：
+$$A^2=a_1^2b_2^2-2a_1b_2a_2b_1+a_2^2b_1^2=(a_1b_2-a_2b_1)^2\ \Longrightarrow\ A=|a_1b_2-a_2b_1|.$$
+那個看似突兀的 $a_1b_2-a_2b_1$，原來是「長度平方乘積減去內積平方」自然收斂出來的完全平方。
+
+\textbf{正負號代表「定向」。}行列式本身可正可負：從 $\vec a$ 轉到 $\vec b$ 是\textbf{逆時針}時為正、\textbf{順時針}時為負；等於 $0$ 時 $\vec a$、$\vec b$ \textbf{共線（平行）}，平行四邊形被壓扁成一條線、面積為 $0$——這正呼應了 3-2 的平行判定。
+\end{補充框}
+
+\textbf{注意：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 算多邊形面積時，行列式的兩列要放「\textbf{從同一頂點出發的兩個邊向量}」（如 $\overrightarrow{AB}$、$\overrightarrow{AC}$），不是隨便放三個頂點的坐標。
+\item 別忘了\textbf{取絕對值}；算出負數不代表面積為負，只是頂點排列是順時針。
+\item 三角形面積記得乘 $\dfrac12$，平行四邊形不用。
+\end{itemize}
+
+\subsection*{\sffamily C.\ 柯西不等式}
+
+從內積的幾何定義 $\vec a\cdot\vec b=|\vec a||\vec b|\cos\theta$，因為 $|\cos\theta|\le1$，立刻得到一條應用極廣的不等式——\textbf{柯西不等式（Cauchy–Schwarz inequality）}。對任意向量 $\vec a$、$\vec b$：
+$$\boxed{\;(\vec a\cdot\vec b)^2\le|\vec a|^2\,|\vec b|^2\;}$$
+寫成坐標就是
+$$\boxed{\;(a_1 b_1+a_2 b_2)^2\le(a_1^2+a_2^2)(b_1^2+b_2^2)\;}$$
+\textbf{等號成立 $\iff$ $\vec a$、$\vec b$ 平行}（同向或反向，即 $\cos\theta=\pm1$）。
+
+\begin{補充框}{柯西不等式是什麼？為什麼到處都在用它？}
+\textbf{它其實就是「$|\cos\theta|\le1$」。}把幾何定義兩邊平方：$(\vec a\cdot\vec b)^2=|\vec a|^2|\vec b|^2\cos^2\theta$。因為 $\cos^2\theta\le1$，所以 $(\vec a\cdot\vec b)^2\le|\vec a|^2|\vec b|^2$。柯西不等式的全部內容，就是「$\cos^2\theta\le1$」披上向量的外衣——一條再普通不過的三角事實，威力卻很大。等號在 $\cos^2\theta=1$，即 $\theta=0$ 或 $180^\circ$（兩向量\textbf{平行}）時成立。
+
+\textbf{為什麼它「到處都在」。}很多極值問題都能翻譯成「內積 vs.\ 長度乘積」的比較，關鍵口訣是：\textbf{看到「平方和」就想長度，看到「交叉項之和」就想內積。}配好向量後，整題就化成同一個套路：套公式、再用「等號 $\iff$ 平行」找出極值在哪取得。
+
+\textbf{注意：}求出上界／下界後，一定要檢查\textbf{等號是否真的取得到}（即平行條件在題目約束下有解），否則那個界只是「不會超過」，未必是「達得到的極值」。此外不等式方向是\textbf{內積平方 $\le$ 長度平方乘積}，別記反。
+\end{補充框}
+
+\begin{延伸框}{柯西不等式能推得多遠}
+這條二維的柯西不等式只是一座大山的山腳。它能直接推出\textbf{三角不等式 $|\vec a+\vec b|\le|\vec a|+|\vec b|$}（「兩邊和大於第三邊」的向量版），下一章空間向量會正式處理。
+
+在大學，柯西不等式推廣到\textbf{任意維度、甚至函數空間}（內積空間），是泛函分析、機率（共變異數不等式）、量子力學的基礎工具。一個值得一提的事實是它的「普遍性」：只要有一個合理的「內積」結構，這條不等式就成立。把它用到量子力學的狀態向量上，就導出\textbf{海森堡不確定性原理}的數學骨架——同一條高中不等式，撐起了現代物理的一塊地基。它是\textbf{已被完全證明、毫無爭議}的定理，不是開放問題。
+\end{延伸框}
+
+\section*{\sffamily 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{向量基本}：$\overrightarrow{AB}=$ 終點 $-$ 起點 $=(x_2-x_1,\,y_2-y_1)$；長度 $|\vec a|=\sqrt{a_1^2+a_2^2}$；單位向量 $\hat a=\vec a/|\vec a|$。
+\item \textbf{運算}：加減逐分量；$k\vec a=(ka_1,ka_2)$；分點 $\overrightarrow{OP}=\dfrac{n\overrightarrow{OA}+m\overrightarrow{OB}}{m+n}$（$\overline{AP}:\overline{PB}=m:n$）。平面上兩個不平行向量可唯一線性組合出任一向量。
+\item \textbf{內積（兩式）}：$\vec a\cdot\vec b=|\vec a||\vec b|\cos\theta=a_1b_1+a_2b_2$；$\vec a\cdot\vec a=|\vec a|^2$；$|\vec a+\vec b|^2=|\vec a|^2+2\vec a\cdot\vec b+|\vec b|^2$。
+\item \textbf{夾角／判定}：$\cos\theta=\dfrac{\vec a\cdot\vec b}{|\vec a||\vec b|}$；\textbf{垂直 $\iff\vec a\cdot\vec b=0$}；\textbf{平行 $\iff a_1b_2-a_2b_1=0$}（內積零垂直、行列式零平行）。內積正負號 $\to$ 銳角／直角／鈍角。
+\item \textbf{正射影}：正射影量 $\dfrac{\vec a\cdot\vec b}{|\vec a|}$（一個數）；正射影向量 $\dfrac{\vec a\cdot\vec b}{|\vec a|^2}\vec a$（一支向量，沿 $\vec a$ 方向）。點到直線距離 $=\overrightarrow{QP}$ 在法向量 $\vec n=(a,b)$ 上的正射影量大小。
+\item \textbf{行列式與面積}：$\det=a_1b_2-a_2b_1$；平行四邊形面積 $=|\det|$、三角形 $=\dfrac12|\det|$；正負號代表定向（逆時針正、順時針負、共線零）。
+\item \textbf{柯西不等式}：$(\vec a\cdot\vec b)^2\le|\vec a|^2|\vec b|^2$；等號 $\iff$ 兩向量平行。求極值口訣：「平方和想長度、交叉項和想內積」，並務必檢查等號取得。
+\end{itemize}
+\end{補充框}
+
+\end{document}

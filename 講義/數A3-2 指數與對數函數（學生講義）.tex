@@ -1,0 +1,281 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\Huge\bfseries 數A3-2 指數與對數函數}\\[3pt]
+{\sffamily\large 普通高中 數學（數學A・第三冊）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+高一已經把「次方」從整數推廣到任意實數，也把 $\log$ 當成「指數的反運算」介紹過了。本章把它們從「一個一個算的數字」升級成\textbf{函數}：讓指數 $x$ 自由變動，畫出 $y=a^{x}$ 這條連續曲線（\textbf{指數函數，exponential function}）；再把它「反過來看」，得到 $y=\log_{a}x$（\textbf{對數函數，logarithmic function}）。看清這兩條曲線的長相與性質後，就能俐落地解\textbf{指數方程式、對數方程式、指數不等式、對數不等式}，並用它們描述現實世界裡所有「按比例成長／衰退」的現象——複利、細菌、放射性衰變、pH、地震、聲音。
+
+凡是「變化率正比於現有量」的東西，長期行為一定是指數型的。指數與對數正是科學家面對「橫跨好幾個數量級」的量時最核心的語言。
+
+\medskip
+兩個全章共用的約定：
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item 沿用高一慣例：以 $10$ 為底的\textbf{常用對數}簡寫 $\log N$（即 $\log_{10}N$）。
+\item 底數一律限 \textbf{$a>0$ 且 $a\ne 1$}。理由稍後說明。
+\end{itemize}
+
+\medskip
+本章主線：
+
+\begin{center}
+指數函數 $y=a^x$ $\rightarrow$ 對數函數 $y=\log_a x$（互為反函數）$\rightarrow$ 對數律與換底 $\rightarrow$ 指數／對數方程式與不等式 $\rightarrow$ 成長衰退模型
+\end{center}
+
+\section*{\sffamily 2-1\quad 指數函數 $y=a^{x}$}
+
+\subsection*{\sffamily A.\ 從「算一個值」到「畫一條曲線」}
+
+高一我們把 $2^{1/2}$、$2^{0}$、$2^{-3}$、甚至 $2^{\sqrt2}$ 都賦予了意義（用「分數指數逼近」把指數律延拓到所有實數）。既然每個實數 $x$ 都對應一個唯一的 $2^x$，那麼 $f(x)=2^{x}$ 就是一個\textbf{函數}：定義域是全體實數，把每個 $x$ 送到 $2^x$。一般地：
+
+\begin{center}
+取定一個底數 $a>0$ 且 $a\ne 1$，
+$$\boxed{\,y=a^{x},\qquad x\in\mathbb{R}\,}$$
+稱為\textbf{以 $a$ 為底的指數函數}。
+\end{center}
+
+其中變數 $x$ 站在\textbf{指數}的位置——這正是它和高一二次函數 $y=x^2$（變數站在底數）最關鍵的區別。它的定義域是 $\mathbb{R}$（所有實數都能當指數）；值域是 $(0,\infty)$，永遠 $>0$：正數的任何次方都是正數，永遠碰不到 $0$，更不會是負數。
+
+\begin{補充框}{為什麼底數要限定 $a>0$ 且 $a\ne1$？}
+這三個被排除的情形，每一個都會讓「畫出一條完整連續曲線」失敗：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item $a<0$：像 $(-2)^{1/2}$ 在實數中沒有意義，曲線會「斷斷續續」，畫不出來。
+\item $a=0$：$0^{x}$ 在 $x\le0$ 時沒有意義。
+\item $a=1$：$1^{x}\equiv 1$ 是一條水平線，退化成常數，也定義不出對數（見 2-2）。
+\end{itemize}
+所以本章一律要求 \textbf{$a>0$ 且 $a\ne1$}。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 兩種樣貌：$a>1$ 遞增、$0<a<1$ 遞減}
+
+指數函數的長相\textbf{完全由底數 $a$ 與 $1$ 的大小關係決定}，分成兩種情形，務必分清楚。
+
+\textbf{兩種共同的性質：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 必過定點 $(0,\,1)$，因為 $a^0=1$ 與底數無關。
+\item 圖形恆在 $x$ 軸上方（值域 $(0,\infty)$），以 \textbf{$x$ 軸（$y=0$）為水平漸近線}——曲線無限接近卻永遠不碰到。
+\item 一對一（任一條水平線最多交曲線一次），所以「反過來看」仍然是函數，這正是 2-2 的對數函數。
+\end{itemize}
+
+\textbf{情形一：$a>1$（例 $a=2,\,10$）——遞增。} $x$ 越大 $y$ 越大；且 $x\to+\infty$ 時 $y\to+\infty$，$x\to-\infty$ 時 $y\to 0^{+}$。往右爆炸性上升，往左貼著 $x$ 軸。這是「\textbf{成長}」型。
+
+\textbf{情形二：$0<a<1$（例 $a=\tfrac12,\,0.1$）——遞減。} $x$ 越大 $y$ 越小；且 $x\to+\infty$ 時 $y\to 0^{+}$，$x\to-\infty$ 時 $y\to+\infty$。往右貼著 $x$ 軸衰減。這是「\textbf{衰退}」型。
+
+\fig{d32-exp}{0.74}{圖 2-1：指數函數 $y=a^x$ 的兩種樣貌。兩條都過 $(0,1)$、以 $x$ 軸為漸近線；藍線 $y=2^x$（$a>1$）遞增，紅線 $y=(\tfrac12)^x$（$0<a<1$）遞減。}
+
+這兩種情形其實是「鏡像」：因為 $\left(\dfrac1a\right)^{x}=a^{-x}$，把 $y=a^x$ 對 $y$ 軸翻轉（$x\to-x$）就得到 $y=\left(\dfrac1a\right)^x$。所以 $y=2^x$ 與 $y=\left(\dfrac12\right)^x$ 是左右對稱的兩條（見上圖）。
+
+\textbf{注意：}「指數函數一律遞增」是錯的。只有 $a>1$ 才遞增；$0<a<1$ 是\textbf{遞減}。底數小於 $1$ 是後面不等式變號的關鍵（見 2-3）。另外，值域是 $(0,\infty)$，\textbf{永遠不含 $0$、也沒有負值}；$x$ 很小時 $a^x$ 只是無限趨近 $0$，並不會「變成 $0$ 或變負」。
+
+\begin{延伸框}{指數成長到底有多快？}
+課本說指數函數「成長很快」，但快到什麼程度，會讓直覺完全失靈？
+
+所有指數成長現象，背後都是同一句話：\textbf{每單位時間，量的增加正比於當下的量本身}。也就是「下一刻 $=$ 這一刻 $\times$ 固定倍率 $a$」，$n$ 步之後就是 $N_n=N_0\cdot a^{n}$。複利（利息正比於本金）、傳染病初期（新感染者正比於現有感染者）、對摺紙張（每摺厚度 $\times2$）都屬於這一類。
+
+關鍵差別在於：\textbf{線性成長是「每次加一個固定量」（等差），指數成長是「每次乘一個固定倍率」（等比）}。加法與乘法在短期差不多，長期差到天文數字。例如一張厚 $0.1$ mm 的紙，每對摺一次厚度加倍，摺 $42$ 次（即 $\times 2^{42}\approx4.4\times10^{12}$）厚度就超過地球到月球的距離。
+
+指數曲線在 $x$ 小的時候增量也小，看起來溫吞，要到某個轉折之後才「衝上天」。其實它從頭到尾都用同一個倍率成長，沒有任何一刻「加速」，是線性直覺讓我們以為它「先慢後快」。現實中指數成長不會永遠持續（資源有限，後期會被環境承載量壓住而轉成 S 形），本章模型只描述\textbf{不受限的早期階段}。
+\end{延伸框}
+
+\section*{\sffamily 2-2\quad 對數函數 $y=\log_{a}x$}
+
+\subsection*{\sffamily A.\ 把指數函數「反過來看」}
+
+指數函數 $y=a^x$ 是一對一的（每個 $y>0$ 恰對應一個 $x$）。於是我們可以\textbf{反過來問}：「要讓 $a$ 的幾次方等於某個正數 $x$？」這個「幾次方」就是高一定義過的對數。讓 $x$ 自由變動，得到的函數就是對數函數：
+
+\begin{center}
+取定底數 $a>0$ 且 $a\ne 1$，
+$$\boxed{\,y=\log_{a}x\quad\Longleftrightarrow\quad a^{y}=x\,}\qquad (x>0)$$
+稱為\textbf{以 $a$ 為底的對數函數}。
+\end{center}
+
+它是指數函數 $y=a^x$ 的\textbf{反函數（inverse function）}：把輸入與輸出的角色對調。因此它的定義域是 $(0,\infty)$（只有正數才有對數；$0$ 與負數沒有對數，因為 $a^y$ 永遠 $>0$），值域是 $\mathbb{R}$（任何實數都可能是「幾次方」）。注意它恰好是指數函數「定義域、值域對調」——這正是互為反函數的標誌。
+
+\begin{補充框}{「互為反函數」「對 $y=x$ 對稱」到底是什麼意思？}
+\textbf{反函數就是把「輸入」與「輸出」角色對調的那個函數。} 指數函數 $f(x)=a^{x}$ 做的事是「\textbf{給指數、求冪值}」；對數函數 $f^{-1}(x)=\log_a x$ 做的事正好相反：「\textbf{給冪值、求指數}」。一個把指數變成冪、另一個把冪變回指數，互相抵銷——這就是互為反函數。寫成恆等式即
+$$\log_a\!\left(a^{x}\right)=x\ (\text{對所有 }x),\qquad a^{\log_a x}=x\ (\text{對所有 }x>0).$$
+
+\textbf{為什麼是「對 $y=x$ 對稱」？} 一個函數的圖形是所有 $(\text{輸入},\text{輸出})$ 點的集合。指數圖上有點 $(p,\,q)$，意思是 $a^{p}=q$；把輸入輸出對調，對數圖上就有對應的點 $(q,\,p)$，意思是 $\log_a q=p$。而把一個點 $(p,q)$ 換成 $(q,p)$（橫縱坐標互換），正是它\textbf{對直線 $y=x$ 的鏡射}（高一直線與圓學過）。所以指數圖上的每個 $(p,q)$，都對應對數圖上的 $(q,p)$，兩條曲線因而對 $y=x$ 互相對稱。
+
+\textbf{一個立刻可用的後果：}因為對調坐標，\textbf{定義域與值域也跟著互換}。對數函數的定義域 $(0,\infty)$，正是指數函數的\textbf{值域}；指數函數永遠輸出正數，所以對數也只接受正數——這就解釋了「真數為什麼必須 $>0$」。
+\end{補充框}
+
+把上面這層關係寫成圖形語言，就是本節的核心結論：
+
+\begin{center}
+$$\boxed{\,y=a^{x}\ \text{與}\ y=\log_{a}x\ \text{的圖形對直線}\ y=x\ \text{對稱}\,}$$
+\end{center}
+
+\fig{d32-log}{0.70}{圖 2-2：對數函數 $y=\log_a x$（實線）與指數函數 $y=a^x$（虛線）對直線 $y=x$（灰色虛線）互相對稱。藍線 $y=\log_2 x$（$a>1$）遞增、紅線 $y=\log_{1/2}x$（$0<a<1$）遞減，都過 $(1,0)$、以 $y$ 軸為漸近線。}
+
+\subsection*{\sffamily B.\ 對數函數的兩種樣貌}
+
+對數函數同樣依底數分兩種情形，與指數函數一一對應（因為它們互為反函數）。
+
+\textbf{兩種共同的性質：}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 必過定點 $(1,\,0)$，因為 $\log_a 1=0$（$a^0=1$）與底數無關。
+\item 圖形只在 $y$ 軸右側（定義域 $x>0$），以 \textbf{$y$ 軸（$x=0$）為鉛直漸近線}：$x\to 0^{+}$ 時曲線往 $\pm\infty$ 衝。
+\item 一對一。
+\end{itemize}
+
+\textbf{情形一：$a>1$（例 $a=2,\,10$）——遞增。} $x$ 越大 $y$ 越大；$x\to0^{+}$ 時 $y\to-\infty$，$x\to+\infty$ 時 $y\to+\infty$。過 $(1,0)$ 後緩緩上升，成長\textbf{越來越慢}（這正是「壓縮數量級」的本領）。
+
+\textbf{情形二：$0<a<1$（例 $a=\tfrac12$）——遞減。} $x$ 越大 $y$ 越小；$x\to0^{+}$ 時 $y\to+\infty$，$x\to+\infty$ 時 $y\to-\infty$。
+
+\textbf{注意：}別把「對數函數遞增」誤解成「成長很快」。$a>1$ 的對數函數雖然遞增，但成長\textbf{極慢}（它是爆炸成長的指數函數的反函數，當然慢）：$\log_{10}$ 把 $1$ 到 $10^{12}$ 壓進 $0$ 到 $12$。$0<a<1$ 時對數函數則\textbf{遞減}，和指數函數一樣是不等式變號的重點。此外，\textbf{真數必須為正}：$\log_a(\text{負數})$、$\log_a 0$ 都沒有意義；解對數方程式時，求出的 $x$ 一定要回頭檢查真數 $>0$（見 2-3）。
+
+\section*{\sffamily 2-3\quad 對數律、換底，與方程式、不等式}
+
+這是全章的重頭戲。要靈活解方程式與不等式，得先把\textbf{對數律}與\textbf{換底公式}這兩件工具備齊。
+
+\subsection*{\sffamily A.\ 對數律（三條）}
+
+對一般底數 $a$（$a>0,\,a\ne1$）的對數律如下。核心精神是：\textbf{對數把乘除變加減、把次方變乘法}——因為它是指數的反運算，而指數律正是「乘法 $\to$ 指數相加」。
+
+\begin{center}
+（$a>0,\,a\ne1$；$M,N>0$）
+$$\boxed{\;\log_a(MN)=\log_a M+\log_a N\;}\qquad(\text{積}\to\text{和})$$
+$$\boxed{\;\log_a\!\frac{M}{N}=\log_a M-\log_a N\;}\qquad(\text{商}\to\text{差})$$
+$$\boxed{\;\log_a M^{k}=k\,\log_a M\;}\qquad(\text{冪}\to\text{乘})\quad(k\ \text{為任意實數})$$
+另有常用特例：$\log_a 1=0$、$\log_a a=1$、$\log_a a^{k}=k$。
+\end{center}
+
+\begin{補充框}{對數律為什麼成立（以「積 $\to$ 和」為例）}
+設 $\log_a M=s$、$\log_a N=t$，即 $M=a^s$、$N=a^t$。則
+$$MN=a^s\cdot a^t=a^{s+t},$$
+依對數定義 $\log_a(MN)=s+t=\log_a M+\log_a N$。商與冪的兩條同理（分別用 $a^{s-t}$、$(a^s)^k=a^{ks}$ 推得）。所以三條對數律全部來自指數律，並非另外背的新規則。
+\end{補充框}
+
+\textbf{注意：}對數律只管「\textbf{整個真數的乘除與次方}」，不能亂拆加減。常見的三個錯誤：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item $\log_a(M+N)\ne\log_a M+\log_a N$（右邊其實是 $\log_a(MN)$）。
+\item $\dfrac{\log_a M}{\log_a N}\ne\log_a\dfrac{M}{N}$（左邊是換底後的比值，右邊才是商的對數 $\log_a M-\log_a N$）。
+\item $\log_a M^k=k\log_a M$ 的 $k$ 是\textbf{整個真數的次方}；$\big(\log_a M\big)^k$（對數再取 $k$ 次方）完全不同。
+\end{itemize}
+
+\subsection*{\sffamily B.\ 換底公式}
+
+對數律要求「同一個底」。但題目常混著不同底（$\log_2$、$\log_3$、$\log$…），這時需要把它們\textbf{換成同一種底}：
+
+\begin{center}
+對 $a,b,c>0$ 且 $a\ne1,\,c\ne1$：
+$$\boxed{\;\log_a b=\frac{\log_c b}{\log_c a}\;}$$
+最常用是換成常用對數（$c=10$）：$\log_a b=\dfrac{\log b}{\log a}$。
+\end{center}
+
+\begin{補充框}{換底公式怎麼來的？為什麼換成哪個底都行？}
+對數 $\log_a b$ 問的是「\textbf{$a$ 的幾次方等於 $b$}」。先把這個「幾次方」叫做 $t$：
+$$\log_a b=t\quad\Longleftrightarrow\quad a^{t}=b.$$
+這是一個等式，對它兩邊「同時做同一件事」不會破壞它——我們選擇\textbf{兩邊取同一個底 $c$ 的對數}（$c>0,\,c\ne1$，先隨便挑一個合法的底）：
+$$\log_c\!\left(a^{t}\right)=\log_c b.$$
+左邊用「冪 $\to$ 乘」把指數 $t$ 拉下來，得 $t\,\log_c a=\log_c b$，故
+$$t=\frac{\log_c b}{\log_c a}\;\Longrightarrow\;\log_a b=\frac{\log_c b}{\log_c a}.$$
+
+\textbf{為什麼「換成哪個底都行」？}這串推導裡，$c$ 從頭到尾沒有指定是多少——只要它合法（$c>0,c\ne1$），每一步都成立。所以無論換成 $10$、$2$ 還是 $e$，算出來的 $\log_a b$ 一定一樣（它本來就是個固定的數，跟你用什麼底去表達無關）。換成 $10$ 只是因為計算機上有 $\log$ 鍵、最方便。
+\end{補充框}
+
+由換底公式可直接得到兩個好用的推論：
+$$\log_a b=\frac{1}{\log_b a}\qquad(\text{倒數律，把 }c\text{ 選成 }b),\qquad \log_{a^{n}}b^{m}=\frac{m}{n}\log_a b.$$
+另外，連乘時會發生\textbf{鏈式相消}：$\log_a b\cdot\log_b c=\dfrac{\log b}{\log a}\cdot\dfrac{\log c}{\log b}=\dfrac{\log c}{\log a}=\log_a c$，一長串連乘會像骨牌一樣消到只剩頭尾。
+
+\textbf{注意：}換底時別把分子分母放反，是\textbf{真數在上、底數在下}（$\dfrac{\log b}{\log a}$，新分母是舊底數）。又 $\dfrac{\log_c b}{\log_c a}$ 是「兩個對數相除」，\textbf{不等於} $\log_c\dfrac{b}{a}$（後者是商的對數）。
+
+\subsection*{\sffamily C.\ 解指數方程式}
+
+把未知數在「指數位置」的方程式解出來，有三條主要策略：
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{化同底}：把兩邊化成同一底數 $a^{f(x)}=a^{g(x)}$，因指數函數一對一，可直接比指數 $f(x)=g(x)$。
+\item \textbf{取對數}：兩邊各取對數（常用 $\log$），用冪律把指數「拉下來」。底數不同、化不成同底時用這招。
+\item \textbf{換元}：式中出現 $a^x$ 的多項式（如 $a^{2x}$、$a^x$、常數）時，令 $t=a^x>0$ 化成代數方程式，解出 $t$ 後\textbf{回代且要求 $t>0$}（負根或 $0$ 一律捨去，因為 $a^x$ 恆正）。
+\end{itemize}
+
+\subsection*{\sffamily D.\ 解對數方程式}
+
+要領有三步：
+\begin{enumerate}\setlength{\itemsep}{2pt}
+\item 先用對數律把式子併成\textbf{單一對數}：$\log_a(\cdots)=$ 常數，或 $\log_a A=\log_a B$。
+\item 化掉對數：$\log_a A=c\Rightarrow A=a^{c}$；$\log_a A=\log_a B\Rightarrow A=B$。
+\item \textbf{務必回頭檢查真數 $>0$}（也檢查底數合法）。化對數的過程可能引入「真數變負」的增根，一定要驗。
+\end{enumerate}
+
+\subsection*{\sffamily E.\ 指數不等式與對數不等式（最容易錯的地方）}
+
+解不等式比解方程式多一個關鍵動作：\textbf{比較指數／真數時，要看底數}。底數 $>1$ 時函數遞增，不等號\textbf{方向不變}；底數 $0<a<1$ 時函數遞減，不等號\textbf{方向必須反過來}。這是本章最高頻的失分點。
+
+\begin{center}
+（$a>0,\,a\ne1$）\\[2pt]
+\textbf{指數不等式}（化掉底數後）：
+$$a>1:\ \ a^{f}>a^{g}\iff f>g\ (\text{同向});\qquad 0<a<1:\ \ a^{f}>a^{g}\iff f<g\ (\text{反向}).$$
+\textbf{對數不等式}（真數須 $>0$）：
+$$a>1:\ \ \log_a A>\log_a B\iff A>B\ (\text{同向});$$
+$$0<a<1:\ \ \log_a A>\log_a B\iff A<B\ (\text{反向}).$$
+$$\boxed{\,\text{底數}>1\Rightarrow\text{不等號不變；}\ \ 0<\text{底數}<1\Rightarrow\text{不等號反向}\,}$$
+\end{center}
+
+\textbf{注意：}底數 $0<a<1$ 忘記翻不等號，是本章第一名的錯誤。養成兩步驟習慣：\textbf{先寫真數定義域}（真數 $>0$），再\textbf{化同底／同對數，並先看一眼底數才決定方向}，最後取交集。另外把常數寫成同底對數時別算錯，例如對底 $0.5$，$-2=\log_{0.5}(0.5^{-2})=\log_{0.5}4$（因 $0.5^{-2}=4$），而不是 $\log_{0.5}(-2)$（沒有意義）。
+
+\section*{\sffamily 2-4\quad 成長與衰退模型}
+
+凡是「每單位時間按\textbf{固定比例}增減」的量，都是指數型的。把「比例」放進底數、「時間」放進指數，就得到模型；要反求「需要多久」「原來多少」時，就取對數。一句話概括：\textbf{已知量求時間 $\to$ 取對數；已知時間求量 $\to$ 代指數}。
+
+\fig{d32-growth-decay}{0.96}{圖 2-3：指數模型。左——複利（指數，曲線）期數一大就遠遠把單利（線性，直線）甩開；右——半衰期衰退，每過一個半衰期 $T$ 數量減半。}
+
+\subsection*{\sffamily A.\ 複利（指數成長）}
+
+本金 $P$、每期利率 $r$、複利 $n$ 期後的本利和為
+$$\boxed{\,A=P(1+r)^{n}\,}.$$
+對照之下，\textbf{單利} $A=P(1+rn)$ 是線性（直線），\textbf{複利}是指數（曲線）。期數一大，複利遠遠把單利甩開（上圖左）。要反求「要存幾年才翻倍」這類問題，就令本利和等於目標、兩邊取對數解出 $n$。
+
+\subsection*{\sffamily B.\ 半衰期（指數衰退）}
+
+放射性物質、藥物代謝等，每過一段固定時間 $T$（\textbf{半衰期，half-life}）數量減半：
+$$\boxed{\,N=N_{0}\left(\frac12\right)^{t/T}\,},$$
+其中 $N_0$ 是初始量、$t$ 是經過時間。每過一個 $T$ 就乘 $\tfrac12$（上圖右）。要反求「過了多久」就取對數：$\dfrac{t}{T}=\dfrac{\log(N/N_0)}{\log(1/2)}$。\textbf{注意：}指數是 $\dfrac{t}{T}$（經過幾個半衰期），別漏掉除以 $T$。例如碳-14 半衰期約 $5730$ 年，可用此模型由現存比例反推出土樣本的年代。
+
+\subsection*{\sffamily C.\ 對數尺度：pH、芮氏規模、分貝}
+
+當一個量橫跨好幾個數量級時，直接畫線性軸會「大的爆框、小的看不見」（下圖左）。改用\textbf{對數尺度}（取 $\log$），每格代表 $\times10$，整片數量級就壓進一張圖、還變成直線（下圖右）。這就是為什麼以下這些指標都用對數定義：
+
+\fig{d32-log-scale}{0.96}{圖 2-4：同一條 $y=10^x$。左——線性軸上小值全被壓在底部看不見；右——改用對數軸，每格 $\times10$，跨數量級也看得清，且取 $\log$ 後成等差（直線）。}
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{pH}：$\mathrm{pH}=-\log[\mathrm{H}^{+}]$。氫離子濃度每變 $10$ 倍，pH 改變 $1$。
+\item \textbf{芮氏地震規模} $M$：規模每增 $1$，地震波振幅約 $\times10$、釋放能量約 $\times31.6$（$=10^{1.5}$）。
+\item \textbf{聲音強度（分貝 dB）}：$L=10\log\dfrac{I}{I_0}$。強度每 $\times10$，增加 $10$ dB。
+\end{itemize}
+
+\textbf{注意：}pH、分貝是「相差幾」而不是「相差幾倍」。例如 pH 從 $3$ 到 $5$，是氫離子濃度變成 $\dfrac{1}{100}$（差兩個數量級），不是「少了 $2$」。地震規模相差 $2$，較大者釋放的能量約是 $10^{1.5\times2}=10^{3}=1000$ 倍。
+
+\begin{延伸框}{那個老是出現的 $e\approx2.718$ 是什麼？為什麼叫「自然」底數？}
+高三、大學裡 $e\approx2.718$、$\ln$、$y=e^{x}$ 到處都是。它其實可以用本節的「複利」自然地推出來。（$e$ 與 $\ln$ 不在本冊必學範圍，這裡只替有興趣的學生搭一座往微積分的橋。）
+
+回到複利。本金 $1$ 元、年利率 $100\%$（即 $r=1$），改變「一年複利幾次」：一年一次得 $(1+1)^1=2$；每半年一次得 $\left(1+\tfrac12\right)^2=2.25$；每季 $\left(1+\tfrac14\right)^4\approx2.44$；每月 $\left(1+\tfrac1{12}\right)^{12}\approx2.61$；每天 $\left(1+\tfrac1{365}\right)^{365}\approx2.71$。切得越細，年底的錢越多，但\textbf{不會無限變多}，而是越來越逼近一個固定極限：
+$$e=\lim_{n\to\infty}\left(1+\frac1n\right)^{n}=2.718281828\ldots$$
+這個極限就是\textbf{自然底數 $e$}，也就是「連續複利」（每一瞬間都在利滾利）一年後的本利和。
+
+\textbf{為什麼叫「自然」？}在微積分裡，$y=e^{x}$ 有一個獨一無二的性質：它的變化率（導數）恰好等於它自己。換句話說，這條曲線「在每一點的成長速度，剛好等於它當下的高度」——正是「增量正比於現有量」中比例係數恰好為 $1$ 的最乾淨情形。底數選 $2$ 或 $10$ 時會多出一個換底因子，唯獨選 $e$ 時因子是 $1$。以 $e$ 為底的對數記作 $\ln$（\textbf{自然對數，natural logarithm}）：$\ln x=\log_e x$，它是 $y=e^x$ 的反函數。本章用底 $10$ 或底 $2$ 算半衰期、複利，和用 $e$ 算只差一個換底常數，答案完全一樣。
+\end{延伸框}
+
+\section*{\sffamily 2-5\quad 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{指數函數 $y=a^x$}（$a>0,a\ne1$）：定義域 $\mathbb{R}$、值域 $(0,\infty)$、過 $(0,1)$、漸近線 $y=0$。$a>1$ 遞增、$0<a<1$ 遞減；$y=a^x$ 與 $y=(1/a)^x$ 對 $y$ 軸對稱。
+\item \textbf{對數函數 $y=\log_a x$}：定義域 $(0,\infty)$、值域 $\mathbb{R}$、過 $(1,0)$、漸近線 $x=0$。$a>1$ 遞增、$0<a<1$ 遞減。與 $y=a^x$ 互為反函數，圖形對 $y=x$ 對稱（定義域與值域互換，故真數必 $>0$）。
+\item \textbf{對數律}（$M,N>0$）：$\log_a(MN)=\log_a M+\log_a N$；$\log_a\tfrac{M}{N}=\log_a M-\log_a N$；$\log_a M^{k}=k\log_a M$。
+\item \textbf{換底}：$\log_a b=\dfrac{\log_c b}{\log_c a}=\dfrac{1}{\log_b a}$。特例 $\log_a a=1$、$\log_a 1=0$。
+\item \textbf{方程式}：化同底比指數／真數；或取對數；或換元（$t=a^x>0$）。對數方程式\textbf{必驗真數 $>0$}。
+\item \textbf{不等式（高頻陷阱）}：$\boxed{\text{底}>1\text{ 不等號不變；}0<\text{底}<1\text{ 不等號反向}}$；對數不等式先寫定義域、最後取交集。
+\item \textbf{模型}：複利 $A=P(1+r)^n$；半衰期 $N=N_0(\tfrac12)^{t/T}$；pH$=-\log[\mathrm{H}^+]$、分貝 $L=10\log\tfrac{I}{I_0}$。求時間取對數、求量代指數。
+\end{itemize}
+\end{補充框}
+
+\end{document}

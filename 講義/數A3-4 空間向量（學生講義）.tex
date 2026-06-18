@@ -1,0 +1,332 @@
+\documentclass[11pt]{article}
+\input{preamble}
+
+\begin{document}
+
+\begin{center}
+{\sffamily\Huge\bfseries 數A3-4 空間向量}\\[3pt]
+{\sffamily\large 普通高中 數學（數學A・第三冊）・學生講義}
+\end{center}
+\vspace{0.6em}
+
+上一章在\textbf{平面}上建立了向量：用兩個坐標 $(x,y)$ 描述位置，並學了向量的加減、係數積、長度與內積。本章把同一套方法整個搬到\textbf{空間}——只要把「兩個坐標」換成「三個坐標」$(x,y,z)$，平面向量學過的東西幾乎原封不動地成立，差別只在「每個式子多算一個 $z$ 分量」。
+
+但空間並不只是「平面多一維」這麼單純：多了一個方向後，幾何關係變得更豐富（兩條直線可以既不平行也不相交），而且出現一個平面上沒有的新運算——\textbf{外積（cross product）}。本章先建立空間的幾何直覺與坐標，再講空間向量的運算與內積，接著是空間特有的外積，最後用\textbf{三階行列式（third-order determinant）}把外積與內積接力起來，算出\textbf{平行六面體（parallelepiped）}的體積。
+
+\medskip
+本章主線：
+
+\begin{center}
+空間位置關係與坐標 $\rightarrow$ 空間向量的運算與長度 $\rightarrow$ 內積（夾角、垂直、投影）$\rightarrow$ 外積（法向量、面積）$\rightarrow$ 三階行列式與體積
+\end{center}
+
+\section*{\sffamily 4-1\quad 空間概念與空間坐標系}
+
+\subsection*{\sffamily A.\ 從平面到空間：多了一個方向}
+
+在平面上，過一點只能畫出彼此垂直的兩個方向（$x$、$y$）；在空間中，我們再加上一個與這兩者都垂直的方向 $z$。於是描述空間中的一個點需要\textbf{三個坐標} $(a,b,c)$。本章自始至終，空間中的點都用三個實數表示。
+
+「多一個坐標」帶來的不只是多寫一個數字，而是\textbf{幾何關係變豐富}。最明顯的差別是兩直線的位置關係：平面上兩條不平行的直線一定相交，空間中卻可能「既不平行、也不相交」。先把這些位置關係講清楚，後面用向量處理時才不會搞混。
+
+\begin{補充框}{空間中兩直線的三種位置關係}
+空間中兩條相異直線 $L_1$、$L_2$ 只有三種可能：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{平行}：方向相同（或相反），永不相交，且\textbf{共平面}。
+\item \textbf{相交}：恰有一個公共點，\textbf{共平面}。
+\item \textbf{歪斜（skew，又稱不共面）}：既不平行也不相交，\textbf{不共平面}——這是平面上沒有的新情形。
+\end{itemize}
+判準：兩直線\textbf{共平面} $\iff$ 平行或相交；否則為歪斜。
+
+\textbf{注意：}「兩直線不平行就一定相交」是\textbf{平面}的性質，在空間中是錯的——還有歪斜線。電線桿與遠處天橋的邊緣，就是一組常見的歪斜線。
+\end{補充框}
+
+\begin{補充框}{兩平面、直線與平面的位置關係}
+\textbf{兩相異平面 $E_1$、$E_2$}：\textbf{平行}（無交點）、或\textbf{相交於一條直線}。（注意：兩相異平面若相交，交集是\textbf{一條直線}，不是一個點。想像兩張紙互相切過。）
+
+\textbf{直線 $L$ 與平面 $E$}：$L$ 在 $E$ \textbf{內}（無數個公共點）、$L$ 與 $E$ \textbf{平行}（無公共點）、或 $L$ 與 $E$ \textbf{相交於一點}。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 三垂線定理}
+
+空間裡有一個非常常用的定理，叫\textbf{三垂線定理（three perpendiculars theorem）}。它把「線垂直於面」與「面內的垂直」這兩個垂直關係，接成第三個垂直關係，專門用來在立體圖裡\textbf{找出「點到直線」的垂足}，好讓你知道距離要從哪裡量起。
+
+\begin{補充框}{三垂線定理在說什麼？（用路燈的影子理解）}
+先看一個場景：地面是平面 $E$，地上畫了一條直線 $L$（一條路）；空中有一點 $P$（路燈頂）。
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item $A$＝$P$ 在地面的\textbf{正下方影子}（即 $PA\perp$ 地面，$A$ 是 $P$ 在 $E$ 上的正射影）。
+\item 在地面上，從影子 $A$ 向路 $L$ 拉一條\textbf{垂線}，垂足為 $B$（即 $AB\perp L$）。
+\end{itemize}
+\textbf{三垂線定理說：斜拉線 $PB$ 也垂直於路 $L$，即 $PB\perp L$。} 反過來也成立：若 $PB\perp L$，則 $AB\perp L$。
+
+一句話：\textbf{鉛直桿子在地上的影子怎麼垂直於某條路，桿頂到那條路的斜拉線就怎麼垂直。}
+
+它的用處是：因為 $PB\perp L$，所以「$P$ 到直線 $L$ 的最短距離」就是 $\overline{PB}$，而垂足 $B$ 你已經在地面上用平面幾何找出來了。
+
+\textbf{為什麼三個垂直可以這樣串（向量看最清楚）：}設 $L$ 的方向為 $\vec d$。因 $PA\perp$ 整個平面 $E$，故 $\vec{PA}\perp$ 平面內任何向量，特別地 $\vec{PA}\cdot\vec d=0$；又已知 $\vec{AB}\cdot\vec d=0$。而 $\vec{PB}=\vec{PA}+\vec{AB}$，所以
+$$\vec{PB}\cdot\vec d=(\vec{PA}+\vec{AB})\cdot\vec d=0+0=0,$$
+即 $\vec{PB}\perp\vec d$，也就是 $PB\perp L$。本質只是一句話：\textbf{$\vec d$ 同時垂直於 $\vec{PA}$ 和 $\vec{AB}$，就一定垂直於它們的和 $\vec{PB}$}（這用到內積對加法可分配）。
+
+\textbf{注意：}$P$ 到 $L$ 的距離不是 $\overline{PA}$，也不是隨便一點——垂足必須落在 $L$ 上，而三垂線定理告訴你它就是 $B$。
+\end{補充框}
+
+\fig{d34-three-perp}{0.62}{圖 4-1：三垂線定理。$PA$ 垂直於地面，$A$ 是 $P$ 的正射影；在地面上 $AB\perp L$，則斜拉線 $PB$ 也垂直於 $L$。$\overline{PB}$ 即點 $P$ 到直線 $L$ 的距離。}
+
+\subsection*{\sffamily C.\ 空間直角坐標系}
+
+取空間中一固定點 $O$ 為\textbf{原點}，過 $O$ 作兩兩垂直的三條數線 $x$、$y$、$z$ 軸（依右手定則排列）。空間中每一點 $P$ 都對應唯一的有序三數組 $P(a,b,c)$。
+
+三個坐標平面——$xy$ 平面（$z=0$）、$yz$ 平面（$x=0$）、$zx$ 平面（$y=0$）——把空間分成 \textbf{8 個卦限（octant）}。一個點到坐標平面或坐標軸的\textbf{投影}有簡單規則：投到某個坐標平面，就把缺的那一個坐標歸零（如 $P(a,b,c)$ 到 $xy$ 平面的投影是 $(a,b,0)$）；投到某條坐標軸，就只留那一個坐標（如到 $x$ 軸的投影是 $(a,0,0)$）。
+
+\fig{d34-coords}{0.6}{圖 4-2：空間直角坐標系。三軸兩兩垂直，點 $P(a,b,c)$ 由三個坐標定位；虛線顯示 $P$ 到各坐標平面的投影。}
+
+空間中兩點的距離，是把平面的距離公式多補一個 $z$ 方向的平方而已（本質都是畢氏定理）。
+
+\begin{補充框}{空間中的兩點距離公式}
+空間中 $A(x_1,y_1,z_1)$、$B(x_2,y_2,z_2)$ 的距離為
+$$\boxed{\;\overline{AB}=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2+(z_2-z_1)^2}\;}$$
+這正是平面距離公式 $\sqrt{(\Delta x)^2+(\Delta y)^2}$ 多加一項 $(\Delta z)^2$ 的結果，可由「兩次畢氏定理」推得。
+
+由此也能直接寫出\textbf{球面方程式}：以 $C(x_0,y_0,z_0)$ 為球心、半徑 $r$ 的球面，就是「到 $C$ 的距離等於 $r$ 的所有點」，即
+$$(x-x_0)^2+(y-y_0)^2+(z-z_0)^2=r^2.$$
+這是平面上「圓方程式」在空間的對應物，邏輯完全相同。
+\end{補充框}
+
+\section*{\sffamily 4-2\quad 空間向量}
+
+\subsection*{\sffamily A.\ 坐標表示與基本運算}
+
+空間向量是「有向線段的等價類」，但一旦有了坐標，一切都變成\textbf{逐分量計算}——和平面向量唯一的差別，就是「多算一個 $z$ 分量」。
+
+\begin{補充框}{空間向量的坐標表示與運算}
+由 $A(x_1,y_1,z_1)$ 指到 $B(x_2,y_2,z_2)$ 的向量
+$$\vec{AB}=(x_2-x_1,\ y_2-y_1,\ z_2-z_1).$$
+設 $\vec a=(a_1,a_2,a_3)$、$\vec b=(b_1,b_2,b_3)$，$t\in\mathbb{R}$，則
+$$\vec a\pm\vec b=(a_1\pm b_1,\ a_2\pm b_2,\ a_3\pm b_3),\qquad t\vec a=(ta_1,\ ta_2,\ ta_3).$$
+標準單位向量 $\vec i=(1,0,0)$、$\vec j=(0,1,0)$、$\vec k=(0,0,1)$，於是任意向量可寫成 $\vec a=a_1\vec i+a_2\vec j+a_3\vec k$。
+\end{補充框}
+
+加減與係數積的幾何意義（平行四邊形法、三角形法、伸縮），與平面向量完全相同，這裡不再重畫圖。
+
+\subsection*{\sffamily B.\ 線性組合、共線與共面}
+
+把幾個向量各自乘上一個實數再相加，得到的向量稱為它們的\textbf{線性組合（linear combination）}，例如 $\vec v=s\vec a+t\vec b+\cdots$。用線性組合可以乾淨地描述「平行」與「共面」：
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{兩向量平行（共線）}：$\vec a\parallel\vec b\iff\vec b=t\vec a$（其中 $\vec a\ne\vec 0$），也就是兩者\textbf{對應分量成比例}。
+\item \textbf{三向量共面}：$\vec c$ 與 $\vec a,\vec b$ 共面 $\iff\vec c=s\vec a+t\vec b$（$\vec a,\vec b$ 不平行）。要在空間中「撐滿」整個三維，需要\textbf{三個不共面}的向量。
+\end{itemize}
+
+\begin{補充框}{用比例式判斷平行時的小陷阱}
+平行條件「分量成比例」寫成
+$$\frac{b_1}{a_1}=\frac{b_2}{a_2}=\frac{b_3}{a_3}\,(=t)$$
+很方便，但若 $\vec a$ 某個分量為 $0$（例如 $\vec a=(2,0,3)$），就不能直接除以 $0$。較安全的作法是改寫成 $\vec b=t\vec a$ 逐項對應：要平行，$\vec b$ 在那一項也必須是 $0$。另外，\textbf{零向量 $\vec 0$ 與任何向量都可說「平行也垂直」}，討論時通常先把零向量排除。
+\end{補充框}
+
+\subsection*{\sffamily C.\ 長度（模）與三角不等式}
+
+向量的\textbf{長度（模，magnitude）}就是它的「大小」，由各分量平方相加再開根號得到——這和原點到該點的距離是同一件事。
+
+\begin{補充框}{向量長度與單位向量}
+$\vec a=(a_1,a_2,a_3)$ 的長度
+$$\boxed{\;|\vec a|=\sqrt{a_1^2+a_2^2+a_3^2}\;}$$
+與原點到 $(a_1,a_2,a_3)$ 的距離一致。若 $\vec a\ne\vec 0$，則 $\dfrac{\vec a}{|\vec a|}$ 是與 $\vec a$ 同方向的\textbf{單位向量（長度為 $1$ 的向量）}。
+
+「長度公式 $=$ 兩點距離公式 $=$ 三維畢氏定理」其實是同一件事換個說法：核心動作都是\textbf{平方相加再開根號}，不必當成三個獨立公式來背。
+\end{補充框}
+
+向量相加時，合向量的長度有一個固定的範圍，這就是\textbf{三角不等式}。
+
+\begin{補充框}{三角不等式（triangle inequality）}
+對任意兩空間向量 $\vec a,\vec b$：
+$$\boxed{\;\bigl|\,|\vec a|-|\vec b|\,\bigr|\ \le\ |\vec a+\vec b|\ \le\ |\vec a|+|\vec b|\;}$$
+\textbf{幾何意義}就是三角形的「兩邊之和大於第三邊、兩邊之差小於第三邊」。右邊等號成立 $\iff\vec a,\vec b$ \textbf{同方向}（此時兩向量首尾相接成一直線）。
+
+\textbf{注意：}一般而言 $|\vec a+\vec b|\ne|\vec a|+|\vec b|$。只有兩向量\textbf{同方向}時長度才直接相加；只要有夾角，合向量就比兩長度之和短。把向量當成數字直接相加，是很常見的錯誤。
+\end{補充框}
+
+\section*{\sffamily 4-3\quad 內積與外積}
+
+這一節是本章的核心，也是空間向量與平面向量分岔的地方：\textbf{內積}在平面早就有，而\textbf{外積是空間特有的新運算}。先記住一句話分工：\textbf{內積吃兩個向量、吐一個數（純量）；外積吃兩個向量、吐一個向量。}
+
+\subsection*{\sffamily A.\ 內積}
+
+\textbf{內積（inner product，又稱 dot product）}有兩種等價的算法：一種用夾角（好懂），一種用坐標（好算）。
+
+\begin{補充框}{內積的兩種定義}
+設 $\vec a,\vec b$ 的夾角為 $\theta$（$0\le\theta\le\pi$），則
+$$\vec a\cdot\vec b=|\vec a|\,|\vec b|\cos\theta.$$
+用坐標（$\vec a=(a_1,a_2,a_3)$、$\vec b=(b_1,b_2,b_3)$）則為
+$$\boxed{\;\vec a\cdot\vec b=a_1b_1+a_2b_2+a_3b_3\;}$$
+兩個定義會得到相同的結果：坐標式好算，幾何式好懂。內積的結果是一個\textbf{數}（可正、可負、可為零）。
+\end{補充框}
+
+由內積馬上得到三個常用工具：算\textbf{夾角}、判斷\textbf{垂直}、求\textbf{正射影}。
+
+\begin{補充框}{夾角、垂直、正射影}
+由 $\vec a\cdot\vec b=|\vec a||\vec b|\cos\theta$ 解出夾角：
+$$\cos\theta=\frac{\vec a\cdot\vec b}{|\vec a|\,|\vec b|}.$$
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{垂直判定}：$\vec a\perp\vec b\iff\vec a\cdot\vec b=0$（$\vec a,\vec b\ne\vec 0$）。
+\item $\vec a$ 在 $\vec b$ 上的\textbf{正射影長}為 $\dfrac{\vec a\cdot\vec b}{|\vec b|}$；\textbf{正射影向量}為 $\dfrac{\vec a\cdot\vec b}{|\vec b|^2}\,\vec b$。
+\end{itemize}
+\end{補充框}
+
+\begin{補充框}{為什麼「垂直」恰好是「內積 $=0$」？}
+兩個非零向量的長度都是正的，所以
+$$\vec a\cdot\vec b=0\iff\cos\theta=0\iff\theta=90^\circ.$$
+直覺上，內積在量「$\vec b$ 有多少分量是沿著 $\vec a$ 方向的」。如果 $\vec b$ 完全垂直於 $\vec a$，它在 $\vec a$ 方向上就沒有任何分量，這個「沿 $\vec a$ 的分量」是 $0$——內積自然為 $0$。
+
+\textbf{注意：}判斷\textbf{平行}不要用內積。內積大只代表夾角小，不一定平行；平行的判準是\textbf{分量成比例}（或下面外積為零）。一個好記的對照：內積裡的 $\cos\theta$ 在 $90^\circ$ 為 $0$，所以\textbf{內積管垂直}；外積裡的 $\sin\theta$ 在 $0^\circ$ 為 $0$，所以\textbf{外積管平行}。
+\end{補充框}
+
+把 $|\cos\theta|\le 1$ 代回內積定義，立刻得到一條重要不等式：
+
+\begin{補充框}{柯西不等式（Cauchy inequality）}
+由 $\vec a\cdot\vec b=|\vec a||\vec b|\cos\theta$ 及 $|\cos\theta|\le 1$：
+$$\boxed{\;|\vec a\cdot\vec b|\le|\vec a|\,|\vec b|\;}$$
+用坐標寫出來就是
+$$(a_1b_1+a_2b_2+a_3b_3)^2\le(a_1^2+a_2^2+a_3^2)(b_1^2+b_2^2+b_3^2).$$
+等號成立 $\iff\vec a\parallel\vec b$。這是平面版柯西不等式直接多一項。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 外積——空間特有的運算}
+
+平面上兩個向量「沒有地方放第三個垂直方向」，所以平面沒有外積；空間有了 $z$ 方向後，就能定義一個\textbf{同時垂直於 $\vec a$ 與 $\vec b$ 的向量}——這就是\textbf{外積（cross product，又稱向量積 vector product）}。它的價值在於\textbf{一鍵生出法向量}，而且\textbf{長度恰好是面積}。
+
+\begin{補充框}{外積的定義與三個關鍵性質}
+$\vec a=(a_1,a_2,a_3)$、$\vec b=(b_1,b_2,b_3)$ 的外積 $\vec a\times\vec b$ 是一個\textbf{向量}，坐標為
+$$\boxed{\;\vec a\times\vec b=\bigl(a_2b_3-a_3b_2,\ \ a_3b_1-a_1b_3,\ \ a_1b_2-a_2b_1\bigr)\;}$$
+它有三個關鍵性質：
+\begin{enumerate}\setlength{\itemsep}{1pt}
+\item \textbf{方向}：$\vec a\times\vec b$ 同時垂直於 $\vec a$ 與 $\vec b$，即垂直於 $\vec a,\vec b$ 所決定的平面，因此是該平面的一個\textbf{法向量（normal vector）}。方向由\textbf{右手定則}決定：右手四指由 $\vec a$ 彎向 $\vec b$，拇指所指即 $\vec a\times\vec b$。
+\item \textbf{長度}：$|\vec a\times\vec b|=|\vec a|\,|\vec b|\sin\theta$，恰好是以 $\vec a,\vec b$ 為鄰邊的\textbf{平行四邊形面積}。
+\item \textbf{反交換}：$\vec b\times\vec a=-(\vec a\times\vec b)$；且 $\vec a\times\vec a=\vec 0$。
+\end{enumerate}
+\end{補充框}
+
+\fig{d34-cross-product}{0.6}{圖 4-3：外積 $\vec a\times\vec b$ 垂直於 $\vec a,\vec b$ 所在的平面（右手定則決定朝向），其長度等於以 $\vec a,\vec b$ 為鄰邊的平行四邊形面積。}
+
+\begin{補充框}{外積的記憶法：符號行列式}
+不必硬背那三個分量，可用「符號行列式」展開：
+$$\vec a\times\vec b=\begin{vmatrix}\vec i&\vec j&\vec k\\ a_1&a_2&a_3\\ b_1&b_2&b_3\end{vmatrix}
+=\vec i\,(a_2b_3-a_3b_2)-\vec j\,(a_1b_3-a_3b_1)+\vec k\,(a_1b_2-a_2b_1).$$
+\textbf{注意：}中間 $\vec j$ 那一項\textbf{帶負號}，這是最常算錯的地方，務必檢查。
+\end{補充框}
+
+外積有兩個直接的用途：\textbf{面積}與\textbf{法向量}。由性質 2，以 $\vec a,\vec b$ 為鄰邊的平行四邊形面積就是 $|\vec a\times\vec b|$；而三角形是平行四邊形的一半，所以三角形 $ABC$ 的面積為
+$$[\triangle ABC]=\tfrac12\bigl|\vec{AB}\times\vec{AC}\bigr|.$$
+由性質 1，$\vec a\times\vec b$ 是 $\vec a,\vec b$ 所在平面的法向量——這正是下一冊寫\textbf{平面方程式}時第一步要找的東西。
+
+\begin{補充框}{內積與外積到底差在哪？怎麼分工？}
+這兩種「乘法」負責完全不同的工作：
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{內積測「有多平行」}：$\vec a\cdot\vec b=|\vec a||\vec b|\cos\theta$ 裡有 $\cos\theta$，兩向量越同向值越大，垂直時為 $0$。\textbf{結果是一個數}，用於夾角、垂直判定、正射影、（物理的）功。
+\item \textbf{外積測「有多垂直，並指出垂直方向」}：$|\vec a\times\vec b|=|\vec a||\vec b|\sin\theta$ 裡有 $\sin\theta$，兩向量越垂直值越大，平行時為 $\vec 0$。\textbf{結果是一個向量}，用於法向量、面積、（物理的）力矩。
+\end{itemize}
+一句話：\textbf{內積給你一個數（管夾角、垂直、投影），外積給你一個向量（管法向量、面積）。} 要判斷該用哪個，就看你要的是\textbf{數}，還是\textbf{方向／面積}。
+
+\textbf{注意：}內積、外積最容易被搞混。問「夾角、垂直、投影」用內積（結果是數）；問「面積、法向量、體積、力矩」用外積（結果是向量）。另外外積\textbf{不可交換}：$\vec a\times\vec b\ne\vec b\times\vec a$，兩者差一個負號，寫順序要小心。
+
+\textbf{補充：}平面上其實沒有真正的外積，因為平面沒有「第三個垂直方向」可放。平面上頂多用 $a_1b_2-a_2b_1$ 這個\textbf{數}（它就是空間外積的 $z$ 分量，等於有號面積）。真正的外積是空間特有的。
+\end{補充框}
+
+\section*{\sffamily 4-4\quad 三階行列式與平行六面體體積}
+
+\subsection*{\sffamily A.\ 三階行列式}
+
+有了外積與內積，把它們接力使用就能算出「體積」。在那之前，先定義\textbf{三階行列式}。
+
+\begin{補充框}{三階行列式的定義（餘因式展開）}
+$$\det\begin{pmatrix}a_1&a_2&a_3\\ b_1&b_2&b_3\\ c_1&c_2&c_3\end{pmatrix}
+=a_1\begin{vmatrix}b_2&b_3\\ c_2&c_3\end{vmatrix}
+-a_2\begin{vmatrix}b_1&b_3\\ c_1&c_3\end{vmatrix}
++a_3\begin{vmatrix}b_1&b_2\\ c_1&c_2\end{vmatrix},$$
+其中 $\begin{vmatrix}p&q\\ r&s\end{vmatrix}=ps-qr$ 是\textbf{二階行列式}。展開後共六項，\textbf{中間（第二）項帶負號}。
+
+\textbf{薩魯斯法（Sarrus，對角線法）}是另一種算法：把前兩行抄到右邊，三條「右下方向」對角線的乘積相加、三條「左下方向」對角線的乘積相減。\textbf{此法只對三階有效}，更高階不能用。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 三重積與平行六面體體積}
+
+把外積與內積接力使用，得到\textbf{純量三重積（scalar triple product）} $(\vec a\times\vec b)\cdot\vec c$，它正好等於上面那個三階行列式，而它的\textbf{絕對值}就是平行六面體的體積。
+
+\begin{補充框}{三重積與體積公式}
+設 $\vec a=(a_1,a_2,a_3)$、$\vec b=(b_1,b_2,b_3)$、$\vec c=(c_1,c_2,c_3)$，則
+$$(\vec a\times\vec b)\cdot\vec c=\det\begin{pmatrix}a_1&a_2&a_3\\ b_1&b_2&b_3\\ c_1&c_2&c_3\end{pmatrix}.$$
+以 $\vec a,\vec b,\vec c$ 為鄰邊的\textbf{平行六面體體積}為
+$$\boxed{\;V=\bigl|(\vec a\times\vec b)\cdot\vec c\bigr|=\left|\det\begin{pmatrix}a_1&a_2&a_3\\ b_1&b_2&b_3\\ c_1&c_2&c_3\end{pmatrix}\right|\;}$$
+\textbf{共面判定}：三向量共面 $\iff$ 此行列式 $=0$（撐不出體積，被壓扁成一個面）。
+\end{補充框}
+
+\fig{d34-parallelepiped}{0.6}{圖 4-4：以 $\vec a,\vec b,\vec c$ 為鄰邊的平行六面體。底面是 $\vec a,\vec b$ 撐的平行四邊形（面積 $=|\vec a\times\vec b|$），高是 $\vec c$ 在法向量 $\vec a\times\vec b$ 方向上的投影長。}
+
+\begin{補充框}{為什麼一個行列式剛好等於體積？（底面積 $\times$ 高）}
+這不是巧合，背後就是「底面積 $\times$ 高」，可分四步看清楚：
+
+\textbf{第一步——底面積 $=$ 外積長度。} 把 $\vec a,\vec b$ 撐的平行四邊形當底面，其面積 $S=|\vec a\times\vec b|$；而 $\vec n=\vec a\times\vec b$ 這個向量恰好\textbf{垂直於底面}，是底面的法向量。
+
+\textbf{第二步——高 $=$ 第三向量在法向量上的投影長。} 平行六面體的「高」是頂點到底面的垂直距離，也就是 $\vec c$ 在「垂直於底面的方向」（即 $\vec n$ 方向）上的投影長。用 4-3 學過的正射影長公式：
+$$h=\frac{|\vec c\cdot\vec n|}{|\vec n|}=\frac{|\vec c\cdot(\vec a\times\vec b)|}{|\vec a\times\vec b|}.$$
+
+\textbf{第三步——相乘，自動消去。}
+$$V=S\times h=|\vec a\times\vec b|\times\frac{|\vec c\cdot(\vec a\times\vec b)|}{|\vec a\times\vec b|}=\bigl|(\vec a\times\vec b)\cdot\vec c\bigr|.$$
+$|\vec a\times\vec b|$ 上下約掉，只剩三重積的絕對值。
+
+\textbf{第四步——三重積 $=$ 三階行列式。} 把 $\vec a\times\vec b$ 的坐標代進 $(\vec a\times\vec b)\cdot\vec c$ 逐項整理，恰好就是前面那個三階行列式。
+
+所以：\textbf{體積 $=$ 底面積 $\times$ 高 $=$ |外積長度| $\times$ |投影高| $=$ |三重積| $=$ |三階行列式|}，是一條把本章外積、內積、正射影、行列式全部串起來的接力。
+\end{補充框}
+
+\begin{補充框}{用體積算四面體；行列式的正負號}
+\textbf{四面體體積。} 以 $\vec a,\vec b,\vec c$ 為三邊的\textbf{四面體}，體積是平行六面體的 $\dfrac16$：
+$$V_{\text{四面體}}=\frac16\bigl|(\vec a\times\vec b)\cdot\vec c\bigr|.$$
+\textbf{注意：}四面體不是平行六面體，要乘的是 $\dfrac16$（不是 $\dfrac12$）。記法：平行六面體先切一半成三角柱（$\tfrac12$），三角柱再分三份成四面體（$\tfrac13$），合起來 $\tfrac16$。
+
+\textbf{正負號的意義。} 三階行列式（三重積）本身\textbf{可正可負}：正負號代表 $\vec a,\vec b,\vec c$ 的「定向」是右手系（正）還是左手系（負）。但「面積」「體積」是幾何量，一定取\textbf{絕對值}——行列式算出 $-6$，體積是 $|-6|=6$，不是 $-6$。
+\end{補充框}
+
+\begin{延伸框}{行列式其實「就是有號體積」}
+本章把行列式當成「一套計算規則」，但它其實有更根本的幾何身分：\textbf{三階行列式就是三向量撐出的有號體積}（二階行列式則是兩向量撐出的有號面積）。「行列式 $=0\iff$ 三向量共面」也因此是同一件事的兩種說法——被壓扁、撐不出體積，行列式自然為零。
+
+這個幾何意義在大學的線性代數會反覆出現：行列式代表一個線性變換「把體積放大或縮小幾倍」（負號代表它把空間的定向翻面）。換句話說，本章看似只是高中的計算技巧，其實是線性代數一個核心概念的入口。
+\end{延伸框}
+
+\section*{\sffamily 4-5\quad 本章重點整理}
+
+\begin{補充框}{一頁複習（公式與關鍵結論）}
+\textbf{空間概念}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 兩直線：平行 / 相交 / \textbf{歪斜}（不共面，平面沒有）。兩平面：平行 / 交於\textbf{一直線}。線與面：在面內 / 平行 / 交於一點。
+\item \textbf{三垂線定理}：$PA\perp$ 面、$AB\perp L$（$B$ 在 $L$ 上）$\Rightarrow PB\perp L$，用來找「點到直線」的垂足。
+\end{itemize}
+
+\textbf{坐標與向量}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 兩點距離 $\overline{AB}=\sqrt{(\Delta x)^2+(\Delta y)^2+(\Delta z)^2}$；向量長度 $|\vec a|=\sqrt{a_1^2+a_2^2+a_3^2}$。
+\item 加減、係數積逐分量做；平行 $\iff$ 分量成比例（$\vec b=t\vec a$）。
+\item 三角不等式 $\bigl|\,|\vec a|-|\vec b|\,\bigr|\le|\vec a+\vec b|\le|\vec a|+|\vec b|$。
+\end{itemize}
+
+\textbf{內積（吐一個數）}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item $\vec a\cdot\vec b=a_1b_1+a_2b_2+a_3b_3=|\vec a||\vec b|\cos\theta$。
+\item 垂直 $\iff\vec a\cdot\vec b=0$；$\cos\theta=\dfrac{\vec a\cdot\vec b}{|\vec a||\vec b|}$；正射影長 $\dfrac{\vec a\cdot\vec b}{|\vec b|}$。
+\item 柯西不等式 $|\vec a\cdot\vec b|\le|\vec a||\vec b|$。
+\end{itemize}
+
+\textbf{外積（吐一個向量，空間特有）}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item $\vec a\times\vec b=\begin{vmatrix}\vec i&\vec j&\vec k\\ a_1&a_2&a_3\\ b_1&b_2&b_3\end{vmatrix}$（中間 $\vec j$ 帶負號）。
+\item 方向 $\perp\vec a,\vec b$（\textbf{法向量}），右手定則；長度 $|\vec a\times\vec b|=|\vec a||\vec b|\sin\theta=$ 平行四邊形面積。三角形面積 $=\tfrac12|\vec{AB}\times\vec{AC}|$；反交換 $\vec b\times\vec a=-\vec a\times\vec b$。
+\end{itemize}
+
+\textbf{三階行列式與體積}
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item 三重積 $(\vec a\times\vec b)\cdot\vec c=\det\begin{pmatrix}a_1&a_2&a_3\\ b_1&b_2&b_3\\ c_1&c_2&c_3\end{pmatrix}$。
+\item 平行六面體體積 $V=|(\vec a\times\vec b)\cdot\vec c|$；四面體體積 $=\tfrac16V$；共面 $\iff$ 行列式 $=0$。
+\end{itemize}
+
+\textbf{一句話總結}：本章把平面向量「多一個坐標」搬到空間，新增的兩件事是\textbf{空間幾何（歪斜線、三垂線定理）}與\textbf{外積}；而外積（法向量、面積）接上內積（投影、高），就得到三階行列式與體積。
+\end{補充框}
+
+\end{document}
