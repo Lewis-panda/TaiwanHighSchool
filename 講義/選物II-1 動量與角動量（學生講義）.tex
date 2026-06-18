@@ -130,6 +130,48 @@ $$\boxed{\,m_1v_1+m_2v_2=m_1v_1'+m_2v_2'\,}$$
 \textbf{注意：}「動量守恆即動能守恆」並不正確；動量在任何（外力可忽略的）碰撞都守恆，動能只有\textbf{彈性}碰撞才守恆。「黏在一起代表動量消失」也不正確——完全非彈性只是\textbf{動能}損失最多，\textbf{動量照常守恆}（由兩物一起帶走）。
 \end{補充框}
 
+\subsection*{\sffamily A.\ 恢復係數：把三類碰撞接成連續光譜}
+
+彈性與完全非彈性是兩個極端，兩者之間還有大量「有彈、但不完全彈」的碰撞：碰後兩物分開了（不像完全非彈性黏在一起），但動能有所損失（不像彈性那樣完全保留）。要量化「彈到什麼程度」，可用\textbf{恢復係數（coefficient of restitution）} $e$。
+
+一維正面碰撞的恢復係數 $e$，定義為\textbf{分離速率}與\textbf{接近速率}之比：
+$$\boxed{\,e=\frac{\text{分離速率}}{\text{接近速率}}=\frac{v_2'-v_1'}{v_1-v_2}\,}\qquad(0\le e\le 1)$$
+它衡量碰撞「回彈的程度」，把三類碰撞接成一條連續的光譜：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item $e=1$：\textbf{彈性碰撞}——分離速率等於接近速率，動能完全保留（即前面「接近速率等於分離速率」的情形）。
+\item $0<e<1$：\textbf{一般（部分）非彈性碰撞}——回彈一部分，動能部分損失。
+\item $e=0$：\textbf{完全非彈性碰撞}——分離速率為零，兩物以共同速度離開（黏在一起）。
+\end{itemize}
+$e$ 主要由兩碰撞物的材料性質決定（橡膠球的 $e$ 大、黏土球幾乎為 $0$），與碰撞速度幾乎無關。
+
+\begin{補充框}{一般非彈性碰撞用幾條方程式求解？}
+碰撞要列幾條方程式，取決於知道多少資訊，恰好對應 $e$ 落在光譜上的位置：
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{完全非彈性（$e=0$）}：碰後共速，只剩一個未知數，僅用動量守恆即可。
+\item \textbf{一般非彈性（$0<e<1$）}：兩個碰後速度為未知，用動量守恆\textbf{加上}恢復係數的關係 $v_2'-v_1'=e(v_1-v_2)$ 兩式聯立求解。
+\item \textbf{彈性（$e=1$）}：用動量守恆與動能守恆，或等價地用動量守恆加上「接近速率等於分離速率」。
+\end{itemize}
+換言之，恢復係數 $e$ 把「動能守不守恆」這個是非題，換成一個可以連續調整的數，補上的那條方程式正是 $v_2'-v_1'=e(v_1-v_2)$。
+\end{補充框}
+
+\subsection*{\sffamily B.\ 二維碰撞：把守恆拆成 $x$、$y$ 兩條}
+
+前面討論的都是「正面對撞」（一維）。現實中更多的是\textbf{偏心碰撞}——撞球沒打正、兩車斜角相撞，碰後各自飛向不同方向。處理方法不變，只是把\textbf{向量}的動量守恆，拆成互相獨立的 $x$、$y$ 兩個分量式。
+
+碰撞外力衝量可忽略時，系統動量\textbf{向量}守恆。在平面上把它拆成兩條純量式，兩個方向各自守恆：
+$$\boxed{\,\sum m_i v_{ix}=\sum m_i v_{ix}'\,}\qquad\boxed{\,\sum m_i v_{iy}=\sum m_i v_{iy}'\,}$$
+動量是向量，$x$ 與 $y$ 兩方向\textbf{各自守恆、互不干擾}。若另知是彈性碰撞，再補上一條\textbf{動能守恆}的方程式；動能是純量，\textbf{不分方向}，只有一條。
+
+\begin{補充框}{等質量的二維彈性碰撞：兩球必以直角分開}
+一個常用的結果是：一動一靜、\textbf{質量相同}的兩球作\textbf{彈性}偏心碰撞，碰後兩球的速度方向\textbf{必互相垂直}（夾 $90^\circ$）。這正是撞球高手熟知的「母球斜撞同樣的目標球，兩球以直角分開」。
+
+理由如下。設運動球碰前速度為 $\vec v_1$，碰後兩球速度為 $\vec v_1'$、$\vec v_2'$，質量同為 $m$。動量守恆給出 $\vec v_1=\vec v_1'+\vec v_2'$（向量關係，已含 $x$、$y$ 兩分量）；兩邊平方得
+$$v_1^2=v_1'^2+v_2'^2+2\,\vec v_1'\!\cdot\!\vec v_2'.$$
+彈性碰撞另有動能守恆，等質量時化為 $v_1^2=v_1'^2+v_2'^2$。兩式相比，得 $\vec v_1'\!\cdot\!\vec v_2'=0$，即\textbf{碰後兩速度互相垂直}。（若改為非彈性碰撞，夾角會小於 $90^\circ$；完全非彈性則兩球合為一體，談不上夾角。）
+\end{補充框}
+
+\textbf{注意：}二維碰撞\textbf{不能}把速率直接相加減——動量是向量，必先分成 $x$、$y$ 分量再各自守恆。動能守恆式則\textbf{不分方向}（純量），不要也把它拆成兩條。
+
 \section*{\sffamily 1-4\quad 質心}
 
 \subsection*{\sffamily A.\ 質心的定義}
@@ -218,7 +260,7 @@ $$\boxed{\,\vec\tau=0\;\Longrightarrow\;\vec L=\text{定值}\,}$$
 \item \textbf{動量}：$\vec p=m\vec v$（向量）。第二定律的基本形式為 $\vec F=\dfrac{d\vec p}{dt}$，質量不變時退回 $\vec F=m\vec a$。
 \item \textbf{衝量}：$\vec J=\displaystyle\int\vec F\,dt=\bar F\,\Delta t=\Delta\vec p$，等於 $F$–$t$ 圖面積。緩衝原理：同樣的 $\Delta p$ 拉長 $\Delta t$，平均力 $\bar F$ 減小。
 \item \textbf{動量守恆}：$\sum\vec F_{\text{外}}=0\Rightarrow\vec p_{\text{總}}$ 守恆（內力因第三定律成對抵消）。反衝、爆炸的主要工具。
-\item \textbf{碰撞}：任何碰撞動量皆守恆；\textbf{彈性}碰撞動能也守恆，\textbf{完全非彈性}碰後黏在一起、動能損失最多。等質量彈性碰撞即交換速度。
+\item \textbf{碰撞}：任何碰撞動量皆守恆；\textbf{彈性}碰撞動能也守恆，\textbf{完全非彈性}碰後黏在一起、動能損失最多。等質量彈性碰撞即交換速度。\textbf{恢復係數} $e=\dfrac{\text{分離速率}}{\text{接近速率}}$：$e=1$ 彈性、$0<e<1$ 一般非彈性、$e=0$ 完全非彈性。\textbf{二維碰撞}：動量按 $x$、$y$ 分量各自守恆；等質量彈性偏心碰撞兩球以直角分開。
 \item \textbf{質心}：$\vec r_{cm}=\dfrac{\sum m_i\vec r_i}{M}$；$\vec p_{\text{總}}=M\vec v_{cm}$；$\sum\vec F_{\text{外}}=M\vec a_{cm}$。外力只決定質心運動。
 \item \textbf{角動量與力矩}：$\vec L=\vec r\times\vec p$、$\vec\tau=\vec r\times\vec F$、$\vec\tau=\dfrac{d\vec L}{dt}$；合力矩為零則 $L$（或 $I\omega$）守恆。收手轉快、等面積定律皆屬此。
 \end{itemize}

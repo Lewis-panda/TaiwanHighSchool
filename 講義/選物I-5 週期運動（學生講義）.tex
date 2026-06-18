@@ -153,6 +153,33 @@ $$\boxed{\;T=2\pi\sqrt{\frac{m}{k}}\;}$$
 
 \textbf{注意：}振幅不影響週期。拉得越開，路程越長，但速度也越快，兩者恰好抵消。此外，$x=\pm A$（最大位移處）時速度為零、加速度最大（$|a|=\omega^2 A$）；$x=0$（平衡位置）時加速度為零、速度最大（$|v|=\omega A$）。「速度最大」與「加速度最大」發生在不同位置。簡諧的力隨位置變化、不是定值，因此不能套用等加速度三公式。
 
+\subsection*{\sffamily C.\ 簡諧運動的能量}
+
+簡諧系統在振盪時，能量在\textbf{動能（kinetic energy）}與\textbf{位能（potential energy）}之間來回搬運，但\textbf{總力學能不變}。以水平彈簧為例，位能存在被壓縮或拉伸的彈簧裡：
+$$U=\tfrac12 kx^2,\qquad K=\tfrac12 mv^2.$$
+兩者相加即為總力學能 $E=K+U$。桌面光滑、沒有摩擦做功，因此 $E$ 守恆。用兩個特殊位置就能把 $E$ 定出來：
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{端點}（$x=\pm A$）：此刻速度 $v=0$，能量全是位能，$E=\tfrac12 kA^2$。
+\item \textbf{平衡點}（$x=0$）：此刻位能為零、速率最大 $v_{\max}=A\omega$，能量全是動能，$E=\tfrac12 m v_{\max}^2$。
+\end{itemize}
+
+兩處的 $E$ 必須相等，於是
+$$\boxed{\;E=\tfrac12 kA^2=\tfrac12 m v_{\max}^2=\text{定值}\;}$$
+（代入 $v_{\max}=A\omega$ 與 $\omega^2=k/m$，兩式確實相等。）
+
+在任意位置 $x$，由 $E=\tfrac12 kx^2+\tfrac12 mv^2=\tfrac12 kA^2$ 解出速率：
+$$\boxed{\;v=\omega\sqrt{A^2-x^2}\;}$$
+此式描述整個振盪的快慢分佈：離平衡點越近（$x$ 越小）速率越大，到端點（$x=\pm A$）剛好停住。動能 $K$ 在平衡點最大、端點為零；位能 $U$ 相反，在端點最大、平衡點為零；兩者像接力一樣此消彼長，總和恆為 $\tfrac12 kA^2$。
+
+\begin{補充框}{總能與振幅的關係：$E\propto A^2$}
+總力學能 $E=\tfrac12 kA^2$ 與振幅的\textbf{平方}成正比，而非與振幅本身成正比。因此\textbf{振幅加倍時，總能變為 4 倍}（$2^2=4$），不是 2 倍；振幅變 3 倍，總能變 9 倍。
+
+這一點與「週期和振幅無關」並不衝突：拉得越開，振盪一趟的時間相同（等時性），但系統儲存的能量更多、各處速率也更大。週期管的是「快慢的節奏」，總能管的是「振盪的規模」，兩者各自獨立。
+\end{補充框}
+
+\textbf{注意：}一個完整振盪裡，動能與位能各自在一個週期內達到最大值兩次（左右兩端點、上下通過平衡點各一次），因此\textbf{動能與位能的變化週期是位移週期的一半}。此外，處理「中途某位置的速率」時，用能量守恆（$\tfrac12 kA^2=\tfrac12 kx^2+\tfrac12 mv^2$）比代入三角函數更直接。
+
 \section*{\sffamily 5-3\quad 簡諧與圓周的關係}
 
 讓一個物體在半徑 $A$ 的圓上做等速圓周運動，角速度為 $\omega$。把它在一條直徑上的投影取出來——\textbf{這個投影的來回運動，即為簡諧運動}。
@@ -242,6 +269,7 @@ $$T=2\pi\sqrt{\frac{L}{g}}\left(1+\frac{1}{16}\theta_0^2+\cdots\right),$$
 \item $x=A\cos\omega t$，$v=-A\omega\sin\omega t$，$a=-\omega^2 x$；$\omega=\sqrt{k/m}$。
 \item 端點（$x=\pm A$）：$v=0$、$|a|$ 最大；平衡點（$x=0$）：$|v|=A\omega$ 最大、$a=0$。
 \item 彈簧週期 $T=2\pi\sqrt{m/k}$，\textbf{與振幅無關}。
+\item \textbf{能量}：$U=\tfrac12 kx^2$、$K=\tfrac12 mv^2$，動能與位能互換而總力學能守恆 $E=\tfrac12 kA^2=\tfrac12 mv_{\max}^2$（$\propto A^2$）；任意位置 $v=\omega\sqrt{A^2-x^2}$。
 \end{itemize}
 
 \textbf{簡諧＝圓周的投影}：半徑 $A$、角速度 $\omega$ 的等速圓周，投影到一直徑上即為簡諧；正弦／餘弦與 $\omega$ 由此而來。

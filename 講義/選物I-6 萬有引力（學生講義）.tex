@@ -3,6 +3,8 @@
 
 % 讓羅馬數字 Ⅰ（U+2160）由中文字型排版，避免落到無此字符的拉丁字型
 \xeCJKDeclareCharClass{CJK}{`Ⅰ}
+% 同理：圈號數字 ①②③（U+2460–2462）改由中文字型排版
+\xeCJKDeclareCharClass{CJK}{"2460->"2462}
 
 \begin{document}
 
@@ -140,7 +142,27 @@ $$v_1=\sqrt{gR}=\sqrt{\dfrac{GM}{R}}\approx7.9\ \text{km/s}.$$
 $$\dfrac{GM}{r^2}=\dfrac{4\pi^2 r}{T^2}\;\Longrightarrow\;r^3=\dfrac{GM\,T^2}{4\pi^2}\;\Longrightarrow\;r\approx4.2\times10^{7}\ \text{m},$$
 離地面約 $3.6\times10^{7}$ m（約 36000 km），與實際同步衛星軌道相符。
 
-\subsection*{\sffamily C.\ 「失重」不是「沒有重力」}
+\subsection*{\sffamily C.\ 脫離速度（逃逸速度）}
+
+第一宇宙速度讓物體「貼著地表繞地球運行」；若要更進一步\textbf{徹底擺脫地球的引力束縛、一去不回}，所需的臨界速率稱為\textbf{脫離速度（逃逸速度）}。
+
+\begin{補充框}{脫離速度／逃逸速度（escape velocity）}
+從地表發射、能\textbf{剛好掙脫地球引力束縛}（飛到無窮遠時速率恰好減到零）所需的最小速率為
+$$\boxed{\,v_{\text{脫}}=\sqrt{\dfrac{2GM}{R}}=\sqrt{2gR}\approx11.2\ \text{km/s}\,}$$
+它與第一宇宙速度 $v_1=\sqrt{\dfrac{GM}{R}}$ 之間恰好差一個 $\sqrt2$ 倍：$v_{\text{脫}}=\sqrt2\,v_1$（$11.2\approx1.41\times7.9$）。脫離速度也稱\textbf{第二宇宙速度（second cosmic speed）}。
+\end{補充框}
+
+這個式子來自\textbf{力學能守恆}：要逃離地球，必須提供足以「填平」整個重力位能井的動能。完整推導（含重力位能 $-\dfrac{GMm}{r}$ 的由來）將在後續「功與能量」章節進行，此處先掌握三個要點：
+
+\begin{enumerate}\setlength{\itemsep}{2pt}
+\item \textbf{與發射物體的質量無關}——式子裡沒有 $m$。一顆子彈和一艘火箭，要逃離地球所需的「速率」相同（但火箭需要的「能量」大得多）。
+\item \textbf{與發射方向無關}（忽略空氣阻力與地球自轉）——脫離速度是一個「速率門檻」，而非某個特定方向的速度。
+\item \textbf{繞得住與逃得出只差 $\sqrt2$ 倍}：以 $v_1\approx7.9\ \text{km/s}$ 發射，物體繞地球運行（受縛軌道）；加速到 $v_{\text{脫}}\approx11.2\ \text{km/s}$，便能掙脫地球飛向太空。
+\end{enumerate}
+
+\textbf{注意：}脫離速度\textbf{不是}「飛出大氣層的速度」。$11.2\ \text{km/s}$ 指的是\textbf{只靠初速、之後不再加速}就能逃離地球所需的速率；實際火箭是\textbf{持續推進}的，並不需要在地表就達到這個速率，它可以用較慢的速度、靠引擎一路加速離開。脫離速度與天體本身有關：天體質量越大、半徑越小，$v_{\text{脫}}$ 越大；當 $\sqrt{2GM/R}$ 大到等於光速時，連光都無法逃出，這便是\textbf{黑洞}。
+
+\subsection*{\sffamily D.\ 「失重」不是「沒有重力」}
 
 太空人在太空站內漂浮，常被說成「太空中沒有重力」。這是不正確的。在 400 km 高處，$g$ 仍約為地表的 $89\%$，重力幾乎與地面相當。漂浮的原因不是重力消失，而是：\textbf{太空人與太空站以相同的加速度（重力提供的向心加速度）一起自由下落}。兩者同步下落，人對地板（太空站）便沒有壓力，磅秤讀數為零。這稱為\textbf{失重（weightlessness）}，更精確的說法是\textbf{表觀失重}。它與「電梯纜繩斷裂時，人在電梯內會飄起來」是同一回事。
 
@@ -154,7 +176,16 @@ $$\dfrac{GM}{r^2}=\dfrac{4\pi^2 r}{T^2}\;\Longrightarrow\;r^3=\dfrac{GM\,T^2}{4\
 
 \section*{\sffamily 6-4\quad 由萬有引力推導克卜勒第三定律}
 
-必修課程中，克卜勒三大定律是克卜勒由第谷的觀測資料\textbf{歸納}出的經驗規律——他知道「規律是這樣」，但不知道「為什麼」。牛頓的萬有引力定律提供了「為什麼」：只要假設行星受太陽的平方反比引力，三大定律都可由力學\textbf{演繹}出來。以下用最簡單的\textbf{圓軌道}為例，把第三定律 $T^2\propto r^3$ 推導出來。
+必修課程中，克卜勒三大定律是克卜勒由第谷的觀測資料\textbf{歸納}出的經驗規律——他知道「規律是這樣」，但不知道「為什麼」。牛頓的萬有引力定律提供了「為什麼」：只要假設行星受太陽的平方反比引力，三大定律都可由力學\textbf{演繹}出來。以下先把三條定律完整列出，再用最簡單的\textbf{圓軌道}把第三定律 $T^2\propto r^3$ 推導出來。
+
+\begin{補充框}{克卜勒行星運動三大定律（Kepler's laws）}
+\begin{enumerate}\setlength{\itemsep}{2pt}
+\item \textbf{橢圓軌道定律（第一定律）}：行星繞太陽的軌道是\textbf{橢圓}，太陽位於橢圓的\textbf{一個焦點}上（不是圓心，也不是中心）。
+\item \textbf{等面積定律（第二定律）}：行星與太陽的連線，在\textbf{相等時間內掃過相等面積}，因此行星在\textbf{近日點跑得快、遠日點跑得慢}。其物理根源是\textbf{角動量守恆（conservation of angular momentum）}——萬有引力始終指向太陽，對太陽不產生力矩。
+\item \textbf{諧和定律（第三定律）}：$T^2\propto a^3$（週期平方正比於\textbf{半長軸（semi-major axis）}$a$ 的立方）。對圓軌道，$a$ 就是半徑 $r$。
+\end{enumerate}
+三條定律分別描述軌道的\textbf{形狀}（橢圓）、\textbf{快慢的變化}（等面積）、以及\textbf{週期與大小的關係}（$T^2\propto a^3$）。以下只推導第三條（用圓軌道）；第一、第二定律的嚴格證明屬大學內容。
+\end{補充框}
 
 \subsection*{\sffamily A.\ 推導（圓軌道）}
 
@@ -213,8 +244,9 @@ $$T^2=k\,r^3\;\Longrightarrow\;\boxed{\,T^2\propto r^3\,},\qquad k=\dfrac{4\pi^2
 \item \textbf{萬有引力定律}：$F=\dfrac{GMm}{r^2}$，沿連線、互相吸引、成對出現，$G\approx6.67\times10^{-11}$。$r$ 是\textbf{質心間距離}；均勻球可視為質量集中於球心。平方反比：$r$ 變 2 倍，$F$ 變 $\tfrac14$。
 \item \textbf{地表重力}：$g=\dfrac{GM}{R^2}$（與物體質量無關）。高度 $h$ 處 $g_h=\dfrac{GM}{(R+h)^2}$。恆等式 $GM=gR^2$。質量到處不變，重量隨 $g$ 改變。
 \item \textbf{圓軌道衛星}：萬有引力＝向心力 $\dfrac{GMm}{r^2}=\dfrac{mv^2}{r}$。軌道速率 $v=\sqrt{\dfrac{GM}{r}}$（外圈較慢，與衛星質量無關）。第一宇宙速度 $v_1=\sqrt{gR}\approx7.9\ \text{km/s}$。同步衛星 $T=24\ \text{h}$，$r\approx4.2\times10^7\ \text{m}$。
+\item \textbf{脫離速度（逃逸速度）}：$v_{\text{脫}}=\sqrt{\dfrac{2GM}{R}}=\sqrt{2gR}\approx11.2\ \text{km/s}=\sqrt2\,v_1$。與發射物體的質量、方向無關，源於力學能守恆，也稱第二宇宙速度。
 \item \textbf{失重}：不是沒有重力，而是人與太空站\textbf{一起自由下落}，支撐力為零。
-\item \textbf{克卜勒第三定律（圓軌道推導）}：$T^2=\dfrac{4\pi^2}{GM}r^3\Rightarrow T^2\propto r^3$。比例常數只由中央天體 $M$ 決定；橢圓時 $r$ 換成半長軸 $a$。
+\item \textbf{克卜勒三大定律}：①橢圓軌道（太陽在焦點）②等面積（近日快、遠日慢＝角動量守恆）③$T^2\propto a^3$。由萬有引力＝向心力可推得第三定律：$T^2=\dfrac{4\pi^2}{GM}r^3\Rightarrow T^2\propto r^3$，比例常數只由中央天體 $M$ 決定；橢圓時 $r$ 換成半長軸 $a$。
 \end{itemize}
 \end{補充框}
 
