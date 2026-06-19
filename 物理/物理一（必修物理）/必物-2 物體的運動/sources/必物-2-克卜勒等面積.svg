@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-06-17T14:52:06.311029</dc:date>
+    <dc:date>2026-06-19T21:26:21.914126</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -165,7 +165,7 @@ L 330.316655 157.564138
 L 330.756888 153.106408 
 L 330.903742 148.63871 
 L 330.903742 148.63871 
-" clip-path="url(#p95e45cea84)" style="fill: none; stroke: #222831; stroke-width: 2; stroke-linecap: square"/>
+" clip-path="url(#pcb50795dab)" style="fill: none; stroke: #222831; stroke-width: 2; stroke-linecap: square"/>
    </g>
    <g id="patch_2">
     <path d="M 290.793384 148.63871 
@@ -200,7 +200,7 @@ L 317.721042 107.37113
 L 315.570981 104.324612 
 L 313.269297 101.335871 
 z
-" clip-path="url(#p95e45cea84)" style="fill: #d1242f; opacity: 0.3; stroke: #d1242f; stroke-linejoin: miter"/>
+" clip-path="url(#pcb50795dab)" style="fill: #d1242f; opacity: 0.3; stroke: #d1242f; stroke-linejoin: miter"/>
    </g>
    <g id="patch_3">
     <path d="M 290.793384 148.63871 
@@ -235,7 +235,7 @@ L 70.562523 168.419708
 L 71.044552 169.975831 
 L 71.562995 171.525894 
 z
-" clip-path="url(#p95e45cea84)" style="fill: #1f6feb; opacity: 0.3; stroke: #1f6feb; stroke-linejoin: miter"/>
+" clip-path="url(#pcb50795dab)" style="fill: #1f6feb; opacity: 0.3; stroke: #1f6feb; stroke-linejoin: miter"/>
    </g>
    <g id="text_1">
     <!-- 近日點 -->
@@ -3924,7 +3924,7 @@ C 282.69763 143.936907 281.744145 146.238824 281.744145 148.63871
 C 281.744145 151.038596 282.69763 153.340512 284.394606 155.037488 
 C 286.091582 156.734464 288.393498 157.687948 290.793384 157.687948 
 z
-" clip-path="url(#p95e45cea84)" style="fill: #f0a202; stroke: #f0a202; stroke-linejoin: miter"/>
+" clip-path="url(#pcb50795dab)" style="fill: #f0a202; stroke: #f0a202; stroke-linejoin: miter"/>
    </g>
    <g id="patch_5">
     <path d="M 290.793384 157.687948 
@@ -3938,7 +3938,7 @@ C 281.744145 151.038596 282.69763 153.340512 284.394606 155.037488
 C 286.091582 156.734464 288.393498 157.687948 290.793384 157.687948 
 L 290.793384 157.687948 
 z
-" clip-path="url(#p95e45cea84)" style="fill: none; stroke: #9a6700; stroke-width: 1.2; stroke-linejoin: miter"/>
+" clip-path="url(#pcb50795dab)" style="fill: none; stroke: #9a6700; stroke-width: 1.2; stroke-linejoin: miter"/>
    </g>
    <g id="text_5">
     <!-- 太陽 -->
@@ -3958,7 +3958,7 @@ C 326.119887 145.860372 325.556465 147.220595 325.556465 148.63871
 C 325.556465 150.056824 326.119887 151.417047 327.122646 152.419806 
 C 328.125404 153.422564 329.485627 153.985987 330.903742 153.985987 
 z
-" clip-path="url(#p95e45cea84)" style="fill: #d1242f; stroke: #d1242f; stroke-linejoin: miter"/>
+" clip-path="url(#pcb50795dab)" style="fill: #d1242f; stroke: #d1242f; stroke-linejoin: miter"/>
    </g>
    <g id="patch_7">
     <path d="M 67.653161 153.985987 
@@ -3971,12 +3971,12 @@ C 62.869307 145.860372 62.305884 147.220595 62.305884 148.63871
 C 62.305884 150.056824 62.869307 151.417047 63.872065 152.419806 
 C 64.874824 153.422564 66.235047 153.985987 67.653161 153.985987 
 z
-" clip-path="url(#p95e45cea84)" style="fill: #1f6feb; stroke: #1f6feb; stroke-linejoin: miter"/>
+" clip-path="url(#pcb50795dab)" style="fill: #1f6feb; stroke: #1f6feb; stroke-linejoin: miter"/>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="p95e45cea84">
+  <clipPath id="pcb50795dab">
    <rect x="26.520258" y="25.24" width="345.516387" height="255.024"/>
   </clipPath>
  </defs>
