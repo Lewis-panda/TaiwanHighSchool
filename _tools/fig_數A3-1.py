@@ -140,6 +140,104 @@ def fig_radian_sector():
     F.save_to(fig, CH, "數A3-1-弧度扇形")
 
 
+def fig_unit_circle_projection():
+    """單位圓動點的縱坐標（sin x）攤平成波形：左單位圓 + 右 sin 波，
+    在幾個關鍵角畫投影虛線，說明波形是被單位圓「逼」出來的。"""
+    fig, (axc, axw) = plt.subplots(
+        1, 2, figsize=(11.0, 5.2), gridspec_kw={"width_ratios": [1.0, 2.0]}
+    )
+
+    # ---- 左：單位圓 ----
+    ft = np.linspace(0, 2 * np.pi, 400)
+    axc.plot(np.cos(ft), np.sin(ft), color=F.GRID, lw=1.8, zorder=1)
+    axc.axhline(0, color=F.INK, lw=1.0, zorder=2)
+    axc.axvline(0, color=F.INK, lw=1.0, zorder=2)
+
+    # 動點位置（取一個代表角，例如 50 度）
+    a = np.deg2rad(50.0)
+    Px, Py = np.cos(a), np.sin(a)
+    # 半徑
+    axc.plot([0, Px], [0, Py], color=F.INK, lw=2.0, zorder=4)
+    # 角弧
+    axc.add_patch(
+        Arc(
+            (0, 0),
+            0.5,
+            0.5,
+            angle=0,
+            theta1=0,
+            theta2=50.0,
+            color=F.AMBER,
+            lw=2.0,
+            zorder=4,
+        )
+    )
+    axc.text(0.33, 0.12, "$x$", color=F.AMBER, fontsize=14, ha="center")
+    # 縱坐標（高度 = sin x）紅色
+    axc.plot([Px, Px], [0, Py], color=F.RED, lw=3.0, zorder=5)
+    axc.add_patch(Circle((Px, Py), 0.035, color=F.BLUE, zorder=6))
+    axc.text(
+        Px + 0.06,
+        Py + 0.04,
+        r"$(\cos x,\ \sin x)$",
+        color=F.BLUE,
+        fontsize=11,
+        ha="left",
+        va="bottom",
+    )
+    axc.text(
+        Px + 0.05, Py / 2, r"$\sin x$", color=F.RED, fontsize=12, ha="left", va="center"
+    )
+    axc.add_patch(Circle((0, 0), 0.025, color=F.INK, zorder=6))
+
+    axc.set_xlim(-1.3, 1.5)
+    axc.set_ylim(-1.3, 1.35)
+    axc.set_aspect("equal")
+    axc.axis("off")
+    axc.set_title("單位圓：動點的高度就是 $\\sin x$", fontsize=13)
+
+    # ---- 右：sin 波形 ----
+    xs = np.linspace(0, 2 * np.pi, 1000)
+    axw.plot(xs, np.sin(xs), color=F.BLUE, lw=2.8, zorder=3)
+    axw.axhline(0, color=F.INK, lw=1.0, zorder=2)
+    axw.axvline(0, color=F.INK, lw=1.0, zorder=2)
+
+    # 對齊左圖代表角的投影線
+    axw.plot([a, a], [0, np.sin(a)], color=F.RED, lw=3.0, zorder=5)
+    axw.add_patch(Circle((a, np.sin(a)), 0.04, color=F.BLUE, zorder=6))
+    axw.annotate(
+        "",
+        xy=(a, np.sin(a)),
+        xytext=(-0.35, np.sin(a)),
+        arrowprops=dict(arrowstyle="->", color=F.RED, lw=1.4, ls=":"),
+        zorder=4,
+    )
+
+    # 關鍵角的高度標記
+    for xv, lab in [
+        (0, "$0$"),
+        (np.pi / 2, "最高 $1$"),
+        (np.pi, "$0$"),
+        (3 * np.pi / 2, "最低 $-1$"),
+        (2 * np.pi, "$0$"),
+    ]:
+        axw.plot([xv], [np.sin(xv)], "o", color=F.AMBER, ms=6, zorder=6)
+
+    axw.set_ylim(-1.6, 1.7)
+    axw.set_yticks([-1, 0, 1])
+    _pi_ticks(axw, 1.0, step=0.5)
+    axw.set_xlim(-0.45, 2 * np.pi + 0.2)
+    F.clean_grid(axw)
+    axw.set_title(
+        "把高度隨轉角 $x$ 攤平 $\\rightarrow$ 波形（值域 $[-1,1]$、週期 $2\\pi$）",
+        fontsize=13,
+    )
+
+    fig.suptitle("波形是單位圓動點的高度攤平來的", fontsize=15, y=1.01)
+    fig.tight_layout()
+    F.save_to(fig, CH, "數A3-1-單位圓投影")
+
+
 def fig_three_graphs():
     """y=sin x, y=cos x, y=tan x 三條基本圖形（上下排）。"""
     fig, axes = plt.subplots(3, 1, figsize=(8.2, 9.2))
@@ -472,6 +570,7 @@ def fig_superpose():
 
 if __name__ == "__main__":
     fig_radian_sector()
+    fig_unit_circle_projection()
     fig_three_graphs()
     fig_transform()
     fig_sum_diff_circle()

@@ -85,7 +85,11 @@ $$A=\frac{\theta}{2\pi}\cdot\pi r^2=\frac{1}{2}r^2\theta.$$
 
 理解圖形最好的工具是\textbf{單位圓}：一個動點以等速沿單位圓逆時針運動，轉過的角是 $x$，這個點的\textbf{縱坐標就是 $\sin x$、橫坐標就是 $\cos x$}。把縱坐標隨 $x$ 攤平展開，波形就出現了。
 
-\fig{d31-trig-graphs}{0.92}{圖 1-2：$y=\sin x$、$y=\cos x$、$y=\tan x$ 的圖形。$\sin$、$\cos$ 為週期 $2\pi$ 的波形且值域 $[-1,1]$；$\tan$ 週期 $\pi$，並在 $x=\frac{\pi}{2}+k\pi$ 處有鉛直漸近線。}
+\fig{d31-unit-circle}{0.92}{圖 1-2：波形的由來。左邊單位圓上動點的\textbf{高度}（紅色線段，即縱坐標 $\sin x$）隨轉角 $x$ 變化；把這個高度逐點移到右邊、以 $x$ 為橫軸畫出，就得到正弦波。動點轉到正上方（$x=\frac{\pi}{2}$）時高度最高 $1$、正下方（$x=\frac{3\pi}{2}$）時最低 $-1$，故波形被夾在 $[-1,1]$（值域的由來）；轉滿一圈 $2\pi$ 完全重複（週期 $2\pi$ 的由來）。}
+
+如上圖，正弦波其實是「單位圓動點高度的攤平」；$\cos x$ 是同一動點的橫坐標，可同理攤平得到。三條基本圖形與其性質整理如下。
+
+\fig{d31-trig-graphs}{0.92}{圖 1-3：$y=\sin x$、$y=\cos x$、$y=\tan x$ 的圖形。$\sin$、$\cos$ 為週期 $2\pi$ 的波形且值域 $[-1,1]$；$\tan$ 週期 $\pi$，並在 $x=\frac{\pi}{2}+k\pi$ 處有鉛直漸近線。}
 
 \begin{center}
 \renewcommand{\arraystretch}{1.5}
@@ -142,7 +146,7 @@ $$\boxed{\;
 \end{aligned}
 \;}$$
 
-\fig{d31-transforms}{0.92}{圖 1-3：四種變換各以 $y=\sin x$ 為基準。左上 $y=2\sin x$（振幅變 $2$）；右上 $y=\sin 2x$（週期變 $\pi$，波變密）；左下 $y=\sin(x-\frac{\pi}{2})$（向右移 $\frac{\pi}{2}$）；右下 $y=\sin x+1$（向上移 $1$，中線升到 $y=1$）。}
+\fig{d31-transforms}{0.92}{圖 1-4：四種變換各以 $y=\sin x$ 為基準。左上 $y=2\sin x$（振幅變 $2$）；右上 $y=\sin 2x$（週期變 $\pi$，波變密）；左下 $y=\sin(x-\frac{\pi}{2})$（向右移 $\frac{\pi}{2}$）；右下 $y=\sin x+1$（向上移 $1$，中線升到 $y=1$）。}
 
 逐一拆解（皆以 $y=\sin x$ 為基準）：
 
@@ -202,7 +206,7 @@ $$\cos(A-B)=\cos A\cos B+\sin A\sin B.$$
 \textbf{注意：}$\sin(A+B)\neq\sin A+\sin B$ 是最致命的錯。代 $A=B=\dfrac{\pi}{2}$ 檢驗：左 $\sin\pi=0$，右 $1+1=2$，相差甚大。
 \end{延伸框}
 
-\fig{d31-sum-diff}{0.62}{圖 1-4：和差角公式的單位圓推導。在單位圓上取 $P=(\cos A,\sin A)$、$Q=(\cos B,\sin B)$，兩半徑夾角為 $A-B$；分別用坐標距離公式與餘弦定理算 $\overline{PQ}^2$ 並令其相等，即得 $\cos(A-B)=\cos A\cos B+\sin A\sin B$。}
+\fig{d31-sum-diff}{0.62}{圖 1-5：和差角公式的單位圓推導。在單位圓上取 $P=(\cos A,\sin A)$、$Q=(\cos B,\sin B)$，兩半徑夾角為 $A-B$；分別用坐標距離公式與餘弦定理算 $\overline{PQ}^2$ 並令其相等，即得 $\cos(A-B)=\cos A\cos B+\sin A\sin B$。}
 
 \subsection*{\sffamily B.\ 倍角公式}
 
@@ -210,7 +214,7 @@ $$\cos(A-B)=\cos A\cos B+\sin A\sin B.$$
 $$\boxed{\;\sin 2A=2\sin A\cos A\;}$$
 $$\boxed{\;\cos 2A=\cos^2 A-\sin^2 A=1-2\sin^2 A=2\cos^2 A-1\;}$$
 $$\boxed{\;\tan 2A=\frac{2\tan A}{1-\tan^2 A}\;}$$
-$\cos 2A$ 的\textbf{三種寫法}都常用：要把式子只留 $\sin$ 就用 $1-2\sin^2A$，只留 $\cos$ 就用 $2\cos^2A-1$（後者是半角公式的跳板）。
+三條都是在和角公式中\textbf{令 $B=A$} 的直接結果（例如 $\tan2A=\tan(A+A)=\dfrac{\tan A+\tan A}{1-\tan A\tan A}$）。$\cos 2A$ 的\textbf{三種寫法}都常用：要把式子只留 $\sin$ 就用 $1-2\sin^2A$，只留 $\cos$ 就用 $2\cos^2A-1$（後者是半角公式的跳板）；後兩式由 $\cos^2A-\sin^2A$ 配 $\sin^2A+\cos^2A=1$ 換得。
 
 \subsection*{\sffamily C.\ 半角公式}
 
@@ -218,6 +222,9 @@ $\cos 2A$ 的\textbf{三種寫法}都常用：要把式子只留 $\sin$ 就用 $
 $$\boxed{\;\sin^2\frac{\theta}{2}=\frac{1-\cos\theta}{2}\;}\qquad\boxed{\;\cos^2\frac{\theta}{2}=\frac{1+\cos\theta}{2}\;}$$
 兩者相除得
 $$\boxed{\;\tan^2\frac{\theta}{2}=\frac{1-\cos\theta}{1+\cos\theta}\;}$$
+$\tan\dfrac{\theta}{2}$ 另有\textbf{不必開根號、也不必判正負}的兩個常用寫法（只要 $\sin\theta\neq0$、$1+\cos\theta\neq0$）：
+$$\boxed{\;\tan\frac{\theta}{2}=\frac{1-\cos\theta}{\sin\theta}=\frac{\sin\theta}{1+\cos\theta}\;}$$
+它們由倍角 $\sin\theta=2\sin\dfrac{\theta}{2}\cos\dfrac{\theta}{2}$、$1-\cos\theta=2\sin^2\dfrac{\theta}{2}$、$1+\cos\theta=2\cos^2\dfrac{\theta}{2}$ 代入約分即得；好處是\textbf{自動帶對正負號}，比平方式好用。
 
 \textbf{注意：}
 \begin{itemize}\setlength{\itemsep}{1pt}
@@ -241,7 +248,7 @@ $$\boxed{\;a\sin\theta+b\cos\theta=R\sin(\theta+\varphi)\;}$$
 其中\textbf{振幅} $R$ 與\textbf{相位角} $\varphi$ 為
 $$R=\sqrt{a^2+b^2}\ (>0),\qquad \cos\varphi=\frac{a}{R},\quad\sin\varphi=\frac{b}{R}\ \ \left(\text{即}\ \tan\varphi=\frac{b}{a}\right).$$
 
-\fig{d31-superposition}{0.78}{圖 1-5：兩個同頻的 $\sin$ 與 $\cos$ 相加，合成後仍是同頻率的正弦波，振幅變為 $R=\sqrt{a^2+b^2}$、相位移為 $\varphi$。}
+\fig{d31-superposition}{0.78}{圖 1-6：兩個同頻的 $\sin$ 與 $\cos$ 相加，合成後仍是同頻率的正弦波，振幅變為 $R=\sqrt{a^2+b^2}$、相位移為 $\varphi$。}
 
 \textbf{推導}：把目標 $R\sin(\theta+\varphi)$ 用和角公式展開，再與原式比對係數：
 $$R\sin(\theta+\varphi)=(R\cos\varphi)\sin\theta+(R\sin\varphi)\cos\theta.$$
@@ -286,7 +293,7 @@ $$a\sin\theta+b\cos\theta\ \text{的最大值}=\sqrt{a^2+b^2},\qquad\text{最小
 \item \textbf{一般式 $y=a\sin(bx+c)+d$}：振幅 $|a|$、週期 $\dfrac{2\pi}{b}$、相位移 $-\dfrac{c}{b}$（\textbf{先提 $b$}）、鉛直平移 $d$、值域 $[\,d-|a|,\,d+|a|\,]$。
 \item \textbf{和差角}：$\sin(A\pm B)=\sin A\cos B\pm\cos A\sin B$；$\cos(A\pm B)=\cos A\cos B\mp\sin A\sin B$；$\tan(A\pm B)=\dfrac{\tan A\pm\tan B}{1\mp\tan A\tan B}$。
 \item \textbf{倍角}：$\sin2A=2\sin A\cos A$；$\cos2A=\cos^2A-\sin^2A=1-2\sin^2A=2\cos^2A-1$；$\tan2A=\dfrac{2\tan A}{1-\tan^2A}$。
-\item \textbf{半角}：$\sin^2\dfrac{\theta}{2}=\dfrac{1-\cos\theta}{2}$、$\cos^2\dfrac{\theta}{2}=\dfrac{1+\cos\theta}{2}$（開根號看 $\dfrac{\theta}{2}$ 象限定正負）。
+\item \textbf{半角}：$\sin^2\dfrac{\theta}{2}=\dfrac{1-\cos\theta}{2}$、$\cos^2\dfrac{\theta}{2}=\dfrac{1+\cos\theta}{2}$（開根號看 $\dfrac{\theta}{2}$ 象限定正負）；$\tan\dfrac{\theta}{2}=\dfrac{1-\cos\theta}{\sin\theta}=\dfrac{\sin\theta}{1+\cos\theta}$（此形式免判正負）。
 \item \textbf{疊合}：$a\sin\theta+b\cos\theta=R\sin(\theta+\varphi)$，$R=\sqrt{a^2+b^2}$、$\cos\varphi=\dfrac{a}{R}$、$\sin\varphi=\dfrac{b}{R}$；值域 $[-R,\,R]$，僅限同頻率。
 \end{itemize}
 \textbf{核心串連}：和角 $\rightarrow$ 倍角 $\rightarrow$ 半角是一條推導鏈，真正要背的只有 $\sin(A\pm B)$、$\cos(A\pm B)$ 與 $\cos2A$ 的三種寫法。

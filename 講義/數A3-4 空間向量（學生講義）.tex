@@ -43,7 +43,7 @@
 \fig{d34-line-relations}{0.98}{圖 4-1：空間中兩直線的三種位置關係。平行與相交都\textbf{共平面}；歪斜線既不平行也不相交，無法落在同一平面上（虛線標出兩線的最近距離）——這是平面上沒有的新情形。}
 
 \begin{補充框}{兩平面、直線與平面的位置關係}
-\textbf{兩相異平面 $E_1$、$E_2$}：\textbf{平行}（無交點）、或\textbf{相交於一條直線}。（注意：兩相異平面若相交，交集是\textbf{一條直線}，不是一個點。想像兩張紙互相切過。）
+\textbf{兩平面 $E_1$、$E_2$}：\textbf{平行}（無交點）、\textbf{重合}（完全相同，視為同一平面）、或\textbf{相交於一條直線}——共三種。（注意：兩相異平面若相交，交集是\textbf{一條直線}，不是一個點。想像兩張紙互相切過。）
 
 \textbf{直線 $L$ 與平面 $E$}：$L$ 在 $E$ \textbf{內}（無數個公共點）、$L$ 與 $E$ \textbf{平行}（無公共點）、或 $L$ 與 $E$ \textbf{相交於一點}。
 \end{補充框}
@@ -245,8 +245,12 @@ $$\det\begin{pmatrix}a_1&a_2&a_3\\ b_1&b_2&b_3\\ c_1&c_2&c_3\end{pmatrix}
 +a_3\begin{vmatrix}b_1&b_2\\ c_1&c_2\end{vmatrix},$$
 其中 $\begin{vmatrix}p&q\\ r&s\end{vmatrix}=ps-qr$ 是\textbf{二階行列式}。展開後共六項，\textbf{中間（第二）項帶負號}。
 
-\textbf{薩魯斯法（Sarrus，對角線法）}是另一種算法：把前兩行抄到右邊，三條「右下方向」對角線的乘積相加、三條「左下方向」對角線的乘積相減。\textbf{此法只對三階有效}，更高階不能用。
+\textbf{薩魯斯法（Sarrus，對角線法）}是另一種算法：把前兩行（$\begin{smallmatrix}a_1\\b_1\\c_1\end{smallmatrix}$、$\begin{smallmatrix}a_2\\b_2\\c_2\end{smallmatrix}$）再抄到右邊，湊成 $3\times5$ 的陣列，然後三條「右下方向」對角線的乘積\textbf{相加}、三條「左下方向」對角線的乘積\textbf{相減}：
+$$\det=\underbrace{a_1b_2c_3+a_2b_3c_1+a_3b_1c_2}_{\text{右下對角線（＋）}}-\underbrace{(a_3b_2c_1+a_1b_3c_2+a_2b_1c_3)}_{\text{左下對角線（－）}}.$$
+展開後和上面餘因式展開的六項完全相同，只是換個排法湊。\textbf{此法只對三階有效}，四階以上不能用。
 \end{補充框}
+
+\fig{d34-sarrus}{0.78}{圖 4-5：三階行列式的薩魯斯（對角線）法。把前兩行抄到右邊後，三條右下對角線（藍實線）的乘積相加、三條左下對角線（紅虛線）的乘積相減。}
 
 \subsection*{\sffamily B.\ 三重積與平行六面體體積}
 
@@ -260,7 +264,7 @@ $$\boxed{\;V=\bigl|(\vec a\times\vec b)\cdot\vec c\bigr|=\left|\det\begin{pmatri
 \textbf{共面判定}：三向量共面 $\iff$ 此行列式 $=0$（撐不出體積，被壓扁成一個面）。
 \end{補充框}
 
-\fig{d34-parallelepiped}{0.6}{圖 4-5：以 $\vec a,\vec b,\vec c$ 為鄰邊的平行六面體。底面是 $\vec a,\vec b$ 撐的平行四邊形（面積 $=|\vec a\times\vec b|$），高是 $\vec c$ 在法向量 $\vec a\times\vec b$ 方向上的投影長。}
+\fig{d34-parallelepiped}{0.6}{圖 4-6：以 $\vec a,\vec b,\vec c$ 為鄰邊的平行六面體。底面是 $\vec a,\vec b$ 撐的平行四邊形（面積 $=|\vec a\times\vec b|$），高是 $\vec c$ 在法向量 $\vec a\times\vec b$ 方向上的投影長。}
 
 \begin{補充框}{為什麼一個行列式剛好等於體積？（底面積 $\times$ 高）}
 這不是巧合，背後就是「底面積 $\times$ 高」，可分四步看清楚：
@@ -298,7 +302,7 @@ $$V_{\text{四面體}}=\frac16\bigl|(\vec a\times\vec b)\cdot\vec c\bigr|.$$
 \begin{補充框}{一頁複習（公式與關鍵結論）}
 \textbf{空間概念}
 \begin{itemize}\setlength{\itemsep}{1pt}
-\item 兩直線：平行 / 相交 / \textbf{歪斜}（不共面，平面沒有）。兩平面：平行 / 交於\textbf{一直線}。線與面：在面內 / 平行 / 交於一點。
+\item 兩直線：平行 / 相交 / \textbf{歪斜}（不共面，平面沒有）。兩平面：平行 / 重合 / 交於\textbf{一直線}。線與面：在面內 / 平行 / 交於一點。
 \item \textbf{三垂線定理}：$PA\perp$ 面、$AB\perp L$（$B$ 在 $L$ 上）$\Rightarrow PB\perp L$，用來找「點到直線」的垂足。
 \end{itemize}
 

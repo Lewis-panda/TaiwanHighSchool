@@ -143,10 +143,11 @@ def fig_rotation_reflection():
     ax.set_ylim(-2.4, 2.4)
     F.clean_grid(ax)
 
-    # 右：對 x 軸鏡射
+    # 右：對 y=x 與對 y=-x 鏡射（兩條對角線鏡射成對對照）
     ax = axes[1]
     ax.set_aspect("equal")
-    S = [[1, 0], [0, -1]]
+    S1 = [[0, 1], [1, 0]]  # 對 y=x
+    S2 = [[0, -1], [-1, 0]]  # 對 y=-x
     ax.add_patch(
         Polygon(
             shape, closed=True, facecolor=F.BLUE, alpha=0.22, edgecolor=F.BLUE, lw=2.0
@@ -154,7 +155,7 @@ def fig_rotation_reflection():
     )
     ax.add_patch(
         Polygon(
-            apply(S, shape),
+            apply(S1, shape),
             closed=True,
             facecolor=F.GREEN,
             alpha=0.22,
@@ -162,15 +163,30 @@ def fig_rotation_reflection():
             lw=2.0,
         )
     )
-    ax.text(0.8, 0.5, "原圖", color=F.BLUE, fontsize=12, ha="center")
-    ax.text(0.8, -0.5, "鏡射後", color=F.GREEN, fontsize=12, ha="center")
-    ax.axhline(0, color=F.AMBER, lw=1.6, zorder=1)
-    ax.text(2.0, 0.12, "鏡射軸 (x 軸)", color=F.AMBER, fontsize=11, ha="right")
+    ax.add_patch(
+        Polygon(
+            apply(S2, shape),
+            closed=True,
+            facecolor=F.PURPLE,
+            alpha=0.20,
+            edgecolor=F.PURPLE,
+            lw=2.0,
+        )
+    )
+    ax.text(0.8, 0.55, "原圖", color=F.BLUE, fontsize=11, ha="center")
+    ax.text(0.95, 1.15, "對 y=x", color=F.GREEN, fontsize=11, ha="left")
+    ax.text(-1.25, -1.0, "對 y=-x", color=F.PURPLE, fontsize=11, ha="center")
+    # 兩條鏡射軸
+    dl = np.linspace(-2.4, 2.4, 2)
+    ax.plot(dl, dl, color=F.AMBER, lw=1.4, ls="--", zorder=1)
+    ax.plot(dl, -dl, color=F.AMBER, lw=1.4, ls="--", zorder=1)
+    ax.text(2.2, 2.05, "y=x", color=F.AMBER, fontsize=10, ha="right")
+    ax.text(2.2, -2.15, "y=-x", color=F.AMBER, fontsize=10, ha="right")
+    ax.axhline(0, color=F.GRID, lw=1.0, zorder=0)
     ax.axvline(0, color=F.GRID, lw=1.0, zorder=0)
-    ax.text(0, -2.3, "S = [[1, 0], [0, -1]]", color=F.INK, fontsize=12, ha="center")
-    ax.set_title("對 x 軸鏡射", fontsize=14)
-    ax.set_xlim(-1.0, 2.4)
-    ax.set_ylim(-2.6, 2.2)
+    ax.set_title("對 y=x、y=-x 鏡射", fontsize=14)
+    ax.set_xlim(-2.6, 2.6)
+    ax.set_ylim(-2.6, 2.6)
     F.clean_grid(ax)
 
     fig.tight_layout()

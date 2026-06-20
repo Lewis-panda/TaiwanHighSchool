@@ -78,11 +78,25 @@ $$\frac{a_1}{a_2}=\frac{b_1}{b_2}=\frac{c_1}{c_2}=\frac{d_1}{d_2}.$$
 
 \textbf{注意：}平面平行判的是\textbf{法向量平行}（不是法向量垂直）。容易記錯的對照是：法向量\textbf{平行} $\Rightarrow$ 平面平行（或重合）；法向量\textbf{垂直} $\Rightarrow$ 平面垂直。
 
+兩平面相交時，交集是一條直線，那就要會把\textbf{這條交線寫出來}。交線同時躺在兩個平面上，所以它\textbf{同時垂直於兩個法向量} $\vec n_1$、$\vec n_2$——這正是外積的拿手好戲。
+
+\fig{d41-two-planes}{0.60}{圖 2：兩相交平面的交線 $L$。交線同時順著兩平面、同時垂直 $\vec n_1$ 與 $\vec n_2$，因此方向就是外積 $\vec n_1\times\vec n_2$。}
+
+\begin{補充框}{兩相交平面的交線怎麼求}
+兩平面 $E_1$、$E_2$（法向量 $\vec n_1$、$\vec n_2$，$\vec n_1\not\parallel\vec n_2$）相交於一直線 $L$。
+\begin{itemize}\setlength{\itemsep}{2pt}
+\item \textbf{交線方向}：$\boxed{\;\vec d=\vec n_1\times\vec n_2\;}$（同時垂直兩法向量，故同時順著兩平面）。
+\item \textbf{交線上一點}：解聯立 $E_1=0$、$E_2=0$，\textbf{指定一個座標}（例如令 $z=0$）解出另兩個座標，得交線上一個具體點。
+\item 有了「一點 ＋ 方向」就能寫出交線的參數式或比例式（見 1-2）。
+\end{itemize}
+\textbf{取點時的小陷阱：}「令某座標 ＝ 常數」要挑一個\textbf{真能解出唯一交點}的座標。若令 $z=0$ 後聯立無解，改令 $x=0$ 或 $y=0$ 試。原則上方向 $\vec d$ 哪個分量不為 0，就固定「對應那一軸」的座標來求點。
+\end{補充框}
+
 \subsection*{\sffamily D.\ 兩平面的夾角}
 
 兩平面相交時會夾出一個角。既然「平面的朝向 ＝ 法向量」，\textbf{兩平面的夾角就用兩個法向量的夾角來算}。
 
-\fig{d41-dihedral-angle}{0.62}{圖 2：兩平面的夾角 $\theta$ 等於兩法向量 $\vec n_1$、$\vec n_2$ 的夾角（取不超過 $90^\circ$ 的那一個）。}
+\fig{d41-dihedral-angle}{0.62}{圖 3：兩平面的夾角 $\theta$ 等於兩法向量 $\vec n_1$、$\vec n_2$ 的夾角（取不超過 $90^\circ$ 的那一個）。}
 
 \begin{補充框}{兩平面夾角公式}
 兩平面夾角 $\theta$（習慣取 $0^\circ\le\theta\le 90^\circ$）滿足
@@ -95,7 +109,7 @@ $$\boxed{\;\cos\theta=\frac{|\vec n_1\cdot\vec n_2|}{|\vec n_1|\,|\vec n_2|}\;}$
 
 點到平面的距離，量的是\textbf{沿著垂直平面那一段}的長度——而垂直平面的方向就是法向量。所以這個距離，本質上是「一條連線在法向量方向上的正射影長」。
 
-\fig{d41-point-to-plane}{0.60}{圖 3：點 $P_0$ 到平面的距離，是把連線投影到法向量 $\vec n$ 方向後的長度（垂直高度）。}
+\fig{d41-point-to-plane}{0.60}{圖 4：點 $P_0$ 到平面的距離，是把連線投影到法向量 $\vec n$ 方向後的長度（垂直高度）。}
 
 \begin{補充框}{點到平面的距離公式}
 點 $P_0(x_0,y_0,z_0)$ 到平面 $E:ax+by+cz+d=0$ 的距離
@@ -129,7 +143,7 @@ $$\operatorname{dist}=\frac{|\vec n\cdot\vec{QP_0}|}{|\vec n|}.$$
 
 設直線過定點 $A(x_1,y_1,z_1)$、方向向量 $\vec d=(a,b,c)$（$\vec d\ne\vec0$）。直線上的動點 $P$ 必滿足 $\vec{AP}=t\vec d$；讓參數 $t$ 掃過所有實數，就掃出整條直線。
 
-\fig{d41-line-param}{0.60}{圖 4：直線上的動點 $P$ 由「定點 $A$ ＋ $t$ 倍方向向量 $\vec d$」給出。$t=0$ 時回到 $A$，掃過 $t$ 就掃出整條線。}
+\fig{d41-line-param}{0.60}{圖 5：直線上的動點 $P$ 由「定點 $A$ ＋ $t$ 倍方向向量 $\vec d$」給出。$t=0$ 時回到 $A$，掃過 $t$ 就掃出整條線。}
 
 \begin{補充框}{直線的參數式（parametric form）}
 過 $A(x_1,y_1,z_1)$、方向向量 $\vec d=(a,b,c)$ 的直線：
@@ -166,7 +180,7 @@ $$\frac{x-1}{2}=\frac{z-5}{3},\qquad y=4.$$
 
 把直線的「方向向量 $\vec d$」和平面的「法向量 $\vec n$」擺在一起比，就能判斷直線與平面怎麼擺。關鍵直覺：\textbf{方向向量與法向量垂直 $\Rightarrow$ 直線「順著」平面（平行或在面上）；不垂直 $\Rightarrow$ 直線一定戳穿平面（相交於一點）}。
 
-\fig{d41-line-plane}{0.92}{圖 5：直線與平面的三種關係。$\vec d\cdot\vec n\ne0$ 時相交於一點；$\vec d\cdot\vec n=0$ 時平行或內含，再看定點在不在平面上。}
+\fig{d41-line-plane}{0.92}{圖 6：直線與平面的三種關係。$\vec d\cdot\vec n\ne0$ 時相交於一點；$\vec d\cdot\vec n=0$ 時平行或內含，再看定點在不在平面上。}
 
 \begin{補充框}{直線 $L$（方向 $\vec d$、過點 $A$）與平面 $E$（法向量 $\vec n$）的三種關係}
 \begin{itemize}\setlength{\itemsep}{2pt}
@@ -176,6 +190,8 @@ $$\frac{x-1}{2}=\frac{z-5}{3},\qquad y=4.$$
 \end{itemize}
 一句話：先看 $\vec d\cdot\vec n$ 是否為 0 分兩大類；若 $=0$，再用「定點在不在平面上」分平行或內含。
 \end{補充框}
+
+\textbf{一個常用特例（直線垂直於平面）：}在「相交於一點」裡，當 $\vec d\parallel\vec n$（方向向量與法向量平行）時，直線\textbf{垂直於平面}、戳得最正。這是「兩平面垂直 $\iff$ 法向量垂直」的對偶——對直線與平面而言，\textbf{方向向量平行法向量 $\iff$ 線面垂直}。求垂足、作正射影時都靠它。
 
 \subsection*{\sffamily D.\ 點到直線的距離}
 
@@ -222,7 +238,7 @@ $$\boxed{\;\operatorname{dist}(L_1,L_2)=\frac{|\vec{A_1A_2}\times\vec d|}{|\vec 
 
 歪斜線碰不到，但它們之間有一段\textbf{唯一的最短連線}——這條線段同時垂直於兩條直線，稱為\textbf{公垂線（common perpendicular）}，它的長度就是兩歪斜線的距離。
 
-\fig{d41-skew-lines}{0.62}{圖 6：兩歪斜線 $L_1$、$L_2$ 與它們的公垂線段。公垂方向同時垂直 $\vec d_1$、$\vec d_2$，正是外積 $\vec d_1\times\vec d_2$；該線段長度即兩線距離。}
+\fig{d41-skew-lines}{0.62}{圖 8：兩歪斜線 $L_1$、$L_2$ 與它們的公垂線段。公垂方向同時垂直 $\vec d_1$、$\vec d_2$，正是外積 $\vec d_1\times\vec d_2$；該線段長度即兩線距離。}
 
 公垂線的\textbf{方向}同時垂直 $\vec d_1$、$\vec d_2$，正是外積 $\vec d_1\times\vec d_2$。於是「歪斜線距離」就是「把跨兩線的連線 $\vec{A_1A_2}$ 投影到公垂方向 $\vec d_1\times\vec d_2$ 上的長度」——又是一個正射影問題。
 

@@ -350,6 +350,72 @@ def fig_cauchy():
     F.save_to(fig, CH, "數A3-3-柯西不等式")
 
 
+def fig_perp_parallel():
+    """垂直判定（內積=0）vs 平行判定（行列式=0）的對比。"""
+    fig, axes = plt.subplots(1, 2, figsize=(11.0, 4.4))
+    O = np.array([0.0, 0.0])
+
+    # --- (1) 垂直：內積 = 0 ---
+    ax = axes[0]
+    ax.set_aspect("equal")
+    a = np.array([3.4, 0.6])
+    b = np.array([-0.6, 3.4])  # 與 a 垂直（a·b = 0）
+    F.arrow(ax, O, a, color=F.BLUE, lw=2.8)
+    F.arrow(ax, O, b, color=F.GREEN, lw=2.8)
+    # 直角記號
+    ua = a / np.linalg.norm(a)
+    ub = b / np.linalg.norm(b)
+    rs = 0.4
+    corner = rs * ua + rs * ub
+    ax.add_patch(
+        Polygon(
+            [rs * ua, corner, rs * ub],
+            closed=False,
+            fill=False,
+            edgecolor=F.INK,
+            lw=1.2,
+        )
+    )
+    ax.text(a[0] * 0.6 + 0.1, a[1] * 0.6 - 0.4, "a", color=F.BLUE, fontsize=15)
+    ax.text(b[0] * 0.6 - 0.5, b[1] * 0.6, "b", color=F.GREEN, fontsize=15)
+    ax.text(1.5, 3.5, "垂直 ⇔ a·b = 0", color=F.RED, fontsize=13, ha="center")
+    ax.text(1.5, 3.0, "（內積為零）", color=F.INK, fontsize=11, ha="center")
+    ax.set_title("垂直判定：用內積", fontsize=13)
+    ax.set_xlim(-1.4, 4.2)
+    ax.set_ylim(-0.6, 4.2)
+    F.clean_grid(ax)
+
+    # --- (2) 平行：行列式 = 0 ---
+    ax = axes[1]
+    ax.set_aspect("equal")
+    a2 = np.array([3.2, 1.2])
+    b2 = np.array([-2.0, -0.75])  # 與 a2 反向平行（行列式 ≈ 0）
+    F.arrow(ax, O, a2, color=F.BLUE, lw=2.8)
+    F.arrow(ax, O, b2, color=F.GREEN, lw=2.8)
+    # 共線提示（淡虛線延伸）
+    t = np.linspace(-1.0, 1.2, 2)
+    line = np.outer(t, a2 / np.linalg.norm(a2)) * 4.2
+    ax.plot(line[:, 0], line[:, 1], color=F.INK, lw=1.0, ls="--", alpha=0.6, zorder=1)
+    ax.text(a2[0] * 0.6 + 0.1, a2[1] * 0.6 + 0.25, "a", color=F.BLUE, fontsize=15)
+    ax.text(b2[0] * 0.6 - 0.1, b2[1] * 0.6 - 0.45, "b", color=F.GREEN, fontsize=15)
+    ax.text(
+        0.2,
+        3.3,
+        r"平行 ⇔ $a_1 b_2 - a_2 b_1 = 0$",
+        color=F.RED,
+        fontsize=13,
+        ha="center",
+    )
+    ax.text(0.2, 2.8, "（行列式為零）", color=F.INK, fontsize=11, ha="center")
+    ax.set_title("平行判定：用行列式", fontsize=13)
+    ax.set_xlim(-3.0, 4.2)
+    ax.set_ylim(-2.0, 3.8)
+    F.clean_grid(ax)
+
+    fig.tight_layout()
+    F.save_to(fig, CH, "數A3-3-垂直平行判定")
+
+
 def fig_dot_product():
     """內積的幾何意義：|a||b|cosθ，b 在 a 上的投影。"""
     fig, ax = F.canvas(6.4, 4.8)
@@ -532,6 +598,7 @@ if __name__ == "__main__":
     fig_operations()
     fig_linear_combination()
     fig_dot_product()
+    fig_perp_parallel()
     fig_projection()
     fig_determinant_area()
     fig_cauchy()

@@ -308,9 +308,117 @@ def fig_casework():
     F.save_to(fig, CH, "數1-1-分段討論")
 
 
+def fig_triangle_inequality():
+    """三角不等式 |a+b| ≤ |a|+|b| 的幾何來源（向量版三角形）。
+    左：a、b 不同方向 → 構成三角形，第三邊 |a+b| < |a|+|b|；
+    右：a、b 同方向（共線）→ 三角形退化成一直線，|a+b| = |a|+|b|（等號）。"""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9.4, 4.2))
+    for ax in (ax1, ax2):
+        ax.set_aspect("equal")
+        ax.axis("off")
+
+    def vec(ax, p0, p1, color, lw=2.4):
+        ax.annotate(
+            "",
+            xy=p1,
+            xytext=p0,
+            arrowprops=dict(arrowstyle="-|>", color=color, lw=lw),
+        )
+
+    # 左圖：一般情形，三角形成立，嚴格不等
+    O = np.array([0.0, 0.0])
+    A = np.array([3.0, 0.4])  # 向量 a 終點
+    B = A + np.array([0.8, 2.6])  # 再加向量 b 的終點 = a+b
+    vec(ax1, O, A, F.BLUE)  # a
+    vec(ax1, A, B, F.GREEN)  # b（接在 a 之後）
+    vec(ax1, O, B, F.RED)  # a+b（合）
+    ax1.text(1.5, -0.05, "$\\vec{a}$", color=F.BLUE, fontsize=14, ha="center", va="top")
+    ax1.text(
+        A[0] + 0.55,
+        (A[1] + B[1]) / 2,
+        "$\\vec{b}$",
+        color=F.GREEN,
+        fontsize=14,
+        ha="left",
+        va="center",
+    )
+    ax1.text(
+        (O[0] + B[0]) / 2 - 0.35,
+        (O[1] + B[1]) / 2 + 0.1,
+        "$\\vec{a}+\\vec{b}$",
+        color=F.RED,
+        fontsize=14,
+        ha="right",
+        va="bottom",
+    )
+    ax1.text(
+        1.9,
+        -1.05,
+        "三角形兩邊和 > 第三邊",
+        color=F.INK,
+        fontsize=12.5,
+        ha="center",
+    )
+    ax1.text(
+        1.9,
+        -1.65,
+        "$|\\vec{a}+\\vec{b}| < |\\vec{a}|+|\\vec{b}|$",
+        color=F.RED,
+        fontsize=13,
+        ha="center",
+    )
+    ax1.set_title("一般情形：構成三角形", fontsize=13)
+    ax1.set_xlim(-0.6, 4.6)
+    ax1.set_ylim(-2.1, 3.6)
+
+    # 右圖：a、b 同方向，退化成一直線，等號成立
+    O2 = np.array([0.0, 0.0])
+    A2 = np.array([2.4, 0.0])
+    B2 = np.array([4.0, 0.0])  # a 與 b 同向共線
+    # 把 a+b 畫在稍下方一點，避免與 a、b 疊死
+    vec(ax2, O2, A2, F.BLUE)
+    vec(ax2, A2, B2, F.GREEN)
+    vec(ax2, np.array([0.0, -0.6]), np.array([4.0, -0.6]), F.RED)
+    ax2.text(1.2, 0.18, "$\\vec{a}$", color=F.BLUE, fontsize=14, ha="center")
+    ax2.text(3.2, 0.18, "$\\vec{b}$", color=F.GREEN, fontsize=14, ha="center")
+    ax2.text(
+        2.0,
+        -1.05,
+        "$\\vec{a}+\\vec{b}$",
+        color=F.RED,
+        fontsize=14,
+        ha="center",
+        va="top",
+    )
+    ax2.text(
+        2.0,
+        -1.9,
+        "同方向：退化成直線",
+        color=F.INK,
+        fontsize=12.5,
+        ha="center",
+    )
+    ax2.text(
+        2.0,
+        -2.5,
+        "$|\\vec{a}+\\vec{b}| = |\\vec{a}|+|\\vec{b}|$（等號）",
+        color=F.RED,
+        fontsize=13,
+        ha="center",
+    )
+    ax2.set_title("同號／同向：等號成立", fontsize=13)
+    ax2.set_xlim(-0.6, 4.6)
+    ax2.set_ylim(-3.0, 1.2)
+
+    fig.suptitle("三角不等式的幾何來源", fontsize=14, y=0.99)
+    fig.tight_layout(rect=(0, 0, 1, 0.96))
+    F.save_to(fig, CH, "數1-1-三角不等式")
+
+
 if __name__ == "__main__":
     fig_number_line()
     fig_abs_distance()
     fig_abs_function()
     fig_casework()
+    fig_triangle_inequality()
     print("done.")

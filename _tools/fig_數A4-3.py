@@ -457,10 +457,119 @@ def fig_relative_frequency():
     F.save_to(fig, CH, "數A4-3-相對次數")
 
 
+# =====================================================================
+# 圖六：乘法公式 — 不放回連抽的樹狀圖（例題 3-5）
+# =====================================================================
+def fig_multiplication():
+    """袋中 5 紅 3 白，不放回連抽兩顆。樹狀圖把每條路徑的條件機率連乘，
+    強調「第二次的機率被第一次改變」（不放回 ⇒ 不獨立）。"""
+    fig, ax = F.schematic(8.8, 5.4)
+
+    root = (0.5, 2.3)
+    ax.add_patch(Circle(root, 0.09, color=F.INK, zorder=6))
+    ax.text(
+        root[0] - 0.15,
+        root[1],
+        "袋中\n5 紅 3 白",
+        color=F.INK,
+        fontsize=11,
+        ha="right",
+        va="center",
+    )
+
+    # 第一層：第一顆 紅 / 白
+    lvl1 = [
+        ("第一顆紅", (2.7, 3.9), F.RED, "5/8"),
+        ("第一顆白", (2.7, 0.7), F.GREEN, "3/8"),
+    ]
+    # 第二層條件機率（已抽走一顆，分母變 7）
+    sub = {
+        "第一顆紅": [("第二顆紅", "4/7", F.RED), ("第二顆白", "3/7", F.GREEN)],
+        "第一顆白": [("第二顆紅", "5/7", F.RED), ("第二顆白", "2/7", F.GREEN)],
+    }
+    p1map = {"第一顆紅": (5, 8), "第一顆白": (3, 8)}
+    q2map = {
+        "第二顆紅": {"第一顆紅": (4, 7), "第一顆白": (5, 7)},
+        "第二顆白": {"第一顆紅": (3, 7), "第一顆白": (2, 7)},
+    }
+    leaf_x = 5.4
+    label_x = 6.5
+    for name, pos, col, ptxt in lvl1:
+        ax.plot([root[0], pos[0]], [root[1], pos[1]], color=col, lw=2.2, zorder=3)
+        ax.add_patch(Circle(pos, 0.09, color=col, zorder=6))
+        ax.text(
+            pos[0],
+            pos[1] + 0.24,
+            name,
+            color=col,
+            fontsize=11.5,
+            ha="center",
+            va="bottom",
+        )
+        ax.text(
+            (root[0] + pos[0]) / 2,
+            (root[1] + pos[1]) / 2 + 0.16,
+            f"${ptxt}$",
+            color=col,
+            fontsize=11,
+            ha="center",
+            style="italic",
+        )
+        spread = 0.9
+        sub_ys = [pos[1] + spread, pos[1] - spread]
+        for (qname, qtxt, qcol), sy in zip(sub[name], sub_ys):
+            spos = (leaf_x, sy)
+            ax.plot(
+                [pos[0], spos[0]],
+                [pos[1], spos[1]],
+                color=qcol,
+                lw=1.6,
+                alpha=0.9,
+                zorder=2,
+            )
+            ax.add_patch(Circle(spos, 0.07, color=qcol, zorder=6))
+            ax.text(
+                (pos[0] + spos[0]) / 2,
+                (pos[1] + sy) / 2 + 0.13,
+                f"${qtxt}$",
+                color=qcol,
+                fontsize=10.5,
+                ha="center",
+                style="italic",
+            )
+            an, ad = p1map[name]
+            bn, bd = q2map[qname][name]
+            jn, jd = an * bn, ad * bd
+            mark = "  ←兩顆都紅" if (name == "第一顆紅" and qname == "第二顆紅") else ""
+            ax.text(
+                label_x,
+                sy,
+                f"${an}/{ad}$×${bn}/{bd}$ = ${jn}/{jd}${mark}",
+                color=F.INK,
+                fontsize=10.5,
+                ha="left",
+                va="center",
+            )
+
+    ax.text(
+        4.2,
+        -0.55,
+        "乘法公式：P(兩顆都紅) ＝ 5/8 × 4/7 ＝ 5/14（第二步分母變 7：不放回⇒不獨立）",
+        color=F.PURPLE,
+        fontsize=11.5,
+        ha="center",
+    )
+    ax.set_xlim(-0.7, 8.8)
+    ax.set_ylim(-1.0, 4.9)
+    ax.set_title("乘法公式：沿路徑把每一步的條件機率連乘", fontsize=14)
+    F.save_to(fig, CH, "數A4-3-乘法公式")
+
+
 if __name__ == "__main__":
     fig_conditional()
     fig_indep_vs_exclusive()
     fig_bayes_tree()
     fig_screening()
     fig_relative_frequency()
+    fig_multiplication()
     print("done.")

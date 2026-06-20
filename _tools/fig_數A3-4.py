@@ -395,10 +395,90 @@ def _line_panel(ax, title):
     ax.set_title(title, fontsize=11)
 
 
+# ---------------------------------------------------------------------------
+def fig_sarrus():
+    """薩魯斯法（對角線法）：把前兩行抄到右邊，三條右下對角線相加、三條左下對角線相減。"""
+    fig, ax = F.schematic(8.6, 4.6)
+
+    # 三列三行的元素符號，外加抄到右邊的前兩行（共 5 行）
+    rows = [
+        ["a1", "a2", "a3", "a1", "a2"],
+        ["b1", "b2", "b3", "b1", "b2"],
+        ["c1", "c2", "c3", "c1", "c2"],
+    ]
+    nx, ny = 5, 3
+    dx, dy = 1.5, 1.4
+
+    # 元素座標：第 j 行第 i 列
+    def pos(i, j):
+        return (j * dx, (ny - 1 - i) * dy)
+
+    for i in range(ny):
+        for j in range(nx):
+            x, y = pos(i, j)
+            faded = j >= 3  # 抄過去的兩行用淡色
+            col = F.GRID if faded else F.INK
+            ax.text(
+                x,
+                y,
+                rows[i][j],
+                color=(F.INK if not faded else "#9aa3ad"),
+                fontsize=15,
+                ha="center",
+                va="center",
+            )
+
+    # 原 3x3 方框
+    ax.add_patch(
+        plt.Rectangle(
+            (-0.7, -0.6),
+            3 * dx - 0.1,
+            2 * dy + 1.2,
+            fill=False,
+            edgecolor=F.INK,
+            lw=1.4,
+        )
+    )
+
+    # 三條「右下對角線」（相加，藍）：起點第一列 j=0,1,2
+    for j0 in range(3):
+        p0 = pos(0, j0)
+        p2 = pos(2, j0 + 2)
+        ax.plot([p0[0], p2[0]], [p0[1], p2[1]], color=F.BLUE, lw=2.0, alpha=0.85)
+    # 三條「左下對角線」（相減，紅）：起點第一列 j=2,3,4
+    for j0 in range(2, 5):
+        p0 = pos(0, j0)
+        p2 = pos(2, j0 - 2)
+        ax.plot(
+            [p0[0], p2[0]], [p0[1], p2[1]], color=F.RED, lw=2.0, ls="--", alpha=0.85
+        )
+
+    ax.text(
+        3.0, 3.5, "右下對角線：乘積相加（＋）", color=F.BLUE, fontsize=12, ha="center"
+    )
+    ax.text(
+        3.0, -1.45, "左下對角線：乘積相減（－）", color=F.RED, fontsize=12, ha="center"
+    )
+    ax.text(
+        3.0,
+        -2.25,
+        "det ＝（a1b2c3＋a2b3c1＋a3b1c2）－（a3b2c1＋a1b3c2＋a2b1c3）",
+        color=F.INK,
+        fontsize=11,
+        ha="center",
+    )
+
+    ax.set_xlim(-1.2, 7.4)
+    ax.set_ylim(-2.7, 4.0)
+    ax.set_title("薩魯斯法（對角線法）：只適用於三階行列式", fontsize=13)
+    F.save_to(fig, CH, "數A3-4-薩魯斯法")
+
+
 if __name__ == "__main__":
     fig_space_coords()
     fig_cross_product()
     fig_parallelepiped()
     fig_three_perpendicular()
     fig_line_relations()
+    fig_sarrus()
     print("done.")

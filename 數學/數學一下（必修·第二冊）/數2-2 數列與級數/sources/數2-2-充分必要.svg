@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-06-18T08:49:57.809799</dc:date>
+    <dc:date>2026-06-20T18:20:29.511722</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -40,7 +40,7 @@ C 86.136699 100.906828 73.986362 122.342853 73.986362 144.6912
 C 73.986362 167.039547 86.136699 188.475572 107.761403 204.27824 
 C 129.386106 220.080908 158.719614 228.96 189.301562 228.96 
 z
-" clip-path="url(#p3eb071750d)" style="fill: #e9f0fb; stroke: #1f6feb; stroke-width: 2; stroke-linejoin: miter"/>
+" clip-path="url(#pb1ad29b345)" style="fill: #e9f0fb; stroke: #1f6feb; stroke-width: 2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_3">
     <path d="M 162.690362 186.8256 
@@ -53,7 +53,7 @@ C 115.07581 129.538655 109.467962 139.128455 109.467962 149.1264
 C 109.467962 159.124345 115.07581 168.714145 125.056443 175.78376 
 C 135.037075 182.853374 148.575617 186.8256 162.690362 186.8256 
 z
-" clip-path="url(#p3eb071750d)" style="fill: #fdeaea; stroke: #d1242f; stroke-width: 2; stroke-linejoin: miter"/>
+" clip-path="url(#pb1ad29b345)" style="fill: #fdeaea; stroke: #d1242f; stroke-width: 2; stroke-linejoin: miter"/>
    </g>
    <g id="text_1">
     <!-- $p$ 的範圍包含於 $q$ 的範圍內　（$p \Rightarrow q$） -->
@@ -1623,7 +1623,7 @@ z
   </g>
  </g>
  <defs>
-  <clipPath id="p3eb071750d">
+  <clipPath id="pb1ad29b345">
    <rect x="38.504762" y="7.2" width="301.5936" height="288.288"/>
   </clipPath>
  </defs>

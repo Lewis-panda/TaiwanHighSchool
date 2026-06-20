@@ -90,16 +90,21 @@ def fig_arith_geo():
 
 
 def fig_gauss_pairing():
-    """等差級數求和的高斯配對：正反兩列相加，每對都等於 a1+an。"""
-    fig, ax = F.schematic(8.4, 4.2)
+    """左：等差級數的高斯配對（正反兩列相加，每行都等於 a1+an）。
+    右：等比級數的錯位相減（整式乘 r 後與原式相減，中段全部抵消）。"""
+    fig, (axL, axR) = plt.subplots(1, 2, figsize=(12.2, 4.4))
+    for ax in (axL, axR):
+        ax.set_aspect("equal")
+        ax.axis("off")
 
+    # ---------- 左：高斯配對 ----------
     vals = [1, 2, 3, 4, 5, 6]
     n = len(vals)
     box_w, box_h, gap = 0.95, 0.7, 0.12
     x0 = 0.0
     y_top, y_bot = 2.2, 0.6
 
-    def draw_row(y, seq, color):
+    def draw_row(ax, y, seq, color):
         for i, v in enumerate(seq):
             x = x0 + i * (box_w + gap)
             ax.add_patch(
@@ -125,13 +130,12 @@ def fig_gauss_pairing():
                 zorder=4,
             )
 
-    draw_row(y_top, vals, F.BLUE)  # 正序
-    draw_row(y_bot, vals[::-1], F.RED)  # 反序
+    draw_row(axL, y_top, vals, F.BLUE)  # 正序
+    draw_row(axL, y_bot, vals[::-1], F.RED)  # 反序
 
-    # 每一直行相加 = 7
     for i in range(n):
         x = x0 + i * (box_w + gap) + box_w / 2
-        ax.text(
+        axL.text(
             x,
             y_bot - 0.45,
             "7",
@@ -141,7 +145,7 @@ def fig_gauss_pairing():
             va="center",
             zorder=4,
         )
-    ax.text(
+    axL.text(
         x0 - 0.55,
         y_top + box_h / 2,
         "正",
@@ -150,7 +154,7 @@ def fig_gauss_pairing():
         ha="right",
         va="center",
     )
-    ax.text(
+    axL.text(
         x0 - 0.55,
         y_bot + box_h / 2,
         "反",
@@ -159,7 +163,7 @@ def fig_gauss_pairing():
         ha="right",
         va="center",
     )
-    ax.text(
+    axL.text(
         x0 - 0.55,
         y_bot - 0.45,
         "和",
@@ -170,27 +174,166 @@ def fig_gauss_pairing():
     )
 
     total_w = n * (box_w + gap) - gap
-    ax.text(
+    axL.text(
         x0 + total_w / 2,
-        y_bot - 1.15,
-        "每行都是 1+6 = 7，共 6 行 → 2S = 6×7，故 S = 6×7÷2 = 21",
+        y_bot - 1.25,
+        "每行都是 1+6 = 7，共 6 行\n→ 2S = 6×7，故 S = 21",
+        color=F.INK,
+        fontsize=12,
+        ha="center",
+        va="center",
+    )
+    axL.text(
+        x0 + total_w / 2,
+        y_top + box_h + 0.6,
+        "等差：高斯配對\n（正著寫一遍、反著再寫一遍）",
         color=F.INK,
         fontsize=12.5,
         ha="center",
         va="center",
     )
-    ax.text(
-        x0 + total_w / 2,
-        y_top + box_h + 0.55,
-        "高斯配對法：把級數正著寫一遍、反著再寫一遍",
-        color=F.INK,
-        fontsize=13,
+    axL.set_xlim(-1.4, total_w + 0.4)
+    axL.set_ylim(-2.1, 4.1)
+
+    # ---------- 右：錯位相減 ----------
+    # 以 S = a + ar + ar^2 + ar^3 為例，r 列往右錯開一格。
+    terms = ["$a_1$", "$a_1r$", "$a_1r^2$", "$a_1r^3$"]
+    m = len(terms)
+    bw, bh, bgap = 1.05, 0.7, 0.14
+    gx0 = 0.0
+    gy_top, gy_bot = 2.2, 0.7
+    shift = bw + bgap  # rS 整列往右錯開一格
+
+    def draw_geo_row(y, x_start, labels, color):
+        for i, lab in enumerate(labels):
+            x = x_start + i * (bw + bgap)
+            ax = axR
+            ax.add_patch(
+                FancyBboxPatch(
+                    (x, y),
+                    bw,
+                    bh,
+                    boxstyle="round,pad=0.02,rounding_size=0.08",
+                    fc="white",
+                    ec=color,
+                    lw=1.8,
+                    zorder=3,
+                )
+            )
+            ax.text(
+                x + bw / 2,
+                y + bh / 2,
+                lab,
+                color=color,
+                fontsize=12.5,
+                ha="center",
+                va="center",
+                zorder=4,
+            )
+
+    terms_r = ["$a_1r$", "$a_1r^2$", "$a_1r^3$", "$a_1r^4$"]  # 各項乘 r
+    draw_geo_row(gy_top, gx0, terms, F.BLUE)  # S
+    draw_geo_row(gy_bot, gx0 + shift, terms_r, F.GREEN)  # rS（各項乘 r 並往右錯開）
+
+    axR.text(
+        gx0 - 0.55,
+        gy_top + bh / 2,
+        "$S$",
+        color=F.BLUE,
+        fontsize=14,
+        ha="right",
+        va="center",
+    )
+    axR.text(
+        gx0 - 0.55,
+        gy_bot + bh / 2,
+        "$rS$",
+        color=F.GREEN,
+        fontsize=14,
+        ha="right",
+        va="center",
+    )
+
+    # 框出「中段重疊、相減抵消」的部分（S 列的後三項 = rS 列的前三項）
+    overlap_x0 = gx0 + shift - 0.06
+    overlap_x1 = gx0 + (m - 1) * (bw + bgap) + bw + 0.06
+    axR.add_patch(
+        Rectangle(
+            (overlap_x0, gy_bot - 0.12),
+            overlap_x1 - overlap_x0,
+            (gy_top + bh) - (gy_bot - 0.12),
+            fc="none",
+            ec=F.AMBER,
+            lw=1.6,
+            ls="--",
+            zorder=5,
+        )
+    )
+    axR.text(
+        (overlap_x0 + overlap_x1) / 2,
+        gy_top + bh + 0.35,
+        "中段上下對齊、相減全部抵消",
+        color=F.AMBER,
+        fontsize=11.5,
         ha="center",
         va="center",
     )
 
-    ax.set_xlim(-1.4, total_w + 0.4)
-    ax.set_ylim(-1.7, 3.7)
+    # 頭尾：S 列最左 a1 留下，rS 列最右 a1 r^n 留下
+    axR.annotate(
+        "",
+        xy=(gx0 + bw / 2, gy_top - 0.18),
+        xytext=(gx0 + bw / 2, gy_top - 0.6),
+        arrowprops=dict(arrowstyle="-|>", color=F.RED, lw=1.5),
+    )
+    axR.text(
+        gx0 + bw / 2,
+        gy_top - 0.85,
+        "留下\n$a_1$",
+        color=F.RED,
+        fontsize=11,
+        ha="center",
+        va="center",
+    )
+    last_x = gx0 + shift + (m - 1) * (bw + bgap) + bw / 2
+    axR.annotate(
+        "",
+        xy=(last_x, gy_bot - 0.18),
+        xytext=(last_x, gy_bot - 0.6),
+        arrowprops=dict(arrowstyle="-|>", color=F.RED, lw=1.5),
+    )
+    axR.text(
+        last_x,
+        gy_bot - 0.85,
+        "留下\n$a_1r^4$",
+        color=F.RED,
+        fontsize=11,
+        ha="center",
+        va="center",
+    )
+
+    axR.text(
+        (gx0 + last_x) / 2,
+        gy_top + bh + 1.0,
+        "等比：錯位相減\n（整式乘 r 後往右錯一格，再相減）",
+        color=F.INK,
+        fontsize=12.5,
+        ha="center",
+        va="center",
+    )
+    axR.text(
+        (gx0 + last_x) / 2,
+        gy_bot - 1.55,
+        "S − rS = $a_1$ − $a_1r^n$　→　S = $a_1(1-r^n)/(1-r)$　($r\\neq1$)",
+        color=F.INK,
+        fontsize=11.5,
+        ha="center",
+        va="center",
+    )
+    axR.set_xlim(gx0 - 1.2, last_x + 1.2)
+    axR.set_ylim(-2.4, 4.4)
+
+    fig.tight_layout()
     F.save_to(fig, CH, "數2-2-級數求和")
 
 

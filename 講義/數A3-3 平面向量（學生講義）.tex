@@ -85,7 +85,7 @@ $$\boxed{\;\hat a=\frac{\vec a}{|\vec a|}\;}$$
 
 由線性組合可得\textbf{分點公式}：設 $P$ 在線段 $AB$ 上，且 $\overline{AP}:\overline{PB}=m:n$（內分），則
 $$\boxed{\;\overrightarrow{OP}=\frac{n\,\overrightarrow{OA}+m\,\overrightarrow{OB}}{m+n}\;}$$
-寫成坐標：$P=\left(\dfrac{n x_1+m x_2}{m+n},\ \dfrac{n y_1+m y_2}{m+n}\right)$。當 $m=n$ 時退化為中點公式。
+寫成坐標：$P=\left(\dfrac{n x_1+m x_2}{m+n},\ \dfrac{n y_1+m y_2}{m+n}\right)$。當 $m=n$ 時退化為中點公式。這條公式不是背的：由 $\overline{AP}:\overline{PB}=m:n$ 知 $\overrightarrow{AP}=\dfrac{m}{m+n}\overrightarrow{AB}$，於是 $\overrightarrow{OP}=\overrightarrow{OA}+\overrightarrow{AP}=\overrightarrow{OA}+\dfrac{m}{m+n}(\overrightarrow{OB}-\overrightarrow{OA})$；併項後 $\overrightarrow{OA}$ 的係數為 $\dfrac{n}{m+n}$，即得上式，「$m$ 配 $B$」的交叉配法自然就冒出來了。
 
 \textbf{注意：}分點公式的「\textbf{係數要交叉配}」：靠近 $B$ 的比例 $m$ 乘的是 $\overrightarrow{OB}$，靠近 $A$ 的比例 $n$ 乘 $\overrightarrow{OA}$，分母則是 $m+n$。穩做法是記「\textbf{離得越遠權重越大}」：$P$ 離 $A$ 越遠（$m$ 越大），$B$ 的權重就越大。
 
@@ -151,6 +151,10 @@ $$\boxed{\;\cos\theta=\frac{\vec a\cdot\vec b}{|\vec a|\,|\vec b|}=\frac{a_1 b_1
 \item 夾角範圍是 $0\le\theta\le180^\circ$。\textbf{內積的正負號就告訴你鈍角還是銳角}：內積為正是銳角（$\cos\theta>0$）、為零是直角、為負是鈍角（$\cos\theta<0$）。
 \end{itemize}
 
+\textbf{平行判定為什麼是 $a_1b_2-a_2b_1=0$。}「$\vec a\parallel\vec b$」表示分量成比例：$b_1=ka_1$、$b_2=ka_2$。把兩式交叉相乘消去 $k$，得 $a_1b_2=a_2b_1$，即 $a_1b_2-a_2b_1=0$。反之，若此式成立（且 $\vec a\ne\vec 0$），則分量比例一致，可找到 $k$ 使 $\vec b=k\vec a$。兩者完全等價——這只是把「比例式」改寫成「不含分母的乘法式」，順便避開 $a_1$ 或 $a_2$ 為 $0$ 時不能相除的麻煩。這個量正是 3-4 的二階行列式。
+
+\fig{d33-perp-parallel}{0.92}{圖 3-4：兩種判定剛好相反。左——\textbf{垂直}用\textbf{內積}：$\vec a\perp\vec b\iff\vec a\cdot\vec b=0$（圖中直角記號）；右——\textbf{平行}用\textbf{行列式}：$\vec a\parallel\vec b\iff a_1b_2-a_2b_1=0$（兩向量落在同一條直線上，同向或反向）。}
+
 \section*{\sffamily 3-3\quad 正射影}
 
 \subsection*{\sffamily A.\ 影子的長度與向量}
@@ -166,7 +170,7 @@ $$\boxed{\;\operatorname{proj}_{\vec a}\vec b=\left(\frac{\vec a\cdot\vec b}{|\v
 即「正射影量」乘上 $\vec a$ 的單位向量 $\dfrac{\vec a}{|\vec a|}$。
 \end{itemize}
 
-\fig{d33-projection}{0.60}{圖 3-4：$\vec b$ 在 $\vec a$ 上的正射影。從 $\vec b$ 的尖端對 $\vec a$ 所在直線作垂線，落點與原點之間沿 $\vec a$ 方向的那支紅色向量，即正射影向量 $\left(\dfrac{\vec a\cdot\vec b}{|\vec a|^2}\right)\vec a$。}
+\fig{d33-projection}{0.60}{圖 3-5：$\vec b$ 在 $\vec a$ 上的正射影。從 $\vec b$ 的尖端對 $\vec a$ 所在直線作垂線，落點與原點之間沿 $\vec a$ 方向的那支紅色向量，即正射影向量 $\left(\dfrac{\vec a\cdot\vec b}{|\vec a|^2}\right)\vec a$。}
 
 \textbf{注意：}
 \begin{itemize}\setlength{\itemsep}{1pt}
@@ -200,7 +204,7 @@ $$\boxed{\;\det(\vec a,\vec b)=\begin{vmatrix} a_1 & a_2\\ b_1 & b_2\end{vmatrix
 
 取絕對值是因為面積非負；行列式本身的正負號代表 $\vec a$、$\vec b$ 的\textbf{排列方向}（逆時針為正、順時針為負）。
 
-\fig{d33-determinant-area}{0.58}{圖 3-5：以 $\vec a=(x_1,y_1)$、$\vec b=(x_2,y_2)$ 為鄰邊的平行四邊形，其面積等於二階行列式的絕對值 $|x_1y_2-x_2y_1|$。}
+\fig{d33-determinant-area}{0.58}{圖 3-6：以 $\vec a=(x_1,y_1)$、$\vec b=(x_2,y_2)$ 為鄰邊的平行四邊形，其面積等於二階行列式的絕對值 $|x_1y_2-x_2y_1|$。}
 
 \begin{補充框}{行列式 $a_1b_2-a_2b_1$ 為什麼剛好等於面積？}
 平行四邊形以 $\vec a$ 為底，底長 $=|\vec a|$，高 $=\vec b$ 在垂直 $\vec a$ 方向上的分量 $=|\vec b|\sin\theta$，所以面積 $A=|\vec a||\vec b|\sin\theta$。把 $\sin\theta$ 換成坐標：用 $\sin^2\theta=1-\cos^2\theta$，並代入內積 $|\vec a||\vec b|\cos\theta=a_1b_1+a_2b_2$，得
@@ -227,7 +231,7 @@ $$\boxed{\;(\vec a\cdot\vec b)^2\le|\vec a|^2\,|\vec b|^2\;}$$
 $$\boxed{\;(a_1 b_1+a_2 b_2)^2\le(a_1^2+a_2^2)(b_1^2+b_2^2)\;}$$
 \textbf{等號成立 $\iff$ $\vec a$、$\vec b$ 平行}（同向或反向，即 $\cos\theta=\pm1$）。
 
-\fig{d33-cauchy}{0.92}{圖 3-6：柯西不等式的幾何意義。左——當 $\vec a$、$\vec b$ 夾角 $\theta\ne0$ 時，$\vec b$ 在 $\vec a$ 上的投影長 $|\vec b|\cos\theta$ 嚴格小於 $|\vec b|$（因 $|\cos\theta|<1$），故 $(\vec a\cdot\vec b)^2<|\vec a|^2|\vec b|^2$；右——當 $\vec a\parallel\vec b$（$\theta=0$）時投影長等於 $|\vec b|$，不等式取\textbf{等號}。柯西不等式正是「$|\cos\theta|\le1$」的代數化身。}
+\fig{d33-cauchy}{0.92}{圖 3-7：柯西不等式的幾何意義。左——當 $\vec a$、$\vec b$ 夾角 $\theta\ne0$ 時，$\vec b$ 在 $\vec a$ 上的投影長 $|\vec b|\cos\theta$ 嚴格小於 $|\vec b|$（因 $|\cos\theta|<1$），故 $(\vec a\cdot\vec b)^2<|\vec a|^2|\vec b|^2$；右——當 $\vec a\parallel\vec b$（$\theta=0$）時投影長等於 $|\vec b|$，不等式取\textbf{等號}。柯西不等式正是「$|\cos\theta|\le1$」的代數化身。}
 
 \begin{補充框}{柯西不等式是什麼？為什麼到處都在用它？}
 \textbf{它其實就是「$|\cos\theta|\le1$」。}把幾何定義兩邊平方：$(\vec a\cdot\vec b)^2=|\vec a|^2|\vec b|^2\cos^2\theta$。因為 $\cos^2\theta\le1$，所以 $(\vec a\cdot\vec b)^2\le|\vec a|^2|\vec b|^2$。柯西不等式的全部內容，就是「$\cos^2\theta\le1$」披上向量的外衣——一條再普通不過的三角事實，威力卻很大。等號在 $\cos^2\theta=1$，即 $\theta=0$ 或 $180^\circ$（兩向量\textbf{平行}）時成立。

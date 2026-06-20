@@ -522,10 +522,92 @@ def fig_venn3():
     F.save_to(fig, CH, "數2-3-三集合取捨")
 
 
+# =====================================================================
+# 圖六：環狀排列（旋轉視為同一種，n! 收成 (n-1)!）
+# =====================================================================
+def fig_circular():
+    """以 4 人圍圓桌示意：同一圈坐法旋轉 4 個位置看起來不同，其實算同一種，
+    故環狀排列數＝直線排列 4! 再除以 4 ＝ (4-1)! = 3!。"""
+    fig, axes = plt.subplots(1, 2, figsize=(11.0, 4.8))
+    people = ["甲", "乙", "丙", "丁"]
+    cols = [F.BLUE, F.RED, F.GREEN, F.AMBER]
+
+    def draw_round_table(ax, start, title):
+        # 圓桌
+        ax.add_patch(Circle((0, 0), 0.62, fc="#f3f4f6", ec=F.INK, lw=1.6, zorder=1))
+        n = 4
+        for k in range(n):
+            ang = np.pi / 2 - 2 * np.pi * k / n  # 從正上方開始、順時針
+            x, y = 1.25 * np.cos(ang), 1.25 * np.sin(ang)
+            idx = (start + k) % n
+            ax.add_patch(Circle((x, y), 0.30, fc=cols[idx], ec=F.INK, lw=1.4, zorder=4))
+            ax.text(
+                x,
+                y,
+                people[idx],
+                color="white",
+                fontsize=14,
+                ha="center",
+                va="center",
+                fontweight="bold",
+                zorder=5,
+            )
+        ax.set_xlim(-1.9, 1.9)
+        ax.set_ylim(-1.9, 1.9)
+        ax.set_aspect("equal")
+        ax.axis("off")
+        ax.set_title(title, fontsize=12.5)
+
+    # 左：同一圈坐法旋轉後的三個樣子，用一張代表 + 旋轉箭頭
+    ax = axes[0]
+    draw_round_table(ax, 0, "圍圓桌：只看「誰在誰旁邊」")
+    # 旋轉箭頭
+    ax.add_patch(
+        FancyArrowPatch(
+            (1.55, 0.55),
+            (0.55, 1.55),
+            arrowstyle="-|>",
+            mutation_scale=16,
+            lw=1.8,
+            color=F.PURPLE,
+            connectionstyle="arc3,rad=-0.35",
+            zorder=6,
+        )
+    )
+    ax.text(1.55, 1.62, "整桌旋轉", color=F.PURPLE, fontsize=11, ha="center")
+
+    # 右：說明文字（公式推導）
+    ax = axes[1]
+    ax.axis("off")
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    lines = [
+        ("直線排列：4 個位置有頭有尾", F.INK, 0.86, 12.5),
+        ("$4! = 24$ 種", F.INK, 0.76, 14),
+        ("但圍成圈後，同一種坐法", F.INK, 0.60, 12.5),
+        ("整體旋轉到 4 個位置都「一樣」", F.INK, 0.52, 12.5),
+        ("（左右鄰居都沒變）", "#6b7280", 0.44, 11),
+        ("被重複算了 4 次，要除掉：", F.RED, 0.30, 12.5),
+        (r"$\frac{4!}{4} = (4-1)! = 3! = 6$ 種", F.PURPLE, 0.16, 15),
+    ]
+    for txt, col, y, fs in lines:
+        ax.text(0.5, y, txt, color=col, fontsize=fs, ha="center", va="center")
+    ax.set_title("環狀排列：旋轉視為同一種", fontsize=12.5)
+
+    fig.suptitle(
+        "環狀排列：$n$ 人圍圓桌 $=(n-1)!$（整體旋轉算同一種）",
+        fontsize=14,
+        y=1.02,
+    )
+    fig.tight_layout()
+    F.save_to(fig, CH, "數2-3-環狀排列")
+
+
 if __name__ == "__main__":
     fig_venn()
     fig_tree()
     fig_perm_comb()
     fig_prob()
     fig_venn3()
+    fig_circular()
     print("done.")

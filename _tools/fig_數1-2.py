@@ -301,9 +301,173 @@ def fig_interval_extremum():
     F.save_to(fig, CH, "數1-2-區間極值")
 
 
+def fig_synthetic_division():
+    """綜合除法「落、乘、加」流程示意。
+    以 f(x)=2x^3-3x^2+0x+5 除以 x-2 為例（例題 2-2），餘式 9。
+    展示三排數字與「乘以 a 斜向上、相加直向下」的箭頭。"""
+    fig, ax = F.schematic(7.6, 4.0)
+    ax.set_xlim(0, 7.6)
+    ax.set_ylim(0, 4.0)
+    ax.set_aspect("auto")
+
+    # 欄位 x 座標：a 在最左，再來四個係數欄
+    xa = 0.7
+    xc = [1.9, 3.3, 4.7, 6.1]  # 四欄係數位置
+    y_top = 3.2  # 第一排：原係數
+    y_mid = 2.3  # 第二排：乘下來的數
+    y_bot = 1.4  # 第三排：相加結果（商係數＋餘式）
+
+    coeff = ["2", "-3", "0", "5"]  # 被除式係數（缺項補 0）
+    carry = ["", "4", "2", "4"]  # 乘 a 後加到下一欄的數
+    out = ["2", "1", "2", "9"]  # 第三排：商係數 2,1,2，最後一格餘式 9
+
+    # 除數 a=2 放最左，框起來
+    ax.text(xa, y_top, "2", color=F.RED, fontsize=18, ha="center", va="center")
+    ax.add_patch(
+        plt.Rectangle(
+            (xa - 0.32, y_top - 0.34),
+            0.64,
+            0.68,
+            fill=False,
+            ec=F.RED,
+            lw=1.6,
+        )
+    )
+    ax.text(xa, y_top + 0.62, "除數 a", color=F.RED, fontsize=12, ha="center")
+    # 直分隔線
+    ax.plot([xa + 0.55, xa + 0.55], [y_bot - 0.5, y_top + 0.45], color=F.INK, lw=1.4)
+
+    # 三排數字
+    for i in range(4):
+        ax.text(
+            xc[i], y_top, coeff[i], color=F.INK, fontsize=18, ha="center", va="center"
+        )
+        if carry[i]:
+            ax.text(
+                xc[i],
+                y_mid,
+                carry[i],
+                color=F.GREEN,
+                fontsize=17,
+                ha="center",
+                va="center",
+            )
+        col = F.AMBER if i == 3 else F.BLUE
+        ax.text(xc[i], y_bot, out[i], color=col, fontsize=18, ha="center", va="center")
+
+    # 橫線（在第二排與第三排之間）
+    ax.plot([xa + 0.55, 6.7], [y_bot + 0.45, y_bot + 0.45], color=F.INK, lw=1.4)
+
+    # 「落下」：第一欄最高次係數直接落到第三排
+    F.arrow(ax, (xc[0], y_top - 0.32), (xc[0], y_bot + 0.30), color=F.INK, lw=1.8)
+
+    # 「乘」斜箭頭：第三排某欄結果 × a，斜向上到下一欄第二排
+    for i in range(3):
+        F.arrow(
+            ax,
+            (xc[i] + 0.28, y_bot + 0.18),
+            (xc[i + 1] - 0.28, y_mid - 0.18),
+            color=F.GREEN,
+            lw=1.6,
+        )
+    # 「加」直箭頭：第一排與第二排相加到第三排
+    for i in range(1, 4):
+        F.arrow(ax, (xc[i], y_mid + 0.30), (xc[i], y_bot + 0.30), color=F.INK, lw=1.6)
+
+    # 圖例文字
+    ax.text(
+        3.0,
+        0.55,
+        "綠箭頭：乘以 a 後斜放到下一欄",
+        color=F.GREEN,
+        fontsize=11,
+        ha="center",
+    )
+    ax.text(5.9, 0.55, "（再上下相加）", color=F.INK, fontsize=11, ha="center")
+
+    # 標注：商係數與餘式
+    ax.text(
+        (xc[0] + xc[2]) / 2,
+        y_bot - 0.55,
+        "商的係數 2, 1, 2",
+        color=F.BLUE,
+        fontsize=11.5,
+        ha="center",
+    )
+    ax.text(xc[3], y_bot - 0.55, "餘式 9", color=F.AMBER, fontsize=11.5, ha="center")
+
+    ax.set_title("綜合除法：2x³-3x²+5 除以 x-2（落、乘、加）", fontsize=13)
+    fig.tight_layout()
+    F.save_to(fig, CH, "數1-2-綜合除法")
+
+
+def fig_sign_line():
+    """高次不等式的數線分段定號示意。
+    以 (x-1)(x+2)(x-3)>0 為例（例題 2-10），根 -2,1,3，單根逐段變號。
+    取乘積>0 的區段：-2<x<1 或 x>3。"""
+    fig, ax = F.schematic(8.4, 2.8)
+    ax.set_xlim(-4.2, 5.2)
+    ax.set_ylim(-1.6, 1.4)
+    ax.set_aspect("auto")
+
+    y0 = 0.0
+    # 數線
+    F.arrow(ax, (-4.2, y0), (5.2, y0), color=F.INK, lw=1.6)
+    roots = [-2.0, 1.0, 3.0]
+    rlab = ["-2", "1", "3"]
+    for r, lb in zip(roots, rlab):
+        ax.add_patch(Circle((r, y0), 0.10, color=F.RED, zorder=6))
+        ax.text(r, y0 - 0.32, lb, color=F.RED, fontsize=13, ha="center", va="top")
+
+    # 每段中點放符號（單根逐段變號，最右段為 +）
+    seg_mid = [-3.1, -0.5, 2.0, 4.1]
+    signs = ["−", "+", "−", "+"]
+    take = [False, True, False, True]  # 取 >0 的段
+    for xm, s, t in zip(seg_mid, signs, take):
+        col = F.GREEN if s == "+" else F.RED
+        ax.text(xm, y0 + 0.42, s, color=col, fontsize=22, ha="center", va="center")
+        if t:
+            # 在數線上方標出取用區段（粗綠線）
+            ax.text(
+                xm,
+                y0 + 0.95,
+                "取",
+                color=F.GREEN,
+                fontsize=12,
+                ha="center",
+                va="center",
+            )
+
+    # 取用區段的粗線（-2,1）與（3,∞）
+    ax.plot(
+        [-2.0, 1.0], [y0 + 0.72, y0 + 0.72], color=F.GREEN, lw=5, solid_capstyle="butt"
+    )
+    ax.plot(
+        [3.0, 5.0], [y0 + 0.72, y0 + 0.72], color=F.GREEN, lw=5, solid_capstyle="butt"
+    )
+    for r in (-2.0, 1.0, 3.0):
+        ax.add_patch(
+            Circle((r, y0 + 0.72), 0.11, fill=False, ec=F.GREEN, lw=2, zorder=7)
+        )
+
+    ax.text(
+        0.5,
+        -1.25,
+        "單根逐段變號；取乘積 > 0 者：-2 < x < 1 或 x > 3",
+        color=F.INK,
+        fontsize=12.5,
+        ha="center",
+    )
+    ax.set_title("數線分段定號：(x-1)(x+2)(x-3) > 0", fontsize=13)
+    fig.tight_layout()
+    F.save_to(fig, CH, "數1-2-數線定號")
+
+
 if __name__ == "__main__":
     fig_completing_square()
     fig_cubic_features()
     fig_quadratic_inequality()
     fig_interval_extremum()
+    fig_synthetic_division()
+    fig_sign_line()
     print("done.")

@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-06-18T14:57:24.862456</dc:date>
+    <dc:date>2026-06-20T18:20:35.618254</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -67,25 +67,25 @@ L 168.640667 179.722124
 L 109.079255 169.946137 
 L 72.58714 187.194886 
 z
-" clip-path="url(#pc1f403334e)" style="fill: #9db8e6; fill-opacity: 0.3"/>
+" clip-path="url(#p92f085054b)" style="fill: #9db8e6; fill-opacity: 0.3"/>
     <path d="M 198.49739 209.110404 
 L 231.262153 190.00037 
 L 168.640667 179.722124 
 L 133.894054 197.865763 
 z
-" clip-path="url(#pc1f403334e)" style="fill: #9db8e6; fill-opacity: 0.3"/>
+" clip-path="url(#p92f085054b)" style="fill: #9db8e6; fill-opacity: 0.3"/>
     <path d="M 95.846491 217.733059 
 L 133.894054 197.865763 
 L 72.58714 187.194886 
 L 32.720786 206.038538 
 z
-" clip-path="url(#pc1f403334e)" style="fill: #9db8e6; fill-opacity: 0.3"/>
+" clip-path="url(#p92f085054b)" style="fill: #9db8e6; fill-opacity: 0.3"/>
     <path d="M 162.532185 230.087096 
 L 198.49739 209.110404 
 L 133.894054 197.865763 
 L 95.846491 217.733059 
 z
-" clip-path="url(#pc1f403334e)" style="fill: #9db8e6; fill-opacity: 0.3"/>
+" clip-path="url(#p92f085054b)" style="fill: #9db8e6; fill-opacity: 0.3"/>
    </g>
    <g id="text_1">
     <!-- 相交於一點 -->
@@ -366,7 +366,7 @@ L 144.191831 45.112142
 L 146.853375 40.417556 
 L 149.519471 35.71494 
 L 152.190131 31.004274 
-" clip-path="url(#pc1f403334e)" style="fill: none; stroke: #d1242f; stroke-width: 2.6; stroke-linecap: square"/>
+" clip-path="url(#p92f085054b)" style="fill: none; stroke: #d1242f; stroke-width: 2.6; stroke-linecap: square"/>
    </g>
   </g>
   <g id="patch_3">
@@ -408,25 +408,25 @@ L 428.320667 179.722124
 L 368.759255 169.946137 
 L 332.26714 187.194886 
 z
-" clip-path="url(#pce720423d7)" style="fill: #9db8e6; fill-opacity: 0.3"/>
+" clip-path="url(#p95a6f03bb1)" style="fill: #9db8e6; fill-opacity: 0.3"/>
     <path d="M 458.17739 209.110404 
 L 490.942153 190.00037 
 L 428.320667 179.722124 
 L 393.574054 197.865763 
 z
-" clip-path="url(#pce720423d7)" style="fill: #9db8e6; fill-opacity: 0.3"/>
+" clip-path="url(#p95a6f03bb1)" style="fill: #9db8e6; fill-opacity: 0.3"/>
     <path d="M 355.526491 217.733059 
 L 393.574054 197.865763 
 L 332.26714 187.194886 
 L 292.400786 206.038538 
 z
-" clip-path="url(#pce720423d7)" style="fill: #9db8e6; fill-opacity: 0.3"/>
+" clip-path="url(#p95a6f03bb1)" style="fill: #9db8e6; fill-opacity: 0.3"/>
     <path d="M 422.212185 230.087096 
 L 458.17739 209.110404 
 L 393.574054 197.865763 
 L 355.526491 217.733059 
 z
-" clip-path="url(#pce720423d7)" style="fill: #9db8e6; fill-opacity: 0.3"/>
+" clip-path="url(#p95a6f03bb1)" style="fill: #9db8e6; fill-opacity: 0.3"/>
    </g>
    <g id="text_2">
     <!-- 與平面平行 -->
@@ -652,7 +652,7 @@ L 430.665985 142.885462
 L 435.122492 143.052943 
 L 439.583109 143.220578 
 L 444.047844 143.388368 
-" clip-path="url(#pce720423d7)" style="fill: none; stroke: #1f6feb; stroke-width: 2.6; stroke-linecap: square"/>
+" clip-path="url(#p95a6f03bb1)" style="fill: none; stroke: #1f6feb; stroke-width: 2.6; stroke-linecap: square"/>
    </g>
   </g>
   <g id="patch_4">
@@ -694,25 +694,25 @@ L 688.000667 179.722124
 L 628.439255 169.946137 
 L 591.94714 187.194886 
 z
-" clip-path="url(#p1ac983173c)" style="fill: #9db8e6; fill-opacity: 0.3"/>
+" clip-path="url(#p6283251f52)" style="fill: #9db8e6; fill-opacity: 0.3"/>
     <path d="M 717.85739 209.110404 
 L 750.622153 190.00037 
 L 688.000667 179.722124 
 L 653.254054 197.865763 
 z
-" clip-path="url(#p1ac983173c)" style="fill: #9db8e6; fill-opacity: 0.3"/>
+" clip-path="url(#p6283251f52)" style="fill: #9db8e6; fill-opacity: 0.3"/>
     <path d="M 615.206491 217.733059 
 L 653.254054 197.865763 
 L 591.94714 187.194886 
 L 552.080786 206.038538 
 z
-" clip-path="url(#p1ac983173c)" style="fill: #9db8e6; fill-opacity: 0.3"/>
+" clip-path="url(#p6283251f52)" style="fill: #9db8e6; fill-opacity: 0.3"/>
     <path d="M 681.892185 230.087096 
 L 717.85739 209.110404 
 L 653.254054 197.865763 
 L 615.206491 217.733059 
 z
-" clip-path="url(#p1ac983173c)" style="fill: #9db8e6; fill-opacity: 0.3"/>
+" clip-path="url(#p6283251f52)" style="fill: #9db8e6; fill-opacity: 0.3"/>
    </g>
    <g id="text_3">
     <!-- 直線在平面上 -->
@@ -944,7 +944,7 @@ L 688.705219 198.249955
 L 693.090225 198.227686 
 L 697.474765 198.20542 
 L 701.858838 198.183156 
-" clip-path="url(#p1ac983173c)" style="fill: none; stroke: #1a7f37; stroke-width: 2.6; stroke-linecap: square"/>
+" clip-path="url(#p6283251f52)" style="fill: none; stroke: #1a7f37; stroke-width: 2.6; stroke-linecap: square"/>
    </g>
   </g>
   <g id="text_4">
@@ -1397,13 +1397,13 @@ z
   </g>
  </g>
  <defs>
-  <clipPath id="pc1f403334e">
+  <clipPath id="p92f085054b">
    <rect x="7.2" y="41.993562" width="246.72" height="246.72"/>
   </clipPath>
-  <clipPath id="pce720423d7">
+  <clipPath id="p95a6f03bb1">
    <rect x="266.88" y="41.993562" width="246.72" height="246.72"/>
   </clipPath>
-  <clipPath id="p1ac983173c">
+  <clipPath id="p6283251f52">
    <rect x="526.56" y="41.993562" width="246.72" height="246.72"/>
   </clipPath>
  </defs>

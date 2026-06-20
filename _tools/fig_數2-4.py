@@ -52,7 +52,7 @@ def fig_std():
         ax.text(
             0.6,
             mean + sd + 1.5,
-            "標準差 s = %.1f" % sd,
+            "標準差 σ = %.1f" % sd,
             color=col,
             fontsize=11.5,
             ha="left",
@@ -343,10 +343,76 @@ def fig_standardize():
     F.save_to(fig, CH, "數2-4-標準化")
 
 
+def fig_linear_transform():
+    """線性變換對離散量數的影響：平移＝整體搬家（間距不變）、伸縮＝間距放大。"""
+    data = np.array([2.0, 3.0, 5.0, 6.0])  # 原始資料
+
+    fig, axes = plt.subplots(3, 1, figsize=(9.6, 5.4), sharex=True)
+
+    def draw_row(ax, vals, col, title, mean_txt):
+        m = vals.mean()
+        ax.scatter(vals, np.zeros_like(vals), color=col, s=80, zorder=5)
+        # 相鄰資料點之間的間距標尺
+        for x0, x1 in zip(vals[:-1], vals[1:]):
+            ax.annotate(
+                "",
+                xy=(x0, 0.32),
+                xytext=(x1, 0.32),
+                arrowprops=dict(arrowstyle="<->", color=F.GRID, lw=1.3),
+            )
+            ax.text(
+                (x0 + x1) / 2,
+                0.42,
+                "%.0f" % (x1 - x0),
+                color=F.INK,
+                fontsize=10,
+                ha="center",
+                va="bottom",
+            )
+        # 平均線
+        ax.axvline(m, color=F.INK, lw=1.6, ls="--", zorder=3)
+        ax.text(m, -0.62, mean_txt, color=F.INK, fontsize=10.5, ha="center", va="top")
+        ax.set_title(title, fontsize=12, color=col, loc="left")
+        ax.set_ylim(-0.95, 0.85)
+        ax.set_yticks([])
+        for s in ("top", "right", "left"):
+            ax.spines[s].set_visible(False)
+        ax.axhline(0, color=F.GRID, lw=0.8, zorder=1)
+
+    draw_row(
+        axes[0],
+        data,
+        F.INK,
+        "原始資料：間距 1、2、1，平均 = 4",
+        "平均 4",
+    )
+    draw_row(
+        axes[1],
+        data + 8,
+        F.BLUE,
+        "平移 +8（整體搬家）：間距仍是 1、2、1 → 標準差不變，只有平均跟著 +8",
+        "平均 12",
+    )
+    draw_row(
+        axes[2],
+        data * 2,
+        F.RED,
+        "伸縮 ×2（間距放大）：間距變成 2、4、2 → 標準差變 2 倍",
+        "平均 8",
+    )
+
+    axes[2].set_xlim(0, 16)
+    axes[2].set_xlabel("數值")
+    fig.suptitle("線性變換 y = ax + b：平移不動離散、伸縮放大離散", fontsize=14, y=0.99)
+    fig.tight_layout()
+    F.save_to(fig, CH, "數2-4-線性變換")
+
+
 if __name__ == "__main__":
     fig_std()
     fig_scatter_corr()
     fig_best_fit()
     fig_standardize()
     fig_boxplot()
+    fig_linear_transform()
     print("done.")

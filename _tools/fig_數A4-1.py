@@ -175,6 +175,61 @@ def fig_dihedral_angle():
     F.save_to(fig, CH, "數A4-1-兩平面夾角")
 
 
+def fig_two_planes_line():
+    """兩相交平面的交線：方向 = n1 x n2，同時躺在兩平面上。"""
+    fig = plt.figure(figsize=(6.8, 5.4))
+    ax = fig.add_subplot(111, projection="3d")
+
+    n1 = np.array([0.0, 0.0, 1.0])
+    n2 = np.array([0.0, 0.9, 0.5])
+    C = np.array([0.0, 0.0, 0.0])
+
+    _plane(ax, C, n1, F.BLUE, alpha=0.22, span=2.3)
+    _plane(ax, C, n2, F.GREEN, alpha=0.22, span=2.3)
+
+    arrow3d(ax, C, C + n1 * 1.9, color=F.BLUE, lw=2.4, mutation=16)
+    arrow3d(ax, C, C + n2 * 1.9, color=F.GREEN, lw=2.4, mutation=16)
+    ax.text(*(C + n1 * 2.0), "n1", color=F.BLUE, fontsize=12)
+    ax.text(*(C + n2 * 2.05), "n2", color=F.GREEN, fontsize=12)
+
+    # 交線：方向 = n1 x n2（這裡兩法向量的 x 分量皆 0，交線沿 x 軸）
+    d = np.cross(n1, n2)
+    d = d / np.linalg.norm(d)
+    line = np.array([C + s * d for s in np.linspace(-2.6, 2.6, 30)])
+    ax.plot(line[:, 0], line[:, 1], line[:, 2], color=F.RED, lw=3.0, zorder=6)
+    ax.text(2.7, 0, 0, "交線 L", color=F.RED, fontsize=12)
+    arrow3d(ax, C, C + 1.6 * d, color=F.RED, lw=2.4, mutation=16, z=7)
+    ax.text(
+        1.7 * d[0],
+        1.7 * d[1] - 0.3,
+        1.7 * d[2],
+        "d = n1 x n2",
+        color=F.RED,
+        fontsize=11,
+    )
+
+    ax.text(
+        -2.6,
+        0,
+        2.5,
+        "兩平面相交於一直線\n交線方向 = 兩法向量外積",
+        color=F.INK,
+        fontsize=10.5,
+    )
+
+    ax.set_xlim(-2.6, 2.6)
+    ax.set_ylim(-2.4, 2.4)
+    ax.set_zlim(-1.2, 2.4)
+    ax.set_box_aspect((1, 1, 0.9))
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_zticks([])
+    ax.set_title("兩相交平面的交線", fontsize=13)
+    ax.view_init(elev=16, azim=-66)
+    _clean3d(ax)
+    F.save_to(fig, CH, "數A4-1-兩平面交線")
+
+
 def fig_line_param():
     """直線參數式：過定點 A、沿方向向量 d；動點 P = A + t d。"""
     fig = plt.figure(figsize=(6.8, 5.2))
@@ -438,6 +493,7 @@ def fig_two_lines_relation():
 if __name__ == "__main__":
     fig_plane_normal()
     fig_dihedral_angle()
+    fig_two_planes_line()
     fig_line_param()
     fig_point_to_plane()
     fig_skew_lines()

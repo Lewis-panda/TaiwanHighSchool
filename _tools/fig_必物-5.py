@@ -90,6 +90,101 @@ def fig_energy_conversion():
     F.save_to(fig, CH, "必物-5-能量轉換")
 
 
+def fig_mass_defect():
+    """質量虧損與質能等價：反應前後用天平比較，產物總質量略輕，差額 Δm 以 E=Δm c² 釋出。"""
+    fig, ax = F.schematic(8.6, 5.0)
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+
+    # ---- 左盤：反應前（兩個核子團，較重） ----
+    lx = 0.20
+    ax.add_patch(
+        FancyBboxPatch(
+            (lx - 0.15, 0.60),
+            0.30,
+            0.20,
+            boxstyle="round,pad=0.01,rounding_size=0.02",
+            fc="#eef4ff",
+            ec=F.BLUE,
+            lw=2.0,
+            zorder=3,
+        )
+    )
+    ax.text(lx, 0.745, "反應前", ha="center", fontsize=12, color=F.BLUE)
+    ax.text(lx, 0.655, "核子分開", ha="center", fontsize=10, color="#555")
+    # 散開的核子（畫幾顆小球）
+    for dx, dy in [(-0.085, 0.50), (-0.03, 0.53), (0.03, 0.49), (0.085, 0.52)]:
+        ax.add_patch(plt.Circle((lx + dx, dy), 0.022, color=F.BLUE, zorder=4))
+    ax.text(lx, 0.43, "總質量 $M_{0}$", ha="center", fontsize=12, color=F.INK)
+    ax.text(lx, 0.37, "（較重）", ha="center", fontsize=9.5, color="#555")
+
+    # ---- 右盤：反應後（綁成核，較輕） ----
+    rx = 0.62
+    ax.add_patch(
+        FancyBboxPatch(
+            (rx - 0.15, 0.60),
+            0.30,
+            0.20,
+            boxstyle="round,pad=0.01,rounding_size=0.02",
+            fc="#fff8ec",
+            ec=F.AMBER,
+            lw=2.0,
+            zorder=3,
+        )
+    )
+    ax.text(rx, 0.745, "反應後", ha="center", fontsize=12, color=F.AMBER)
+    ax.text(rx, 0.655, "綁成原子核", ha="center", fontsize=10, color="#555")
+    # 綁在一起的核子（緊貼成團）
+    for dx, dy in [(-0.025, 0.515), (0.025, 0.515), (0.0, 0.475), (0.0, 0.555)]:
+        ax.add_patch(plt.Circle((rx + dx, dy), 0.022, color=F.AMBER, zorder=4))
+    ax.text(rx, 0.43, "總質量 $M_{0}-\\Delta m$", ha="center", fontsize=12, color=F.INK)
+    ax.text(rx, 0.37, "（較輕）", ha="center", fontsize=9.5, color="#555")
+
+    # ---- 中間：反應箭頭 ----
+    F.arrow(ax, (lx + 0.18, 0.50), (rx - 0.18, 0.50), color=F.INK, lw=2.4, mutation=18)
+    ax.text(
+        (lx + rx) / 2,
+        0.575,
+        "綁在一起\n（放能）",
+        ha="center",
+        va="center",
+        fontsize=10,
+        color=F.INK,
+    )
+
+    # ---- 下方：差額質量變成能量 ----
+    ax.add_patch(
+        FancyBboxPatch(
+            (0.30, 0.085),
+            0.40,
+            0.16,
+            boxstyle="round,pad=0.01,rounding_size=0.03",
+            fc="#fdecec",
+            ec=F.RED,
+            lw=2.2,
+            zorder=3,
+        )
+    )
+    ax.text(0.50, 0.195, "釋出能量", ha="center", fontsize=12, color=F.RED)
+    ax.text(0.50, 0.130, "$E=\\Delta m\\,c^{2}$", ha="center", fontsize=14, color=F.RED)
+    F.arrow(ax, (rx, 0.345), (0.58, 0.255), color=F.RED, lw=2.0, mutation=14)
+    ax.text(
+        0.80,
+        0.30,
+        "虧損的質量\n$\\Delta m$",
+        ha="center",
+        va="center",
+        fontsize=10,
+        color=F.RED,
+    )
+
+    ax.set_title(
+        "質量虧損：綁好的核比散開的核子輕，差額 $\\Delta m$ 化為能量 $\\Delta m\\,c^{2}$",
+        fontsize=13,
+    )
+    F.save_to(fig, CH, "必物-5-質量虧損")
+
+
 def fig_binding_energy():
     """每核子束縛能 vs 質量數曲線，標出鐵峰、融合與分裂釋能方向。"""
     fig, ax = F.canvas(7.6, 4.8)
@@ -687,6 +782,7 @@ def FancyArrowPatchSafe(ax, p0, p1):
 
 if __name__ == "__main__":
     fig_energy_conversion()
+    fig_mass_defect()
     fig_binding_energy()
     fig_internal_energy()
     fig_heat_engine()

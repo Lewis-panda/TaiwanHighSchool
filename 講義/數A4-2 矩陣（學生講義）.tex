@@ -106,6 +106,7 @@ $$(ad-bc)\,x=ed-bf\ \Longrightarrow\ x=\frac{ed-bf}{ad-bc}=\frac{\begin{vmatrix}
 \item \textbf{相等}：$A=B\iff$ 每個對應位置 $a_{ij}=b_{ij}$。
 \item \textbf{加減}（對應位置相加減）：$A\pm B=[\,a_{ij}\pm b_{ij}\,]$。
 \item \textbf{係數積}（每個元素都乘 $k$）：$kA=[\,k\,a_{ij}\,]$。
+\item \textbf{零矩陣（zero matrix）$O$}：所有元素都是 $0$ 的矩陣，是矩陣加法的「$0$」，滿足 $A+O=A$。
 \end{itemize}
 形狀不同的矩陣\textbf{不能相加}。加減與係數積都是「逐元素」進行，跟向量一模一樣，沒有什麼陷阱。真正的重頭戲是乘法。
 
@@ -213,15 +214,17 @@ $$A^{-1}A\vec x=A^{-1}\vec b\ \Rightarrow\ I\vec x=A^{-1}\vec b\ \Rightarrow\ \b
 \begin{itemize}\setlength{\itemsep}{3pt}
 \item \textbf{旋轉（rotation）}繞原點逆時針轉 $\theta$：
 $$R_\theta=\begin{bmatrix} \cos\theta & -\sin\theta\\ \sin\theta & \cos\theta \end{bmatrix}$$
-\item \textbf{鏡射（reflection）}對 $x$ 軸、$y$ 軸、直線 $y=x$：
-$$\begin{bmatrix} 1 & 0\\ 0 & -1 \end{bmatrix}\ (\text{對 }x\text{ 軸}),\quad \begin{bmatrix} -1 & 0\\ 0 & 1 \end{bmatrix}\ (\text{對 }y\text{ 軸}),\quad \begin{bmatrix} 0 & 1\\ 1 & 0 \end{bmatrix}\ (\text{對 }y=x)$$
+\item \textbf{鏡射（reflection）}對 $x$ 軸、$y$ 軸、直線 $y=x$、直線 $y=-x$：
+$$\begin{bmatrix} 1 & 0\\ 0 & -1 \end{bmatrix}\ (\text{對 }x\text{ 軸}),\quad \begin{bmatrix} -1 & 0\\ 0 & 1 \end{bmatrix}\ (\text{對 }y\text{ 軸}),$$
+$$\begin{bmatrix} 0 & 1\\ 1 & 0 \end{bmatrix}\ (\text{對 }y=x),\quad \begin{bmatrix} 0 & -1\\ -1 & 0 \end{bmatrix}\ (\text{對 }y=-x)$$
+其中對 $y=x$ 鏡射是把坐標對調 $(x,y)\mapsto(y,x)$、對 $y=-x$ 鏡射是對調再變號 $(x,y)\mapsto(-y,-x)$。
 \item \textbf{伸縮（scaling）}沿 $x$ 方向放大 $k$ 倍、$y$ 方向放大 $\ell$ 倍：$\begin{bmatrix} k & 0\\ 0 & \ell \end{bmatrix}$。
 \item \textbf{推移（shear）}沿 $x$ 方向錯切：$\begin{bmatrix} 1 & k\\ 0 & 1 \end{bmatrix}$（把方格推成平行四邊形）。
 \end{itemize}
 
 \fig{d42-four-transforms}{0.98}{圖 2-3：四種標準變換對同一個單位方格（虛線藍）的作用對比。伸縮把方格沿坐標軸拉長；推移（shear）把方格推成平行四邊形；旋轉整體轉一個角度；鏡射把方格翻到 $x$ 軸另一側。紅色箭頭為兩基底 $(1,0)$、$(0,1)$ 的像，即矩陣的兩行。}
 
-\fig{d42-rotation-reflection}{0.92}{圖 2-4：旋轉（繞原點逆時針轉 $\theta$）與鏡射（對 $x$ 軸、對 $y=x$）。旋轉的 $\det=1$、鏡射的 $\det=-1$（負號代表把定向翻面），兩者都不改變面積。}
+\fig{d42-rotation-reflection}{0.92}{圖 2-4：旋轉（繞原點逆時針轉 $\theta$，左）與兩條對角線鏡射（對 $y=x$、對 $y=-x$，右）。旋轉的 $\det=1$、鏡射的 $\det=-1$（負號代表把定向翻面），兩者都不改變面積。}
 
 \begin{延伸框}{旋轉、鏡射憑什麼能寫成矩陣？那些 $\cos\theta$、$\sin\theta$ 哪來的}
 \textbf{關鍵事實：}線性變換被「兩個基底的去向」完全決定。平面上任何向量都能寫成
@@ -230,7 +233,7 @@ $$\begin{bmatrix} x\\ y \end{bmatrix}=x\begin{bmatrix} 1\\ 0 \end{bmatrix}+y\beg
 
 \textbf{推出旋轉矩陣。}把「繞原點逆時針轉 $\theta$」套上去：$\vec e_1=(1,0)$ 在單位圓上從 $0^\circ$ 轉到 $\theta$，落在 $(\cos\theta,\sin\theta)$；$\vec e_2=(0,1)$ 從 $90^\circ$ 轉到 $90^\circ+\theta$，落在 $(-\sin\theta,\cos\theta)$。把兩個像填進兩行，正好得到
 $$R_\theta=\begin{bmatrix} \cos\theta & -\sin\theta\\ \sin\theta & \cos\theta \end{bmatrix}.$$
-那些三角函數不是憑空出現的，它們就是\textbf{兩個基底轉動後的坐標}，是單位圓的定義直接搬過來的。鏡射用完全相同的方法：例如對 $y=x$ 鏡射，$\vec e_1=(1,0)\mapsto(0,1)$、$\vec e_2=(0,1)\mapsto(1,0)$，得 $\begin{bmatrix} 0 & 1\\ 1 & 0 \end{bmatrix}$。
+那些三角函數不是憑空出現的，它們就是\textbf{兩個基底轉動後的坐標}，是單位圓的定義直接搬過來的。鏡射用完全相同的方法：對 $y=x$ 鏡射，$\vec e_1=(1,0)\mapsto(0,1)$、$\vec e_2=(0,1)\mapsto(1,0)$，得 $\begin{bmatrix} 0 & 1\\ 1 & 0 \end{bmatrix}$；對 $y=-x$ 鏡射，$\vec e_1\mapsto(0,-1)$、$\vec e_2\mapsto(-1,0)$，得 $\begin{bmatrix} 0 & -1\\ -1 & 0 \end{bmatrix}$。
 
 \textbf{為什麼只看兩個基底就夠？}因為這些變換保持線性組合（原點固定、直線仍是直線）。\textbf{平移就不行}——平移會把原點移走，不是線性變換，無法只用 $2\times2$ 矩陣表示（大學會用「齊次坐標」處理）。
 \end{延伸框}
