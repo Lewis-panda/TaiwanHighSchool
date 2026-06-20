@@ -593,6 +593,81 @@ def fig_thermal_equilibrium():
     F.save_to(fig, CH, "必物-5-熱平衡")
 
 
+def fig_mechanical_energy():
+    """力學能守恆：自由落體三個高度，位能↓、動能↑，總和(力學能)不變。"""
+    from matplotlib.patches import Rectangle, Circle
+
+    fig, (ax1, ax2) = plt.subplots(
+        1, 2, figsize=(8.6, 4.8), gridspec_kw={"width_ratios": [1, 1.25]}
+    )
+
+    # ---- 左：落體三位置 ----
+    H = 3.0
+    states = [(H, "頂端：靜止"), (H / 2, "中途"), (0.0, "落地：最快")]
+    ax1.plot([0.15, 0.15], [0, H], color="#bbb", lw=1.0, zorder=1)
+    ax1.plot([-0.25, 0.55], [0, 0], color=F.INK, lw=2.2)  # 地面
+    for h, lab in states:
+        ax1.add_patch(Circle((0.15, h), 0.16, color=F.BLUE, zorder=4))
+        ax1.text(0.42, h, lab, fontsize=10.5, va="center", ha="left", color=F.INK)
+    F.arrow(ax1, (0.15, H - 0.35), (0.15, 0.35), color=F.RED, lw=1.6, mutation=12)
+    ax1.text(-0.1, H / 2, "$g$", color=F.RED, fontsize=12, va="center", ha="right")
+    ax1.set_xlim(-0.5, 2.0)
+    ax1.set_ylim(-0.5, H + 0.6)
+    ax1.axis("off")
+    ax1.set_title("自由落體", fontsize=12)
+
+    # ---- 右：U+K 堆疊長條，總高不變 ----
+    Etot = 1.0
+    xs = [0, 1, 2]
+    labels = ["頂端", "中途", "落地"]
+    U = [1.0, 0.5, 0.0]
+    K = [0.0, 0.5, 1.0]
+    w = 0.55
+    for x, u, k in zip(xs, U, K):
+        ax2.add_patch(
+            Rectangle((x - w / 2, 0), w, u, facecolor=F.BLUE, edgecolor=F.INK, lw=1.0)
+        )
+        ax2.add_patch(
+            Rectangle((x - w / 2, u), w, k, facecolor=F.RED, edgecolor=F.INK, lw=1.0)
+        )
+        if u > 0.04:
+            ax2.text(
+                x, u / 2, "位能", color="white", fontsize=10, ha="center", va="center"
+            )
+        if k > 0.04:
+            ax2.text(
+                x,
+                u + k / 2,
+                "動能",
+                color="white",
+                fontsize=10,
+                ha="center",
+                va="center",
+            )
+    ax2.plot([-0.5, 2.5], [Etot, Etot], color=F.GREEN, lw=1.6, ls="--")
+    ax2.text(
+        2.5,
+        Etot + 0.03,
+        "力學能 ＝ 動能 ＋ 位能（定值）",
+        color=F.GREEN,
+        fontsize=10.5,
+        ha="right",
+        va="bottom",
+    )
+    ax2.set_xticks(xs)
+    ax2.set_xticklabels(labels, fontsize=11)
+    ax2.set_yticks([])
+    ax2.set_ylim(0, Etot + 0.22)
+    ax2.set_xlim(-0.6, 2.6)
+    for s in ("top", "right", "left"):
+        ax2.spines[s].set_visible(False)
+    ax2.set_title("位能↓、動能↑，總和不變", fontsize=12)
+
+    fig.suptitle("力學能守恆（無摩擦時）", fontsize=13)
+    fig.tight_layout(rect=[0, 0, 1, 0.95])
+    F.save_to(fig, CH, "必物-5-力學能守恆")
+
+
 def FancyArrowPatchSafe(ax, p0, p1):
     """小幅雙向振動標記（原地振動，不整體移動）。"""
     a = FancyArrowPatch(
@@ -617,4 +692,5 @@ if __name__ == "__main__":
     fig_heat_engine()
     fig_heat_transfer()
     fig_thermal_equilibrium()
+    fig_mechanical_energy()
     print("done.")
