@@ -393,6 +393,205 @@ def fig_contact_push():
     F.save_to(fig, CH, "選物I-4-接觸推擠連接體")
 
 
+def fig_apparent_weight():
+    """電梯視重：同一人在四種電梯狀態下，正向力 N 與重力 mg 的對比。"""
+    fig, ax = F.schematic(8.6, 4.4)
+
+    cases = [
+        ("靜止 / 等速", "a = 0", "N = mg", 1.0, F.INK),
+        ("向上加速", "a 向上", "N > mg（變重）", 1.5, F.RED),
+        ("向下加速", "a 向下", "N < mg（變輕）", 0.62, F.BLUE),
+        ("自由下墜", "a = g 向下", "N = 0（失重）", 0.0, F.GREEN),
+    ]
+    cell_w = 4.0
+    base_y = -1.7  # 地板高度
+    mg_len = 1.55  # 重力箭頭長度（各格相同，因 mg 不變）
+
+    for i, (state, acc, res, nfac, ac) in enumerate(cases):
+        x0 = i * cell_w
+        cx = x0 + cell_w / 2
+        # 電梯廂
+        ax.add_patch(
+            Rectangle(
+                (x0 + 0.55, base_y),
+                cell_w - 1.1,
+                3.4,
+                facecolor="white",
+                edgecolor=F.INK,
+                lw=1.6,
+            )
+        )
+        # 地板（磅秤）
+        ax.add_patch(
+            Rectangle(
+                (x0 + 0.85, base_y),
+                cell_w - 1.7,
+                0.28,
+                facecolor="#eef1f5",
+                edgecolor=F.INK,
+                lw=1.2,
+                hatch="////",
+            )
+        )
+        # 人（方塊代表）
+        pc = np.array([cx, base_y + 0.28 + 0.55])
+        ax.add_patch(
+            Rectangle(
+                (pc[0] - 0.4, pc[1] - 0.55),
+                0.8,
+                1.1,
+                facecolor="#dbe7ff",
+                edgecolor=F.INK,
+                lw=1.5,
+                zorder=3,
+            )
+        )
+        ax.add_patch(Circle(pc, 0.05, color=F.INK, zorder=6))
+        # 重力 mg（紅，向下，長度固定）
+        F.arrow(ax, pc, pc + np.array([0, -mg_len]), color=F.RED)
+        F.label(
+            ax, pc + np.array([0.18, -mg_len - 0.18]), r"$mg$", color=F.RED, ha="left"
+        )
+        # 正向力 N（藍，向上，長度隨 N 變）
+        if nfac > 0.01:
+            F.arrow(ax, pc, pc + np.array([0, mg_len * nfac]), color=F.BLUE)
+            F.label(
+                ax,
+                pc + np.array([0.18, mg_len * nfac + 0.16]),
+                r"$N$",
+                color=F.BLUE,
+                ha="left",
+            )
+        else:
+            F.label(ax, pc + np.array([0, 0.55]), r"$N=0$", color=F.GREEN, fs=11)
+        # 加速度方向標示（廂外右側）
+        if acc != "a = 0":
+            ay0 = base_y + 1.5
+            adir = 1 if "向上" in acc else -1
+            F.arrow(
+                ax,
+                np.array([x0 + cell_w - 0.30, ay0]),
+                np.array([x0 + cell_w - 0.30, ay0 + 0.85 * adir]),
+                color=F.PURPLE,
+                lw=2.0,
+            )
+            F.label(
+                ax,
+                np.array([x0 + cell_w - 0.30, ay0 + 1.05 * adir]),
+                r"$a$",
+                color=F.PURPLE,
+                fs=12,
+            )
+        # 標題與結論文字
+        ax.text(cx, base_y + 3.62, state, ha="center", color=F.INK, fontsize=11.5)
+        ax.text(cx, base_y - 0.30, res, ha="center", color=ac, fontsize=10.5)
+
+    ax.set_title(
+        "電梯中的視重：重力 mg 不變，磅秤讀數（正向力 N）隨加速度改變", fontsize=12.5
+    )
+    ax.set_xlim(-0.2, 4 * cell_w + 0.2)
+    ax.set_ylim(base_y - 0.75, base_y + 4.0)
+    F.save_to(fig, CH, "選物I-4-電梯視重")
+
+
+def fig_atwood():
+    """阿特午德機：理想滑輪兩側懸掛 m1、m2，各畫自由體圖。"""
+    fig, ax = F.schematic(6.4, 5.4)
+
+    # 天花板與支架
+    ax.add_patch(
+        Rectangle(
+            (-2.4, 3.0),
+            4.8,
+            0.3,
+            facecolor="#eef1f5",
+            edgecolor=F.INK,
+            hatch="////",
+            lw=1.2,
+        )
+    )
+    ax.plot([-2.4, 2.4], [3.0, 3.0], color=F.INK, lw=1.5)
+    # 滑輪
+    pulley = np.array([0.0, 2.55])
+    ax.plot([0, 0], [3.0, pulley[1] + 0.35], color=F.INK, lw=1.5)
+    ax.add_patch(
+        Circle(pulley, 0.35, facecolor="white", edgecolor=F.INK, lw=1.8, zorder=4)
+    )
+    ax.add_patch(Circle(pulley, 0.06, color=F.INK, zorder=5))
+
+    xL, xR = -0.35, 0.35
+    # 繩
+    ax.plot([xL, xL], [pulley[1], 0.7], color=F.GREEN, lw=2.2, zorder=2)
+    ax.plot([xR, xR], [pulley[1], 1.5], color=F.GREEN, lw=2.2, zorder=2)
+    # 繩跨過滑輪頂端
+    th = np.linspace(np.pi, 0, 40)
+    ax.plot(
+        pulley[0] + 0.35 * np.cos(th),
+        pulley[1] + 0.35 * np.sin(th),
+        color=F.GREEN,
+        lw=2.2,
+        zorder=3,
+    )
+
+    # m1（左，較重，較低）
+    m1c = np.array([xL, 0.7 - 0.5])
+    ax.add_patch(
+        Rectangle(
+            (m1c[0] - 0.5, m1c[1] - 0.5),
+            1.0,
+            1.0,
+            facecolor="#dbe7ff",
+            edgecolor=F.INK,
+            lw=1.6,
+            zorder=3,
+        )
+    )
+    F.label(ax, m1c, r"$m_1$", color=F.INK, fs=14)
+    # m2（右，較輕，較高）
+    m2c = np.array([xR, 1.5 - 0.45])
+    ax.add_patch(
+        Rectangle(
+            (m2c[0] - 0.45, m2c[1] - 0.45),
+            0.9,
+            0.9,
+            facecolor="#ffe3e3",
+            edgecolor=F.INK,
+            lw=1.6,
+            zorder=3,
+        )
+    )
+    F.label(ax, m2c, r"$m_2$", color=F.INK, fs=14)
+
+    # m1 的力：張力向上、重力向下
+    F.arrow(ax, m1c, m1c + np.array([0, 1.0]), color=F.GREEN)
+    F.label(ax, m1c + np.array([-0.22, 0.85]), r"$T$", color=F.GREEN, ha="right")
+    F.arrow(ax, m1c, m1c + np.array([0, -1.25]), color=F.RED)
+    F.label(ax, m1c + np.array([-0.22, -1.1]), r"$m_1g$", color=F.RED, ha="right")
+    # m2 的力
+    F.arrow(ax, m2c, m2c + np.array([0, 1.0]), color=F.GREEN)
+    F.label(ax, m2c + np.array([0.22, 0.85]), r"$T$", color=F.GREEN, ha="left")
+    F.arrow(ax, m2c, m2c + np.array([0, -1.05]), color=F.RED)
+    F.label(ax, m2c + np.array([0.22, -0.9]), r"$m_2g$", color=F.RED, ha="left")
+    # 加速度方向（m1 下、m2 上）
+    F.arrow(ax, np.array([-1.45, 0.6]), np.array([-1.45, -0.1]), color=F.PURPLE, lw=2.0)
+    F.label(ax, np.array([-1.7, 0.25]), r"$a$", color=F.PURPLE, fs=12)
+    F.arrow(ax, np.array([1.45, 0.7]), np.array([1.45, 1.4]), color=F.PURPLE, lw=2.0)
+    F.label(ax, np.array([1.7, 1.05]), r"$a$", color=F.PURPLE, fs=12)
+
+    ax.text(
+        0.0,
+        -1.55,
+        "重者下降、輕者上升，共用同一加速度 a 與張力 T",
+        ha="center",
+        color=F.INK,
+        fontsize=11,
+    )
+    ax.set_title("阿特午德機（理想滑輪兩側懸掛兩物體）", fontsize=12.5)
+    ax.set_xlim(-2.6, 2.6)
+    ax.set_ylim(-1.9, 3.6)
+    F.save_to(fig, CH, "選物I-4-阿特午德機")
+
+
 def fig_action_reaction():
     """作用與反作用：兩物體互推，力作用在不同物體上。"""
     fig, ax = F.schematic(7.0, 4.0)
@@ -439,5 +638,7 @@ if __name__ == "__main__":
     fig_incline_fbd()
     fig_connected()
     fig_contact_push()
+    fig_apparent_weight()
+    fig_atwood()
     fig_action_reaction()
     print("done.")

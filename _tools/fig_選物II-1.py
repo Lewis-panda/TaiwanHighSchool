@@ -338,6 +338,120 @@ def fig_collision_2d():
     F.save_to(fig, CH, "選物II-1-二維碰撞")
 
 
+def fig_restitution():
+    """恢復係數光譜：上——接近速率 / 分離速率 的定義（碰前互相接近、碰後互相遠離）；
+    下——e 從 0 到 1 的連續光譜，標出完全非彈性 / 一般非彈性 / 彈性三類碰撞。"""
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9.0, 5.2))
+
+    # ---------- 上：接近速率 vs 分離速率 ----------
+    ax1.axis("off")
+    ax1.set_xlim(0, 12)
+    ax1.set_ylim(-1.6, 2.4)
+
+    # 碰前：兩球互相接近
+    ax1.text(0.2, 2.05, "碰前：互相接近", color=F.INK, fontsize=11.5, ha="left")
+    _ball(ax1, 1.6, 1.1, 0.36, F.BLUE, "1")
+    _ball(ax1, 4.2, 1.1, 0.36, F.RED, "2")
+    F.arrow(ax1, (1.95, 1.1), (3.05, 1.1), color=F.BLUE, lw=2.4, mutation=15)
+    ax1.text(2.5, 1.55, "$v_1$", color=F.BLUE, fontsize=12, ha="center")
+    # v2 較小、同向（1 追上 2）
+    F.arrow(ax1, (4.55, 1.1), (5.15, 1.1), color=F.RED, lw=2.4, mutation=15)
+    ax1.text(4.9, 1.55, "$v_2$", color=F.RED, fontsize=12, ha="center")
+    ax1.text(
+        2.9,
+        0.35,
+        "接近速率 $=v_1-v_2$",
+        color=F.INK,
+        fontsize=11.5,
+        ha="center",
+    )
+
+    # 碰後：兩球互相遠離
+    ax1.text(6.9, 2.05, "碰後：互相遠離", color=F.INK, fontsize=11.5, ha="left")
+    _ball(ax1, 8.0, 1.1, 0.36, F.BLUE, "1")
+    _ball(ax1, 10.4, 1.1, 0.36, F.RED, "2")
+    F.arrow(ax1, (7.75, 1.1), (7.05, 1.1), color=F.BLUE, lw=2.4, mutation=15)
+    ax1.text(7.3, 1.55, "$v_1'$", color=F.BLUE, fontsize=12, ha="center")
+    F.arrow(ax1, (10.75, 1.1), (11.55, 1.1), color=F.RED, lw=2.4, mutation=15)
+    ax1.text(11.2, 1.55, "$v_2'$", color=F.RED, fontsize=12, ha="center")
+    ax1.text(
+        9.2,
+        0.35,
+        "分離速率 $=v_2'-v_1'$",
+        color=F.INK,
+        fontsize=11.5,
+        ha="center",
+    )
+    ax1.text(
+        6.0,
+        -1.15,
+        "恢復係數 $e=$（分離速率）/（接近速率）",
+        color=F.PURPLE,
+        fontsize=13,
+        ha="center",
+    )
+
+    # ---------- 下：e 的連續光譜 ----------
+    ax2.axis("off")
+    ax2.set_xlim(-0.5, 1.5)
+    ax2.set_ylim(-1.4, 1.2)
+    # 數線 0 → 1
+    ax2.annotate(
+        "",
+        xy=(1.18, 0.0),
+        xytext=(-0.18, 0.0),
+        arrowprops=dict(arrowstyle="-|>", color=F.INK, lw=2.0),
+    )
+    for xx, lab in [(0.0, "$e=0$"), (1.0, "$e=1$")]:
+        ax2.plot([xx, xx], [-0.1, 0.1], color=F.INK, lw=1.6)
+        ax2.text(xx, -0.42, lab, color=F.INK, fontsize=12, ha="center")
+    ax2.text(1.32, -0.02, "$e$", color=F.INK, fontsize=13, va="center")
+
+    # 三類碰撞標記
+    ax2.plot([0.0], [0.0], marker="o", color=F.RED, ms=11, zorder=5)
+    ax2.text(
+        0.0,
+        0.55,
+        "完全非彈性\n（黏在一起）",
+        color=F.RED,
+        fontsize=10.5,
+        ha="center",
+        va="bottom",
+    )
+    ax2.plot([0.5], [0.0], marker="o", color=F.AMBER, ms=11, zorder=5)
+    ax2.text(
+        0.5,
+        0.55,
+        "一般非彈性\n（部分回彈）",
+        color=F.AMBER,
+        fontsize=10.5,
+        ha="center",
+        va="bottom",
+    )
+    ax2.plot([1.0], [0.0], marker="o", color=F.BLUE, ms=11, zorder=5)
+    ax2.text(
+        1.0,
+        0.55,
+        "彈性\n（動能守恆）",
+        color=F.BLUE,
+        fontsize=10.5,
+        ha="center",
+        va="bottom",
+    )
+    ax2.text(
+        0.5,
+        -1.05,
+        "$e$ 越大越「彈」：$0$ 完全黏住、$1$ 完全回彈，中間連續過渡",
+        color="#666",
+        fontsize=10.5,
+        ha="center",
+    )
+    ax2.set_title("恢復係數把三類碰撞接成一條連續光譜", fontsize=13)
+
+    fig.tight_layout(h_pad=2.0)
+    F.save_to(fig, CH, "選物II-1-恢復係數")
+
+
 def fig_center_of_mass():
     """兩質點的質心位置（靠近大質量一側），與系統運動。"""
     fig, ax = F.schematic(8.2, 3.6)
@@ -545,6 +659,7 @@ if __name__ == "__main__":
     fig_impulse()
     fig_collision()
     fig_collision_2d()
+    fig_restitution()
     fig_center_of_mass()
     fig_angular_momentum()
     print("done.")

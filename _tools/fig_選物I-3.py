@@ -488,10 +488,225 @@ def fig_boat():
     F.save_to(fig, CH, "選物I-3-行船向量三角形")
 
 
+def fig_monkey():
+    """猴子與獵人：水平瞄準的子彈與同時放手的猴子，鉛直方向以同一個 g 下墜，
+    必相撞。左：無重力的直線瞄準路徑；右：加上重力後兩者的實際拋物線／落線，
+    並用等高虛線標出同一時刻兩者位於同一高度。"""
+    fig, ax = F.schematic(8.6, 5.2)
+    g = 10.0
+    # 槍口在左下，猴子原位在右上；子彈水平速度沿瞄準線方向
+    gun = np.array([0.0, 0.6])
+    monkey0 = np.array([7.4, 4.2])  # 猴子原本掛的位置
+    dx, dy = monkey0 - gun
+    L = np.hypot(dx, dy)
+    # 子彈速率設定，使其在合理時間抵達猴子水平位置
+    Tend = 1.0
+    vb = L / Tend  # 沿瞄準線的速率
+    ux, uy = dx / L, dy / L  # 瞄準線單位向量
+    speed_x = vb * ux  # 子彈水平分速
+    speed_y = vb * uy  # 子彈鉛直分速（向上）
+
+    # 瞄準線（無重力時的直線路徑）— 灰色虛線
+    ax.plot(
+        [gun[0], monkey0[0]],
+        [gun[1], monkey0[1]],
+        color="#9aa0a6",
+        lw=1.4,
+        ls="--",
+        zorder=2,
+    )
+    F.label(
+        ax,
+        ((gun[0] + monkey0[0]) / 2 + 0.2, (gun[1] + monkey0[1]) / 2 + 0.45),
+        "瞄準線（無重力時的直線）",
+        color="#9aa0a6",
+        fs=10.5,
+        ha="center",
+    )
+
+    ts = np.linspace(0, Tend, 100)
+    # 子彈實際軌跡（拋物線）
+    bx = gun[0] + speed_x * ts
+    by = gun[1] + speed_y * ts - 0.5 * g * ts**2
+    ax.plot(bx, by, color=F.BLUE, lw=2.2, zorder=3)
+    # 猴子實際軌跡（自由落下，x 固定）
+    mx = np.full_like(ts, monkey0[0])
+    my = monkey0[1] - 0.5 * g * ts**2
+    ax.plot(mx, my, color=F.RED, lw=2.2, ls="-", zorder=3)
+
+    # 幾個同時刻的位置 + 等高虛線
+    for tk in (0.45, 0.7, 1.0):
+        bxx = gun[0] + speed_x * tk
+        byy = gun[1] + speed_y * tk - 0.5 * g * tk**2
+        myy = monkey0[1] - 0.5 * g * tk**2
+        ax.plot(
+            [bxx, monkey0[0]], [byy, myy], color="#c9ccd1", lw=0.8, ls=":", zorder=1
+        )
+        ax.add_patch(Circle((bxx, byy), 0.10, color=F.BLUE, zorder=5))
+        ax.add_patch(Circle((monkey0[0], myy), 0.13, color=F.RED, zorder=5))
+        # 標出「同一時刻兩者掉的高度相同」
+        if tk == 0.7:
+            ax.annotate(
+                "",
+                xy=(monkey0[0] + 0.5, monkey0[1]),
+                xytext=(monkey0[0] + 0.5, myy),
+                arrowprops=dict(arrowstyle="<->", color=F.INK, lw=1.0),
+            )
+            ax.text(
+                monkey0[0] + 0.65,
+                (monkey0[1] + myy) / 2,
+                r"下墜 $\frac{1}{2}gt^2$",
+                color=F.INK,
+                fontsize=10.5,
+                ha="left",
+                va="center",
+            )
+
+    # 相撞點（t=Tend）
+    hitx = gun[0] + speed_x * Tend
+    hity = gun[1] + speed_y * Tend - 0.5 * g * Tend**2
+    ax.add_patch(
+        Circle(
+            (hitx, hity), 0.18, facecolor="none", edgecolor=F.AMBER, lw=2.2, zorder=6
+        )
+    )
+    F.label(ax, (hitx - 0.2, hity - 0.5), "相撞！", color=F.AMBER, fs=12.5, ha="center")
+
+    # 槍口與猴子標記
+    F.label(ax, (gun[0] - 0.1, gun[1] - 0.45), "槍口", color=F.BLUE, fs=11, ha="center")
+    F.label(
+        ax,
+        (monkey0[0] + 0.1, monkey0[1] + 0.35),
+        "猴子原位",
+        color=F.RED,
+        fs=11,
+        ha="center",
+    )
+    F.label(ax, (2.1, 1.0), "子彈實際軌跡", color=F.BLUE, fs=11, ha="center")
+
+    # 地面
+    ax.add_patch(
+        Rectangle(
+            (-0.6, -0.85),
+            9.6,
+            0.3,
+            facecolor="#eef1f5",
+            edgecolor=F.INK,
+            hatch="////",
+            lw=1.0,
+            zorder=0,
+        )
+    )
+    ax.plot([-0.6, 9.0], [-0.55, -0.55], color=F.INK, lw=1.4)
+
+    ax.set_title("猴子與獵人：子彈與猴子鉛直方向同步下墜 → 必相撞", fontsize=13.5)
+    ax.set_xlim(-0.9, 9.4)
+    ax.set_ylim(-1.2, 5.3)
+    F.save_to(fig, CH, "選物I-3-猴子與獵人")
+
+
+def fig_relvel():
+    """一般平面相對速度：兩物體沿不同方向運動時，B 相對於 A 的速度＝向量相減。
+    以「雨中行人」為例——雨鉛直落下、人水平前進，從人看雨是斜向迎面而來。
+    左：地面看到的兩速度向量；右：以 vB − vA 合成出相對速度三角形。"""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10.6, 4.8))
+    for ax in (ax1, ax2):
+        ax.set_aspect("equal")
+        ax.axis("off")
+
+    vrain = np.array([0.0, -3.0])  # 雨對地：鉛直向下
+    vperson = np.array([2.0, 0.0])  # 人對地：水平向前
+
+    # ===== 左：地面參考系看到的兩速度 =====
+    O = np.array([0.0, 0.0])
+    F.arrow(ax1, O, vrain, color=F.BLUE, lw=3.0, mutation=18)
+    ax1.text(
+        vrain[0] - 0.25,
+        vrain[1] / 2,
+        "雨對地",
+        color=F.BLUE,
+        fontsize=12,
+        ha="right",
+        va="center",
+    )
+    F.arrow(ax1, O, vperson, color=F.GREEN, lw=3.0, mutation=18)
+    ax1.text(
+        vperson[0] / 2,
+        vperson[1] + 0.25,
+        "人對地",
+        color=F.GREEN,
+        fontsize=12,
+        ha="center",
+        va="bottom",
+    )
+    ax1.set_title("地面看：雨鉛直落、人水平走", fontsize=12)
+    ax1.set_xlim(-1.6, 3.0)
+    ax1.set_ylim(-3.8, 1.2)
+
+    # ===== 右：相對速度 v(雨/人) = v雨 − v人 =====
+    # 作圖：v雨 + (−v人) 頭尾相接
+    O2 = np.array([0.0, 0.0])
+    neg_p = -vperson
+    rel = vrain - vperson
+    # v雨
+    F.arrow(ax2, O2, vrain, color=F.BLUE, lw=3.0, mutation=18)
+    ax2.text(
+        vrain[0] - 0.25,
+        vrain[1] / 2,
+        r"$\vec v_{r}$",
+        color=F.BLUE,
+        fontsize=14,
+        ha="right",
+        va="center",
+    )
+    # −v人（接在 v雨 末端）
+    F.arrow(ax2, vrain, vrain + neg_p, color=F.GREEN, lw=3.0, mutation=18)
+    ax2.text(
+        vrain[0] + neg_p[0] / 2,
+        vrain[1] - 0.28,
+        r"$-\vec v_{p}$",
+        color=F.GREEN,
+        fontsize=14,
+        ha="center",
+        va="top",
+    )
+    # 合成的相對速度（從 O2 指到末端）
+    F.arrow(ax2, O2, rel, color=F.PURPLE, lw=3.0, mutation=20)
+    ax2.text(
+        rel[0] / 2 - 0.3,
+        rel[1] / 2 + 0.1,
+        r"$\vec v_{r/p}$",
+        color=F.PURPLE,
+        fontsize=14,
+        ha="right",
+        va="center",
+    )
+    ax2.text(
+        rel[0] / 2 - 0.3,
+        rel[1] / 2 - 0.5,
+        "雨對人（斜向迎面）",
+        color=F.PURPLE,
+        fontsize=10.5,
+        ha="right",
+        va="center",
+    )
+    ax2.set_title(
+        r"從人看：$\vec v_{r/p}=\vec v_{r}-\vec v_{p}$（向量相減）", fontsize=12
+    )
+    ax2.set_xlim(-3.0, 1.4)
+    ax2.set_ylim(-3.8, 1.2)
+
+    fig.suptitle("一般平面相對速度：B 相對 A 的速度＝向量相減", fontsize=13.5)
+    fig.tight_layout(rect=(0, 0, 1, 0.95))
+    F.save_to(fig, CH, "選物I-3-相對速度合成")
+
+
 if __name__ == "__main__":
     fig_independence()
     fig_dropvsproj()
     fig_oblique()
     fig_parabola()
     fig_boat()
+    fig_monkey()
+    fig_relvel()
     print("done.")

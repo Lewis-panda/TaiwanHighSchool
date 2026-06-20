@@ -118,6 +118,125 @@ def fig_surface_gravity():
     F.save_to(fig, CH, "選物I-6-地表重力")
 
 
+def fig_inside_earth_g():
+    """g 隨「到地心距離 r」的完整變化：地內線性上升、地表最大、地外平方反比遞減。
+    地內（均勻球）：只有半徑 r 內的質量有貢獻，g=GM r/R³，與 r 成正比，地心為零。
+    地外：g=GM/r²。兩段在地表 r=R 接起來，地表 g 最大。
+    """
+    fig, ax = F.canvas(7.2, 4.4)
+    R = 1.0  # 以地球半徑為單位
+    g0 = 9.81
+    # 地內：r 從 0 到 R，g 線性
+    ri = np.linspace(0, R, 200)
+    gi = g0 * ri / R
+    # 地外：r 從 R 到 4R，g 平方反比
+    ro = np.linspace(R, 4 * R, 400)
+    go = g0 * R**2 / ro**2
+    ax.plot(ri, gi, color=F.AMBER, lw=2.8, label="地球內部：$g=\\dfrac{GM}{R^{3}}\\,r$")
+    ax.plot(ro, go, color=F.BLUE, lw=2.8, label="地球外部：$g=\\dfrac{GM}{r^{2}}$")
+    # 地表分界
+    ax.axvline(R, color="#bcc4cf", lw=1.1, ls="--")
+    ax.plot([R], [g0], "o", color=F.RED, ms=8, zorder=5)
+    ax.annotate(
+        "地表 $r=R$，$g$ 最大（約 9.8）",
+        xy=(R, g0),
+        xytext=(1.35, 8.6),
+        color=F.RED,
+        fontsize=11,
+        arrowprops=dict(arrowstyle="->", color=F.RED),
+    )
+    ax.annotate(
+        "地心 $r=0$，$g=0$",
+        xy=(0, 0),
+        xytext=(0.18, 2.2),
+        color=F.AMBER,
+        fontsize=11,
+        arrowprops=dict(arrowstyle="->", color=F.AMBER),
+    )
+    ax.text(0.5, 9.6, "地球內部", ha="center", color=F.AMBER, fontsize=11)
+    ax.text(2.4, 9.6, "地球外部", ha="center", color=F.BLUE, fontsize=11)
+    ax.set_xlim(0, 4)
+    ax.set_ylim(0, 11)
+    ax.set_xlabel("到地心的距離 $r$（以地球半徑 $R$ 為單位）")
+    ax.set_ylabel("重力加速度 $g$（$\\mathrm{m/s^2}$）")
+    ax.set_title("重力加速度隨到地心距離的變化（均勻地球）")
+    ax.legend(loc="upper right", fontsize=10, frameon=False)
+    F.clean_grid(ax)
+    F.save_to(fig, CH, "選物I-6-地球內部重力")
+
+
+def fig_newton_cannon():
+    """牛頓大砲思想實驗：山頂水平發射砲彈，初速越大射程越遠；
+    達到第一宇宙速度時，下墜弧線恰與地表曲率一致，不再落地而成為環繞軌道。
+    用真實的「指向地心平方反比重力」積分軌跡，故弧線會明顯彎曲、落點越來越遠。"""
+    fig, ax = F.schematic(6.4, 6.4)
+    Re = 1.0
+    GM = 1.0  # 任意單位；圓軌道速率 v_orb = sqrt(GM/r)
+    ax.add_patch(
+        Circle((0, 0), Re, facecolor="#cfe3ff", edgecolor=F.INK, lw=1.8, zorder=2)
+    )
+    ax.text(0, -0.30, "地球", ha="center", va="center", fontsize=13, zorder=3)
+    # 砲台在正上方（示意，略抬高使拋射弧看得清楚）
+    r0 = Re + 0.14
+    top = np.array([0.0, r0])
+    ax.add_patch(Circle(top, 0.045, facecolor=F.INK, edgecolor=F.INK, zorder=7))
+
+    v_orb = np.sqrt(GM / r0)  # 此高度的圓軌道速率（≈第一宇宙速度）
+
+    def integrate(v0, steps=4000, dt=0.004):
+        """從 top 以水平速度 v0（向右）拋出，受指向原點的平方反比重力，
+        積到落回地面（|pos|<=Re）或繞回起點附近為止。"""
+        pos = top.copy().astype(float)
+        vel = np.array([v0, 0.0])
+        xs, ys = [pos[0]], [pos[1]]
+        for _ in range(steps):
+            r = np.linalg.norm(pos)
+            acc = -GM / r**3 * pos
+            vel = vel + acc * dt
+            pos = pos + vel * dt
+            xs.append(pos[0])
+            ys.append(pos[1])
+            if np.linalg.norm(pos) <= Re:  # 落地
+                break
+        return np.array(xs), np.array(ys)
+
+    # 三條落地弧（初速由小到大，落點越來越遠）＋一條環繞圓
+    for v0, c in [
+        (0.45 * v_orb, F.GREEN),
+        (0.70 * v_orb, F.AMBER),
+        (0.88 * v_orb, F.RED),
+    ]:
+        xs, ys = integrate(v0)
+        ax.plot(xs, ys, color=c, lw=2.0, ls="--", zorder=4)
+        ax.plot([xs[-1]], [ys[-1]], "o", color=c, ms=6, zorder=6)
+    # 環繞：初速＝圓軌道速率，畫整圈
+    xs, ys = integrate(v_orb, steps=2000, dt=0.004)
+    th = np.linspace(0, 2 * np.pi, 300)
+    ax.plot(r0 * np.cos(th), r0 * np.sin(th), color=F.BLUE, lw=2.4, zorder=5)
+
+    # 砲口初速箭頭與標籤
+    F.arrow(ax, top, top + np.array([0.62, 0.0]), color=F.INK, lw=1.8, mutation=13)
+    ax.text(
+        0.0, r0 + 0.20, "山頂的砲（水平發射）", ha="center", color=F.INK, fontsize=11
+    )
+    ax.text(0.95, 1.30, "初速小：\n很快落地", color=F.GREEN, fontsize=10, ha="center")
+    ax.text(1.78, 0.35, "初速較大：\n落得更遠", color=F.AMBER, fontsize=10, ha="center")
+    ax.text(1.55, -1.05, "再大：\n射程更遠", color=F.RED, fontsize=10, ha="center")
+    ax.text(
+        0.0,
+        -(r0 + 0.62),
+        "初速達 $v_1\\approx 7.9$ km/s：下墜弧線與地表一樣彎，\n不再落地 → 持續環繞（這就是衛星）",
+        ha="center",
+        va="center",
+        color=F.BLUE,
+        fontsize=11,
+    )
+    ax.set_xlim(-1.7, 2.2)
+    ax.set_ylim(-2.3, 1.9)
+    ax.set_title("牛頓大砲：為什麼衛星「掉不下來」", fontsize=14)
+    F.save_to(fig, CH, "選物I-6-牛頓大砲")
+
+
 def fig_satellite():
     """衛星圓軌道：萬有引力＝向心力；不同半徑 → 不同速率（外圈較慢）。"""
     fig, ax = F.schematic(6.4, 6.0)
@@ -458,6 +577,8 @@ def fig_kepler_laws():
 if __name__ == "__main__":
     fig_gravitation()
     fig_surface_gravity()
+    fig_inside_earth_g()
+    fig_newton_cannon()
     fig_satellite()
     fig_kepler3()
     fig_kepler_laws()

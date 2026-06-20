@@ -15,6 +15,7 @@ cp "$S/必物-2-運動圖形.pdf"     講義/figs/m2-motion.pdf
 cp "$S/必物-2-自由體圖.pdf"     講義/figs/m2-fbd.pdf
 cp "$S/必物-2-斜面分解.pdf"     講義/figs/m2-incline.pdf
 cp "$S/必物-2-克卜勒等面積.pdf" 講義/figs/m2-kepler.pdf
+cp "$S/必物-2-圓軌道向心力.pdf" 講義/figs/m2-orbit.pdf
 
 # 3) 編譯兩次（版面/參照穩定）
 cd 講義

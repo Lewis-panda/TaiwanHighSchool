@@ -88,6 +88,56 @@ def fig_photoelectric():
     F.save_to(fig, CH, "必物-6-光電效應")
 
 
+def fig_stopping_voltage():
+    """光電效應實驗：光電流 I 對外加電壓 V 的關係，標出遏止電壓。
+    左：兩種亮度（同頻率）→ 飽和電流不同，但遏止電壓相同。"""
+    fig, ax = F.canvas(7.0, 4.4)
+    Vs = -1.5  # 遏止電壓位置
+
+    def curve(V, Isat):
+        # V 從 -Vs 起電流由 0 升到飽和（簡化的平滑曲線）
+        y = np.where(V <= Vs, 0.0, Isat * (1 - np.exp(-(V - Vs) / 0.9)))
+        return y
+
+    V = np.linspace(-2.5, 4.0, 400)
+    ax.plot(V, curve(V, 2.0), color=F.BLUE, lw=2.6, label="較亮（光子數多）")
+    ax.plot(V, curve(V, 1.1), color=F.RED, lw=2.6, label="較暗（同頻率）")
+    ax.axhline(0, color=F.INK, lw=1.0)
+    ax.axvline(0, color="#999", lw=0.9, ls=":")
+    # 遏止電壓標記
+    ax.plot([Vs], [0], "o", color=F.INK, ms=7)
+    ax.annotate(
+        "遏止電壓 $-V_s$\n（電流剛好歸零）",
+        xy=(Vs, 0),
+        xytext=(-2.4, 1.25),
+        color=F.INK,
+        fontsize=11,
+        ha="left",
+        arrowprops=dict(arrowstyle="->", color=F.INK),
+    )
+    ax.text(2.0, 2.12, "飽和電流", color=F.BLUE, fontsize=11, ha="center")
+    ax.text(1.6, 0.78, "飽和電流較小", color=F.RED, fontsize=11, ha="center")
+    ax.text(
+        -2.4,
+        2.35,
+        "同頻率、不同亮度：遏止電壓相同（$K_{\\max}$ 不變），\n只有飽和電流（電子數目）不同",
+        color="#555",
+        fontsize=10,
+        va="top",
+    )
+    ax.set_xlim(-2.5, 4.0)
+    ax.set_ylim(-0.3, 2.7)
+    ax.set_yticks([])
+    ax.set_xticks([])
+    ax.set_xlabel("外加電壓 $V$（反向 ← 0 → 正向）")
+    ax.set_ylabel("光電流 $I$")
+    ax.set_title("光電效應：光電流–電壓關係與遏止電壓")
+    for s in ("top", "right"):
+        ax.spines[s].set_visible(False)
+    ax.legend(loc="lower right", fontsize=10, frameon=False)
+    F.save_to(fig, CH, "必物-6-遏止電壓")
+
+
 def fig_energy_levels():
     fig, ax = F.canvas(6.8, 5.2)
     levels = {1: -13.6, 2: -3.40, 3: -1.51, 4: -0.85, 5: -0.54}
@@ -336,6 +386,7 @@ def fig_spectra():
 if __name__ == "__main__":
     fig_blackbody()
     fig_photoelectric()
+    fig_stopping_voltage()
     fig_energy_levels()
     fig_double_slit()
     fig_modes()

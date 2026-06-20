@@ -688,10 +688,135 @@ def fig_slide_vs_tip():
     F.save_to(fig, CH, "選物II-3-先滑vs先翻")
 
 
+def fig_ladder():
+    """靠牆梯子的自由體圖（例題 3-7）：均勻梯靠在光滑牆上，與地夾角 θ。
+    標出四個力——梯重 W（中點）、牆正向力 N_w（水平）、地正向力 N_g（鉛直）、
+    地摩擦 f（水平指向牆）——並示意對梯腳取矩，N_g、f 力臂為零。"""
+    fig, ax = F.schematic(6.6, 6.0)
+
+    theta = np.deg2rad(58.0)  # 梯與地面夾角
+    L = 5.0  # 梯長
+    foot = np.array([0.0, 0.0])  # 梯腳（地面接觸點）
+    top = foot + L * np.array([np.cos(theta), np.sin(theta)])  # 梯頂（靠牆）
+    mid = (foot + top) / 2.0  # 中點（重心）
+
+    # 牆（鉛直）與地面（水平）
+    wallx = top[0]
+    ax.add_patch(
+        Rectangle(
+            (wallx, -0.3),
+            0.45,
+            top[1] + 1.2,
+            facecolor="#eef1f5",
+            edgecolor=F.INK,
+            hatch="\\\\\\",
+            lw=1.4,
+        )
+    )
+    ax.plot([wallx, wallx], [-0.3, top[1] + 0.9], color=F.INK, lw=1.8)
+    ax.plot([-1.2, wallx + 0.45], [0, 0], color=F.INK, lw=1.8)
+    ax.add_patch(
+        Rectangle(
+            (-1.2, -0.35),
+            wallx + 0.45 + 1.2,
+            0.35,
+            facecolor="#eef1f5",
+            edgecolor="none",
+            hatch="////",
+            lw=0,
+        )
+    )
+
+    # 梯子
+    ax.plot(
+        [foot[0], top[0]],
+        [foot[1], top[1]],
+        color=F.INK,
+        lw=5.0,
+        solid_capstyle="round",
+        zorder=3,
+    )
+    # 梯腳支點標記
+    ax.add_patch(Circle(foot, 0.09, color=F.INK, zorder=8))
+    F.label(
+        ax,
+        foot + np.array([-0.05, -0.40]),
+        "梯腳（取矩支點）",
+        color=F.INK,
+        fs=11,
+        ha="center",
+    )
+    # 重心點
+    ax.add_patch(
+        Circle(mid, 0.08, facecolor="white", edgecolor=F.RED, lw=1.6, zorder=7)
+    )
+
+    # 夾角 θ
+    ax.add_patch(Arc(foot, 1.5, 1.5, angle=0, theta1=0, theta2=58, color=F.INK, lw=1.4))
+    ax.text(0.95, 0.30, r"$\theta$", color=F.INK, fontsize=14)
+
+    # 力：梯重 W（中點，向下，紅）
+    F.arrow(ax, mid, mid + np.array([0, -1.6]), color=F.RED, lw=2.6)
+    F.label(ax, mid + np.array([0.42, -1.0]), r"$W=mg$", color=F.RED, fs=12, ha="left")
+
+    # 牆正向力 N_w（梯頂，水平離牆，藍）— 牆光滑，只有正向力、無摩擦
+    F.arrow(ax, top, top + np.array([-1.7, 0]), color=F.BLUE, lw=2.6)
+    F.label(
+        ax,
+        top + np.array([-1.8, 0.32]),
+        r"$N_w$（牆光滑）",
+        color=F.BLUE,
+        fs=11,
+        ha="right",
+    )
+
+    # 地正向力 N_g（梯腳，鉛直向上，藍）
+    F.arrow(ax, foot, foot + np.array([0, 1.9]), color=F.BLUE, lw=2.6)
+    F.label(
+        ax, foot + np.array([-0.30, 1.7]), r"$N_g$", color=F.BLUE, fs=12, ha="right"
+    )
+
+    # 地摩擦力 f（梯腳，水平指向牆，琥珀）
+    F.arrow(ax, foot, foot + np.array([1.7, 0]), color=F.AMBER, lw=2.6)
+    F.label(
+        ax,
+        foot + np.array([1.8, 0.30]),
+        r"$f$（阻止外滑）",
+        color=F.AMBER,
+        fs=11,
+        ha="left",
+    )
+
+    # 力臂示意：對梯腳取矩，N_w 力臂 = 梯頂高度 L sinθ；W 力臂 = 中點水平距 (L/2)cosθ
+    ax.plot([top[0], top[0]], [0, top[1]], color=F.GRID, lw=1.2, ls=":", zorder=1)
+    ax.plot([mid[0], mid[0]], [0, mid[1]], color=F.GRID, lw=1.2, ls=":", zorder=1)
+    F.label(
+        ax,
+        np.array([top[0] - 0.15, top[1] / 2]),
+        r"$L\sin\theta$",
+        color="#6b7280",
+        fs=10,
+        ha="right",
+    )
+    F.label(
+        ax,
+        np.array([mid[0], -0.62]),
+        r"$\frac{L}{2}\cos\theta$",
+        color="#6b7280",
+        fs=10,
+    )
+
+    ax.set_title("靠牆梯子的自由體圖：對梯腳取矩消去 $N_g$、$f$", fontsize=12.5)
+    ax.set_xlim(-1.6, wallx + 0.9)
+    ax.set_ylim(-1.1, top[1] + 1.1)
+    F.save_to(fig, CH, "選物II-3-靠牆梯子")
+
+
 if __name__ == "__main__":
     fig_static_equilibrium()
     fig_torque_lever()
     fig_stability()
     fig_collision()
     fig_slide_vs_tip()
+    fig_ladder()
     print("done.")

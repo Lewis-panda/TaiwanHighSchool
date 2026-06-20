@@ -240,6 +240,58 @@ def fig_propagation():
     F.save_to(fig, CH, "選物I-1-不確定度傳遞")
 
 
+def fig_dominant_term():
+    """例題 1-8 的「主導項」長條圖：把 Δg/g 拆成 L 與 T 兩項貢獻，
+    顯示 T 因帶平方（次方 2）貢獻加倍、主導總誤差，呼應一般式
+    Δg/g = 1·ΔL/L + 2·ΔT/T。"""
+    fig, ax = F.canvas(7.4, 4.2)
+
+    # 例題 1-8 數據：ΔL/L = 0.5%，ΔT/T = 1.0%（次方 2 → 貢獻 2.0%）
+    rel_L = 0.5  # %
+    rel_T = 1.0  # %
+    contrib_L = 1 * rel_L  # L 次方 1
+    contrib_T = 2 * rel_T  # T 次方 2
+    total = contrib_L + contrib_T
+
+    labels = ["L 的貢獻\n1 x (dL/L)", "T 的貢獻\n2 x (dT/T)", "合計 dg/g"]
+    vals = [contrib_L, contrib_T, total]
+    colors = [F.BLUE, F.RED, F.GREEN]
+
+    bars = ax.bar(
+        labels, vals, color=colors, alpha=0.55, edgecolor=colors, lw=1.6, width=0.6
+    )
+    for b, v, base in zip(bars, vals, [rel_L, rel_T, None]):
+        txt = f"{v:.1f}%"
+        ax.text(
+            b.get_x() + b.get_width() / 2,
+            v + 0.07,
+            txt,
+            ha="center",
+            va="bottom",
+            fontsize=12,
+            color=F.INK,
+            fontweight="bold",
+        )
+
+    # 標出 T 項裡「次方 2」把 1.0% 放大成 2.0%
+    ax.annotate(
+        "週期帶平方，\n次方 2 把貢獻加倍",
+        xy=(1, contrib_T),
+        xytext=(0.05, 2.55),
+        fontsize=9.5,
+        color=F.RED,
+        ha="left",
+        va="center",
+        arrowprops=dict(arrowstyle="->", color=F.RED, lw=1.4),
+    )
+
+    ax.set_ylabel("對相對不確定度的貢獻 (%)")
+    ax.set_ylim(0, 3.0)
+    ax.set_title("誰在主導誤差：T 雖只 1.0%，帶平方後貢獻 2.0%，蓋過 L")
+    F.clean_grid(ax)
+    F.save_to(fig, CH, "選物I-1-主導項")
+
+
 def 選物I_1_two_axes():
     """誤差的兩條獨立分類軸：四大來源（縱）× 兩種性質（橫）對照矩陣。
     重點是呈現「來源」與「性質」彼此正交——同一個來源常可同時製造
@@ -396,5 +448,6 @@ if __name__ == "__main__":
     fig_error_types()
     fig_distribution()
     fig_propagation()
+    fig_dominant_term()
     選物I_1_two_axes()
     print("done.")

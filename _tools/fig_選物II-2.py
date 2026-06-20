@@ -126,6 +126,67 @@ def fig_variable_force():
     F.save_to(fig, CH, "選物II-2-變力作功")
 
 
+def fig_fx_signed_area():
+    """F–x 圖的「帶正負號面積」：x 軸上方面積為正功、下方為負功，淨功為兩者代數和。"""
+    fig, ax = F.canvas(7.6, 4.4)
+
+    # 一條先正後負的 F(x)：0~3 為正、3~5 為負
+    x1 = np.linspace(0, 3, 120)
+    F1 = 3.0 * np.sin(np.pi * x1 / 3.0)  # 0→3 上方的正半波
+    x2 = np.linspace(3, 5, 100)
+    F2 = -2.2 * np.sin(np.pi * (x2 - 3) / 2.0)  # 3→5 下方的負半波
+
+    ax.plot(x1, F1, color=F.BLUE, lw=2.6)
+    ax.plot(x2, F2, color=F.RED, lw=2.6)
+    ax.fill_between(x1, 0, F1, color=F.BLUE, alpha=0.16)
+    ax.fill_between(x2, 0, F2, color=F.RED, alpha=0.16)
+
+    # 軸線
+    ax.axhline(0, color=F.INK, lw=1.3)
+    ax.set_xlim(0, 5.4)
+    ax.set_ylim(-3.0, 3.6)
+
+    # 標註
+    ax.text(
+        1.5, 1.2, "上方面積\n為正功 $W_1>0$", ha="center", color=F.BLUE, fontsize=12
+    )
+    ax.text(
+        4.0, -1.2, "下方面積\n為負功 $W_2<0$", ha="center", color=F.RED, fontsize=12
+    )
+    ax.annotate(
+        "力沿運動方向",
+        xy=(1.5, 2.6),
+        xytext=(0.2, 3.2),
+        color=F.BLUE,
+        fontsize=11,
+        arrowprops=dict(arrowstyle="->", color=F.BLUE),
+    )
+    ax.annotate(
+        "力逆運動方向",
+        xy=(4.0, -1.9),
+        xytext=(4.2, -2.7),
+        color=F.RED,
+        fontsize=11,
+        ha="center",
+        arrowprops=dict(arrowstyle="->", color=F.RED),
+    )
+    ax.text(
+        2.7,
+        3.25,
+        r"淨功 $W=W_1+W_2$（代數相加，含正負）",
+        ha="center",
+        color=F.INK,
+        fontsize=12,
+    )
+
+    ax.set_title("變力作功：x 軸上方面積為正功、下方為負功", fontsize=13)
+    ax.set_xlabel("位置 $x$ (m)")
+    ax.set_ylabel("力 $F$ (N)")
+    F.clean_grid(ax)
+    fig.tight_layout()
+    F.save_to(fig, CH, "選物II-2-變力作功正負面積")
+
+
 def fig_mechanical_energy():
     """力學能守恆：軌道上 K 與 U 互換，總和不變（雲霄飛車示意）。"""
     fig, ax = F.schematic(8.4, 5.0)
@@ -540,6 +601,7 @@ def fig_pe_zero():
 if __name__ == "__main__":
     fig_work_definition()
     fig_variable_force()
+    fig_fx_signed_area()
     fig_mechanical_energy()
     fig_conservative()
     fig_closed_loop()

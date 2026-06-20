@@ -230,10 +230,26 @@ $$\boxed{\ \frac{\Delta Q}{|Q|} = |n|\,\frac{\Delta A}{|A|}\ }$$
 
 \textbf{注意：}「次方就把不確定度平方」是錯的——是把\textbf{相對}不確定度乘以次方數 $n$，不是平方（$Q=A^2\Rightarrow \Delta Q/Q=2(\Delta A/A)$）。乘除與加減兩套規則也勿張冠李戴：乘除是\textbf{相對}相加，加減才是\textbf{絕對}相加。
 
+\subsection*{\sffamily D.\ 把它們合起來：一般的「乘除＋次方」公式}
+
+實驗最常碰到的，是上面三條規則\textbf{混在一起}的式子，例如 $g = \dfrac{4\pi^2 L}{T^2}$——它同時有常數（$4\pi^2$）、相除（$L\div T^2$）與次方（$T^2$）。因為「乘除＝相對相加」「次方＝相對乘以次方數」「常數不貢獻」三件事彼此相容，可直接合併成一條通用公式。
+
+\begin{補充框}{乘冪單項式的傳遞（一般式）}
+若一個量寫得成「常數 $\times$ 各測量量的次方連乘」的形式
+$$Q = k\,A^{a}\,B^{b}\,C^{c}\cdots\qquad(a,b,c\ \text{可正可負、可為分數}),$$
+則其相對不確定度，是\textbf{各量「相對不確定度 $\times$ 該量次方的絕對值」之總和}：
+$$\boxed{\ \frac{\Delta Q}{|Q|} = |a|\,\frac{\Delta A}{|A|} + |b|\,\frac{\Delta B}{|B|} + |c|\,\frac{\Delta C}{|C|} + \cdots\ }$$
+三件事一次到位：\textbf{乘或除一律取「$+$」}（除法的次方記為負，取絕對值後仍是相加，故乘、除沒有差別）；\textbf{次方就把那一項乘上次方數}；\textbf{常數 $k$ 完全不出現}。前面的乘除、次方、常數規則都只是它的特例。
+\end{補充框}
+
+\textbf{注意：}除法那一項\textbf{不是}用減的。$Q=A/B$ 可寫成 $A\,B^{-1}$，$B$ 的次方是 $-1$，但公式裡取的是\textbf{絕對值} $|-1|=1$，仍是相加；不論乘、除，相對不確定度永遠\textbf{相加、不相減}。同理 $T^{-2}$ 的貢獻是 $|-2|\,\dfrac{\Delta T}{T}=2\,\dfrac{\Delta T}{T}$，照樣為正、照樣加進去。
+
 \medskip
-以單擺測重力加速度為例：由 $T=2\pi\sqrt{L/g}$ 反解得 $g=\dfrac{4\pi^2 L}{T^2}$，即 $g\propto L^{1}\,T^{-2}$。其相對不確定度為
+以單擺測重力加速度為例：由 $T=2\pi\sqrt{L/g}$ 反解得 $g=\dfrac{4\pi^2 L}{T^2}$，即 $g = 4\pi^2\,L^{1}\,T^{-2}$。套上面的一般式，常數 $4\pi^2$ 不貢獻，$L$ 次方 $1$、$T$ 次方 $-2$（絕對值 $2$），故
 $$\frac{\Delta g}{g} = 1\cdot\frac{\Delta L}{L} + 2\cdot\frac{\Delta T}{T},$$
-其中 $4\pi^2$ 是常數、不貢獻誤差，$T$ 因帶\textbf{平方}，其相對誤差被放大為 2 倍貢獻。由此可知：實驗上「量準週期」比「量準擺長」更關鍵——這正是測單擺要\textbf{量很多個週期再除}（例如量 10 個來回的總時間再 $\div 10$）以壓低 $\Delta T/T$ 的原因。傳遞計算的真正價值，在於看出「\textbf{哪個量在主導誤差}」，從而知道下次該優先改進哪個測量。
+$T$ 因帶\textbf{平方}，其相對誤差被放大為 2 倍貢獻。由此可知：實驗上「量準週期」比「量準擺長」更關鍵——這正是測單擺要\textbf{量很多個週期再除}（例如量 10 個來回的總時間再 $\div 10$）以壓低 $\Delta T/T$ 的原因。傳遞計算的真正價值，在於看出「\textbf{哪個量在主導誤差}」，從而知道下次該優先改進哪個測量。
+
+\fig{si1-dominant}{0.78}{圖 1-5：以單擺測 $g$ 為例，把相對不確定度 $\Delta g/g$ 拆成兩項貢獻。擺長 $L$ 貢獻 $0.5\%$；週期 $T$ 雖只 $1.0\%$，但因帶平方（次方 $2$）貢獻加倍為 $2.0\%$，主導了總誤差 $2.5\%$。要降低 $g$ 的不確定度，應優先把週期量得更準。}
 
 \section*{\sffamily 1-5\quad 測量有沒有「絕對精確」的極限？}
 
@@ -248,7 +264,7 @@ $$\frac{\Delta g}{g} = 1\cdot\frac{\Delta L}{L} + 2\cdot\frac{\Delta T}{T},$$
 
 \textbf{牆三——量子力學畫的硬底線。}\,某些成對的物理量（最有名的是位置 $x$ 與動量 $p$）無法同時被無限精確地確定：
 $$\Delta x\,\Delta p \gtrsim \frac{\hbar}{2}.$$
-把一個量壓得越準，另一個就必然越模糊，乘積有一條誰也跨不過的下限。這\textbf{不是儀器不夠好，而是自然本身的規定}（細節見必修「量子現象」一章）。
+式中 $\hbar$（讀作 h-bar）是\textbf{約化普朗克常數}（reduced Planck constant），等於普朗克常數 $h$ 除以 $2\pi$，數值約 $1.05\times10^{-34}\ \text{J\,s}$，是量子尺度的基本常數。這條式子說：把一個量壓得越準，另一個就必然越模糊，兩者不確定度的乘積有一條誰也跨不過的下限。這\textbf{不是儀器不夠好，而是自然本身的規定}（細節見必修「量子現象」一章）。
 
 \medskip
 \textbf{哪些是定論、哪些仍開放：}\,「不存在零不確定度的測量」在標準物理框架內是確定結論，三道牆都已被大量實驗與理論支持。但量子下限「\textbf{為什麼}」存在——微觀粒子在被測量之前到底有沒有確定的值——\textbf{目前尚無定論}，不同的量子詮釋給出的圖像不同，這牽涉到仍未解決的「量子測量問題」。換句話說：「測量必有下限」是確定的結論；「這條下限背後的真實圖像」仍是開放問題。
@@ -263,7 +279,7 @@ $$\Delta x\,\Delta p \gtrsim \frac{\hbar}{2}.$$
 \item \textbf{兩種誤差}：系統誤差（整批偏一方向、傷準確度、多測無效，靠校正）；隨機誤差（上下亂跳、傷精密度、多測取平均可壓低）。對應：系統\,$\leftrightarrow$\,準確度、隨機\,$\leftrightarrow$\,精密度。
 \item \textbf{不確定度估計}：單次取\textbf{最小刻度一半}（B 類）；多次用平均值 $\bar{x}=\frac{1}{N}\sum x_i$、標準差 $s=\sqrt{\frac{1}{N-1}\sum(x_i-\bar{x})^2}$、平均值不確定度 $\Delta\bar{x}=s/\sqrt{N}$（A 類）。A 類靠統計、B 類靠規格／經驗，地位平等。
 \item \textbf{表示法}：寫成 $x\pm\Delta x$；相對不確定度 $=\dfrac{\Delta x}{|x|}$（無單位，比「哪個量得好」用它）；不確定度取 1$\sim$2 位有效數字，最佳值末位與之對齊。
-\item \textbf{傳遞規則}：加減 $\Delta Q=\Delta A+\Delta B$（\textbf{絕對}相加，相減易使相對誤差暴增）；乘除 $\dfrac{\Delta Q}{|Q|}=\dfrac{\Delta A}{|A|}+\dfrac{\Delta B}{|B|}$（\textbf{相對}相加）；次方 $Q=A^n\Rightarrow\dfrac{\Delta Q}{|Q|}=|n|\dfrac{\Delta A}{|A|}$；常數不貢獻誤差。
+\item \textbf{傳遞規則}：加減 $\Delta Q=\Delta A+\Delta B$（\textbf{絕對}相加，相減易使相對誤差暴增）；乘除 $\dfrac{\Delta Q}{|Q|}=\dfrac{\Delta A}{|A|}+\dfrac{\Delta B}{|B|}$（\textbf{相對}相加）；次方 $Q=A^n\Rightarrow\dfrac{\Delta Q}{|Q|}=|n|\dfrac{\Delta A}{|A|}$；常數不貢獻誤差。一般式（乘冪單項式）$Q=k\,A^a B^b\cdots\Rightarrow\dfrac{\Delta Q}{|Q|}=|a|\dfrac{\Delta A}{|A|}+|b|\dfrac{\Delta B}{|B|}+\cdots$（次方取絕對值、一律相加），乘、除、次方都是它的特例。
 \item \textbf{實用洞見}：找出「主導項」決定該改進哪個測量；避免「大數相減」；測單擺要量多個週期再除以壓低 $\Delta T/T$。
 \end{itemize}
 \end{補充框}

@@ -322,6 +322,87 @@ def fig_freefall():
     F.save_to(fig, CH, "選物I-2-自由落體")
 
 
+def fig_uptoss_vt():
+    """鉛直上拋的 v–t 圖：由 +v0 線性降到 -v0，過零點＝最高點。
+    上方面積（上升、正位移）與下方面積（下降、負位移）大小相等 → 回到拋出點位移為零、
+    路程為兩塊絕對值相加。同時示意 v–t 圖的「上方正面積、下方負面積」規則。"""
+    fig, ax = F.canvas(6.6, 4.6)
+    g = 10.0
+    v0 = 20.0
+    tT = 2 * v0 / g  # 回到拋出點總時間 = 4 s
+    t = np.linspace(0, tT, 200)
+    v = v0 - g * t
+
+    # 上升段（v>0，時間軸上方）填正面積；下降段（v<0，下方）填負面積
+    up = t <= v0 / g
+    ax.fill_between(t[up], 0, v[up], color=F.BLUE, alpha=0.16, zorder=1)
+    ax.fill_between(t[~up], 0, v[~up], color=F.RED, alpha=0.16, zorder=1)
+    ax.plot(t, v, color=F.INK, lw=2.8, zorder=5)
+
+    # 零軸
+    ax.axhline(0, color=F.INK, lw=1.0, zorder=2)
+
+    # 最高點（過零點）
+    t_top = v0 / g
+    ax.plot([t_top], [0], "o", color=F.AMBER, ms=8, zorder=6)
+    ax.annotate(
+        "最高點 v=0\n（過零點，a=-g 不變）",
+        xy=(t_top, 0),
+        xytext=(t_top + 0.15, 9.5),
+        color=F.AMBER,
+        fontsize=11,
+        ha="left",
+        va="center",
+        arrowprops=dict(arrowstyle="->", color=F.AMBER, lw=1.3),
+    )
+
+    # 起點與終點速度標註
+    ax.plot([0], [v0], "o", color=F.BLUE, ms=6, zorder=6)
+    ax.plot([tT], [-v0], "o", color=F.RED, ms=6, zorder=6)
+    ax.text(-0.08, v0, "$+v_0$", ha="right", va="center", color=F.BLUE, fontsize=12)
+    ax.text(tT + 0.08, -v0, "$-v_0$", ha="left", va="center", color=F.RED, fontsize=12)
+
+    # 兩塊面積標註
+    ax.text(
+        t_top * 0.42,
+        v0 * 0.30,
+        "上升段\n上方面積\n（正位移）",
+        ha="center",
+        va="center",
+        color=F.BLUE,
+        fontsize=10.5,
+    )
+    ax.text(
+        t_top + (tT - t_top) * 0.62,
+        -v0 * 0.32,
+        "下降段\n下方面積\n（負位移）",
+        ha="center",
+        va="center",
+        color=F.RED,
+        fontsize=10.5,
+    )
+
+    # 對稱說明
+    ax.text(
+        tT / 2,
+        -v0 - 4.5,
+        "兩塊面積大小相等 → 回到拋出點位移為零；路程＝兩塊絕對值相加",
+        ha="center",
+        va="center",
+        color="#555",
+        fontsize=10,
+    )
+
+    ax.set_xlim(-0.4, tT + 0.7)
+    ax.set_ylim(-v0 - 7, v0 + 4)
+    ax.set_xlabel("時間 $t$ (s)")
+    ax.set_ylabel("速度 $v$ (m/s)")
+    ax.set_title("鉛直上拋的 v–t 圖（$v_0=20$ m/s, $g=10$ m/s$^2$）", fontsize=13)
+    F.clean_grid(ax)
+    fig.tight_layout()
+    F.save_to(fig, CH, "選物I-2-上拋vt圖")
+
+
 def fig_relative():
     """一維相對速度：月台上兩列火車，相對速度＝速度之差。"""
     fig, ax = F.schematic(8.4, 4.2)
@@ -426,5 +507,6 @@ if __name__ == "__main__":
     fig_vt()
     fig_xt()
     fig_freefall()
+    fig_uptoss_vt()
     fig_relative()
     print("done.")

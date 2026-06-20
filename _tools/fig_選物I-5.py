@@ -350,6 +350,65 @@ def fig_pendulum():
     F.save_to(fig, CH, "選物I-5-單擺")
 
 
+def fig_shm_xva():
+    """簡諧的 x–t、v–t、a–t 三圖疊放：x 與 a 反相、v 比 x 提前 T/4。"""
+    fig, (axx, axv, axa) = plt.subplots(3, 1, figsize=(7.6, 6.6), sharex=True)
+
+    t = np.linspace(0, 2.0, 600)  # 以週期 T=1 為單位，畫兩個週期
+    w = 2 * np.pi
+    x = np.cos(w * t)
+    v = -np.sin(w * t)
+    a = -np.cos(w * t)
+
+    # x–t
+    axx.plot(t, x, color=F.BLUE, lw=2.6)
+    axx.axhline(0, color=F.INK, lw=0.9)
+    axx.set_ylabel("位置 $x$")
+    axx.set_yticks([-1, 0, 1])
+    axx.set_yticklabels(["$-A$", "0", "$+A$"])
+    axx.set_title("位置 $x=A\\cos\\omega t$（端點 $v=0$、$|a|$ 最大）", fontsize=12)
+
+    # v–t
+    axv.plot(t, v, color=F.GREEN, lw=2.6)
+    axv.axhline(0, color=F.INK, lw=0.9)
+    axv.set_ylabel("速度 $v$")
+    axv.set_yticks([-1, 0, 1])
+    axv.set_yticklabels(["$-A\\omega$", "0", "$+A\\omega$"])
+    axv.set_title("速度 $v=-A\\omega\\sin\\omega t$（平衡點速率最大）", fontsize=12)
+
+    # a–t
+    axa.plot(t, a, color=F.RED, lw=2.6)
+    axa.axhline(0, color=F.INK, lw=0.9)
+    axa.set_ylabel("加速度 $a$")
+    axa.set_yticks([-1, 0, 1])
+    axa.set_yticklabels(["$-A\\omega^2$", "0", "$+A\\omega^2$"])
+    axa.set_title(
+        "加速度 $a=-A\\omega^2\\cos\\omega t=-\\omega^2 x$（與 $x$ 反相）", fontsize=12
+    )
+
+    # 標出 t=0（端點）與 t=T/4（平衡點）兩條垂直參考線
+    for ax in (axx, axv, axa):
+        for tv in (0.0, 0.25, 1.0):
+            ax.axvline(tv, color="#c2c7cd", lw=0.9, ls=":")
+        ax.set_xlim(0, 2.0)
+        ax.set_ylim(-1.5, 1.5)
+        F.clean_grid(ax)
+
+    axa.set_xlabel("時間 $t$")
+    axa.set_xticks([0, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0])
+    axa.set_xticklabels(["0", "$T/4$", "$T/2$", "", "$T$", "", "$3T/2$", "", "$2T$"])
+
+    # 文字提示：端點與平衡點
+    axx.text(0.02, 1.18, "端點", color=F.INK, fontsize=9.5, ha="left")
+    axx.text(0.27, 1.18, "平衡點", color=F.INK, fontsize=9.5, ha="left")
+
+    fig.suptitle(
+        "簡諧的位置、速度、加速度：$x$ 與 $a$ 反相，$v$ 比 $x$ 提前 $T/4$", fontsize=13
+    )
+    fig.tight_layout(rect=[0, 0, 1, 0.96])
+    F.save_to(fig, CH, "選物I-5-簡諧時間圖")
+
+
 def fig_energy():
     """簡諧能量：U=½kx² 上凹、K=½k(A²−x²) 下凹，總和 E 為水平線。"""
     fig, ax = F.canvas(7.4, 4.8)
@@ -433,6 +492,7 @@ if __name__ == "__main__":
     fig_centripetal()
     fig_shm_projection()
     fig_spring()
+    fig_shm_xva()
     fig_pendulum()
     fig_energy()
     print("done.")

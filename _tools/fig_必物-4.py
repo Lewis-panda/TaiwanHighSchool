@@ -401,6 +401,94 @@ def fig_em_spectrum():
     F.save_to(fig, CH, "必物-4-電磁波譜")
 
 
+def fig_transverse_longitudinal():
+    """橫波 vs 縱波：上圖振動垂直傳播（橫波），下圖振動平行傳播（縱波，疏密相間）。"""
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8.4, 4.8))
+
+    x = np.linspace(0, 4 * np.pi, 400)
+
+    # 上：橫波（繩波）——介質上下振動、波往右傳
+    ax = ax1
+    y = 0.8 * np.sin(x)
+    ax.plot(x, y, color=F.BLUE, lw=2.4, zorder=3)
+    # 幾個質點與其上下振動箭頭
+    for xi in np.linspace(0.6, 4 * np.pi - 0.6, 7):
+        yi = 0.8 * np.sin(xi)
+        ax.add_patch(Circle((xi, yi), 0.07, color=F.INK, zorder=5))
+        F.arrow(
+            ax,
+            (xi, 0),
+            (xi, yi if abs(yi) > 0.15 else (0.3 if yi >= 0 else -0.3)),
+            color=F.RED,
+            lw=1.3,
+            mutation=10,
+            z=4,
+        )
+    F.arrow(
+        ax,
+        (4 * np.pi - 1.0, -1.55),
+        (4 * np.pi + 0.2, -1.55),
+        color=F.INK,
+        lw=2.0,
+        mutation=16,
+    )
+    ax.text(4 * np.pi - 0.4, -1.95, "波傳播方向", color=F.INK, fontsize=10, ha="center")
+    ax.text(
+        0.1,
+        1.45,
+        "橫波：振動（紅）垂直於傳播（黑）",
+        color=F.BLUE,
+        fontsize=12,
+        ha="left",
+    )
+    ax.text(
+        0.1, -1.75, "例：電磁波、水面波、繩波", color="#555", fontsize=9.5, ha="left"
+    )
+    ax.set_xlim(-0.4, 4 * np.pi + 1.2)
+    ax.set_ylim(-2.3, 1.9)
+    ax.set_aspect("auto")
+    ax.axis("off")
+
+    # 下：縱波（聲波）——介質前後振動、疏密相間
+    ax = ax2
+    # 用密度表示疏密：在 x 上以正弦調變一排小點的位置
+    base = np.linspace(0.3, 4 * np.pi - 0.3, 90)
+    disp = 0.32 * np.sin(base)
+    px = base + disp
+    for xv in px:
+        ax.plot([xv, xv], [-0.55, 0.55], color=F.GREEN, lw=1.3, alpha=0.8, zorder=2)
+    # 標一個質點的前後振動
+    xi = 4 * np.pi * 0.5
+    F.arrow(ax, (xi - 0.45, 0.95), (xi + 0.45, 0.95), color=F.RED, lw=1.4, mutation=11)
+    F.arrow(ax, (xi + 0.45, 0.95), (xi - 0.45, 0.95), color=F.RED, lw=1.4, mutation=11)
+    ax.text(xi, 1.25, "質點前後振動", color=F.RED, fontsize=9.5, ha="center")
+    F.arrow(
+        ax,
+        (4 * np.pi - 1.0, -1.15),
+        (4 * np.pi + 0.2, -1.15),
+        color=F.INK,
+        lw=2.0,
+        mutation=16,
+    )
+    ax.text(4 * np.pi - 0.4, -1.5, "波傳播方向", color=F.INK, fontsize=10, ha="center")
+    ax.text(
+        0.1,
+        1.55,
+        "縱波：振動（紅）平行於傳播（黑），疏密相間",
+        color="#1a7f37",
+        fontsize=12,
+        ha="left",
+    )
+    ax.text(0.1, -1.35, "例：聲波", color="#555", fontsize=9.5, ha="left")
+    ax.set_xlim(-0.4, 4 * np.pi + 1.2)
+    ax.set_ylim(-1.7, 2.0)
+    ax.set_aspect("auto")
+    ax.axis("off")
+
+    fig.tight_layout()
+    F.save_to(fig, CH, "必物-4-橫波縱波")
+
+
 def fig_doppler():
     """運動波源造成的波前壓縮（前方）與拉伸（後方）。"""
     fig, ax = F.schematic(7.6, 4.6)
@@ -520,6 +608,7 @@ if __name__ == "__main__":
     fig_current_magnetic()
     fig_induction()
     fig_em_wave()
+    fig_transverse_longitudinal()
     fig_em_spectrum()
     fig_doppler()
     fig_doppler_observer()

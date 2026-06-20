@@ -425,9 +425,154 @@ def fig_redefine():
     F.save_to(fig, CH, "必物-1-常數定義單位")
 
 
+def fig_reading():
+    """讀數與不確定度：尺上讀一個值，最後一位是「估」的，並標出值±不確定度。
+    上：一段放大的尺（最小刻度 1 cm，細分到 mm），物體邊緣落在 12 與 13 之間。
+    下：把讀數寫成 中央值 ± 不確定度，並標明「確定位數」與「估計位數」。
+    """
+    fig, ax = F.schematic(9.8, 6.2)
+    ax.set_xlim(0, 12)
+    ax.set_ylim(0, 7.0)
+
+    # ---- 一段尺：主刻度在 11、12、13、14，之間細分 ----
+    x0, x1 = 1.2, 10.8  # 尺的左右端
+    yr = 5.4  # 尺身的 y
+    majors = [11, 12, 13, 14]  # 主刻度值（cm）
+
+    # 把刻度值映射到畫面 x
+    def xmap(v):
+        return x0 + (v - 11) / (14 - 11) * (x1 - x0)
+
+    # 尺身
+    ax.add_patch(
+        Rectangle(
+            (x0, yr - 0.5),
+            x1 - x0,
+            0.5,
+            facecolor="#fbf3d8",
+            edgecolor=F.INK,
+            lw=1.4,
+            zorder=2,
+        )
+    )
+    # 主刻度與標數
+    for v in majors:
+        xx = xmap(v)
+        ax.plot([xx, xx], [yr, yr + 0.42], color=F.INK, lw=1.6, zorder=4)
+        ax.text(
+            xx, yr + 0.56, f"{v}", ha="center", va="bottom", fontsize=12, color=F.INK
+        )
+    # 次刻度（每 cm 切 10 小格，mm）
+    for v in majors[:-1]:
+        for k in range(1, 10):
+            xx = xmap(v + k / 10)
+            h = 0.26 if k == 5 else 0.16
+            ax.plot([xx, xx], [yr, yr + h], color=F.INK, lw=0.9, zorder=3)
+    ax.text(
+        x1 + 0.05, yr - 0.25, "cm", ha="left", va="center", fontsize=11, color=F.INK
+    )
+
+    # 被測物邊緣落在 12.6~12.7 之間（讀數約 12.65）
+    edge = 12.65
+    xe = xmap(edge)
+    # 物體（藍色塊，左端在尺左外、右端在 edge）
+    ax.add_patch(
+        Rectangle(
+            (x0 - 0.0, yr - 1.15),
+            xe - x0,
+            0.55,
+            facecolor=F.BLUE,
+            edgecolor=F.BLUE,
+            alpha=0.18,
+            lw=1.3,
+            zorder=1,
+        )
+    )
+    ax.text(
+        (x0 + xe) / 2 - 1.2,
+        yr - 0.88,
+        "待測物",
+        ha="center",
+        va="center",
+        fontsize=11,
+        color=F.BLUE,
+    )
+    # 指向邊緣的虛線（從尺往下拉一小段即可，不貫穿算式）
+    ax.plot([xe, xe], [yr - 1.2, yr + 0.42], color=F.RED, lw=1.2, ls="--", zorder=1)
+
+    # ---- 放大說明：邊緣在 12.6 與 12.7 之間 ----
+    ax.text(
+        xe,
+        yr + 1.15,
+        "邊緣落在 12.6 與 12.7 之間",
+        ha="center",
+        va="bottom",
+        fontsize=10.5,
+        color=F.RED,
+    )
+    F.arrow(ax, (xe, yr + 1.12), (xe, yr + 0.46), color=F.RED, lw=1.6)
+
+    # ---- 下半：讀數寫法（清楚分層，與上方尺保持距離）----
+    ax.text(
+        6.0,
+        3.55,
+        "讀數寫成：中央值 ± 不確定度",
+        ha="center",
+        va="center",
+        fontsize=12.5,
+        color=F.INK,
+        fontweight="bold",
+    )
+    # 大字算式（各數字水平錯開、垂直同一基線；用文字避免缺字）
+    yv = 1.95
+    xg, xa, xpm, xunit = 3.7, 4.7, 5.85, 7.55
+    ax.text(xg, yv, "12.6", ha="center", va="center", fontsize=22, color=F.GREEN)
+    ax.text(xa, yv, "5", ha="center", va="center", fontsize=22, color=F.AMBER)
+    ax.text(xpm, yv, "± 0.05", ha="center", va="center", fontsize=20, color=F.INK)
+    ax.text(xunit, yv, "cm", ha="center", va="center", fontsize=18, color=F.INK)
+
+    # 綠：可確定位數 → 標在算式「下方」
+    ax.annotate(
+        "",
+        xy=(xg, yv - 0.42),
+        xytext=(xg, yv - 0.78),
+        arrowprops=dict(arrowstyle="-", color=F.GREEN, lw=1.3),
+    )
+    ax.text(
+        xg,
+        yv - 0.92,
+        "可確定的位數\n（直接讀刻度）",
+        ha="center",
+        va="top",
+        fontsize=9.5,
+        color=F.GREEN,
+    )
+    # 琥珀：最後一位是估的 → 標在算式「上方」
+    ax.annotate(
+        "",
+        xy=(xa, yv + 0.42),
+        xytext=(xa, yv + 0.78),
+        arrowprops=dict(arrowstyle="-", color=F.AMBER, lw=1.3),
+    )
+    ax.text(
+        xa + 0.1,
+        yv + 0.92,
+        "最後一位是估的",
+        ha="left",
+        va="bottom",
+        fontsize=9.5,
+        color=F.AMBER,
+    )
+
+    ax.set_title("測量讀數：最後一位是估計值，並附上不確定度", fontsize=14)
+    fig.tight_layout()
+    F.save_to(fig, CH, "必物-1-不確定度讀數")
+
+
 if __name__ == "__main__":
     fig_scale()
     fig_si()
     fig_accuracy()
     fig_redefine()
+    fig_reading()
     print("done.")
