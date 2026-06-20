@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>高中物理・數學 講義</title>
+<style>
+  :root{
+    --ink:#26282c; --muted:#7a7f87; --line:#e7e4dd;
+    --accent:#9a3b2e; --accent-soft:#f3ece6; --bg:#fcfbf7;
+  }
+  *{box-sizing:border-box}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family: Georgia,"Songti TC","Noto Serif CJK TC",STSong,serif;
+    line-height:1.9; font-size:18px;
+  }
+  .wrap{ max-width:760px; margin:0 auto; padding:0 22px 80px; }
+  header{ padding:64px 0 28px; border-bottom:1px solid var(--line); margin-bottom:34px; }
+  .kicker{
+    font-family:-apple-system,"PingFang TC","Microsoft JhengHei","Noto Sans CJK TC",sans-serif;
+    letter-spacing:.28em; font-size:13px; color:var(--muted); margin:0 0 10px;
+  }
+  h1{
+    font-family:-apple-system,"PingFang TC","Microsoft JhengHei","Noto Sans CJK TC",sans-serif;
+    font-weight:700; font-size:34px; line-height:1.3; margin:0;
+  }
+  h1 .sub{ display:block; font-size:18px; font-weight:400; color:var(--muted); margin-top:8px; letter-spacing:.02em;}
+  .intro p{ margin:0 0 16px; }
+  .intro{ margin-bottom:8px; }
+  h2{
+    font-family:-apple-system,"PingFang TC","Microsoft JhengHei","Noto Sans CJK TC",sans-serif;
+    font-size:23px; margin:48px 0 4px; padding-bottom:6px; border-bottom:2px solid var(--ink);
+  }
+  h3{
+    font-family:-apple-system,"PingFang TC","Microsoft JhengHei","Noto Sans CJK TC",sans-serif;
+    font-size:15px; font-weight:600; color:var(--muted); margin:26px 0 8px; letter-spacing:.02em;
+  }
+  ul.chs{ list-style:none; margin:0; padding:0; columns:2; column-gap:34px; }
+  ul.chs li{ break-inside:avoid; margin:0 0 2px; }
+  ul.chs a{
+    display:block; text-decoration:none; color:var(--ink);
+    padding:5px 8px; border-radius:6px; transition:background .12s,color .12s;
+  }
+  ul.chs a:hover{ background:var(--accent-soft); color:var(--accent); }
+  ul.chs .c{
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+    color:var(--muted); font-size:13px; margin-right:.5em;
+  }
+  ul.chs a:hover .c{ color:var(--accent); }
+  .note{
+    margin-top:46px; padding:18px 20px; background:#fff; border:1px solid var(--line);
+    border-radius:10px; font-size:16px; color:#3a3d42;
+  }
+  .note h3{ margin:0 0 6px; color:var(--ink); }
+  footer{
+    margin-top:54px; padding-top:22px; border-top:1px solid var(--line);
+    font-size:14px; color:var(--muted);
+  }
+  footer a{ color:var(--accent); text-decoration:none; }
+  a{ color:var(--accent); }
+  @media (max-width:560px){
+    body{font-size:17px} h1{font-size:28px} ul.chs{columns:1}
+    header{padding-top:44px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="kicker">十二年國教 108 課綱</p>
+  <h1>高中物理・數學 講義<span class="sub">高一、高二　自編上課教材</span></h1>
+</header>
+
+<section class="intro">
+  <p>這是我備課時寫給自己上課用的講義，依現行課綱編寫，放上來給需要的同學和老師自由取用。</p>
+  <p>寫的時候我盡量做一件事：把課本「跳過去」的地方補回來。課本常常直接丟一條公式、一個名詞，卻沒說它從哪裡來、為什麼長這樣——而這些「為什麼」往往才是真正卡住人的地方，有些甚至到今天物理學界都還沒有定論。每一章我都從最基本的觀念講起，遇到課本沒交代清楚的，就在那裡停下來把它說明白，需要時配一張圖。</p>
+  <p>每一章是一份可以直接讀、也可以印出來的 PDF。點下面的章節名稱就能打開。</p>
+</section>
+
+<h2>物理</h2>
+
+<h3>物理（必修）</h3>
+<ul class="chs">
+  <li><a href="講義/必物-1%20科學態度與方法（學生講義）.pdf"><span class="c">必物-1</span>科學態度與方法</a></li>
+  <li><a href="講義/必物-2%20物體的運動（學生講義）.pdf"><span class="c">必物-2</span>物體的運動</a></li>
+  <li><a href="講義/必物-3%20物質的組成與交互作用（學生講義）.pdf"><span class="c">必物-3</span>物質的組成與交互作用</a></li>
+  <li><a href="講義/必物-4%20電與磁的統一（學生講義）.pdf"><span class="c">必物-4</span>電與磁的統一</a></li>
+  <li><a href="講義/必物-5%20能量（學生講義）.pdf"><span class="c">必物-5</span>能量</a></li>
+  <li><a href="講義/必物-6%20量子現象（學生講義）.pdf"><span class="c">必物-6</span>量子現象</a></li>
+</ul>
+
+<h3>選修物理 I（力學一）</h3>
+<ul class="chs">
+  <li><a href="講義/選物I-1%20測量與不確定度（學生講義）.pdf"><span class="c">選物I-1</span>測量與不確定度</a></li>
+  <li><a href="講義/選物I-2%20直線運動（學生講義）.pdf"><span class="c">選物I-2</span>直線運動</a></li>
+  <li><a href="講義/選物I-3%20平面運動（學生講義）.pdf"><span class="c">選物I-3</span>平面運動</a></li>
+  <li><a href="講義/選物I-4%20牛頓運動定律（學生講義）.pdf"><span class="c">選物I-4</span>牛頓運動定律</a></li>
+  <li><a href="講義/選物I-5%20週期運動（學生講義）.pdf"><span class="c">選物I-5</span>週期運動</a></li>
+  <li><a href="講義/選物I-6%20萬有引力（學生講義）.pdf"><span class="c">選物I-6</span>萬有引力</a></li>
+</ul>
+
+<h3>選修物理 II（力學二）</h3>
+<ul class="chs">
+  <li><a href="講義/選物II-1%20動量與角動量（學生講義）.pdf"><span class="c">選物II-1</span>動量與角動量</a></li>
+  <li><a href="講義/選物II-2%20功與能量（學生講義）.pdf"><span class="c">選物II-2</span>功與能量</a></li>
+  <li><a href="講義/選物II-3%20牛頓運動定律的應用（學生講義）.pdf"><span class="c">選物II-3</span>牛頓運動定律的應用</a></li>
+</ul>
+
+<h2>數學</h2>
+
+<h3>數學一上（必修・第一冊）</h3>
+<ul class="chs">
+  <li><a href="講義/數1-1%20數與式（學生講義）.pdf"><span class="c">數1-1</span>數與式</a></li>
+  <li><a href="講義/數1-2%20多項式函數（學生講義）.pdf"><span class="c">數1-2</span>多項式函數</a></li>
+  <li><a href="講義/數1-3%20指數與對數（學生講義）.pdf"><span class="c">數1-3</span>指數與對數</a></li>
+  <li><a href="講義/數1-4%20直線與圓（學生講義）.pdf"><span class="c">數1-4</span>直線與圓</a></li>
+</ul>
+
+<h3>數學一下（必修・第二冊）</h3>
+<ul class="chs">
+  <li><a href="講義/數2-1%20三角比（學生講義）.pdf"><span class="c">數2-1</span>三角比</a></li>
+  <li><a href="講義/數2-2%20數列與級數（學生講義）.pdf"><span class="c">數2-2</span>數列與級數</a></li>
+  <li><a href="講義/數2-3%20排列組合與機率（學生講義）.pdf"><span class="c">數2-3</span>排列組合與機率</a></li>
+  <li><a href="講義/數2-4%20數據分析（學生講義）.pdf"><span class="c">數2-4</span>數據分析</a></li>
+</ul>
+
+<h3>數學二上（數學A・第三冊）</h3>
+<ul class="chs">
+  <li><a href="講義/數A3-1%20三角函數（學生講義）.pdf"><span class="c">數A3-1</span>三角函數</a></li>
+  <li><a href="講義/數A3-2%20指數與對數函數（學生講義）.pdf"><span class="c">數A3-2</span>指數與對數函數</a></li>
+  <li><a href="講義/數A3-3%20平面向量（學生講義）.pdf"><span class="c">數A3-3</span>平面向量</a></li>
+  <li><a href="講義/數A3-4%20空間向量（學生講義）.pdf"><span class="c">數A3-4</span>空間向量</a></li>
+</ul>
+
+<h3>數學二下（數學A・第四冊）</h3>
+<ul class="chs">
+  <li><a href="講義/數A4-1%20空間中的平面與直線（學生講義）.pdf"><span class="c">數A4-1</span>空間中的平面與直線</a></li>
+  <li><a href="講義/數A4-2%20矩陣（學生講義）.pdf"><span class="c">數A4-2</span>矩陣</a></li>
+  <li><a href="講義/數A4-3%20機率統計（學生講義）.pdf"><span class="c">數A4-3</span>機率統計</a></li>
+</ul>
+
+<div class="note">
+  <h3>給老師、想看更深的同學</h3>
+  每章除了講義，還有完整的教學筆記（含大量「為什麼」與一些開放問題）和段考練習題，放在
+  <a href="https://github.com/Lewis-panda/TaiwanHighSchool">GitHub 倉庫</a>的各章資料夾，用
+  <a href="https://obsidian.md">Obsidian</a> 開啟整個資料夾閱讀體驗最好。
+</div>
+
+<footer>
+  依 108 課綱自編，歡迎自由用於教學與自學。原始檔與筆記在
+  <a href="https://github.com/Lewis-panda/TaiwanHighSchool">GitHub</a>。
+</footer>
+
+</div>
+</body>
+</html>
