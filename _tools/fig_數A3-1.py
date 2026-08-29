@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""產生「數A3-1 三角函數」的圖，輸出到該章 sources/。
+"""產生「數A3-1 三角函數」公開講義的 SVG，輸出到 content 章節 assets/。
 重繪：  .venv/bin/python _tools/fig_數A3-1.py
 函數圖：F.canvas() + ax.plot() + F.clean_grid(ax)；
 幾何圖（扇形）用 ax.set_aspect("equal")。
@@ -15,7 +15,11 @@ from matplotlib.patches import Circle, Wedge, Arc, FancyArrowPatch
 import figlib as F
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CH = os.path.join(ROOT, "數學", "數學二上（數學A·第三冊）", "數A3-1 三角函數")
+CH = os.path.join(ROOT, "content", "數學A", "數A3-1")
+
+
+def _save(fig, name):
+    return F.save_to(fig, CH, name, output_subdir="assets", write_pdf=False)
 
 
 def _pi_ticks(ax, xmax_units, step=0.5):
@@ -137,7 +141,7 @@ def fig_radian_sector():
     ax.set_aspect("equal")
     ax.axis("off")
     ax.set_title("弧度的定義與扇形（弧長、面積）", fontsize=14)
-    F.save_to(fig, CH, "數A3-1-弧度扇形")
+    _save(fig, "數A3-1-弧度扇形")
 
 
 def fig_three_graphs():
@@ -177,7 +181,7 @@ def fig_three_graphs():
     # --- tan ---
     ax = axes[2]
     # 分段畫，避開漸近線
-    for k in range(-2, 2):
+    for k in range(-2, 3):
         xa = np.linspace(
             -np.pi / 2 + k * np.pi + 0.02, np.pi / 2 + k * np.pi - 0.02, 400
         )
@@ -202,7 +206,73 @@ def fig_three_graphs():
 
     fig.suptitle("三角函數的基本圖形", fontsize=15, y=1.005)
     fig.tight_layout()
-    F.save_to(fig, CH, "數A3-1-三角函數圖")
+    _save(fig, "數A3-1-三角函數圖")
+
+
+def fig_sine_cosine_graphs():
+    """把正弦、餘弦拆成適合 A4 寬度的兩列圖，避免三圖縮得過小。"""
+    fig, axes = plt.subplots(2, 1, figsize=(8.4, 5.8))
+    x = np.linspace(-2 * np.pi, 2 * np.pi, 2000)
+
+    panels = [
+        (axes[0], np.sin(x), F.BLUE, r"$y=\sin x$", r"值域 $[-1,1]$，週期 $2\pi$"),
+        (axes[1], np.cos(x), F.GREEN, r"$y=\cos x$", r"值域 $[-1,1]$，週期 $2\pi$"),
+    ]
+    for ax, y, color, name, note in panels:
+        ax.plot(x, y, color=color, lw=2.7)
+        ax.axhline(0, color=F.INK, lw=1.0)
+        ax.axvline(0, color=F.INK, lw=1.0)
+        ax.set_ylim(-1.55, 1.55)
+        ax.set_yticks([-1, 0, 1])
+        _pi_ticks(ax, 2.0, step=0.5)
+        ax.set_xlim(-2 * np.pi - 0.2, 2 * np.pi + 0.2)
+        F.clean_grid(ax)
+        ax.set_title(f"{name}　（定義域 $\\mathbb{{R}}$，{note}）", fontsize=12.5)
+
+    fig.suptitle(r"正弦與餘弦：同樣的波形，相位相差 $\pi/2$", fontsize=14.5, y=1.005)
+    fig.tight_layout()
+    _save(fig, "數A3-1-正弦餘弦圖")
+
+
+def fig_tangent_graph():
+    """獨立的正切圖，讓漸近線與週期在 PDF 中保持可讀。"""
+    fig, ax = plt.subplots(figsize=(8.4, 3.9))
+    xlim = (-2 * np.pi - 0.2, 2 * np.pi + 0.2)
+    branch_indices = range(-2, 3)
+    branch_bounds = [
+        (-np.pi / 2 + k * np.pi, np.pi / 2 + k * np.pi)
+        for k in branch_indices
+    ]
+    if not (
+        branch_bounds[0][0] < xlim[0] < branch_bounds[0][1]
+        and branch_bounds[-1][0] < xlim[1] < branch_bounds[-1][1]
+    ):
+        raise AssertionError("正切分段必須覆蓋整個可見 x 範圍")
+
+    for k in branch_indices:
+        xa = np.linspace(
+            -np.pi / 2 + k * np.pi + 0.025,
+            np.pi / 2 + k * np.pi - 0.025,
+            500,
+        )
+        ax.plot(xa, np.tan(xa), color=F.RED, lw=2.7)
+    for k in range(-2, 3):
+        xv = np.pi / 2 + k * np.pi
+        if -2 * np.pi - 0.2 <= xv <= 2 * np.pi + 0.2:
+            ax.axvline(xv, color="#8d98a5", lw=1.2, ls="--")
+    ax.axhline(0, color=F.INK, lw=1.0)
+    ax.axvline(0, color=F.INK, lw=1.0)
+    ax.set_ylim(-4.2, 4.2)
+    ax.set_yticks([-3, 0, 3])
+    _pi_ticks(ax, 2.0, step=0.5)
+    ax.set_xlim(*xlim)
+    F.clean_grid(ax)
+    ax.set_title(
+        r"$y=\tan x$：值域 $\mathbb{R}$，週期 $\pi$；虛線是 $x=\frac{\pi}{2}+k\pi$",
+        fontsize=12.5,
+    )
+    fig.tight_layout()
+    _save(fig, "數A3-1-正切函數圖")
 
 
 def fig_transform():
@@ -262,7 +332,7 @@ def fig_transform():
 
     fig.suptitle(r"$y=a\sin(bx+c)+d$ 的四種變換", fontsize=15, y=1.01)
     fig.tight_layout()
-    F.save_to(fig, CH, "數A3-1-圖形變換")
+    _save(fig, "數A3-1-圖形變換")
 
 
 def fig_sum_diff_circle():
@@ -425,7 +495,7 @@ def fig_sum_diff_circle():
     ax.set_aspect("equal")
     ax.axis("off")
     ax.set_title("和差角公式的單位圓推導：弦長算兩次", fontsize=14)
-    F.save_to(fig, CH, "數A3-1-和差角推導")
+    _save(fig, "數A3-1-和差角推導")
 
 
 def fig_superpose():
@@ -440,21 +510,45 @@ def fig_superpose():
     y1 = a * np.sin(x)
     y2 = b * np.cos(x)
     ysum = a * np.sin(x) + b * np.cos(x)
+    combined = R * np.sin(x + phi)
+    np.testing.assert_allclose(ysum, combined, rtol=0.0, atol=1e-12)
+    if not np.isclose(R, 5.0):
+        raise AssertionError("合成振幅必須是 sqrt(3^2+4^2)=5")
 
-    ax.plot(x, y1, color=F.BLUE, lw=1.8, ls="--", label=r"$3\sin x$")
-    ax.plot(x, y2, color=F.GREEN, lw=1.8, ls="--", label=r"$4\cos x$")
+    ax.plot(
+        x,
+        y1,
+        color=F.BLUE,
+        lw=1.8,
+        ls=(0, (7, 3)),
+        marker="o",
+        markevery=200,
+        ms=3.2,
+        label=r"$3\sin x$",
+    )
+    ax.plot(
+        x,
+        y2,
+        color=F.GREEN,
+        lw=1.8,
+        ls=(0, (2, 2)),
+        marker="s",
+        markevery=200,
+        ms=3.0,
+        label=r"$4\cos x$",
+    )
     ax.plot(x, ysum, color=F.RED, lw=3.0, label=r"$3\sin x+4\cos x=5\sin(x+\varphi)$")
 
     # 振幅 R 標示
     ax.axhline(R, color="#9aa0a6", lw=1.0, ls=":")
     ax.axhline(-R, color="#9aa0a6", lw=1.0, ls=":")
     ax.text(
-        2 * np.pi - 0.1,
+        0.15,
         R + 0.12,
         "$R=5$",
         color=F.RED,
         fontsize=12,
-        ha="right",
+        ha="left",
         va="bottom",
     )
 
@@ -462,17 +556,18 @@ def fig_superpose():
     ax.axvline(0, color=F.INK, lw=1.0)
     ax.set_ylim(-5.8, 6.4)
     ax.set_yticks([-5, 0, 5])
-    _pi_ticks(ax, 1.0, step=0.5)
+    _pi_ticks(ax, 2.0, step=0.5)
     ax.set_xlim(-0.1, 2 * np.pi + 0.1)
     F.clean_grid(ax)
     ax.legend(loc="upper right", fontsize=11, framealpha=0.95)
     ax.set_title("正餘弦的疊合：兩同頻波合成單一正弦波", fontsize=14)
-    F.save_to(fig, CH, "數A3-1-疊合")
+    _save(fig, "數A3-1-疊合")
 
 
 if __name__ == "__main__":
     fig_radian_sector()
-    fig_three_graphs()
+    fig_sine_cosine_graphs()
+    fig_tangent_graph()
     fig_transform()
     fig_sum_diff_circle()
     fig_superpose()

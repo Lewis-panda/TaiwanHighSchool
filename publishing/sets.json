@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "defaultSet": "review-2026-08-24",
+  "sets": {
+    "review-2026-08-24": {
+      "status": "review",
+      "description": "高二數學 3A 全冊與選修物理 I 全冊學生講義送審；共 8 冊，未經確認不得視為正式發布版。",
+      "documents": [
+        {
+          "id": "math-a3-1-student",
+          "audience": "student",
+          "source": "content/數學A/數A3-1/學生講義.md",
+          "slug": "數A3-1-三角函數-學生講義",
+          "assets": [
+            "content/數學A/數A3-1/assets/數A3-1-和差角推導.svg",
+            "content/數學A/數A3-1/assets/數A3-1-圖形變換.svg",
+            "content/數學A/數A3-1/assets/數A3-1-弧度扇形.svg",
+            "content/數學A/數A3-1/assets/數A3-1-正切函數圖.svg",
+            "content/數學A/數A3-1/assets/數A3-1-正弦餘弦圖.svg",
+            "content/數學A/數A3-1/assets/數A3-1-疊合.svg"
+          ]
+        },
+        {
+          "id": "math-a3-2-student",
+          "audience": "student",
+          "source": "content/數學A/數A3-2/學生講義.md",
+          "slug": "數A3-2-指數與對數函數-學生講義",
+          "assets": [
+            "content/數學A/數A3-2/assets/數A3-2-對數尺度.svg",
+            "content/數學A/數A3-2/assets/數A3-2-指數對數互逆.svg",
+            "content/數學A/數A3-2/assets/數A3-2-線性與指數模型.svg"
+          ]
+        },
+        {
+          "id": "math-a3-3-student",
+          "audience": "student",
+          "source": "content/數學A/數A3-3/學生講義.md",
+          "slug": "數A3-3-平面向量-學生講義",
+          "assets": [
+            "content/數學A/數A3-3/assets/數A3-3-克拉瑪線性組合.svg",
+            "content/數學A/數A3-3/assets/數A3-3-內積與投影.svg",
+            "content/數學A/數A3-3/assets/數A3-3-向量合成與分解.svg",
+            "content/數學A/數A3-3/assets/數A3-3-行列式面積與定向.svg"
+          ]
+        },
+        {
+          "id": "physics-i1-1-student",
+          "audience": "student",
+          "source": "content/選修物理I/選物I-1/學生講義.md",
+          "slug": "選物I-1-測量與不確定度-學生講義",
+          "assets": [
+            "content/選修物理I/選物I-1/assets/選物I-1-不確定度傳遞.svg",
+            "content/選修物理I/選物I-1/assets/選物I-1-因次檢核.svg",
+            "content/選修物理I/選物I-1/assets/選物I-1-多次測量分布.svg",
+            "content/選修物理I/選物I-1/assets/選物I-1-標準不確定度組合.svg",
+            "content/選修物理I/選物I-1/assets/選物I-1-解析度與讀值區間.svg"
+          ]
+        },
+        {
+          "id": "physics-i1-2-student",
+          "audience": "student",
+          "source": "content/選修物理I/選物I-2/學生講義.md",
+          "slug": "選物I-2-直線運動-學生講義",
+          "assets": [
+            "content/選修物理I/選物I-2/assets/選物I-2-一維相對速度.svg",
+            "content/選修物理I/選物I-2/assets/選物I-2-圖像讀法.svg",
+            "content/選修物理I/選物I-2/assets/選物I-2-斜面實驗資料.svg",
+            "content/選修物理I/選物I-2/assets/選物I-2-等時間點與運動圖.svg",
+            "content/選修物理I/選物I-2/assets/選物I-2-自由落體實驗.svg",
+            "content/選修物理I/選物I-2/assets/選物I-2-自由落體正方向.svg",
+            "content/選修物理I/選物I-2/assets/選物I-2-章末列式圖.svg",
+            "content/選修物理I/選物I-2/assets/選物I-2-章末解析01-04.svg",
+            "content/選修物理I/選物I-2/assets/選物I-2-章末解析05-08.svg",
+            "content/選修物理I/選物I-2/assets/選物I-2-章末解析09-11.svg",
+            "content/選修物理I/選物I-2/assets/選物I-2-章末解析12-14.svg",
+            "content/選修物理I/選物I-2/assets/選物I-2-章末解析15-18.svg"
+          ]
+        },
+        {
+          "id": "physics-i1-3-student",
+          "audience": "student",
+          "source": "content/選修物理I/選物I-3/學生講義.md",
+          "slug": "選物I-3-平面運動-學生講義",
+          "assets": [
+            "content/選修物理I/選物I-3/assets/選物I-3-切向與法向加速度.svg",
+            "content/選修物理I/選物I-3/assets/選物I-3-向量作圖.svg",
+            "content/選修物理I/選物I-3/assets/選物I-3-向量分解與正負.svg",
+            "content/選修物理I/選物I-3/assets/選物I-3-拋體分解.svg",
+            "content/選修物理I/選物I-3/assets/選物I-3-拋體速度分量.svg",
+            "content/選修物理I/選物I-3/assets/選物I-3-章末列式圖.svg",
+            "content/選修物理I/選物I-3/assets/選物I-3-章末題解1-3.svg",
+            "content/選修物理I/選物I-3/assets/選物I-3-章末題解6-8.svg",
+            "content/選修物理I/選物I-3/assets/選物I-3-章末題解9-11.svg",
+            "content/選修物理I/選物I-3/assets/選物I-3-章末題解12-14.svg",
+            "content/選修物理I/選物I-3/assets/選物I-3-章末題解16-18.svg"
+          ]
+        },
+        {
+          "id": "physics-i1-4-student",
+          "audience": "student",
+          "source": "content/選修物理I/選物I-4/學生講義.md",
+          "slug": "選物I-4-牛頓運動定律-學生講義",
+          "assets": [
+            "content/選修物理I/選物I-4/assets/選物I-4-受力圖.svg",
+            "content/選修物理I/選物I-4/assets/選物I-4-向心加速度推導.svg",
+            "content/選修物理I/選物I-4/assets/選物I-4-單擺小角度.svg",
+            "content/選修物理I/選物I-4/assets/選物I-4-圓周受力模型.svg",
+            "content/選修物理I/選物I-4/assets/選物I-4-圓周與簡諧.svg",
+            "content/選修物理I/選物I-4/assets/選物I-4-整合題解題圖.svg",
+            "content/選修物理I/選物I-4/assets/選物I-4-斜面重力分解.svg",
+            "content/選修物理I/選物I-4/assets/選物I-4-牛頓第二定律實驗.svg",
+            "content/選修物理I/選物I-4/assets/選物I-4-章末受力解題圖.svg",
+            "content/選修物理I/選物I-4/assets/選物I-4-章末週期解題圖.svg",
+            "content/選修物理I/選物I-4/assets/選物I-4-第三定律力對.svg",
+            "content/選修物理I/選物I-4/assets/選物I-4-簡諧狀態與相位.svg",
+            "content/選修物理I/選物I-4/assets/選物I-4-虎克定律斜率.svg",
+            "content/選修物理I/選物I-4/assets/選物I-4-視重與連接體.svg"
+          ]
+        },
+        {
+          "id": "physics-i1-5-student",
+          "audience": "student",
+          "source": "content/選修物理I/選物I-5/學生講義.md",
+          "slug": "選物I-5-萬有引力定律-學生講義",
+          "assets": [
+            "content/選修物理I/選物I-5/assets/選物I-5-反平方縮放.svg",
+            "content/選修物理I/選物I-5/assets/選物I-5-引力軌道鏈.svg",
+            "content/選修物理I/選物I-5/assets/選物I-5-克卜勒第三定律比較.svg",
+            "content/選修物理I/選物I-5/assets/選物I-5-克卜勒資料線性化.svg",
+            "content/選修物理I/選物I-5/assets/選物I-5-橢圓與等面積.svg",
+            "content/選修物理I/選物I-5/assets/選物I-5-解題-克卜勒整合.svg",
+            "content/選修物理I/選物I-5/assets/選物I-5-解題-基本比例.svg",
+            "content/選修物理I/選物I-5/assets/選物I-5-解題-概念與疊加.svg",
+            "content/選修物理I/選物I-5/assets/選物I-5-解題-源與試驗質量.svg",
+            "content/選修物理I/選物I-5/assets/選物I-5-解題-高度與軌道.svg",
+            "content/選修物理I/選物I-5/assets/選物I-5-重力場疊加與零場.svg",
+            "content/選修物理I/選物I-5/assets/選物I-5-高度與中心距離.svg"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,10 +1,26 @@
 # -*- coding: utf-8 -*-
-"""產生「數A3-2 指數與對數函數」的圖，輸出到該章 sources/。
-重繪：  .venv/bin/python _tools/fig_數A3-2.py
+"""產生「數A3-2 指數與對數函數」的章節圖。
+
+``--content-all`` 可重生新版學生講義使用的三張 SVG；
+``--content-figure1`` 保留為只重生反函數圖的相容入口。舊樹函數仍保留給
+既有 API；只有維護舊樹時才能明示使用 ``--legacy-write``，而且會寫入舊
+``sources/`` 並產生 companion PDF。
 
 本章為函數圖：F.canvas() + ax.plot() + F.clean_grid(ax)，座標軸過原點。
 注意：mathtext 不支援 \\dfrac/\\tfrac（用 \\frac）；圖內中文勿放進 $...$。
 """
+
+# Fail closed before importing plotting code or resolving any output path.  Keep
+# this guard inline so copying one legacy script cannot silently drop the gate.
+if __name__ == "__main__":
+    _legacy_argv = __import__("sys").argv[1:]
+    if _legacy_argv not in (["--content-all"], ["--content-figure1"], ["--legacy-write"]):
+        raise SystemExit(
+            "LEGACY/未核准：預設拒絕寫入舊教材樹。請明示 "
+            "--content-all 產生新版三圖（或 --content-figure1 只產圖 1）；"
+            "若維護已獲核准的舊樹，"
+            "則使用唯一參數 --legacy-write。"
+        )
 
 import os, sys
 
@@ -16,6 +32,17 @@ import figlib as F
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CH = os.path.join(ROOT, "數學", "數學二上（數學A·第三冊）", "數A3-2 指數與對數函數")
+CONTENT_CH = os.path.join(ROOT, "content", "數學A", "數A3-2")
+
+
+def _save_content(fig, name):
+    return F.save_to(
+        fig,
+        CONTENT_CH,
+        name,
+        output_subdir="assets",
+        write_pdf=False,
+    )
 
 
 def _axes_through_origin(ax, xlim, ylim, xlabel="$x$", ylabel="$y$"):
@@ -55,6 +82,276 @@ def _axes_through_origin(ax, xlim, ylim, xlabel="$x$", ylabel="$y$"):
     ax.set_xlim(*xlim)
     ax.set_ylim(*ylim)
     ax.axis("off")
+
+
+# ---------------------------------------------------------------------------
+def fig_inverse_pair():
+    """新版圖 1：y=2^x 與 y=log_2 x 對 y=x 鏡射，且不碰到鏡射軸。"""
+    fig, ax = F.canvas(8.8, 6.2, equal=True)
+    xlim = ylim = (-2.35, 4.65)
+
+    # h(x)=2^x-x 的唯一極小值出現在 2^x=1/ln 2；極小值仍為正，
+    # 因此 2^x=x 無實根，兩條反函數曲線也都不會碰到鏡射軸。
+    log_two = np.log(2.0)
+    minimum_x = np.log2(1.0 / log_two)
+    minimum_gap = 1.0 / log_two - minimum_x
+    if minimum_gap <= 0:
+        raise AssertionError("2^x-x 的極小值應為正")
+
+    # 同一比例才能如實呈現 y=x 鏡射。
+    ticks = np.arange(-2, 5, 1)
+    ax.set_xlim(*xlim)
+    ax.set_ylim(*ylim)
+    ax.set_xticks(ticks)
+    ax.set_yticks(ticks)
+    ax.grid(True, color=F.GRID, lw=0.8, zorder=0)
+    ax.axhline(0, color=F.INK, lw=1.25, zorder=2)
+    ax.axvline(0, color=F.INK, lw=1.25, zorder=2)
+    ax.annotate(
+        "",
+        xy=(xlim[1], 0),
+        xytext=(xlim[1] - 0.22, 0),
+        arrowprops=dict(arrowstyle="-|>", color=F.INK, lw=1.25),
+    )
+    ax.annotate(
+        "",
+        xy=(0, ylim[1]),
+        xytext=(0, ylim[1] - 0.22),
+        arrowprops=dict(arrowstyle="-|>", color=F.INK, lw=1.25),
+    )
+    ax.text(xlim[1] - 0.08, -0.28, "$x$", ha="right", va="top", fontsize=13)
+    ax.text(0.16, ylim[1] - 0.08, "$y$", ha="left", va="top", fontsize=13)
+    for side in ("top", "right", "bottom", "left"):
+        ax.spines[side].set_visible(False)
+    ax.tick_params(axis="both", length=0, labelsize=10, pad=4)
+
+    # 鏡射軸只作幾何參照；兩條函數曲線都不與它相交。
+    diag = np.linspace(xlim[0], xlim[1], 300)
+    ax.plot(
+        diag,
+        diag,
+        color="#64748b",
+        lw=1.7,
+        ls=(0, (5, 4)),
+        zorder=1,
+        label="$y=x$（鏡射軸）",
+    )
+
+    xe = np.linspace(xlim[0], np.log2(ylim[1]), 500)
+    xl = np.linspace(2.0 ** ylim[0], xlim[1], 500)
+    ax.plot(xe, 2.0**xe, color=F.BLUE, lw=3.0, zorder=4, label="$y=2^x$")
+    ax.plot(
+        xl,
+        np.log2(xl),
+        color=F.RED,
+        lw=3.0,
+        ls=(0, (7, 2.5)),
+        zorder=4,
+        label="$y=\\log_2 x$",
+    )
+
+    # 同色點成對出現，直接顯示反函數會交換橫、縱坐標。
+    pairs = [
+        ((0, 1), (1, 0), F.GREEN),
+        ((1, 2), (2, 1), F.AMBER),
+    ]
+    label_offsets = {
+        (0, 1): (-0.18, 0.20, "right"),
+        (1, 0): (0.14, -0.30, "left"),
+        (1, 2): (-0.16, 0.22, "right"),
+        (2, 1): (0.15, -0.28, "left"),
+    }
+    for point_on_exp, point_on_log, color in pairs:
+        for point in (point_on_exp, point_on_log):
+            ax.scatter(*point, s=58, color=color, edgecolor="white", linewidth=1.0, zorder=6)
+            dx, dy, ha = label_offsets[point]
+            ax.text(
+                point[0] + dx,
+                point[1] + dy,
+                f"$({point[0]},\\,{point[1]})$",
+                color=color,
+                fontsize=11.5,
+                fontweight="bold",
+                ha=ha,
+                va="center",
+                zorder=7,
+            )
+
+    ax.text(
+        3.02,
+        4.12,
+        "鏡射軸",
+        color="#64748b",
+        fontsize=11,
+        rotation=45,
+        ha="left",
+        va="bottom",
+    )
+    ax.legend(
+        loc="lower right",
+        frameon=True,
+        facecolor="white",
+        edgecolor="#cbd5e1",
+        framealpha=0.96,
+        fontsize=11.5,
+    )
+    ax.set_title(
+        "互為反函數：橫、縱坐標交換，圖形關於 $y=x$ 對稱",
+        fontsize=15,
+        pad=14,
+    )
+    fig.tight_layout()
+    return _save_content(fig, "數A3-2-指數對數互逆")
+
+
+def fig_content_linear_exponential_model():
+    """同一初值下，固定加量與固定倍率的離散資料圖。"""
+    n = np.arange(0, 6, dtype=float)
+    initial, increment, multiplier = 4.0, 3.0, 2.0
+    linear = initial + increment * n
+    exponential = initial * multiplier**n
+
+    np.testing.assert_allclose(np.diff(linear), increment, rtol=0.0, atol=1e-12)
+    np.testing.assert_allclose(
+        exponential[1:] / exponential[:-1], multiplier, rtol=0.0, atol=1e-12
+    )
+    if not np.isclose(linear[0], exponential[0]):
+        raise AssertionError("兩模型必須從同一初值出發")
+
+    fig, (ax, info) = plt.subplots(
+        1,
+        2,
+        figsize=(10.6, 5.2),
+        gridspec_kw={"width_ratios": [1.75, 1.0]},
+    )
+    ax.plot(
+        n,
+        linear,
+        color=F.AMBER,
+        lw=2.8,
+        marker="o",
+        ms=6.5,
+        label=r"固定加 $3$：$Q_n=4+3n$",
+    )
+    ax.plot(
+        n,
+        exponential,
+        color=F.BLUE,
+        lw=3.0,
+        marker="o",
+        ms=6.5,
+        label=r"固定乘 $2$：$Q_n=4\cdot2^n$",
+    )
+    ax.set_xlim(-0.15, 5.15)
+    ax.set_ylim(0, 136)
+    ax.set_xticks(n.astype(int))
+    ax.set_yticks([0, 32, 64, 96, 128])
+    ax.set_xlabel("期數 $n$")
+    ax.set_ylabel("數量 $Q_n$")
+    F.clean_grid(ax)
+    ax.legend(loc="upper left", fontsize=10.5, framealpha=0.96)
+    ax.set_title("相鄰差固定得到線性；相鄰比固定得到指數", fontsize=13)
+
+    info.axis("off")
+    info.set_xlim(0, 1)
+    info.set_ylim(0, 1)
+    info.text(
+        0.5,
+        0.76,
+        "固定加量\n" + r"$4,\ 7,\ 10,\ 13$" + "\n相鄰差：" + r"$3,\ 3,\ 3$",
+        color="#9a3412",
+        fontsize=13,
+        ha="center",
+        va="center",
+        linespacing=1.55,
+        bbox=dict(boxstyle="round,pad=0.7", fc="#fff7ed", ec="#fed7aa", lw=1.5),
+    )
+    info.text(
+        0.5,
+        0.30,
+        "固定倍率\n" + r"$4,\ 8,\ 16,\ 32$" + "\n相鄰比：" + r"$2,\ 2,\ 2$",
+        color="#1e3a8a",
+        fontsize=13,
+        ha="center",
+        va="center",
+        linespacing=1.55,
+        bbox=dict(boxstyle="round,pad=0.7", fc="#eff6ff", ec="#bfdbfe", lw=1.5),
+    )
+    fig.suptitle("固定加量與固定倍率的累積方式", fontsize=15, y=0.995)
+    fig.tight_layout(rect=[0, 0, 1, 0.95])
+    return _save_content(fig, "數A3-2-線性與指數模型")
+
+
+def fig_content_log_scale():
+    """同一組原始值在線性與常用對數尺度上的精確位置。"""
+    values = np.array([1.0, 10.0, 100.0, 1000.0])
+    linear_gaps = np.diff(values)
+    log_values = np.log10(values)
+    np.testing.assert_allclose(linear_gaps, [9.0, 90.0, 900.0], rtol=0.0, atol=1e-12)
+    np.testing.assert_allclose(np.diff(log_values), 1.0, rtol=0.0, atol=1e-12)
+    np.testing.assert_allclose(10.0**log_values, values, rtol=1e-12, atol=0.0)
+
+    fig, axes = plt.subplots(2, 1, figsize=(10.8, 5.4))
+    colors = [F.BLUE, F.GREEN, F.AMBER, F.PURPLE]
+
+    ax = axes[0]
+    ax.axhline(0, color="#64748b", lw=2.2, zorder=1)
+    for value, color in zip(values, colors):
+        ax.scatter(value, 0, s=62, color=color, edgecolor="white", linewidth=0.9, zorder=4)
+    label_specs = [
+        (1.0, "1", (-4, 22), "right"),
+        (10.0, "10", (8, -28), "left"),
+        (100.0, "100", (0, 22), "center"),
+        (1000.0, "1000", (0, 22), "center"),
+    ]
+    for value, label, offset, align in label_specs:
+        ax.annotate(
+            label,
+            xy=(value, 0),
+            xytext=offset,
+            textcoords="offset points",
+            ha=align,
+            va="center",
+            fontsize=11.5,
+            arrowprops=dict(arrowstyle="-", color="#94a3b8", lw=0.9),
+        )
+    ax.set_xlim(-45, 1050)
+    ax.set_ylim(-0.34, 0.34)
+    ax.set_yticks([])
+    ax.set_xticks([0, 250, 500, 750, 1000])
+    ax.set_xlabel("原始值（線性尺度：相同距離代表相同差值）")
+    for side in ("top", "left", "right"):
+        ax.spines[side].set_visible(False)
+    ax.set_title("線性尺度：1 與 10 幾乎重疊，1000 距離很遠", fontsize=12.5)
+
+    ax = axes[1]
+    ax.set_xscale("log", base=10)
+    ax.axhline(0, color="#64748b", lw=2.2, zorder=1)
+    for value, color in zip(values, colors):
+        ax.scatter(value, 0, s=70, color=color, edgecolor="white", linewidth=0.9, zorder=4)
+        ax.annotate(
+            f"{int(value)}\n$\\log_{{10}}={int(np.log10(value))}$",
+            xy=(value, 0),
+            xytext=(0, 22),
+            textcoords="offset points",
+            ha="center",
+            va="bottom",
+            fontsize=10.5,
+        )
+    ax.set_xlim(0.7, 1450)
+    ax.set_ylim(-0.34, 0.34)
+    ax.set_yticks([])
+    ax.set_xticks(values)
+    ax.set_xticklabels(["1", "10", "100", "1000"])
+    ax.minorticks_off()
+    ax.set_xlabel("常用對數尺度（相同距離代表相同倍率）")
+    for side in ("top", "left", "right"):
+        ax.spines[side].set_visible(False)
+    ax.set_title("對數尺度：每次乘 10 對應相同距離", fontsize=12.5)
+
+    fig.suptitle("同一組數值在線性與對數尺度上的位置", fontsize=15, y=0.995)
+    fig.tight_layout(rect=[0, 0, 1, 0.95], h_pad=1.4)
+    return _save_content(fig, "數A3-2-對數尺度")
 
 
 # ---------------------------------------------------------------------------
@@ -329,9 +626,16 @@ def fig_inequality_flip():
 
 
 if __name__ == "__main__":
-    fig_exponential()
-    fig_logarithm()
-    fig_growth_decay()
-    fig_log_scale()
-    fig_inequality_flip()
+    if sys.argv[1:] == ["--content-all"]:
+        fig_inverse_pair()
+        fig_content_linear_exponential_model()
+        fig_content_log_scale()
+    elif sys.argv[1:] == ["--content-figure1"]:
+        fig_inverse_pair()
+    else:
+        fig_exponential()
+        fig_logarithm()
+        fig_growth_decay()
+        fig_log_scale()
+        fig_inequality_flip()
     print("done.")

@@ -6,6 +6,27 @@ __pycache__/
 # macOS
 .DS_Store
 
+# 本機環境與憑證
+.env
+.env.*
+*.pem
+*.key
+
+# 本機參考教材（不公開、不納入版控）
+高中教材/
+
+# 本機教材逐檔比對紀錄（含參考教材路徑，不公開）
+content/**/編輯判定.md
+
+# HTML -> PDF 建置依賴與產物
+node_modules/
+tmp/pdfs/
+tmp/review/
+tmp/publication-build/
+dist/
+output/html/
+output/pdf/
+
 # Obsidian 個人工作區快取（保留 vault 內容，排除每台機器不同的暫存）
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""產生「選物I-1 測量與不確定度」的圖，輸出到該章 sources/。
+"""產生「選物I-1 測量與不確定度」公開講義的 SVG，輸出到 content 章節 assets/。
 重繪：  .venv/bin/python _tools/fig_選物I-1.py
 """
 
@@ -12,9 +12,11 @@ from matplotlib.patches import Circle, FancyBboxPatch, Rectangle
 import figlib as F
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CH = os.path.join(
-    ROOT, "物理", "物理二上（選修物理I·力學一）", "選物I-1 測量與不確定度"
-)
+CH = os.path.join(ROOT, "content", "選修物理I", "選物I-1")
+
+
+def _save(fig, name):
+    return F.save_to(fig, CH, name, output_subdir="assets", write_pdf=False)
 
 
 def fig_error_types():
@@ -98,11 +100,11 @@ def fig_error_types():
         "兩種誤差：隨機誤差讓點「散開」，系統誤差讓整批「偏掉」", fontsize=13.5, y=1.0
     )
     fig.tight_layout(rect=[0, 0, 1, 0.97])
-    F.save_to(fig, CH, "選物I-1-誤差類型")
+    _save(fig, "選物I-1-誤差類型")
 
 
 def fig_distribution():
-    """多次測量的直方圖 + 平均值 ± 標準差。"""
+    """多次測量的直方圖：區分單次散布 s 與平均值的不確定度 u_A。"""
     rng = np.random.default_rng(4)
     # 模擬量某段長度（真值約 10.00 cm），200 次讀數
     data = rng.normal(10.00, 0.08, 200)
@@ -123,7 +125,7 @@ def fig_distribution():
 
     # 平均值
     ax.axvline(mean, color=F.RED, lw=2.4, label=f"平均值 $\\bar{{x}}$ = {mean:.2f} cm")
-    # ±1 標準差帶
+    # ±1 樣本標準差帶：只表示單次讀值的散布，不等同平均值的不確定度。
     ax.axvspan(mean - sd, mean + sd, color=F.GREEN, alpha=0.12)
     ax.axvline(mean - sd, color=F.GREEN, lw=1.6, ls="--")
     ax.axvline(
@@ -139,26 +141,38 @@ def fig_distribution():
     F.arrow(ax, (mean, yarr), (mean + sd, yarr), color=F.GREEN, lw=1.8, mutation=14)
     F.arrow(ax, (mean, yarr), (mean - sd, yarr), color=F.GREEN, lw=1.8, mutation=14)
     ax.text(
-        mean, yarr * 1.06, "離散程度 ~ $s$", ha="center", color=F.GREEN, fontsize=11
+        mean, yarr * 1.06, "單次讀值散布：$s$", ha="center", color=F.GREEN, fontsize=11
+    )
+
+    ax.text(
+        0.98,
+        0.05,
+        r"平均值的 A 類不確定度：$u_A=s/\sqrt{N}$",
+        transform=ax.transAxes,
+        ha="right",
+        va="bottom",
+        fontsize=10,
+        color=F.INK,
+        bbox=dict(boxstyle="round,pad=0.35", fc="white", ec="#aab4c2", alpha=0.92),
     )
 
     ax.set_xlabel("單次測量值 $x_i$ (cm)")
     ax.set_ylabel("出現次數")
-    ax.set_title("多次測量的分布：平均值定「中心」，標準差定「寬度」")
+    ax.set_title("多次測量：平均值定中心，樣本標準差描述單次讀值的散布")
     F.clean_grid(ax)
     ax.legend(loc="upper left", fontsize=9.5, frameon=False)
-    F.save_to(fig, CH, "選物I-1-多次測量分布")
+    _save(fig, "選物I-1-多次測量分布")
 
 
 def fig_propagation():
-    """不確定度傳遞：加減（絕對相加）vs 乘除（相對相加）兩格示意。"""
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9.6, 4.4))
+    """獨立量的不確定度傳遞：加減與乘除都以平方和開根號組合。"""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10.6, 4.4))
 
-    # ---- 左：加減，絕對不確定度相加（數線上區間相加）----
+    # ---- 左：加減，絕對不確定度以 RSS 組合 ----
     ax1.set_xlim(0, 12)
     ax1.set_ylim(0, 6)
     ax1.axis("off")
-    ax1.set_title("加減法：絕對不確定度相加", fontsize=12.5)
+    ax1.set_title("加減：絕對不確定度 RSS", fontsize=12.5)
 
     def bar(ax, y, x0, val, unc, color, name):
         ax.plot(
@@ -175,24 +189,25 @@ def fig_propagation():
             )
         ax.text(x0 + val, y + 0.42, name, ha="center", color=color, fontsize=11)
 
-    bar(ax1, 5.0, 1.0, 3.0, 0.6, F.BLUE, "$A = 3.0 \\pm 0.6$")
-    bar(ax1, 3.6, 1.0, 4.0, 0.8, F.RED, "$B = 4.0 \\pm 0.8$")
+    bar(ax1, 5.0, 1.0, 3.0, 0.15, F.BLUE, "$X = 3.00 \\pm 0.15$")
+    bar(ax1, 3.6, 1.0, 4.0, 0.16, F.RED, "$Y = 4.00 \\pm 0.16$")
     ax1.plot([0.6, 11.4], [2.6, 2.6], color="#cbd2da", lw=1.0)
-    bar(ax1, 1.7, 1.0, 7.0, 1.4, F.GREEN, "$A+B = 7.0 \\pm 1.4$")
+    combined = np.sqrt(0.15**2 + 0.16**2)
+    bar(ax1, 1.7, 1.0, 7.0, combined, F.GREEN, "$Z=X+Y = 7.00 \\pm 0.22$")
     ax1.text(
         6.0,
         0.65,
-        r"$\Delta(A{+}B)=\Delta A+\Delta B=0.6+0.8=1.4$",
+        r"$u_z=\sqrt{u_x^2+u_y^2}=\sqrt{0.15^2+0.16^2}\approx0.22$",
         ha="center",
         color=F.INK,
         fontsize=10.5,
     )
 
-    # ---- 右：乘除，相對不確定度相加（圓餅式條形）----
+    # ---- 右：乘除，相對不確定度以 RSS 組合 ----
     ax2.set_xlim(0, 10)
     ax2.set_ylim(0, 6)
     ax2.axis("off")
-    ax2.set_title("乘除法：相對不確定度相加", fontsize=12.5)
+    ax2.set_title("乘除：相對不確定度 RSS", fontsize=12.5)
 
     def relbar(ax, y, frac, color, name):
         x0, w = 1.0, 7.0
@@ -209,7 +224,7 @@ def fig_propagation():
         ax.add_patch(
             Rectangle(
                 (x0, y - 0.22),
-                w * frac,
+                w * min(frac / 0.10, 1.0),
                 0.44,
                 facecolor=color,
                 alpha=0.55,
@@ -217,27 +232,113 @@ def fig_propagation():
             )
         )
         ax.text(
-            x0 + w + 0.2, y, name, ha="left", va="center", color=color, fontsize=10.5
+            x0 + 0.18, y, name, ha="left", va="center", color=F.INK, fontsize=10.5
         )
 
-    relbar(ax2, 5.0, 0.05, F.BLUE, "$\\dfrac{\\Delta A}{A}=5\\%$")
-    relbar(ax2, 3.8, 0.04, F.RED, "$\\dfrac{\\Delta B}{B}=4\\%$")
+    relbar(ax2, 5.0, 0.05, F.BLUE, "$u_x/|X|=5\\%$")
+    relbar(ax2, 3.8, 0.04, F.RED, "$u_y/|Y|=4\\%$")
     ax2.plot([0.7, 9.3], [3.0, 3.0], color="#cbd2da", lw=1.0)
-    relbar(ax2, 2.0, 0.09, F.GREEN, "$\\dfrac{\\Delta(AB)}{AB}=9\\%$")
+    relative = np.sqrt(0.05**2 + 0.04**2)
+    relbar(ax2, 2.0, relative, F.GREEN, "$u_z/|Z|=6.4\\%$")
     ax2.text(
         5.0,
         0.7,
-        r"$\frac{\Delta(AB)}{AB}=\frac{\Delta A}{A}+\frac{\Delta B}{B}=5\%+4\%=9\%$",
+        r"$\frac{u_z}{|Z|}=\sqrt{(u_x/|X|)^2+(u_y/|Y|)^2}$",
+        ha="center",
+        color=F.INK,
+        fontsize=9.5,
+    )
+
+    fig.suptitle(
+        "獨立測量量的標準不確定度：各貢獻以平方和開根號組合", fontsize=13, y=1.0
+    )
+    fig.tight_layout(rect=[0.01, 0, 0.99, 0.95])
+    _save(fig, "選物I-1-不確定度傳遞")
+
+
+def fig_standard_uncertainty():
+    """A 類、B 類與標準不確定度的依賴關係。"""
+    fig, ax = plt.subplots(figsize=(8.8, 4.3))
+    ax.set_xlim(0, 12)
+    ax.set_ylim(0, 6)
+    ax.axis("off")
+
+    boxes = [
+        (0.5, 3.1, 3.2, 1.7, F.BLUE, "重複測量", r"$u_A=s/\sqrt{N}$"),
+        (0.5, 0.8, 3.2, 1.7, F.RED, "儀器解析度", r"$u_B=d/(2\sqrt{3})$"),
+        (7.4, 2.0, 4.0, 2.0, F.GREEN, "標準不確定度", r"$u=\sqrt{u_A^2+u_B^2}$"),
+    ]
+    for x, y, w, h, color, title, formula in boxes:
+        ax.add_patch(
+            FancyBboxPatch(
+                (x, y),
+                w,
+                h,
+                boxstyle="round,pad=0.04,rounding_size=0.14",
+                facecolor=color,
+                alpha=0.12,
+                edgecolor=color,
+                linewidth=1.5,
+            )
+        )
+        ax.text(x + w / 2, y + h * 0.68, title, ha="center", va="center", color=F.INK, fontsize=12)
+        ax.text(x + w / 2, y + h * 0.30, formula, ha="center", va="center", color=color, fontsize=15)
+
+    F.arrow(ax, (3.8, 3.95), (7.2, 3.25), color=F.BLUE, lw=1.8, mutation=14)
+    F.arrow(ax, (3.8, 1.65), (7.2, 2.75), color=F.RED, lw=1.8, mutation=14)
+    ax.text(5.55, 3.75, "統計資訊", ha="center", color=F.BLUE, fontsize=10)
+    ax.text(5.55, 1.85, "非重複測量資訊", ha="center", color=F.RED, fontsize=10)
+    ax.text(
+        6.0,
+        0.25,
+        "即使多次讀數完全相同，儀器解析度仍使 $u_B$ 不為零。",
         ha="center",
         color=F.INK,
         fontsize=10.5,
     )
+    fig.suptitle("一次完整的測量報告，要同時納入 A 類與 B 類資訊", fontsize=13.5, y=0.98)
+    fig.tight_layout(rect=[0, 0.02, 1, 0.93])
+    _save(fig, "選物I-1-標準不確定度組合")
 
-    fig.suptitle(
-        "不確定度怎麼「傳遞」：加減看絕對量、乘除看相對量（百分比）", fontsize=13, y=1.0
+
+def fig_dimension_check():
+    """用等加速度公式示範因次齊一性。"""
+    fig, ax = plt.subplots(figsize=(8.8, 4.2))
+    ax.set_xlim(0, 12)
+    ax.set_ylim(0, 6)
+    ax.axis("off")
+
+    ax.text(0.8, 4.85, r"$[x]=L$", fontsize=14, color=F.BLUE)
+    ax.text(0.8, 3.90, r"$[v]=LT^{-1}$", fontsize=14, color=F.BLUE)
+    ax.text(0.8, 2.95, r"$[a]=LT^{-2}$", fontsize=14, color=F.BLUE)
+    ax.text(0.8, 2.00, r"$[t]=T$", fontsize=14, color=F.BLUE)
+
+    ax.add_patch(
+        FancyBboxPatch(
+            (3.3, 3.25), 8.0, 2.1,
+            boxstyle="round,pad=0.06,rounding_size=0.14",
+            facecolor=F.GREEN, alpha=0.10, edgecolor=F.GREEN, linewidth=1.5,
+        )
     )
-    fig.tight_layout(rect=[0, 0, 1, 0.95])
-    F.save_to(fig, CH, "選物I-1-不確定度傳遞")
+    ax.text(7.3, 4.75, r"$x=v_0t+\frac{1}{2}at^2$", ha="center", fontsize=17, color=F.INK)
+    ax.text(
+        7.3, 3.85,
+        r"$L=(LT^{-1})T+(LT^{-2})T^2=L+L$",
+        ha="center", fontsize=14, color=F.GREEN,
+    )
+
+    ax.add_patch(
+        FancyBboxPatch(
+            (3.3, 0.55), 8.0, 1.8,
+            boxstyle="round,pad=0.06,rounding_size=0.14",
+            facecolor=F.RED, alpha=0.09, edgecolor=F.RED, linewidth=1.5,
+        )
+    )
+    ax.text(7.3, 1.75, r"$x=v_0+at$", ha="center", fontsize=16, color=F.INK)
+    ax.text(7.3, 1.05, r"$L\ne LT^{-1}+LT^{-1}$", ha="center", fontsize=14, color=F.RED)
+    fig.suptitle("因次檢核：物理等式的每一項必須具有相同因次", fontsize=13.5, y=0.98)
+    fig.tight_layout(rect=[0, 0.01, 1, 0.92])
+    _save(fig, "選物I-1-因次檢核")
 
 
 def 選物I_1_two_axes():
@@ -389,12 +490,12 @@ def 選物I_1_two_axes():
         y=0.99,
     )
     fig.tight_layout(rect=[0, 0.02, 1, 0.96])
-    F.save_to(fig, CH, "選物I-1-兩條分類軸")
+    _save(fig, "選物I-1-兩條分類軸")
 
 
 if __name__ == "__main__":
-    fig_error_types()
     fig_distribution()
     fig_propagation()
-    選物I_1_two_axes()
+    fig_standard_uncertainty()
+    fig_dimension_check()
     print("done.")

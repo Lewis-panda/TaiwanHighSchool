@@ -1,0 +1,490 @@
+{
+  "schemaVersion": 1,
+  "runtime": {
+    "implementation": "CPython",
+    "python": "3.14.3",
+    "numpy": "2.4.6",
+    "matplotlib": "3.11.0",
+    "freetype": "2.14.3"
+  },
+  "sharedInputs": [
+    {
+      "path": "_tools/figlib.py",
+      "sha256": "643169489f8b68e66c520be9c461406cd4f95c8097c7e1c7052e69b244a26070"
+    }
+  ],
+  "generators": [
+    {
+      "id": "math-a3-1",
+      "command": [
+        "python",
+        "_tools/fig_數A3-1.py"
+      ],
+      "inputs": [
+        {
+          "path": "_tools/fig_數A3-1.py",
+          "sha256": "1628435ad2fe22b06cbdced5e4af75500d31df6a8841e0351272dae55523c559"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "content/數學A/數A3-1/assets/數A3-1-和差角推導.svg",
+          "entrypoint": "fig_sum_diff_circle",
+          "sha256": "d4c5fb19fa51b6be43138d87c86dcc52a6c6774a8bf1e6246a39550cadda5c86"
+        },
+        {
+          "path": "content/數學A/數A3-1/assets/數A3-1-圖形變換.svg",
+          "entrypoint": "fig_transform",
+          "sha256": "c4300b8b9d6e312cb47ee4a14827f8c0ef0fbc5517d1dba3c773d81fa27d1778"
+        },
+        {
+          "path": "content/數學A/數A3-1/assets/數A3-1-弧度扇形.svg",
+          "entrypoint": "fig_radian_sector",
+          "sha256": "8772d5f2cdedfbf4c7c128ed66067ecdbf3473b35f73cf84f91a35dfb9aa2ad7"
+        },
+        {
+          "path": "content/數學A/數A3-1/assets/數A3-1-正切函數圖.svg",
+          "entrypoint": "fig_tangent_graph",
+          "sha256": "75d1bc9037e623bef826a55fe81b621a5ebd24ebd5483dd9d2915c2bfac12872"
+        },
+        {
+          "path": "content/數學A/數A3-1/assets/數A3-1-正弦餘弦圖.svg",
+          "entrypoint": "fig_sine_cosine_graphs",
+          "sha256": "e4590f168fcf47cfc4c728c02de486efbe91758f192ca7f44b0e831e5094a8fa"
+        },
+        {
+          "path": "content/數學A/數A3-1/assets/數A3-1-疊合.svg",
+          "entrypoint": "fig_superpose",
+          "sha256": "1f1c42412b9ef01ed5d8ec290dc6937d4893bd3e0e80cb6fc19564e915b2e64d"
+        }
+      ]
+    },
+    {
+      "id": "math-a3-2",
+      "command": [
+        "python",
+        "_tools/fig_數A3-2.py",
+        "--content-all"
+      ],
+      "inputs": [
+        {
+          "path": "_tools/fig_數A3-2.py",
+          "sha256": "8cd1bc4732ca7ff48535b3224b2982d8d4f4275f466763ad07132a3b0635e4b9"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "content/數學A/數A3-2/assets/數A3-2-對數尺度.svg",
+          "entrypoint": "fig_content_log_scale",
+          "sha256": "fb0a59a6bcc8d882a1358d60e76712fa733c48efc4f93ca3079f6278dbf754e7"
+        },
+        {
+          "path": "content/數學A/數A3-2/assets/數A3-2-指數對數互逆.svg",
+          "entrypoint": "fig_inverse_pair",
+          "sha256": "27723ddfc66be7a5011247800ad2abf3ac3d34e65afc65762f5074af48376592"
+        },
+        {
+          "path": "content/數學A/數A3-2/assets/數A3-2-線性與指數模型.svg",
+          "entrypoint": "fig_content_linear_exponential_model",
+          "sha256": "0476bcb3cf423944797aa6b5519f135891cf8e42779f8876cc57eadf5e082553"
+        }
+      ]
+    },
+    {
+      "id": "math-a3-3",
+      "command": [
+        "python",
+        "_tools/fig_content_數A3-3.py",
+        "--content-all"
+      ],
+      "inputs": [
+        {
+          "path": "_tools/fig_content_數A3-3.py",
+          "sha256": "ce89d5ca2ed356345b4bc07a885000af6a435f67a20d4e2ec5a6a7e4a6688a60"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "content/數學A/數A3-3/assets/數A3-3-克拉瑪線性組合.svg",
+          "entrypoint": "fig_cramer_linear_combination",
+          "sha256": "bc9069d66914a0de86b8abb1c638545c5fa1f94638058153f50eaffe86255760"
+        },
+        {
+          "path": "content/數學A/數A3-3/assets/數A3-3-內積與投影.svg",
+          "entrypoint": "fig_dot_product_projection",
+          "sha256": "5f47c4424b1de3a72447228639309ae7a65fca5dcd671c6d7eaf6c0bad272ee5"
+        },
+        {
+          "path": "content/數學A/數A3-3/assets/數A3-3-向量合成與分解.svg",
+          "entrypoint": "fig_vector_composition_decomposition",
+          "sha256": "2405d5f1918cbacca56106f9aea540b921aa28df577b6358359878a2ce005a3c"
+        },
+        {
+          "path": "content/數學A/數A3-3/assets/數A3-3-行列式面積與定向.svg",
+          "entrypoint": "fig_determinant_area_orientation",
+          "sha256": "153bd6d61ceb0bdf43b3062c7e5181a5a9aa6d27dd07cb42485e38658d23781c"
+        }
+      ]
+    },
+    {
+      "id": "physics-i1-1-main",
+      "command": [
+        "python",
+        "_tools/fig_選物I-1.py"
+      ],
+      "inputs": [
+        {
+          "path": "_tools/fig_選物I-1.py",
+          "sha256": "6536df3eb6b467dbab2541edb34a4431d870997aec94a11ef5c0be861661ef00"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "content/選修物理I/選物I-1/assets/選物I-1-不確定度傳遞.svg",
+          "entrypoint": "fig_propagation",
+          "sha256": "2746b1075aab1f4b146379d6de07bf7da0a996b03cf75072d114630437137796"
+        },
+        {
+          "path": "content/選修物理I/選物I-1/assets/選物I-1-因次檢核.svg",
+          "entrypoint": "fig_dimension_check",
+          "sha256": "da1e1ca188c93e401282f1a5d30ac4f257a0cb157639f8415619fa3683bc2835"
+        },
+        {
+          "path": "content/選修物理I/選物I-1/assets/選物I-1-多次測量分布.svg",
+          "entrypoint": "fig_distribution",
+          "sha256": "b050b2f7e6bcfd4b2fcc346e18dde33869112ad4a6b7b4a5f5961b4f1c986558"
+        },
+        {
+          "path": "content/選修物理I/選物I-1/assets/選物I-1-標準不確定度組合.svg",
+          "entrypoint": "fig_standard_uncertainty",
+          "sha256": "b1560e50faf7b3beb8e26598bf0bfbe26ef0cc7347e4c3cb84fe780f6a87279a"
+        }
+      ]
+    },
+    {
+      "id": "physics-i1-1-3-shared",
+      "command": [
+        "python",
+        "_tools/fig_content_選物I-1_3.py"
+      ],
+      "inputs": [
+        {
+          "path": "_tools/fig_content_選物I-1_3.py",
+          "sha256": "850097bafe96397d00a74ee7a08d0c87ed22b3ba02e52ada7ac4878e6753b813"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "content/選修物理I/選物I-1/assets/選物I-1-解析度與讀值區間.svg",
+          "entrypoint": "fig_resolution_interval",
+          "sha256": "9a899318d530d4bacb8f9a1d765e87eb2bfd35e9acbaf9b20af3f5d35da23358"
+        },
+        {
+          "path": "content/選修物理I/選物I-2/assets/選物I-2-一維相對速度.svg",
+          "entrypoint": "fig_relative_velocity",
+          "sha256": "5fdf5c2dacef0dba343655deb0ddc59b7d223c737100c8fc2ca9d83d92008e90"
+        },
+        {
+          "path": "content/選修物理I/選物I-2/assets/選物I-2-圖像讀法.svg",
+          "entrypoint": "fig_motion_graph_reading",
+          "sha256": "5c2d8d8d9372d1cf509d1d26bdf02ae33d039a5ca0ab7e201b0514c3010a2fb4"
+        },
+        {
+          "path": "content/選修物理I/選物I-2/assets/選物I-2-等時間點與運動圖.svg",
+          "entrypoint": "fig_equal_time_graphs",
+          "sha256": "2c3ce8ad18ccfb24bbfde8235ea76982567c6ff4088174e35f4de5c18717f426"
+        },
+        {
+          "path": "content/選修物理I/選物I-2/assets/選物I-2-自由落體正方向.svg",
+          "entrypoint": "fig_freefall_sign",
+          "sha256": "c43628ce5515764e5b6a1b733deaacbec56e204a93df65ee6d177b2a6a00d35d"
+        },
+        {
+          "path": "content/選修物理I/選物I-2/assets/選物I-2-斜面實驗資料.svg",
+          "entrypoint": "fig_incline_experiment_data",
+          "sha256": "e5b0c29a7603934fdc17635b1a837259a6499c3cb9543c485e372762e30dfb71"
+        },
+        {
+          "path": "content/選修物理I/選物I-2/assets/選物I-2-自由落體實驗.svg",
+          "entrypoint": "fig_freefall_experiment_data",
+          "sha256": "5ae0540419e500b0a86baff46d64eeed94c849f57c7f5b8f4d9e856f5b414a14"
+        },
+        {
+          "path": "content/選修物理I/選物I-2/assets/選物I-2-章末列式圖.svg",
+          "entrypoint": "fig_linear_motion_solution_panels",
+          "sha256": "f36d737cfa892935ba090c10304f994b9da9178519be0f1102e3d5fc8a2c77b1"
+        },
+        {
+          "path": "content/選修物理I/選物I-3/assets/選物I-3-向量分解與正負.svg",
+          "entrypoint": "fig_vector_components",
+          "sha256": "c8789b598414c221f0cdc7ef335abcb824ba46c8c6a8cd8d29393be2dbcdf5e7"
+        },
+        {
+          "path": "content/選修物理I/選物I-3/assets/選物I-3-向量作圖.svg",
+          "entrypoint": "fig_vector_construction",
+          "sha256": "5b2c29b0580452c982cc0864ed6fad4da3157bfb0e324b5fe587455168184d1c"
+        },
+        {
+          "path": "content/選修物理I/選物I-3/assets/選物I-3-切向與法向加速度.svg",
+          "entrypoint": "fig_tangent_normal_acceleration",
+          "sha256": "1d70e6e2cb09d669d6829514449fdfd5cb0b0217f04ba5ce82ade222e8c01cf4"
+        },
+        {
+          "path": "content/選修物理I/選物I-3/assets/選物I-3-拋體分解.svg",
+          "entrypoint": "fig_projectile_decomposition",
+          "sha256": "60679e7abe722936ce01ac1f2357af52d219ba1b3337bd64d17addc10bcd470e"
+        },
+        {
+          "path": "content/選修物理I/選物I-3/assets/選物I-3-拋體速度分量.svg",
+          "entrypoint": "fig_projectile_velocity_components",
+          "sha256": "3e5ffa0d7a44be9abaf42dc117d7a54c6d7e17596ff71ecda847f0bb6d7730de"
+        },
+        {
+          "path": "content/選修物理I/選物I-3/assets/選物I-3-章末列式圖.svg",
+          "entrypoint": "fig_projectile_solution_panels",
+          "sha256": "182c67f6f6b2791bccd372e06d35368cd572395dacf3be2af82f69ea37781898"
+        }
+      ]
+    },
+    {
+      "id": "physics-i1-2-solutions",
+      "command": [
+        "python",
+        "_tools/fig_content_選物I-2_solutions.py"
+      ],
+      "inputs": [
+        {
+          "path": "_tools/fig_content_選物I-2_solutions.py",
+          "sha256": "803094d67b702fb0777c99501f5d250ca9dae54190ea8ca0ec22a9e51989402d"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "content/選修物理I/選物I-2/assets/選物I-2-章末解析01-04.svg",
+          "entrypoint": "fig_01_04",
+          "sha256": "7f2fa8bf76879f402c81924f2846e1fcba0006b0aa29454e698b577aba76c91b"
+        },
+        {
+          "path": "content/選修物理I/選物I-2/assets/選物I-2-章末解析05-08.svg",
+          "entrypoint": "fig_05_08",
+          "sha256": "2f0628a3dc8d7b2acba8bd3845e8a31c1f1854e8e4f105245825b2d39e408d9c"
+        },
+        {
+          "path": "content/選修物理I/選物I-2/assets/選物I-2-章末解析09-11.svg",
+          "entrypoint": "fig_09_11",
+          "sha256": "cf9cd32be031ff4f6195b428c611fec6eab655bf721adfb5d2f65f8ffa3c38b1"
+        },
+        {
+          "path": "content/選修物理I/選物I-2/assets/選物I-2-章末解析12-14.svg",
+          "entrypoint": "fig_12_14",
+          "sha256": "0b0814a2644c3f24b8f9c4320f614fcf0429e1b572e516f74e32232570c7c935"
+        },
+        {
+          "path": "content/選修物理I/選物I-2/assets/選物I-2-章末解析15-18.svg",
+          "entrypoint": "fig_15_18",
+          "sha256": "41e8ea733ea13149eb9f95b3a922d97c96ca8bd77ab9f52d9643c4f02d148bde"
+        }
+      ]
+    },
+    {
+      "id": "physics-i1-3-solutions",
+      "command": [
+        "python",
+        "_tools/fig_content_選物I-3_solutions.py"
+      ],
+      "inputs": [
+        {
+          "path": "_tools/fig_content_選物I-3_solutions.py",
+          "sha256": "7a4b4766687ab4a6bfc7821feb4cd7c11b23a13ec1ade208dc801a0040f91922"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "content/選修物理I/選物I-3/assets/選物I-3-章末題解1-3.svg",
+          "entrypoint": "fig_solutions_1_3",
+          "sha256": "18eb9797a5a97d148a14ec9231f804665cb8dffefabad4a3b3cd2c9f50497051"
+        },
+        {
+          "path": "content/選修物理I/選物I-3/assets/選物I-3-章末題解6-8.svg",
+          "entrypoint": "fig_solutions_6_8",
+          "sha256": "287523f0715ab43b191b7c0c0e9f161a2b38e49c07ed347bf731fad077748b9d"
+        },
+        {
+          "path": "content/選修物理I/選物I-3/assets/選物I-3-章末題解9-11.svg",
+          "entrypoint": "fig_solutions_9_11",
+          "sha256": "9b91af846f06ac80ae052a2c137a97e18618c0578d970846e727116297bc0fd1"
+        },
+        {
+          "path": "content/選修物理I/選物I-3/assets/選物I-3-章末題解12-14.svg",
+          "entrypoint": "fig_solutions_12_14",
+          "sha256": "41be7984679c76151988b50015711e98fdad276e5fcd0611def63fdbf4603552"
+        },
+        {
+          "path": "content/選修物理I/選物I-3/assets/選物I-3-章末題解16-18.svg",
+          "entrypoint": "fig_solutions_16_18",
+          "sha256": "e23870a808f4fe0bba3ac6d521a721446275eea396eb8e4b5238562773a1cb26"
+        }
+      ]
+    },
+    {
+      "id": "physics-i1-4",
+      "command": [
+        "python",
+        "_tools/fig_content_選物I-4.py"
+      ],
+      "inputs": [
+        {
+          "path": "_tools/fig_content_選物I-4.py",
+          "sha256": "119a1d771914290a66a986f99e8535564f46446ea30f11b8f89d179bc0c08ba6"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "content/選修物理I/選物I-4/assets/選物I-4-受力圖.svg",
+          "entrypoint": "fig_free_body_diagram",
+          "sha256": "eea617de32ae2cc47bc3088402d669875954bf9ed7d6db716631af7ac84831df"
+        },
+        {
+          "path": "content/選修物理I/選物I-4/assets/選物I-4-向心加速度推導.svg",
+          "entrypoint": "fig_centripetal_geometry",
+          "sha256": "31439ea503ee4a607692a221336a5864e4b72024a642b0b226afa6a4cba7dd75"
+        },
+        {
+          "path": "content/選修物理I/選物I-4/assets/選物I-4-單擺小角度.svg",
+          "entrypoint": "fig_pendulum_small_angle",
+          "sha256": "c48060d02dae3dab3b826d5d980d96969a0fb0efc7fc82b94236b85d16c5fb4d"
+        },
+        {
+          "path": "content/選修物理I/選物I-4/assets/選物I-4-圓周受力模型.svg",
+          "entrypoint": "fig_circular_force_models",
+          "sha256": "457528c39e2ecd9180c37bdda97885f7f20c45cdfb902509caddce5bfde7de28"
+        },
+        {
+          "path": "content/選修物理I/選物I-4/assets/選物I-4-圓周與簡諧.svg",
+          "entrypoint": "fig_circular_projection",
+          "sha256": "df3307ad78b66edbcbaea8b512fd4a60be11d8d5a8dc2cb06cd6f9fa08209063"
+        },
+        {
+          "path": "content/選修物理I/選物I-4/assets/選物I-4-斜面重力分解.svg",
+          "entrypoint": "fig_incline_components",
+          "sha256": "8eff6f1cafc615b362f35f3de58d09102acc2e29c1808d81a0ca906af986108b"
+        },
+        {
+          "path": "content/選修物理I/選物I-4/assets/選物I-4-牛頓第二定律實驗.svg",
+          "entrypoint": "fig_newton_second_experiment",
+          "sha256": "6a8f35535451adbd378fbe21d43d73969b778bbd0e0be7ce518cbfb7f591dd62"
+        },
+        {
+          "path": "content/選修物理I/選物I-4/assets/選物I-4-第三定律力對.svg",
+          "entrypoint": "fig_third_law_pair",
+          "sha256": "2ba1cd68e5d187359c6204fa591762b843a5cf4312663d02babf6776941e26f0"
+        },
+        {
+          "path": "content/選修物理I/選物I-4/assets/選物I-4-簡諧狀態與相位.svg",
+          "entrypoint": "fig_shm_phase_states",
+          "sha256": "a03a46ac7f34c13d4fdcb7bc48ff01e4e72c83d1858f4f52addac32f4bae25b1"
+        },
+        {
+          "path": "content/選修物理I/選物I-4/assets/選物I-4-虎克定律斜率.svg",
+          "entrypoint": "fig_hooke_calibration",
+          "sha256": "ba1a552c40e8a747fd007619b705f3fe26425830db88d560cc5009d24ea2bb1e"
+        },
+        {
+          "path": "content/選修物理I/選物I-4/assets/選物I-4-視重與連接體.svg",
+          "entrypoint": "fig_apparent_weight_connected",
+          "sha256": "9c5923c7ac44cdc1466398dc94e9ca6a04e5ae93a9970fce39ef8c49b8dc9d49"
+        },
+        {
+          "path": "content/選修物理I/選物I-4/assets/選物I-4-章末受力解題圖.svg",
+          "entrypoint": "fig_answer_forces",
+          "sha256": "32aa4797cb15ad3b2a729b337099787a6d1f7ff6095dced1c9d944922894f0e0"
+        },
+        {
+          "path": "content/選修物理I/選物I-4/assets/選物I-4-章末週期解題圖.svg",
+          "entrypoint": "fig_answer_periodic",
+          "sha256": "069e43a77c66433d42da96d4ecf50d20617029efe840e2c32e4ef74b069d79b1"
+        },
+        {
+          "path": "content/選修物理I/選物I-4/assets/選物I-4-整合題解題圖.svg",
+          "entrypoint": "fig_answer_integrated",
+          "sha256": "3f007a124388bf7c1c48171c3fd81d0878e7c688a9dc6ecf69e3e79bdd47183a"
+        }
+      ]
+    },
+    {
+      "id": "physics-i1-5",
+      "command": [
+        "python",
+        "_tools/fig_content_選物I-5.py"
+      ],
+      "inputs": [
+        {
+          "path": "_tools/fig_content_選物I-5.py",
+          "sha256": "5e016d9de2f4505f75d8e1f2208d8c369463de63f330bc52590329931e9ba40b"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "content/選修物理I/選物I-5/assets/選物I-5-克卜勒第三定律比較.svg",
+          "entrypoint": "fig_kepler_third_comparison",
+          "sha256": "723808d1b56148c05e575c67c5fce61a3dd15ba0cf144d5ce9922b00e356283e"
+        },
+        {
+          "path": "content/選修物理I/選物I-5/assets/選物I-5-克卜勒資料線性化.svg",
+          "entrypoint": "fig_kepler_data_linearization",
+          "sha256": "d7ac45b1c69e6c5c1daef460936eb184f7a39ce6b347776229416a1e7945350f"
+        },
+        {
+          "path": "content/選修物理I/選物I-5/assets/選物I-5-反平方縮放.svg",
+          "entrypoint": "fig_inverse_square_scaling",
+          "sha256": "6b773bc185165f911f3b9ae6760b8222bca3846f1e6e7bcd1e28cf5ba80bd89d"
+        },
+        {
+          "path": "content/選修物理I/選物I-5/assets/選物I-5-引力軌道鏈.svg",
+          "entrypoint": "fig_gravity_orbit_chain",
+          "sha256": "090d5ab0ea54cc6751d881ce00c63e7d159328ecb1974754c28d217a1da6c8c9"
+        },
+        {
+          "path": "content/選修物理I/選物I-5/assets/選物I-5-橢圓與等面積.svg",
+          "entrypoint": "fig_kepler_ellipse_equal_area",
+          "sha256": "61e92133c40e503133241cce727b210aeadb089df2eeaf530bcbc56a3e99f7d1"
+        },
+        {
+          "path": "content/選修物理I/選物I-5/assets/選物I-5-重力場疊加與零場.svg",
+          "entrypoint": "fig_gravity_superposition_zero",
+          "sha256": "705bc69945b9699b82e72c496128b8061c6a4480c6412ecc4942b7ed8deaf5bc"
+        },
+        {
+          "path": "content/選修物理I/選物I-5/assets/選物I-5-高度與中心距離.svg",
+          "entrypoint": "fig_center_distance",
+          "sha256": "db498e7e9d6425550a00290a71181839b70f8f55a870dda525511eb4fb05791b"
+        },
+        {
+          "path": "content/選修物理I/選物I-5/assets/選物I-5-解題-高度與軌道.svg",
+          "entrypoint": "fig_solution_height_orbits",
+          "sha256": "ceef4e3500d9c9f897eba2f844a81e99f6c5cdb8a391184809485c60b0202150"
+        },
+        {
+          "path": "content/選修物理I/選物I-5/assets/選物I-5-解題-基本比例.svg",
+          "entrypoint": "fig_solution_scaling_basics",
+          "sha256": "ac3ef26624a37b62bb78ede1e15156cd2700bbb77582816f830c7348a06362e0"
+        },
+        {
+          "path": "content/選修物理I/選物I-5/assets/選物I-5-解題-概念與疊加.svg",
+          "entrypoint": "fig_solution_concepts_superposition",
+          "sha256": "b1c6881cd1a87c1a91805a16f071bf737bb4e5c5fc4a2b81445ba4fe6d444aa5"
+        },
+        {
+          "path": "content/選修物理I/選物I-5/assets/選物I-5-解題-源與試驗質量.svg",
+          "entrypoint": "fig_solution_source_test_mass",
+          "sha256": "227a298ce0af28d8a51a9797dbd8c8a3cedc8437672b8c3903e94168caae47f7"
+        },
+        {
+          "path": "content/選修物理I/選物I-5/assets/選物I-5-解題-克卜勒整合.svg",
+          "entrypoint": "fig_solution_kepler_integration",
+          "sha256": "52255b5a3d682dd490341f9317bd328284968121f8f5ec3bc9b04b224d45804d"
+        }
+      ]
+    }
+  ]
+}

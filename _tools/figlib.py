@@ -2,14 +2,22 @@
 figlib — 全庫共用繪圖樣式與工具。
 所有章節的繪圖腳本都 import 這支，確保風格一致。
 
-輸出：SVG（向量、Obsidian 原生支援、放大不糊），文字轉為路徑（svg.fonttype='path'）
+LEGACY 注意：save_to() 的預設仍是舊 Obsidian `sources/` + companion PDF，
+只為既有腳本相容而保留。`content/` 公開新章必須依 content/AUTHORING.md
+明確指定 output_subdir="assets", write_pdf=False；不可依賴預設值。
+
+輸出：SVG（向量、放大不糊），文字轉為路徑（svg.fonttype='path'）
 故任何裝置都能正確顯示中文，不依賴觀看端字型。
 
 用法：
     import figlib as F
     fig, ax = F.canvas(6, 4)          # 一般作圖
     ax.plot(...)
-    F.save(fig, __file__, "必物-2-運動圖形")   # 存到對應章節的 sources/
+    # 舊樹維護：預設 sources/ + PDF
+    F.save_to(fig, chapter_dir, "必物-2-運動圖形")
+
+    # content/ 公開新章：必須明示 assets/ + SVG-only
+    F.save_to(fig, chapter_dir, "章碼-圖名", output_subdir="assets", write_pdf=False)
 """
 
 import os, sys, warnings
@@ -30,6 +38,7 @@ from matplotlib.patches import (
 
 # ---- 中文字型 ----
 _FONT_CANDIDATES = [
+    os.path.expanduser("~/Library/Fonts/NotoSansCJKtc-Regular.otf"),
     "/System/Library/Fonts/STHeiti Medium.ttc",
     "/System/Library/Fonts/Hiragino Sans GB.ttc",
     "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
@@ -63,6 +72,7 @@ plt.rcParams.update(
         "mathtext.fontset": "cm",
         "axes.unicode_minus": False,
         "svg.fonttype": "path",  # 文字→向量路徑，跨裝置可靠
+        "svg.hashsalt": "HighSchooContent-v1",  # 固定 SVG element id，減少無意義 hash churn
         "figure.dpi": 120,
         "savefig.dpi": 120,
         "savefig.bbox": "tight",
@@ -150,14 +160,56 @@ def save(fig, script_file, name):
     raise RuntimeError("請改用 save_to(fig, chapter_dir, name)")
 
 
-def save_to(fig, chapter_dir, name):
-    out = os.path.join(chapter_dir, "sources")
+def save_to(fig, chapter_dir, name, *, output_subdir="sources", write_pdf=True):
+    """輸出章節圖。
+
+    舊教材腳本預設維持 ``sources/`` 與 SVG/PDF 雙輸出；新的 HTML/PDF
+    產線可指定 ``output_subdir="assets"``、``write_pdf=False``，讓公開
+    Markdown 只攜帶可內嵌的 SVG。
+    """
+    if (
+        not isinstance(output_subdir, str)
+        or not output_subdir
+        or output_subdir in (".", "..")
+        or os.path.basename(output_subdir) != output_subdir
+    ):
+        raise ValueError("output_subdir 必須是單一安全目錄名稱")
+    if (
+        not isinstance(name, str)
+        or not name
+        or name in (".", "..")
+        or os.path.basename(name) != name
+        or "\x00" in name
+    ):
+        raise ValueError("name 必須是單一安全檔名且不含副檔名")
+    if not isinstance(write_pdf, bool):
+        raise TypeError("write_pdf 必須是 bool")
+    out = os.path.join(chapter_dir, output_subdir)
+    if os.path.lexists(out) and os.path.islink(out):
+        raise RuntimeError("拒絕寫入 symlink 圖片目錄")
     os.makedirs(out, exist_ok=True)
+    if os.path.dirname(os.path.realpath(out)) != os.path.realpath(chapter_dir):
+        raise RuntimeError("圖片目錄必須是章節目錄的直接子目錄")
     path = os.path.join(out, name + ".svg")
-    fig.savefig(path)  # 給 Obsidian
-    fig.savefig(os.path.join(out, name + ".pdf"))  # 給 LaTeX 學生講義
+    if os.path.lexists(path) and os.path.islink(path):
+        raise RuntimeError("拒絕覆寫 symlink SVG")
+    fig.savefig(path, metadata={"Date": None})
+    # Matplotlib 的 SVG path 會在許多換行前留下空白；它不影響渲染，
+    # 卻會讓 git diff --check 產生數千筆雜訊。
+    with open(path, encoding="utf-8") as source:
+        svg = source.read()
+    cleaned_svg = "\n".join(line.rstrip() for line in svg.splitlines()) + "\n"
+    with open(path, "w", encoding="utf-8", newline="\n") as target:
+        target.write(cleaned_svg)
+    extra = ""
+    if write_pdf:
+        pdf_path = os.path.join(out, name + ".pdf")
+        if os.path.lexists(pdf_path) and os.path.islink(pdf_path):
+            raise RuntimeError("拒絕覆寫 symlink PDF")
+        fig.savefig(pdf_path)
+        extra = " (+pdf)"
     plt.close(fig)
-    print("wrote", path, "(+pdf)")
+    print("wrote", path + extra)
     return path
 
 
