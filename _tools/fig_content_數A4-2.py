@@ -111,32 +111,92 @@ def _arrow2(ax, start, end, color=F.BLUE, lw=2.3):
 
 
 def fig_plane_normal():
-    A = np.array([2.0, 1.0, 1.0])
-    n = np.array([1.0, 2.0, 2.0])
-    u = np.array([2.0, -1.0, 0.0])
-    v = np.array([2.0, 0.0, -1.0])
-    B = A + 0.75 * v
-    assert np.isclose(n @ (B - A), 0)
-    assert np.isclose(n @ A, 6)
-    vertices = [A - 0.8*u - 0.8*v, A + 0.8*u - 0.8*v,
-                A + 0.8*u + 0.8*v, A - 0.8*u + 0.8*v]
-    fig = plt.figure(figsize=(9.2, 6.6))
-    ax = fig.add_subplot(111, projection="3d")
-    ax.add_collection3d(Poly3DCollection([vertices], facecolors="#e5f0ff",
-                                         edgecolors="#6f98c5", alpha=0.72))
-    label_box = {"facecolor": "white", "edgecolor": "none", "alpha": 0.84, "pad": 0.8}
-    ax.scatter(*A, color=F.INK, s=65, depthshade=False)
-    ax.scatter(*B, color=F.GREEN, s=52, depthshade=False)
-    ax.text(*(A + np.array([0.10, 0.18, 0.18])), "A", fontsize=12, bbox=label_box)
-    ax.text(*(B + np.array([0.10, 0.10, -0.18])), "X", color=F.GREEN, fontsize=12, bbox=label_box)
-    ax.quiver(*A, *(B - A), color=F.GREEN, arrow_length_ratio=0.14, lw=2.5)
-    ax.quiver(*A, *n, color=F.RED, arrow_length_ratio=0.09, lw=2.7)
-    ax.text(*(A + 0.68*n), r"法向量 $\vec n=(a,b,c)$", color=F.RED, fontsize=11, bbox=label_box)
-    ax.text(*(A + 0.52*(B-A) + np.array([0, 0.18, -0.10])), r"$\overrightarrow{AX}$", color=F.GREEN, fontsize=11, bbox=label_box)
-    _right_angle_3d(ax, A, B - A, n, size=0.34)
-    ax.text2D(0.06, 0.78, r"$\vec n\cdot\overrightarrow{AX}=0$", transform=ax.transAxes, fontsize=14)
-    _style_3d(ax, (-1.3, 5.4), elev=24, azim=0, plane_normals=(n,))
-    ax.set_title("平面內位移都垂直法向量，形成點法式", fontsize=15)
+    # 以平面 E 的局部基底作圖；畫面中的 x_E、y_E 不是全域坐標軸。
+    # 讓其中一個面內方向與法向量同在投影面上，直角因此能在圖上精確呈現。
+    origin = np.array([0.85, 1.05])
+    screen_basis = np.array([
+        [1.58, 0.00],  # x_E：平面內水平方向
+        [0.52, 0.56],  # y_E：平面內深度方向
+        [0.00, 1.30],  # n：由平面向上
+    ])
+
+    def project(point):
+        return origin + np.asarray(point, dtype=float) @ screen_basis
+
+    A = np.array([1.55, 1.25, 0.0])
+    X = np.array([3.30, 1.25, 0.0])
+    n = np.array([0.0, 0.0, 2.75])
+    AX = X - A
+    assert np.isclose(n @ AX, 0)
+
+    plane_local = np.array([
+        [0.0, 0.0, 0.0],
+        [4.0, 0.0, 0.0],
+        [4.0, 3.0, 0.0],
+        [0.0, 3.0, 0.0],
+    ])
+    plane_screen = np.array([project(point) for point in plane_local])
+    A_screen = project(A)
+    X_screen = project(X)
+    n_tip = project(A + n)
+
+    fig, ax = plt.subplots(figsize=(9.2, 6.4))
+    ax.add_patch(Polygon(
+        plane_screen,
+        closed=True,
+        facecolor="#e5f0ff",
+        edgecolor="#6f98c5",
+        linewidth=1.8,
+        alpha=0.90,
+        zorder=1,
+    ))
+
+    axis_color = "#64748b"
+    x_axis_end = project([0.88, 0.0, 0.0])
+    y_axis_end = project([0.0, 0.88, 0.0])
+    for end in (x_axis_end, y_axis_end):
+        ax.add_patch(FancyArrowPatch(
+            origin,
+            end,
+            arrowstyle="-|>",
+            mutation_scale=14,
+            linewidth=1.55,
+            color=axis_color,
+            zorder=3,
+        ))
+    ax.text(*(x_axis_end + np.array([0.07, -0.20])), r"$x_E$", color=axis_color, fontsize=11.5)
+    ax.text(*(y_axis_end + np.array([0.07, 0.07])), r"$y_E$", color=axis_color, fontsize=11.5)
+
+    _arrow2(ax, A_screen, X_screen, color=F.GREEN, lw=2.7).set_zorder(5)
+    _arrow2(ax, A_screen, n_tip, color=F.RED, lw=2.9).set_zorder(5)
+    ax.scatter(*A_screen, color=F.INK, s=68, zorder=7)
+    ax.scatter(*X_screen, color=F.GREEN, s=58, zorder=7)
+
+    marker_size = 0.34
+    marker = np.array([
+        A_screen + [marker_size, 0.0],
+        A_screen + [marker_size, marker_size],
+        A_screen + [0.0, marker_size],
+    ])
+    ax.plot(marker[:, 0], marker[:, 1], color=F.INK, lw=1.55, zorder=6)
+
+    label_box = {"facecolor": "white", "edgecolor": "none", "alpha": 0.88, "pad": 0.8}
+    ax.text(*(A_screen + np.array([-0.28, -0.36])), "A", fontsize=12, bbox=label_box, zorder=8)
+    ax.text(*(X_screen + np.array([0.10, -0.34])), "X", color=F.GREEN, fontsize=12, bbox=label_box, zorder=8)
+    ax.text(*(0.5 * (A_screen + X_screen) + np.array([0.0, -0.38])),
+            r"$\overrightarrow{AX}$（平面內位移）", color=F.GREEN, fontsize=11,
+            ha="center", bbox=label_box, zorder=8)
+    ax.text(*(A_screen + np.array([0.18, 2.15])),
+            r"法向量 $\vec n=(a,b,c)$", color=F.RED, fontsize=11,
+            bbox=label_box, zorder=8)
+    ax.text(*(plane_screen[2] + np.array([-0.40, -0.34])), "平面 E", color=F.BLUE,
+            fontsize=11, bbox=label_box, zorder=8)
+
+    ax.set_xlim(0.35, 9.25)
+    ax.set_ylim(0.45, 6.20)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    ax.set_title("平面內位移與法向量垂直", fontsize=15, pad=12)
     fig.tight_layout()
     return _save(fig, "數A4-2-點法式與法向量.svg")
 

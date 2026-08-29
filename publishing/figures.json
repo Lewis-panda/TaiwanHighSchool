@@ -1313,7 +1313,7 @@
       "inputs": [
         {
           "path": "_tools/fig_content_數A4-2.py",
-          "sha256": "50b51108fcbfdd0b57f4bd4a23afacf07ca55b2b379837a6ea6757cabf449126"
+          "sha256": "3a575ad8e97750d867749a019493f61c7b76ff8b4498907619a7b13e27c10684"
         }
       ],
       "outputs": [
@@ -1380,7 +1380,7 @@
         {
           "entrypoint": "fig_plane_normal",
           "path": "content/數學A/數A4-2/assets/數A4-2-點法式與法向量.svg",
-          "sha256": "133126330b2c599eca3f5a8b9b9b31d482924d1e9e6e3e57dcae6e3e68d283ed"
+          "sha256": "c2646def24313a6c517f7131e8b5b003be46c78a89526cf8da49fd7b2bde9c01"
         }
       ]
     },
