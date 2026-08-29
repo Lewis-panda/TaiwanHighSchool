@@ -185,6 +185,18 @@ li {
   margin: 1.2mm 0;
 }
 
+.compact-list ul,
+.compact-list ol {
+  margin-top: 1mm;
+  margin-bottom: 1mm;
+}
+
+.compact-list li {
+  margin: 0.45mm 0;
+  font-size: 9.5pt;
+  line-height: 1.42;
+}
+
 li::marker {
   color: var(--blue);
   font-weight: 700;
@@ -475,6 +487,10 @@ math {
 
 .allow-split table {
   break-inside: auto;
+}
+
+.allow-split {
+  break-inside: auto !important;
 }
 
 .allow-split thead {

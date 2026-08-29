@@ -6,7 +6,7 @@ __pycache__/
 # macOS
 .DS_Store
 
-# 本機環境與憑證
+# 本機環境與私密金鑰
 .env
 .env.*
 *.pem
@@ -18,9 +18,26 @@ __pycache__/
 # 本機教材逐檔比對紀錄（含參考教材路徑，不公開）
 content/**/編輯判定.md
 
+# 本機審稿與舊版知識庫（公開倉庫只保留學生講義與可重建來源）
+content/**/教師備課指南.md
+/AGENTS.md
+/research/
+/tmp/
+/_範本/
+/_課綱/
+/數學/
+/物理/
+/講義/
+/index.html
+/規格.md
+/.nojekyll
+/tools/legacy-figure-guard.test.mjs
+
 # HTML -> PDF 建置依賴與產物
 node_modules/
 tmp/pdfs/
+tmp/backups/
+tmp/source-text/
 tmp/review/
 tmp/publication-build/
 dist/

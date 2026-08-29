@@ -40,6 +40,7 @@ export function privateTrackedPathReason(path) {
   const segments = path.split("/");
   if (segments.includes("高中教材")) return "本機高中教材";
   if (path.startsWith("content/") && path.endsWith("/編輯判定.md")) return "本機編輯判定";
+  if (path.startsWith("content/") && path.endsWith("/教師備課指南.md")) return "本機教師備課指南";
   return undefined;
 }
 
@@ -51,6 +52,10 @@ const ignoreProbes = Object.freeze([
   Object.freeze({
     label: "content/**/編輯判定.md",
     path: "content/__privacy-course__/__privacy-chapter__/編輯判定.md",
+  }),
+  Object.freeze({
+    label: "content/**/教師備課指南.md",
+    path: "content/__privacy-course__/__privacy-chapter__/教師備課指南.md",
   }),
 ]);
 

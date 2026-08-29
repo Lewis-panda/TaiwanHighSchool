@@ -1,4 +1,14 @@
 const courseSchemas = Object.freeze({
+  必修數學: Object.freeze({
+    chapterPattern: /^數([12])-([1-9]\d*)$/u,
+    subject: "數學",
+    course(match) {
+      return `普通高中數學 第${match[1] === "1" ? "一" : "二"}冊`;
+    },
+    idStem(match) {
+      return `math-required-${match[1]}-${match[2]}`;
+    },
+  }),
   數學A: Object.freeze({
     chapterPattern: /^數A([34])-([1-9]\d*)$/u,
     subject: "數學",
@@ -7,6 +17,16 @@ const courseSchemas = Object.freeze({
     },
     idStem(match) {
       return `math-a${match[1]}-${match[2]}`;
+    },
+  }),
+  數學B: Object.freeze({
+    chapterPattern: /^數B([34])-([1-9]\d*)$/u,
+    subject: "數學",
+    course(match) {
+      return match[1] === "3" ? "普通高中數學B 第三冊" : "普通高中數學B 第四冊";
+    },
+    idStem(match) {
+      return `math-b${match[1]}-${match[2]}`;
     },
   }),
   選修物理I: Object.freeze({
@@ -29,9 +49,69 @@ const courseSchemas = Object.freeze({
       return `physics-required-${match[1]}`;
     },
   }),
+  必修化學: Object.freeze({
+    chapterPattern: /^必化-([1-9]\d*)$/u,
+    subject: "化學",
+    course() {
+      return "普通高中必修化學";
+    },
+    idStem(match) {
+      return `chemistry-required-${match[1]}`;
+    },
+  }),
+  選修化學I: Object.freeze({
+    chapterPattern: /^選化I-([1-9]\d*)$/u,
+    subject: "化學",
+    course() {
+      return "普通高中選修化學 I";
+    },
+    idStem(match) {
+      return `chemistry-i1-${match[1]}`;
+    },
+  }),
+  選修化學II: Object.freeze({
+    chapterPattern: /^選化II-([1-9]\d*)$/u,
+    subject: "化學",
+    course() {
+      return "普通高中選修化學 II";
+    },
+    idStem(match) {
+      return `chemistry-i2-${match[1]}`;
+    },
+  }),
+  選修化學III: Object.freeze({
+    chapterPattern: /^選化III-([1-9]\d*)$/u,
+    subject: "化學",
+    course() {
+      return "普通高中選修化學 III";
+    },
+    idStem(match) {
+      return `chemistry-i3-${match[1]}`;
+    },
+  }),
+  選修化學IV: Object.freeze({
+    chapterPattern: /^選化IV-([1-9]\d*)$/u,
+    subject: "化學",
+    course() {
+      return "普通高中選修化學 IV";
+    },
+    idStem(match) {
+      return `chemistry-i4-${match[1]}`;
+    },
+  }),
+  選修化學V: Object.freeze({
+    chapterPattern: /^選化V-([1-9]\d*)$/u,
+    subject: "化學",
+    course() {
+      return "普通高中選修化學 V";
+    },
+    idStem(match) {
+      return `chemistry-i5-${match[1]}`;
+    },
+  }),
 });
 
-const registeredChapterCodeAtStart = /^(?:數A[34]-\d+|選物I-\d+|必物-\d+)/u;
+const registeredChapterCodeAtStart = /^(?:數[12]-\d+|數A[34]-\d+|數B[34]-\d+|選物I-\d+|必物-\d+|必化-\d+|選化(?:III|II|IV|I|V)-\d+)/u;
 
 function reject(message) {
   throw new Error(message);

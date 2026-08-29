@@ -86,6 +86,9 @@ export function assertNoPrivateText(value, label) {
 }
 
 export function assertSafeSourceText(value, label) {
+  if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/u.test(value)) {
+    fail(`${label} 含不允許的控制字元`);
+  }
   const decoded = assertNoPrivateText(value, label);
   const forbiddenTokens = ["obsidian:", "javascript:", "$body$", "$if("];
   for (const token of forbiddenTokens) {

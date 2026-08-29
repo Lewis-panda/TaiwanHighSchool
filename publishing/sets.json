@@ -1,11 +1,144 @@
 {
   "schemaVersion": 1,
-  "defaultSet": "review-2026-08-24",
+  "defaultSet": "review-2026-08-29-complete",
   "sets": {
-    "review-2026-08-24": {
+    "review-2026-08-29-complete": {
       "status": "review",
-      "description": "高二數學 3A 全冊與選修物理 I 全冊學生講義送審；共 8 冊，未經確認不得視為正式發布版。",
+      "description": "高一、高二數學、物理與化學學生自學講義完整送審集；共 48 冊，未經使用者逐冊確認，不標示為 published。",
       "documents": [
+        {
+          "id": "math-required-1-1-student",
+          "audience": "student",
+          "source": "content/必修數學/數1-1/學生講義.md",
+          "slug": "數1-1-數與式-學生講義",
+          "assets": [
+            "content/必修數學/數1-1/assets/數1-1-乘法公式面積.svg",
+            "content/必修數學/數1-1/assets/數1-1-分點與距離.svg",
+            "content/必修數學/數1-1/assets/數1-1-實數與區間.svg",
+            "content/必修數學/數1-1/assets/數1-1-算幾最佳化.svg",
+            "content/必修數學/數1-1/assets/數1-1-絕對值距離.svg"
+          ]
+        },
+        {
+          "id": "math-required-1-2-student",
+          "audience": "student",
+          "source": "content/必修數學/數1-2/學生講義.md",
+          "slug": "數1-2-指數與常用對數-學生講義",
+          "assets": [
+            "content/必修數學/數1-2/assets/數1-2-倍率模型.svg",
+            "content/必修數學/數1-2/assets/數1-2-實數指數逼近.svg",
+            "content/必修數學/數1-2/assets/數1-2-常用對數尺度.svg",
+            "content/必修數學/數1-2/assets/數1-2-整數指數延伸.svg",
+            "content/必修數學/數1-2/assets/數1-2-科學記號.svg"
+          ]
+        },
+        {
+          "id": "math-required-1-3-student",
+          "audience": "student",
+          "source": "content/必修數學/數1-3/學生講義.md",
+          "slug": "數1-3-多項式函數-學生講義",
+          "assets": [
+            "content/必修數學/數1-3/assets/數1-3-三次平移與對稱中心.svg",
+            "content/必修數學/數1-3/assets/數1-3-三次標準形.svg",
+            "content/必修數學/數1-3/assets/數1-3-二次基本圖形.svg",
+            "content/必修數學/數1-3/assets/數1-3-判別式三情形.svg",
+            "content/必修數學/數1-3/assets/數1-3-坐標對稱.svg",
+            "content/必修數學/數1-3/assets/數1-3-局部一次近似.svg",
+            "content/必修數學/數1-3/assets/數1-3-常數與一次函數.svg",
+            "content/必修數學/數1-3/assets/數1-3-綜合除法.svg",
+            "content/必修數學/數1-3/assets/數1-3-配方與頂點.svg",
+            "content/必修數學/數1-3/assets/數1-3-重根與變號.svg",
+            "content/必修數學/數1-3/assets/數1-3-閉區間極值.svg"
+          ]
+        },
+        {
+          "id": "math-required-1-4-student",
+          "audience": "student",
+          "source": "content/必修數學/數1-4/學生講義.md",
+          "slug": "數1-4-直線與圓-學生講義",
+          "assets": [
+            "content/必修數學/數1-4/assets/數1-4-半平面.svg",
+            "content/必修數學/數1-4/assets/數1-4-圓方程式.svg",
+            "content/必修數學/數1-4/assets/數1-4-圓的切線.svg",
+            "content/必修數學/數1-4/assets/數1-4-圓與直線位置.svg",
+            "content/必修數學/數1-4/assets/數1-4-平行與垂直.svg",
+            "content/必修數學/數1-4/assets/數1-4-斜率三角形.svg",
+            "content/必修數學/數1-4/assets/數1-4-聯立方程幾何.svg",
+            "content/必修數學/數1-4/assets/數1-4-點線距離.svg"
+          ]
+        },
+        {
+          "id": "math-required-2-1-student",
+          "audience": "student",
+          "source": "content/必修數學/數2-1/學生講義.md",
+          "slug": "數2-1-數列與級數-學生講義",
+          "assets": [
+            "content/必修數學/數2-1/assets/數2-1-單利複利比較.svg",
+            "content/必修數學/數2-1/assets/數2-1-定期存款時間軸.svg",
+            "content/必修數學/數2-1/assets/數2-1-拆項求和.svg",
+            "content/必修數學/數2-1/assets/數2-1-數列是離散對應.svg",
+            "content/必修數學/數2-1/assets/數2-1-歸納法鏈條.svg",
+            "content/必修數學/數2-1/assets/數2-1-等差位移.svg",
+            "content/必修數學/數2-1/assets/數2-1-等差級數配對.svg",
+            "content/必修數學/數2-1/assets/數2-1-等比倍率.svg",
+            "content/必修數學/數2-1/assets/數2-1-等比級數錯位相減.svg",
+            "content/必修數學/數2-1/assets/數2-1-遞迴狀態.svg",
+            "content/必修數學/數2-1/assets/數2-1-部分和成長.svg"
+          ]
+        },
+        {
+          "id": "math-required-2-2-student",
+          "audience": "student",
+          "source": "content/必修數學/數2-2/學生講義.md",
+          "slug": "數2-2-數據分析-學生講義",
+          "assets": [
+            "content/必修數學/數2-2/assets/數2-2-同平均不同分散.svg",
+            "content/必修數學/數2-2/assets/數2-2-平均數平衡.svg",
+            "content/必修數學/數2-2/assets/數2-2-散布圖型態.svg",
+            "content/必修數學/數2-2/assets/數2-2-最小平方法.svg",
+            "content/必修數學/數2-2/assets/數2-2-標準化比較.svg",
+            "content/必修數學/數2-2/assets/數2-2-百分位數與盒狀圖.svg",
+            "content/必修數學/數2-2/assets/數2-2-資料伸縮平移.svg",
+            "content/必修數學/數2-2/assets/數2-2-離群值影響.svg"
+          ]
+        },
+        {
+          "id": "math-required-2-3-student",
+          "audience": "student",
+          "source": "content/必修數學/數2-3/學生講義.md",
+          "slug": "數2-3-排列組合與機率-學生講義",
+          "assets": [
+            "content/必修數學/數2-3/assets/數2-3-事件區域.svg",
+            "content/必修數學/數2-3/assets/數2-3-二項式選因子.svg",
+            "content/必修數學/數2-3/assets/數2-3-加法乘法樹.svg",
+            "content/必修數學/數2-3/assets/數2-3-取捨原理.svg",
+            "content/必修數學/數2-3/assets/數2-3-巴斯卡三角形.svg",
+            "content/必修數學/數2-3/assets/數2-3-排列位置與空隙.svg",
+            "content/必修數學/數2-3/assets/數2-3-排列與組合比較.svg",
+            "content/必修數學/數2-3/assets/數2-3-期望值分布.svg",
+            "content/必修數學/數2-3/assets/數2-3-相同物最短路.svg",
+            "content/必修數學/數2-3/assets/數2-3-邏輯與集合運算.svg",
+            "content/必修數學/數2-3/assets/數2-3-骰子樣本空間.svg"
+          ]
+        },
+        {
+          "id": "math-required-2-4-student",
+          "audience": "student",
+          "source": "content/必修數學/數2-4/學生講義.md",
+          "slug": "數2-4-三角比-學生講義",
+          "assets": [
+            "content/必修數學/數2-4/assets/數2-4-SSA解的個數.svg",
+            "content/必修數學/數2-4/assets/數2-4-基線三角測量.svg",
+            "content/必修數學/數2-4/assets/數2-4-平方關係與象限.svg",
+            "content/必修數學/數2-4/assets/數2-4-廣義角與單位圓.svg",
+            "content/必修數學/數2-4/assets/數2-4-斜角與極坐標.svg",
+            "content/必修數學/數2-4/assets/數2-4-正射影與面積.svg",
+            "content/必修數學/數2-4/assets/數2-4-正弦定理推導.svg",
+            "content/必修數學/數2-4/assets/數2-4-特殊角三角形.svg",
+            "content/必修數學/數2-4/assets/數2-4-相似三角形邊比.svg",
+            "content/必修數學/數2-4/assets/數2-4-餘弦定理坐標推導.svg"
+          ]
+        },
         {
           "id": "math-a3-1-student",
           "audience": "student",
@@ -44,6 +177,321 @@
           ]
         },
         {
+          "id": "math-a4-1-student",
+          "audience": "student",
+          "source": "content/數學A/數A4-1/學生講義.md",
+          "slug": "數A4-1-空間向量-學生講義",
+          "assets": [
+            "content/數學A/數A4-1/assets/數A4-1-三垂線定理.svg",
+            "content/數學A/數A4-1/assets/數A4-1-三重積與體積.svg",
+            "content/數學A/數A4-1/assets/數A4-1-三階行列式.svg",
+            "content/數學A/數A4-1/assets/數A4-1-內積與夾角.svg",
+            "content/數學A/數A4-1/assets/數A4-1-力矩模型.svg",
+            "content/數學A/數A4-1/assets/數A4-1-向量坐標與分點.svg",
+            "content/數學A/數A4-1/assets/數A4-1-外積方向與面積.svg",
+            "content/數學A/數A4-1/assets/數A4-1-柯西不等式幾何.svg",
+            "content/數學A/數A4-1/assets/數A4-1-正射影分解.svg",
+            "content/數學A/數A4-1/assets/數A4-1-直線與平面關係.svg",
+            "content/數學A/數A4-1/assets/數A4-1-空間坐標與投影.svg"
+          ]
+        },
+        {
+          "id": "math-a4-2-student",
+          "audience": "student",
+          "source": "content/數學A/數A4-2/學生講義.md",
+          "slug": "數A4-2-空間中的平面與直線-學生講義",
+          "assets": [
+            "content/數學A/數A4-2/assets/數A4-2-兩平面夾角.svg",
+            "content/數學A/數A4-2/assets/數A4-2-兩直線判別.svg",
+            "content/數學A/數A4-2/assets/數A4-2-兩面交線.svg",
+            "content/數學A/數A4-2/assets/數A4-2-平行平面距離.svg",
+            "content/數學A/數A4-2/assets/數A4-2-平面投影與對稱.svg",
+            "content/數學A/數A4-2/assets/數A4-2-截距式.svg",
+            "content/數學A/數A4-2/assets/數A4-2-歪斜線距離.svg",
+            "content/數學A/數A4-2/assets/數A4-2-直線參數式.svg",
+            "content/數學A/數A4-2/assets/數A4-2-直線與平面夾角.svg",
+            "content/數學A/數A4-2/assets/數A4-2-直線與平面關係.svg",
+            "content/數學A/數A4-2/assets/數A4-2-點到平面距離.svg",
+            "content/數學A/數A4-2/assets/數A4-2-點到直線距離.svg",
+            "content/數學A/數A4-2/assets/數A4-2-點法式與法向量.svg"
+          ]
+        },
+        {
+          "id": "math-a4-3-student",
+          "audience": "student",
+          "source": "content/數學A/數A4-3/學生講義.md",
+          "slug": "數A4-3-條件機率與貝氏定理-學生講義",
+          "assets": [
+            "content/數學A/數A4-3/assets/數A4-3-互斥與獨立.svg",
+            "content/數學A/數A4-3/assets/數A4-3-全機率分割.svg",
+            "content/數學A/數A4-3/assets/數A4-3-客觀機率收斂.svg",
+            "content/數學A/數A4-3/assets/數A4-3-序列乘法樹.svg",
+            "content/數學A/數A4-3/assets/數A4-3-快篩自然頻數.svg",
+            "content/數學A/數A4-3/assets/數A4-3-條件樣本空間.svg",
+            "content/數學A/數A4-3/assets/數A4-3-貝氏面積更新.svg",
+            "content/數學A/數A4-3/assets/數A4-3-雙向條件表.svg"
+          ]
+        },
+        {
+          "id": "math-a4-4-student",
+          "audience": "student",
+          "source": "content/數學A/數A4-4/學生講義.md",
+          "slug": "數A4-4-矩陣-學生講義",
+          "assets": [
+            "content/數學A/數A4-4/assets/數A4-4-列乘行.svg",
+            "content/數學A/數A4-4/assets/數A4-4-列行與元素.svg",
+            "content/數學A/數A4-4/assets/數A4-4-反方陣復原.svg",
+            "content/數學A/數A4-4/assets/數A4-4-基底決定變換.svg",
+            "content/數學A/數A4-4/assets/數A4-4-插值多項式.svg",
+            "content/數學A/數A4-4/assets/數A4-4-特殊變換與合成.svg",
+            "content/數學A/數A4-4/assets/數A4-4-行列式與面積.svg",
+            "content/數學A/數A4-4/assets/數A4-4-解型分類.svg",
+            "content/數學A/數A4-4/assets/數A4-4-資料表乘法.svg",
+            "content/數學A/數A4-4/assets/數A4-4-轉移狀態圖.svg",
+            "content/數學A/數A4-4/assets/數A4-4-轉移長期趨勢.svg",
+            "content/數學A/數A4-4/assets/數A4-4-高斯消去流程.svg"
+          ]
+        },
+        {
+          "id": "math-b3-1-student",
+          "audience": "student",
+          "source": "content/數學B/數B3-1/學生講義.md",
+          "slug": "數B3-1-正弦函數與週期性現象-學生講義",
+          "assets": [
+            "content/數學B/數B3-1/assets/數B3-1-一弧度定義.svg",
+            "content/數學B/數B3-1/assets/數B3-1-單位圓與正弦.svg",
+            "content/數學B/數B3-1/assets/數B3-1-度與弧度對照.svg",
+            "content/數學B/數B3-1/assets/數B3-1-弧長與扇形面積.svg",
+            "content/數學B/數B3-1/assets/數B3-1-摩天輪模型.svg",
+            "content/數學B/數B3-1/assets/數B3-1-時鐘掃掠.svg",
+            "content/數學B/數B3-1/assets/數B3-1-正弦平移伸縮.svg",
+            "content/數學B/數B3-1/assets/數B3-1-正弦方程與不等式.svg",
+            "content/數學B/數B3-1/assets/數B3-1-正弦關鍵點.svg",
+            "content/數學B/數B3-1/assets/數B3-1-聲波週期與頻率.svg",
+            "content/數學B/數B3-1/assets/數B3-1-週期模型參數.svg",
+            "content/數學B/數B3-1/assets/數B3-1-離散週期.svg"
+          ]
+        },
+        {
+          "id": "math-b3-2-student",
+          "audience": "student",
+          "source": "content/數學B/數B3-2/學生講義.md",
+          "slug": "數B3-2-按比例成長模型-學生講義",
+          "assets": [
+            "content/數學B/數B3-2/assets/數B3-2-單利與複利.svg",
+            "content/數學B/數B3-2/assets/數B3-2-固定差與固定倍率.svg",
+            "content/數學B/數B3-2/assets/數B3-2-對數尺度.svg",
+            "content/數學B/數B3-2/assets/數B3-2-對數律刻度.svg",
+            "content/數學B/數B3-2/assets/數B3-2-對數成長與衰退.svg",
+            "content/數學B/數B3-2/assets/數B3-2-對數方程與定義域.svg",
+            "content/數學B/數B3-2/assets/數B3-2-成長衰退資料.svg",
+            "content/數學B/數B3-2/assets/數B3-2-指數對數互為反函數.svg",
+            "content/數學B/數B3-2/assets/數B3-2-指數底數比較.svg",
+            "content/數學B/數B3-2/assets/數B3-2-指數成長與衰退.svg",
+            "content/數學B/數B3-2/assets/數B3-2-指數換元與交點.svg",
+            "content/數學B/數B3-2/assets/數B3-2-指數與對數對照.svg",
+            "content/數學B/數B3-2/assets/數B3-2-指數資料取對數.svg",
+            "content/數學B/數B3-2/assets/數B3-2-複利頻率與常數e.svg"
+          ]
+        },
+        {
+          "id": "math-b3-3-student",
+          "audience": "student",
+          "source": "content/數學B/數B3-3/學生講義.md",
+          "slug": "數B3-3-平面向量與應用-學生講義",
+          "assets": [
+            "content/數學B/數B3-3/assets/數B3-3-A系列紙張.svg",
+            "content/數學B/數B3-3/assets/數B3-3-內分與外分.svg",
+            "content/數學B/數B3-3/assets/數B3-3-內積展開與對角線.svg",
+            "content/數學B/數B3-3/assets/數B3-3-向量加減與平移.svg",
+            "content/數學B/數B3-3/assets/數B3-3-單點透視等分.svg",
+            "content/數學B/數B3-3/assets/數B3-3-圓角切線幾何.svg",
+            "content/數學B/數B3-3/assets/數B3-3-坐標向量.svg",
+            "content/數學B/數B3-3/assets/數B3-3-夾角與內積.svg",
+            "content/數學B/數B3-3/assets/數B3-3-投影點與點線距離.svg",
+            "content/數學B/數B3-3/assets/數B3-3-正射影與分解.svg",
+            "content/數學B/數B3-3/assets/數B3-3-法向量與直線.svg",
+            "content/數學B/數B3-3/assets/數B3-3-線性組合區域.svg",
+            "content/數學B/數B3-3/assets/數B3-3-縮放與平移.svg",
+            "content/數學B/數B3-3/assets/數B3-3-費氏比值.svg",
+            "content/數學B/數B3-3/assets/數B3-3-透視比例.svg",
+            "content/數學B/數B3-3/assets/數B3-3-黃金分割與方形螺線.svg"
+          ]
+        },
+        {
+          "id": "math-b4-1-student",
+          "audience": "student",
+          "source": "content/數學B/數B4-1/學生講義.md",
+          "slug": "數B4-1-空間概念與圓錐曲線-學生講義",
+          "assets": [
+            "content/數學B/數B4-1/assets/數B4-1-兩面角量測.svg",
+            "content/數學B/數B4-1/assets/數B4-1-圓錐截痕分類.svg",
+            "content/數學B/數B4-1/assets/數B4-1-圓錐曲線方程圖.svg",
+            "content/數學B/數B4-1/assets/數B4-1-圓錐與圓錐臺展開.svg",
+            "content/數學B/數B4-1/assets/數B4-1-弦長與大圓弧長.svg",
+            "content/數學B/數B4-1/assets/數B4-1-拋物線反射.svg",
+            "content/數學B/數B4-1/assets/數B4-1-橢圓焦點反射.svg",
+            "content/數學B/數B4-1/assets/數B4-1-正立方體截面.svg",
+            "content/數學B/數B4-1/assets/數B4-1-球面與平面截痕.svg",
+            "content/數學B/數B4-1/assets/數B4-1-直線與平面垂直.svg",
+            "content/數學B/數B4-1/assets/數B4-1-空間兩直線關係.svg",
+            "content/數學B/數B4-1/assets/數B4-1-空間坐標與投影.svg",
+            "content/數學B/數B4-1/assets/數B4-1-空間距離分解.svg",
+            "content/數學B/數B4-1/assets/數B4-1-經緯度與空間坐標.svg",
+            "content/數學B/數B4-1/assets/數B4-1-退化圓錐截痕.svg",
+            "content/數學B/數B4-1/assets/數B4-1-長方體表面路徑.svg"
+          ]
+        },
+        {
+          "id": "math-b4-2-student",
+          "audience": "student",
+          "source": "content/數學B/數B4-2/學生講義.md",
+          "slug": "數B4-2-機率與貝氏定理-學生講義",
+          "assets": [
+            "content/數學B/數B4-2/assets/數B4-2-互斥與獨立.svg",
+            "content/數學B/數B4-2/assets/數B4-2-全機率分割.svg",
+            "content/數學B/數B4-2/assets/數B4-2-客觀機率收斂.svg",
+            "content/數學B/數B4-2/assets/數B4-2-序列乘法樹.svg",
+            "content/數學B/數B4-2/assets/數B4-2-快篩自然頻數.svg",
+            "content/數學B/數B4-2/assets/數B4-2-條件樣本空間.svg",
+            "content/數學B/數B4-2/assets/數B4-2-貝氏面積更新.svg",
+            "content/數學B/數B4-2/assets/數B4-2-雙向條件表.svg"
+          ]
+        },
+        {
+          "id": "math-b4-3-student",
+          "audience": "student",
+          "source": "content/數學B/數B4-3/學生講義.md",
+          "slug": "數B4-3-矩陣-學生講義",
+          "assets": [
+            "content/數學B/數B4-3/assets/數B4-3-乘法階數鏈.svg",
+            "content/數學B/數B4-3/assets/數B4-3-乘法順序比較.svg",
+            "content/數學B/數B4-3/assets/數B4-3-二階反方陣機制.svg",
+            "content/數學B/數B4-3/assets/數B4-3-仿射校正參考點.svg",
+            "content/數學B/數B4-3/assets/數B4-3-列乘行.svg",
+            "content/數學B/數B4-3/assets/數B4-3-列行與元素.svg",
+            "content/數學B/數B4-3/assets/數B4-3-向量線性組合.svg",
+            "content/數學B/數B4-3/assets/數B4-3-數量單價總額.svg",
+            "content/數學B/數B4-3/assets/數B4-3-方程組解型.svg",
+            "content/數學B/數B4-3/assets/數B4-3-矩陣冪週期.svg",
+            "content/數學B/數B4-3/assets/數B4-3-編碼與復原.svg",
+            "content/數學B/數B4-3/assets/數B4-3-資料表與矩陣索引.svg",
+            "content/數學B/數B4-3/assets/數B4-3-逐項運算與庫存更新.svg"
+          ]
+        },
+        {
+          "id": "physics-required-1-student",
+          "audience": "student",
+          "source": "content/必修物理/必物-1/學生講義.md",
+          "slug": "必物-1-科學的態度與方法-學生講義",
+          "assets": [
+            "content/必修物理/必物-1/assets/必物-1-SI基本量與導出量.svg",
+            "content/必修物理/必物-1/assets/必物-1-前綴詞與單位換算.svg",
+            "content/必修物理/必物-1/assets/必物-1-可檢驗主張與科學循環.svg",
+            "content/必修物理/必物-1/assets/必物-1-斜面實驗與資料模型.svg",
+            "content/必修物理/必物-1/assets/必物-1-物理史的證據模型與統一.svg",
+            "content/必修物理/必物-1/assets/必物-1-物理領域與模型條件.svg",
+            "content/必修物理/必物-1/assets/必物-1-跨領域電腦斷層系統.svg",
+            "content/必修物理/必物-1/assets/必物-1-長度尺度與數量級.svg"
+          ]
+        },
+        {
+          "id": "physics-required-2-student",
+          "audience": "student",
+          "source": "content/必修物理/必物-2/學生講義.md",
+          "slug": "必物-2-物質的組成與交互作用-學生講義",
+          "assets": [
+            "content/必修物理/必物-2/assets/必物-2-alpha粒子最近點受力.svg",
+            "content/必修物理/必物-2/assets/必物-2-原子存在的證據鏈.svg",
+            "content/必修物理/必物-2/assets/必物-2-四種基本交互作用尺度圖.svg",
+            "content/必修物理/必物-2/assets/必物-2-庫侖力與電場線.svg",
+            "content/必修物理/必物-2/assets/必物-2-強作用與弱作用.svg",
+            "content/必修物理/必物-2/assets/必物-2-拉塞福散射與原子核.svg",
+            "content/必修物理/必物-2/assets/必物-2-星球表面帶電微粒受力.svg",
+            "content/必修物理/必物-2/assets/必物-2-核素記號與夸克組成.svg",
+            "content/必修物理/必物-2/assets/必物-2-物質三態的粒子模型.svg",
+            "content/必修物理/必物-2/assets/必物-2-物質結構尺度階梯.svg",
+            "content/必修物理/必物-2/assets/必物-2-磁場線與磁化.svg",
+            "content/必修物理/必物-2/assets/必物-2-萬有引力與平方反比.svg"
+          ]
+        },
+        {
+          "id": "physics-required-3-student",
+          "audience": "student",
+          "source": "content/必修物理/必物-3/學生講義.md",
+          "slug": "必物-3-物體的運動-學生講義",
+          "assets": [
+            "content/必修物理/必物-3/assets/必物-3-伽利略理想化.svg",
+            "content/必修物理/必物-3/assets/必物-3-克卜勒三定律.svg",
+            "content/必修物理/必物-3/assets/必物-3-圓周速度與向心.svg",
+            "content/必修物理/必物-3/assets/必物-3-平衡力與第三定律.svg",
+            "content/必修物理/必物-3/assets/必物-3-摩擦力隨外力.svg",
+            "content/必修物理/必物-3/assets/必物-3-正向力三情形.svg",
+            "content/必修物理/必物-3/assets/必物-3-水平面受力圖.svg",
+            "content/必修物理/必物-3/assets/必物-3-牛頓第二定律資料.svg",
+            "content/必修物理/必物-3/assets/必物-3-章末解題圖.svg",
+            "content/必修物理/必物-3/assets/必物-3-等時間位置與座標.svg",
+            "content/必修物理/必物-3/assets/必物-3-自由落體時間狀態.svg",
+            "content/必修物理/必物-3/assets/必物-3-運動圖斜率與面積.svg"
+          ]
+        },
+        {
+          "id": "physics-required-4-student",
+          "audience": "student",
+          "source": "content/必修物理/必物-4/學生講義.md",
+          "slug": "必物-4-電與磁的統一-學生講義",
+          "assets": [
+            "content/必修物理/必物-4/assets/必物-4-反射與折射光路.svg",
+            "content/必修物理/必物-4/assets/必物-4-家用電路與保護.svg",
+            "content/必修物理/必物-4/assets/必物-4-干涉與繞射.svg",
+            "content/必修物理/必物-4/assets/必物-4-惠更斯波前.svg",
+            "content/必修物理/必物-4/assets/必物-4-發電機與變壓器.svg",
+            "content/必修物理/必物-4/assets/必物-4-直導線與線圈磁場.svg",
+            "content/必修物理/必物-4/assets/必物-4-週期波參數與質點運動.svg",
+            "content/必修物理/必物-4/assets/必物-4-都卜勒波前.svg",
+            "content/必修物理/必物-4/assets/必物-4-電磁感應與冷次定律.svg",
+            "content/必修物理/必物-4/assets/必物-4-電磁波正交結構.svg",
+            "content/必修物理/必物-4/assets/必物-4-電磁波譜.svg",
+            "content/必修物理/必物-4/assets/必物-4-馬達線圈受力.svg"
+          ]
+        },
+        {
+          "id": "physics-required-5-student",
+          "audience": "student",
+          "source": "content/必修物理/必物-5/學生講義.md",
+          "slug": "必物-5-能量-學生講義",
+          "assets": [
+            "content/必修物理/必物-5/assets/必物-5-作功加熱與熱量.svg",
+            "content/必修物理/必物-5/assets/必物-5-功率與效率能流.svg",
+            "content/必修物理/必物-5/assets/必物-5-功的方向與力位移面積.svg",
+            "content/必修物理/必物-5/assets/必物-5-動能位能與零位面.svg",
+            "content/必修物理/必物-5/assets/必物-5-抽蓄發電能量轉換鏈.svg",
+            "content/必修物理/必物-5/assets/必物-5-摩擦下的能量帳.svg",
+            "content/必修物理/必物-5/assets/必物-5-攝氏克氏與平均動能.svg",
+            "content/必修物理/必物-5/assets/必物-5-核分裂連鎖與發電.svg",
+            "content/必修物理/必物-5/assets/必物-5-核融合反應與高溫條件.svg",
+            "content/必修物理/必物-5/assets/必物-5-游離輻射與屏蔽.svg",
+            "content/必修物理/必物-5/assets/必物-5-溫度內能與粒子數.svg",
+            "content/必修物理/必物-5/assets/必物-5-質量虧損與能量尺度.svg",
+            "content/必修物理/必物-5/assets/必物-5-軌道力學能守恆.svg"
+          ]
+        },
+        {
+          "id": "physics-required-6-student",
+          "audience": "student",
+          "source": "content/必修物理/必物-6/學生講義.md",
+          "slug": "必物-6-量子現象-學生講義",
+          "assets": [
+            "content/必修物理/必物-6/assets/必物-6-光電效應裝置與電流電壓.svg",
+            "content/必修物理/必物-6/assets/必物-6-光電效應頻率與強度.svg",
+            "content/必修物理/必物-6/assets/必物-6-單電子雙狹縫累積.svg",
+            "content/必修物理/必物-6/assets/必物-6-物質波尺度與電子繞射.svg",
+            "content/必修物理/必物-6/assets/必物-6-能階躍遷與光譜線.svg",
+            "content/必修物理/必物-6/assets/必物-6-連續吸收與發射光譜.svg",
+            "content/必修物理/必物-6/assets/必物-6-黑體輻射與能量量子化.svg"
+          ]
+        },
+        {
           "id": "physics-i1-1-student",
           "audience": "student",
           "source": "content/選修物理I/選物I-1/學生講義.md",
@@ -65,15 +513,15 @@
             "content/選修物理I/選物I-2/assets/選物I-2-一維相對速度.svg",
             "content/選修物理I/選物I-2/assets/選物I-2-圖像讀法.svg",
             "content/選修物理I/選物I-2/assets/選物I-2-斜面實驗資料.svg",
-            "content/選修物理I/選物I-2/assets/選物I-2-等時間點與運動圖.svg",
-            "content/選修物理I/選物I-2/assets/選物I-2-自由落體實驗.svg",
-            "content/選修物理I/選物I-2/assets/選物I-2-自由落體正方向.svg",
             "content/選修物理I/選物I-2/assets/選物I-2-章末列式圖.svg",
             "content/選修物理I/選物I-2/assets/選物I-2-章末解析01-04.svg",
             "content/選修物理I/選物I-2/assets/選物I-2-章末解析05-08.svg",
             "content/選修物理I/選物I-2/assets/選物I-2-章末解析09-11.svg",
             "content/選修物理I/選物I-2/assets/選物I-2-章末解析12-14.svg",
-            "content/選修物理I/選物I-2/assets/選物I-2-章末解析15-18.svg"
+            "content/選修物理I/選物I-2/assets/選物I-2-章末解析15-18.svg",
+            "content/選修物理I/選物I-2/assets/選物I-2-等時間點與運動圖.svg",
+            "content/選修物理I/選物I-2/assets/選物I-2-自由落體實驗.svg",
+            "content/選修物理I/選物I-2/assets/選物I-2-自由落體正方向.svg"
           ]
         },
         {
@@ -89,10 +537,10 @@
             "content/選修物理I/選物I-3/assets/選物I-3-拋體速度分量.svg",
             "content/選修物理I/選物I-3/assets/選物I-3-章末列式圖.svg",
             "content/選修物理I/選物I-3/assets/選物I-3-章末題解1-3.svg",
-            "content/選修物理I/選物I-3/assets/選物I-3-章末題解6-8.svg",
-            "content/選修物理I/選物I-3/assets/選物I-3-章末題解9-11.svg",
             "content/選修物理I/選物I-3/assets/選物I-3-章末題解12-14.svg",
-            "content/選修物理I/選物I-3/assets/選物I-3-章末題解16-18.svg"
+            "content/選修物理I/選物I-3/assets/選物I-3-章末題解16-18.svg",
+            "content/選修物理I/選物I-3/assets/選物I-3-章末題解6-8.svg",
+            "content/選修物理I/選物I-3/assets/選物I-3-章末題解9-11.svg"
           ]
         },
         {
@@ -123,10 +571,10 @@
           "source": "content/選修物理I/選物I-5/學生講義.md",
           "slug": "選物I-5-萬有引力定律-學生講義",
           "assets": [
-            "content/選修物理I/選物I-5/assets/選物I-5-反平方縮放.svg",
-            "content/選修物理I/選物I-5/assets/選物I-5-引力軌道鏈.svg",
             "content/選修物理I/選物I-5/assets/選物I-5-克卜勒第三定律比較.svg",
             "content/選修物理I/選物I-5/assets/選物I-5-克卜勒資料線性化.svg",
+            "content/選修物理I/選物I-5/assets/選物I-5-反平方縮放.svg",
+            "content/選修物理I/選物I-5/assets/選物I-5-引力軌道鏈.svg",
             "content/選修物理I/選物I-5/assets/選物I-5-橢圓與等面積.svg",
             "content/選修物理I/選物I-5/assets/選物I-5-解題-克卜勒整合.svg",
             "content/選修物理I/選物I-5/assets/選物I-5-解題-基本比例.svg",
@@ -135,6 +583,312 @@
             "content/選修物理I/選物I-5/assets/選物I-5-解題-高度與軌道.svg",
             "content/選修物理I/選物I-5/assets/選物I-5-重力場疊加與零場.svg",
             "content/選修物理I/選物I-5/assets/選物I-5-高度與中心距離.svg"
+          ]
+        },
+        {
+          "id": "chemistry-required-1-student",
+          "audience": "student",
+          "source": "content/必修化學/必化-1/學生講義.md",
+          "slug": "必化-1-物質的分類與組成-學生講義",
+          "assets": [
+            "content/必修化學/必化-1/assets/必化-1-三態粒子與加熱曲線.svg",
+            "content/必修化學/必化-1/assets/必化-1-分離方法選擇圖.svg",
+            "content/必修化學/必化-1/assets/必化-1-原子結構與週期位置.svg",
+            "content/必修化學/必化-1/assets/必化-1-定比倍比粒子模型.svg",
+            "content/必修化學/必化-1/assets/必化-1-物質分類決策樹.svg",
+            "content/必修化學/必化-1/assets/必化-1-莫耳換算橋.svg",
+            "content/必修化學/必化-1/assets/必化-1-萃取蒸餾層析裝置.svg",
+            "content/必修化學/必化-1/assets/必化-1-鍵結結構與性質.svg"
+          ]
+        },
+        {
+          "id": "chemistry-required-2-student",
+          "audience": "student",
+          "source": "content/必修化學/必化-2/學生講義.md",
+          "slug": "必化-2-化學式與化學計量-學生講義",
+          "assets": [
+            "content/必修化學/必化-2/assets/必化-2-化學式資訊層次.svg",
+            "content/必修化學/必化-2/assets/必化-2-化學計量莫耳橋.svg",
+            "content/必修化學/必化-2/assets/必化-2-反應式配平守恆帳.svg",
+            "content/必修化學/必化-2/assets/必化-2-反應能量與量熱.svg",
+            "content/必修化學/必化-2/assets/必化-2-燃燒分析證據流.svg",
+            "content/必修化學/必化-2/assets/必化-2-產氣計量量測.svg",
+            "content/必修化學/必化-2/assets/必化-2-限量試劑粒子模型.svg"
+          ]
+        },
+        {
+          "id": "chemistry-required-3-student",
+          "audience": "student",
+          "source": "content/必修化學/必化-3/學生講義.md",
+          "slug": "必化-3-溶液與常見的化學反應-學生講義",
+          "assets": [
+            "content/必修化學/必化-3/assets/必化-3-pH與指示劑範圍.svg",
+            "content/必修化學/必化-3/assets/必化-3-中和反應粒子帳.svg",
+            "content/必修化學/必化-3/assets/必化-3-分散粒徑與光路.svg",
+            "content/必修化學/必化-3/assets/必化-3-強弱酸鹼粒子模型.svg",
+            "content/必修化學/必化-3/assets/必化-3-氧化還原電子轉移.svg",
+            "content/必修化學/必化-3/assets/必化-3-溶解度曲線與結晶.svg",
+            "content/必修化學/必化-3/assets/必化-3-濃度與定量配製.svg",
+            "content/必修化學/必化-3/assets/必化-3-飽和溶液動態平衡.svg"
+          ]
+        },
+        {
+          "id": "chemistry-required-4-student",
+          "audience": "student",
+          "source": "content/必修化學/必化-4/學生講義.md",
+          "slug": "必化-4-生活化學-學生講義",
+          "assets": [
+            "content/必修化學/必化-4/assets/必化-4-原子經濟與能源判讀.svg",
+            "content/必修化學/必化-4/assets/必化-4-奈米化與表面積.svg",
+            "content/必修化學/必化-4/assets/必化-4-常用藥物結構與制酸計量.svg",
+            "content/必修化學/必化-4/assets/必化-4-淨水流程與粒子去向.svg",
+            "content/必修化學/必化-4/assets/必化-4-生物分子組裝帳.svg",
+            "content/必修化學/必化-4/assets/必化-4-界面活性劑與硬水證據.svg",
+            "content/必修化學/必化-4/assets/必化-4-碳循環與足跡邊界.svg",
+            "content/必修化學/必化-4/assets/必化-4-空氣化學路徑.svg",
+            "content/必修化學/必化-4/assets/必化-4-脂肪酸幾何與堆積.svg"
+          ]
+        },
+        {
+          "id": "chemistry-i1-1-student",
+          "audience": "student",
+          "source": "content/選修化學I/選化I-1/學生講義.md",
+          "slug": "選化I-1-化學反應與能量-學生講義",
+          "assets": [
+            "content/選修化學I/選化I-1/assets/選化I-1-分步產率物料流.svg",
+            "content/選修化學I/選化I-1/assets/選化I-1-烷類燃燒熱資料.svg",
+            "content/選修化學I/選化I-1/assets/選化I-1-焓變符號與能階.svg",
+            "content/選修化學I/選化I-1/assets/選化I-1-生成熱與燃燒熱路徑.svg",
+            "content/選修化學I/選化I-1/assets/選化I-1-能量轉換路徑.svg",
+            "content/選修化學I/選化I-1/assets/選化I-1-赫斯定律路徑.svg",
+            "content/選修化學I/選化I-1/assets/選化I-1-量熱裝置與溫時資料.svg",
+            "content/選修化學I/選化I-1/assets/選化I-1-限量試劑粒子帳.svg"
+          ]
+        },
+        {
+          "id": "chemistry-i1-2-student",
+          "audience": "student",
+          "source": "content/選修化學I/選化I-2/學生講義.md",
+          "slug": "選化I-2-氣體-學生講義",
+          "assets": [
+            "content/選修化學I/選化I-2/assets/選化I-2-二氧化碳集氣實驗.svg",
+            "content/選修化學I/選化I-2/assets/選化I-2-亞佛加厥粒子模型.svg",
+            "content/選修化學I/選化I-2/assets/選化I-2-分壓的粒子帳.svg",
+            "content/選修化學I/選化I-2/assets/選化I-2-排水集氣壓力修正.svg",
+            "content/選修化學I/選化I-2/assets/選化I-2-查理定律與絕對零度.svg",
+            "content/選修化學I/選化I-2/assets/選化I-2-氣體密度與莫耳質量.svg",
+            "content/選修化學I/選化I-2/assets/選化I-2-波以耳裝置與圖形.svg",
+            "content/選修化學I/選化I-2/assets/選化I-2-理想氣體狀態帳.svg",
+            "content/選修化學I/選化I-2/assets/選化I-2-真實氣體壓縮因子.svg",
+            "content/選修化學I/選化I-2/assets/選化I-2-粒子碰撞與氣壓.svg",
+            "content/選修化學I/選化I-2/assets/選化I-2-連通容器混合.svg",
+            "content/選修化學I/選化I-2/assets/選化I-2-開閉口壓力計.svg"
+          ]
+        },
+        {
+          "id": "chemistry-i1-3-student",
+          "audience": "student",
+          "source": "content/選修化學I/選化I-3/學生講義.md",
+          "slug": "選化I-3-溶液的性質-學生講義",
+          "assets": [
+            "content/選修化學I/選化I-3/assets/選化I-3-亨利定律粒子與數據.svg",
+            "content/選修化學I/選化I-3/assets/選化I-3-凝固點實驗與冷卻曲線.svg",
+            "content/選修化學I/選化I-3/assets/選化I-3-凡特何夫因數粒子帳.svg",
+            "content/選修化學I/選化I-3/assets/選化I-3-拉午耳定律與氣相組成.svg",
+            "content/選修化學I/選化I-3/assets/選化I-3-氣壓下降與相轉交點.svg",
+            "content/選修化學I/選化I-3/assets/選化I-3-滲透與逆滲透.svg",
+            "content/選修化學I/選化I-3/assets/選化I-3-濃度分母與轉換.svg",
+            "content/選修化學I/選化I-3/assets/選化I-3-相對濕度與露點.svg",
+            "content/選修化學I/選化I-3/assets/選化I-3-蒸氣壓與沸點.svg",
+            "content/選修化學I/選化I-3/assets/選化I-3-非理想偏差與密閉轉移.svg"
+          ]
+        },
+        {
+          "id": "chemistry-i2-1-student",
+          "audience": "student",
+          "source": "content/選修化學II/選化II-1/學生講義.md",
+          "slug": "選化II-1-原子構造與性質-學生講義",
+          "assets": [
+            "content/選修化學II/選化II-1/assets/選化II-1-s與p軌域邊界面.svg",
+            "content/選修化學II/選化II-1/assets/選化II-1-光電效應能量帳.svg",
+            "content/選修化學II/選化II-1/assets/選化II-1-原子到離子的電子帳.svg",
+            "content/選修化學II/選化II-1/assets/選化II-1-原子與等電子離子半徑.svg",
+            "content/選修化學II/選化II-1/assets/選化II-1-單多電子能階順序.svg",
+            "content/選修化學II/選化II-1/assets/選化II-1-氫原子能階與譜線.svg",
+            "content/選修化學II/選化II-1/assets/選化II-1-焰色與光譜鑑別.svg",
+            "content/選修化學II/選化II-1/assets/選化II-1-第一游離能週期趨勢.svg",
+            "content/選修化學II/選化II-1/assets/選化II-1-逐次游離能躍升.svg",
+            "content/選修化學II/選化II-1/assets/選化II-1-連續光譜與線光譜.svg",
+            "content/選修化學II/選化II-1/assets/選化II-1-量子數與軌域容量.svg",
+            "content/選修化學II/選化II-1/assets/選化II-1-電子填排三原則.svg",
+            "content/選修化學II/選化II-1/assets/選化II-1-電子組態與週期表區塊.svg",
+            "content/選修化學II/選化II-1/assets/選化II-1-電磁波與光子能量.svg",
+            "content/選修化學II/選化II-1/assets/選化II-1-電負度與鍵極性.svg"
+          ]
+        },
+        {
+          "id": "chemistry-i2-2-student",
+          "audience": "student",
+          "source": "content/選修化學II/選化II-2/學生講義.md",
+          "slug": "選化II-2-物質的性質與化學鍵-學生講義",
+          "assets": [
+            "content/選修化學II/選化II-2/assets/選化II-2-VSEPR電子域與分子形狀.svg",
+            "content/選修化學II/選化II-2/assets/選化II-2-sp3-sp2-sp混成模型.svg",
+            "content/選修化學II/選化II-2/assets/選化II-2-共價鍵能量與鍵長.svg",
+            "content/選修化學II/選化II-2/assets/選化II-2-分子間作用力.svg",
+            "content/選修化學II/選化II-2/assets/選化II-2-單鍵多鍵與sigma-pi.svg",
+            "content/選修化學II/選化II-2/assets/選化II-2-沸點資料與分子結構.svg",
+            "content/選修化學II/選化II-2/assets/選化II-2-金屬鍵與材料變形.svg",
+            "content/選修化學II/選化II-2/assets/選化II-2-鍵偶極向量和.svg",
+            "content/選修化學II/選化II-2/assets/選化II-2-鍵結模型與材料性質.svg",
+            "content/選修化學II/選化II-2/assets/選化II-2-離子晶格與晶格能.svg"
+          ]
+        },
+        {
+          "id": "chemistry-i2-3-student",
+          "audience": "student",
+          "source": "content/選修化學II/選化II-3/學生講義.md",
+          "slug": "選化II-3-化學反應速率-學生講義",
+          "assets": [
+            "content/選修化學II/選化II-3/assets/選化II-3-催化途徑與反應熱.svg",
+            "content/選修化學II/選化II-3/assets/選化II-3-初速率比較法.svg",
+            "content/選修化學II/選化II-3/assets/選化II-3-化學計量速率關係.svg",
+            "content/選修化學II/選化II-3/assets/選化II-3-多步反應機構.svg",
+            "content/選修化學II/選化II-3/assets/選化II-3-有效碰撞的能量與位向.svg",
+            "content/選修化學II/選化II-3/assets/選化II-3-正逆反應能量圖.svg",
+            "content/選修化學II/選化II-3/assets/選化II-3-濃度時間與速率斜率.svg",
+            "content/選修化學II/選化II-3/assets/選化II-3-濃度與接觸面積.svg",
+            "content/選修化學II/選化II-3/assets/選化II-3-碘鐘反應裝置與終點.svg",
+            "content/選修化學II/選化II-3/assets/選化II-3-碘鐘反應資料.svg",
+            "content/選修化學II/選化II-3/assets/選化II-3-粒子動能分布與溫度.svg",
+            "content/選修化學II/選化II-3/assets/選化II-3-零級一級與半生期.svg"
+          ]
+        },
+        {
+          "id": "chemistry-i3-1-student",
+          "audience": "student",
+          "source": "content/選修化學III/選化III-1/學生講義.md",
+          "slug": "選化III-1-化學平衡-學生講義",
+          "assets": [
+            "content/選修化學III/選化III-1/assets/選化III-1-FeSCN平衡常數實驗.svg",
+            "content/選修化學III/選化III-1/assets/選化III-1-ICE與反應進度.svg",
+            "content/選修化學III/選化III-1/assets/選化III-1-催化劑與平衡.svg",
+            "content/選修化學III/選化III-1/assets/選化III-1-動態平衡濃度與速率.svg",
+            "content/選修化學III/選化III-1/assets/選化III-1-反應商判斷方向.svg",
+            "content/選修化學III/選化III-1/assets/選化III-1-反應式與平衡常數.svg",
+            "content/選修化學III/選化III-1/assets/選化III-1-合成氨條件權衡.svg",
+            "content/選修化學III/選化III-1/assets/選化III-1-同離子與AgCl溶解度.svg",
+            "content/選修化學III/選化III-1/assets/選化III-1-壓縮NO2-N2O4平衡.svg",
+            "content/選修化學III/選化III-1/assets/選化III-1-溫度改變平衡常數.svg",
+            "content/選修化學III/選化III-1/assets/選化III-1-溶度積與莫耳溶解度.svg",
+            "content/選修化學III/選化III-1/assets/選化III-1-濃度擾動的瞬間與鬆弛.svg",
+            "content/選修化學III/選化III-1/assets/選化III-1-異相平衡與活性.svg",
+            "content/選修化學III/選化III-1/assets/選化III-1-離子積與選擇沉澱.svg"
+          ]
+        },
+        {
+          "id": "chemistry-i3-2-student",
+          "audience": "student",
+          "source": "content/選修化學III/選化III-2/學生講義.md",
+          "slug": "選化III-2-酸鹼反應-學生講義",
+          "assets": [
+            "content/選修化學III/選化III-2/assets/選化III-2-Kw溫度與中性pH.svg",
+            "content/選修化學III/選化III-2/assets/選化III-2-三類滴定曲線.svg",
+            "content/選修化學III/選化III-2/assets/選化III-2-二質子酸物種分布.svg",
+            "content/選修化學III/選化III-2/assets/選化III-2-共軛酸鹼KaKb.svg",
+            "content/選修化學III/選化III-2/assets/選化III-2-同離子效應濃度帳.svg",
+            "content/選修化學III/選化III-2/assets/選化III-2-弱酸滴定分區與物種.svg",
+            "content/選修化學III/選化III-2/assets/選化III-2-弱酸解離濃度與百分比.svg",
+            "content/選修化學III/選化III-2/assets/選化III-2-滴定裝置與數據.svg",
+            "content/選修化學III/選化III-2/assets/選化III-2-緩衝比例與容量.svg",
+            "content/選修化學III/選化III-2/assets/選化III-2-緩衝液加入酸鹼.svg",
+            "content/選修化學III/選化III-2/assets/選化III-2-質子轉移與共軛對.svg",
+            "content/選修化學III/選化III-2/assets/選化III-2-酸鹼強度與反應方向.svg",
+            "content/選修化學III/選化III-2/assets/選化III-2-鹽類水解與pH.svg"
+          ]
+        },
+        {
+          "id": "chemistry-i4-1-student",
+          "audience": "student",
+          "source": "content/選修化學IV/選化IV-1/學生講義.md",
+          "slug": "選化IV-1-氧化還原反應與電化學-學生講義",
+          "assets": [
+            "content/選修化學IV/選化IV-1/assets/選化IV-1-一次二次與燃料電池.svg",
+            "content/選修化學IV/選化IV-1/assets/選化IV-1-丹尼耳電池方向與物料變化.svg",
+            "content/選修化學IV/選化IV-1/assets/選化IV-1-半反應配平與守恆.svg",
+            "content/選修化學IV/選化IV-1/assets/選化IV-1-原電池與電解槽比較.svg",
+            "content/選修化學IV/選化IV-1/assets/選化IV-1-氧化數與電子帳本.svg",
+            "content/選修化學IV/選化IV-1/assets/選化IV-1-氧化還原滴定證據鏈.svg",
+            "content/選修化學IV/選化IV-1/assets/選化IV-1-水溶液電解產物選擇.svg",
+            "content/選修化學IV/選化IV-1/assets/選化IV-1-法拉第定律量化圖.svg",
+            "content/選修化學IV/選化IV-1/assets/選化IV-1-滴定體積與待測量.svg",
+            "content/選修化學IV/選化IV-1/assets/選化IV-1-還原電位與電池電壓.svg",
+            "content/選修化學IV/選化IV-1/assets/選化IV-1-鐵鏽蝕與陰極防蝕.svg",
+            "content/選修化學IV/選化IV-1/assets/選化IV-1-電解精煉與電鍍.svg"
+          ]
+        },
+        {
+          "id": "chemistry-i4-2-student",
+          "audience": "student",
+          "source": "content/選修化學IV/選化IV-2/學生講義.md",
+          "slug": "選化IV-2-科學在生活中的應用-學生講義",
+          "assets": [
+            "content/選修化學IV/選化IV-2/assets/選化IV-2-合金晶格與含碳量.svg",
+            "content/選修化學IV/選化IV-2/assets/選化IV-2-固氮與含氮化合物流程.svg",
+            "content/選修化學IV/選化IV-2/assets/選化IV-2-奈米尺度比表面積與光觸媒.svg",
+            "content/選修化學IV/選化IV-2/assets/選化IV-2-導電聚合物共軛與摻雜.svg",
+            "content/選修化學IV/選化IV-2/assets/選化IV-2-氧氣臭氧反應與用途.svg",
+            "content/選修化學IV/選化IV-2/assets/選化IV-2-氫氣製備與能量載體.svg",
+            "content/選修化學IV/選化IV-2/assets/選化IV-2-矽酸鹽離子交換與玻璃.svg",
+            "content/選修化學IV/選化IV-2/assets/選化IV-2-碳同素異形體結構性質.svg",
+            "content/選修化學IV/選化IV-2/assets/選化IV-2-能帶摻雜與LED.svg",
+            "content/選修化學IV/選化IV-2/assets/選化IV-2-草酸鐵鉀製備證據鏈.svg",
+            "content/選修化學IV/選化IV-2/assets/選化IV-2-配位數與配位子牙數.svg",
+            "content/選修化學IV/選化IV-2/assets/選化IV-2-鈉鎂鋁製程選擇.svg",
+            "content/選修化學IV/選化IV-2/assets/選化IV-2-鼓風爐與鐵離子判定.svg"
+          ]
+        },
+        {
+          "id": "chemistry-i5-1-student",
+          "audience": "student",
+          "source": "content/選修化學V/選化V-1/學生講義.md",
+          "slug": "選化V-1-有機化學-學生講義",
+          "assets": [
+            "content/選修化學V/選化V-1/assets/選化V-1-人造聚合物結構與用途.svg",
+            "content/選修化學V/選化V-1/assets/選化V-1-分子間作用力與沸點.svg",
+            "content/選修化學V/選化V-1/assets/選化V-1-加成與縮合聚合.svg",
+            "content/選修化學V/選化V-1/assets/選化V-1-天然聚合物鍵結.svg",
+            "content/選修化學V/選化V-1/assets/選化V-1-官能基分類圖譜.svg",
+            "content/選修化學V/選化V-1/assets/選化V-1-有機命名流程.svg",
+            "content/選修化學V/選化V-1/assets/選化V-1-烴類反應路線.svg",
+            "content/選修化學V/選化V-1/assets/選化V-1-燃燒分析裝置與資料流.svg",
+            "content/選修化學V/選化V-1/assets/選化V-1-結構表示與異構判斷.svg",
+            "content/選修化學V/選化V-1/assets/選化V-1-羰基羧酸酯反應網.svg",
+            "content/選修化學V/選化V-1/assets/選化V-1-聚合物反推單體.svg",
+            "content/選修化學V/選化V-1/assets/選化V-1-酸鹼萃取流程.svg",
+            "content/選修化學V/選化V-1/assets/選化V-1-醇氧化與官能基檢驗.svg",
+            "content/選修化學V/選化V-1/assets/選化V-1-阿司匹靈製備與純度.svg"
+          ]
+        },
+        {
+          "id": "chemistry-i5-2-student",
+          "audience": "student",
+          "source": "content/選修化學V/選化V-2/學生講義.md",
+          "slug": "選化V-2-環境化學-學生講義",
+          "assets": [
+            "content/選修化學V/選化V-2/assets/選化V-2-AQI分指標與最大值.svg",
+            "content/選修化學V/選化V-2/assets/選化V-2-一次與二次空氣污染物.svg",
+            "content/選修化學V/選化V-2/assets/選化V-2-優養化因果與資料.svg",
+            "content/選修化學V/選化V-2/assets/選化V-2-氮循環物種與氧化態.svg",
+            "content/選修化學V/選化V-2/assets/選化V-2-水質檢測與淨化證據鏈.svg",
+            "content/選修化學V/選化V-2/assets/選化V-2-溶氧與生化需氧量.svg",
+            "content/選修化學V/選化V-2/assets/選化V-2-生物累積與食物鏈放大.svg",
+            "content/選修化學V/選化V-2/assets/選化V-2-科學模型證據循環.svg",
+            "content/選修化學V/選化V-2/assets/選化V-2-綠色化學物料指標.svg",
+            "content/選修化學V/選化V-2/assets/選化V-2-能源生命週期邊界.svg",
+            "content/選修化學V/選化V-2/assets/選化V-2-臭氧柱量與杜布森單位.svg",
+            "content/選修化學V/選化V-2/assets/選化V-2-臭氧生成與氯自由基循環.svg",
+            "content/選修化學V/選化V-2/assets/選化V-2-農田氮收支.svg"
           ]
         }
       ]
