@@ -39,21 +39,66 @@ def _save(fig, filename):
     stem, extension = os.path.splitext(filename)
     if extension != ".svg" or not stem.startswith("數A4-1-"):
         raise AssertionError("輸出檔名必須是數A4-1章內 SVG")
+    if any(getattr(ax, "name", "") == "3d" for ax in fig.axes):
+        with plt.rc_context({"savefig.bbox": None}):
+            return F.save_to(fig, CHAPTER, stem, output_subdir="assets", write_pdf=False)
     return F.save_to(fig, CHAPTER, stem, output_subdir="assets", write_pdf=False)
 
 
-def _style_3d(ax, lim=(0, 4)):
+def _view_direction(elev, azim):
+    elev_rad = np.deg2rad(elev)
+    azim_rad = np.deg2rad(azim)
+    return np.array([
+        np.cos(elev_rad) * np.cos(azim_rad),
+        np.cos(elev_rad) * np.sin(azim_rad),
+        np.sin(elev_rad),
+    ])
+
+
+def _assert_plane_projection(normal, elev, azim, min_facing=0.25, max_facing=0.92):
+    """確保平面在正交投影中有足夠面積，同時保留法向量的可見長度。"""
+    unit_normal = np.asarray(normal, dtype=float)
+    unit_normal /= np.linalg.norm(unit_normal)
+    facing = abs(unit_normal @ _view_direction(elev, azim))
+    assert min_facing <= facing <= max_facing, (
+        f"平面投影退化：facing={facing:.3f}, elev={elev}, azim={azim}"
+    )
+
+
+def _style_3d(
+    ax,
+    lim=(0, 4),
+    *,
+    elev=24,
+    azim=-58,
+    aspect=(1, 1, 0.85),
+    plane_normals=(),
+):
+    for normal in plane_normals:
+        _assert_plane_projection(normal, elev, azim)
     ax.set_xlim(*lim)
     ax.set_ylim(*lim)
     ax.set_zlim(*lim)
-    ax.set_box_aspect((1, 1, 0.85))
-    ax.view_init(elev=24, azim=-58)
-    ax.grid(False)
-    ax.set_xticks([])
-    ax.set_yticks([])
-    ax.set_zticks([])
-    for axis in (ax.xaxis, ax.yaxis, ax.zaxis):
-        axis.pane.set_alpha(0)
+    ax.set_box_aspect(aspect)
+    ax.set_proj_type("ortho")
+    ax.view_init(elev=elev, azim=azim)
+    ax.computed_zorder = False
+    ax.set_axis_off()
+
+
+def _right_angle_3d(ax, vertex, direction_a, direction_b, size=0.28):
+    a = np.asarray(direction_a, dtype=float)
+    b = np.asarray(direction_b, dtype=float)
+    a /= np.linalg.norm(a)
+    b /= np.linalg.norm(b)
+    assert np.isclose(a @ b, 0, atol=1e-10)
+    vertex = np.asarray(vertex, dtype=float)
+    marker = np.array([
+        vertex + size * a,
+        vertex + size * (a + b),
+        vertex + size * b,
+    ])
+    ax.plot(*marker.T, color=F.INK, lw=1.5)
 
 
 def _arrow2(ax, start, end, color=F.BLUE, lw=2.3):
@@ -126,14 +171,18 @@ def fig_three_perpendiculars():
             color=F.INK, fontsize=12,
             bbox={"facecolor": "white", "edgecolor": "none", "alpha": 0.78, "pad": 0.8},
         )
-    ax.text(3.2, 3.45, 0.16, "直線 L（點線）", color=F.INK, fontsize=11)
-    ax.text(4.0, 0.25, 0.08, "平面 E", color=F.INK, fontsize=11)
-    ax.text(0.25, 0.45, 1.85, "高度 PA（實線）", color=F.INK, fontsize=11)
-    ax.text(1.75, 0.55, 0.14, "投影 AB（虛線）", color=F.INK, fontsize=11)
-    ax.text(1.35, 0.45, 2.45, "斜線 PB（點畫線）", color=F.INK, fontsize=11)
+    label_box = {"facecolor": "white", "edgecolor": "none", "alpha": 0.84, "pad": 0.7}
+    ax.text(3.2, 3.45, 0.16, "直線 L（點線）", color=F.INK, fontsize=11, bbox=label_box)
+    ax.text(4.0, 0.25, 0.08, "平面 E", color=F.INK, fontsize=11, bbox=label_box)
+    ax.text(0.30, 0.45, 1.85, "PA（實線）", color=F.BLUE, fontsize=11, bbox=label_box)
+    ax.text(1.75, 0.55, 0.14, "AB（虛線）", color=F.GREEN, fontsize=11, bbox=label_box)
+    ax.text(1.45, 0.45, 2.45, "PB（點畫線）", color=F.AMBER, fontsize=11, bbox=label_box)
     assert np.isclose(np.dot(A - B, C - B), 0)
     assert np.isclose(np.dot(P - B, C - B), 0)
-    _style_3d(ax, (0, 4.4))
+    _right_angle_3d(ax, A, P-A, B-A, size=0.25)
+    _right_angle_3d(ax, B, A-B, C-B, size=0.25)
+    _right_angle_3d(ax, B, P-B, C-B, size=0.25)
+    _style_3d(ax, (0, 4.4), plane_normals=((0, 0, 1),))
     ax.set_title("三垂線定理把平面內的垂直關係帶到空間斜線", fontsize=15)
     fig.tight_layout()
     return _save(fig, "數A4-1-三垂線定理.svg")
@@ -150,18 +199,27 @@ def fig_coordinate_projections():
     for end, color, label in zip(ends, colors, labels):
         ax.quiver(*O, *end, color=color, arrow_length_ratio=0.08, lw=2.0)
         ax.text(*(end * 1.04), label, color=color, fontsize=13)
-    ax.scatter(*P, color=F.AMBER, s=75)
-    ax.text(*(P + np.array([0.08, 0.08, 0.15])), r"$P(a,b,c)$", fontsize=12)
-    vertices = [
-        np.array([P[0], P[1], 0]), np.array([P[0], 0, P[2]]), np.array([0, P[1], P[2]]),
-        np.array([P[0], 0, 0]), np.array([0, P[1], 0]), np.array([0, 0, P[2]]),
-    ]
-    for Q in vertices:
-        ax.plot(*np.array([P, Q]).T, color="#7b8794", lw=1.2, ls="--")
-        ax.scatter(*Q, color="#7b8794", s=28)
-    ax.text(P[0], P[1], 0.15, r"$(a,b,0)$", fontsize=10, ha="center")
-    ax.text(P[0], 0.1, P[2], r"$(a,0,c)$", fontsize=10)
-    ax.text(0.05, P[1], P[2], r"$(0,b,c)$", fontsize=10)
+    ax.scatter(*P, color=F.AMBER, s=75, depthshade=False)
+    label_box = {"facecolor": "white", "edgecolor": "none", "alpha": 0.84, "pad": 0.7}
+    ax.text(*(P + np.array([0.08, 0.08, 0.15])), r"$P(a,b,c)$", fontsize=12, bbox=label_box)
+    O3 = np.zeros(3)
+    X = np.array([P[0], 0, 0]); Y = np.array([0, P[1], 0]); Z = np.array([0, 0, P[2]])
+    XY = np.array([P[0], P[1], 0]); XZ = np.array([P[0], 0, P[2]]); YZ = np.array([0, P[1], P[2]])
+    box_edges = (
+        (X, XY), (Y, XY), (X, XZ), (Z, XZ), (Y, YZ), (Z, YZ),
+        (XY, P), (XZ, P), (YZ, P),
+    )
+    for start, end in box_edges:
+        ax.plot(*np.array([start, end]).T, color="#7b8794", lw=1.25, ls="--")
+    for point, label, offset in (
+        (XY, r"$(a,b,0)$", np.array([0.05, 0.05, 0.12])),
+        (XZ, r"$(a,0,c)$", np.array([0.05, 0.05, 0.10])),
+        (YZ, r"$(0,b,c)$", np.array([0.05, 0.05, 0.10])),
+    ):
+        ax.scatter(*point, color="#7b8794", s=30, depthshade=False)
+        ax.text(*(point + offset), label, fontsize=10, bbox=label_box)
+    for point in (O3, X, Y, Z):
+        ax.scatter(*point, color="#7b8794", s=20, depthshade=False)
     assert np.isclose(np.linalg.norm(P), np.sqrt(P @ P))
     _style_3d(ax, (0, 4.4))
     ax.set_title("坐標是沿三條互相垂直軸量出的有向分量", fontsize=15)
@@ -306,8 +364,9 @@ def fig_cross_product():
     ax.text(*(a * 0.65 + np.array([0, -0.15, 0.12])), r"$\vec a$", color=F.BLUE, fontsize=12)
     ax.text(*(b * 0.7 + np.array([-0.15, 0, 0.12])), r"$\vec b$", color=F.GREEN, fontsize=12)
     ax.text(*(scaled_cross * 0.8 + np.array([0.1, 0.1, 0])), r"$\vec a\times\vec b$", color=F.RED, fontsize=12)
-    ax.text(1.25, 1.2, 0.15, r"面積 $=|\vec a\times\vec b|$", fontsize=12)
-    _style_3d(ax, (-0.4, 4.0))
+    _right_angle_3d(ax, O, a, scaled_cross, size=0.28)
+    ax.text2D(0.07, 0.77, r"面積 $=|\vec a\times\vec b|$", transform=ax.transAxes, fontsize=13)
+    _style_3d(ax, (-0.4, 4.0), plane_normals=((0, 0, 1),))
     ax.set_title("外積方向依右手定則，長度等於張成的平行四邊形面積", fontsize=15)
     fig.tight_layout()
     return _save(fig, "數A4-1-外積方向與面積.svg")
@@ -333,8 +392,9 @@ def fig_triple_product():
     ax.text(*(0.55 * b + np.array([-0.15, 0, 0.08])), r"$\vec b$", fontsize=12, color=F.GREEN)
     ax.text(*(0.62 * c + np.array([0.12, 0.05, 0])), r"$\vec c$", fontsize=12, color=F.PURPLE)
     ax.text(*(0.5 * (c + foot) + np.array([0.08, 0.08, 0])), "高", color=F.RED, fontsize=11)
-    ax.text(0.2, 3.25, 3.25, r"$V=|\vec a\cdot(\vec b\times\vec c)|$", fontsize=14)
-    _style_3d(ax, (-0.3, 4.0))
+    ax.text2D(0.05, 0.78, r"$V=|\vec c\cdot(\vec a\times\vec b)|$", transform=ax.transAxes, fontsize=14)
+    _right_angle_3d(ax, foot, (1, 0, 0), c-foot, size=0.26)
+    _style_3d(ax, (-0.3, 4.0), plane_normals=((0, 0, 1),))
     ax.set_title("三重積是底面積乘上第三向量的垂直高度", fontsize=15)
     fig.tight_layout()
     return _save(fig, "數A4-1-三重積與體積.svg")

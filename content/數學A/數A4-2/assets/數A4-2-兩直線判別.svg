@@ -1040,7 +1040,7 @@ z
 " style="stroke: #bf8700"/>
     </defs>
     <g clip-path="url(#pa22d26ca7f)">
-     <use xlink:href="#m1d7c7c7241" x="152.634396" y="384.9839" style="fill: #bf8700; stroke: #bf8700"/>
+     <use xlink:href="#m1d7c7c7241" x="149.890351" y="386.630327" style="fill: #bf8700; stroke: #bf8700"/>
     </g>
    </g>
   </g>
@@ -1063,12 +1063,67 @@ L 594.995978 414.070779
 L 600.484068 359.189875
 " clip-path="url(#pb54ff9bd6a)" style="fill: none; stroke: #d1242f; stroke-width: 2.5; stroke-linecap: square"/>
    </g>
-   <g id="line2d_9">
-    <path d="M 435.841356 312.541107
-L 435.841356 433.279096
-" clip-path="url(#pb54ff9bd6a)" style="fill: none; stroke-dasharray: 4.44,1.92; stroke-dashoffset: 0; stroke: #d1242f; stroke-width: 1.2"/>
-   </g>
    <g id="text_4">
+    <!-- 不同平面 -->
+    <g style="fill: #d1242f" transform="translate(563.228114 319.126815) scale(0.1 -0.1)">
+     <defs>
+      <path id="NotoSansCJKtc-Regular-aaab" d="M 2490 2138
+L 3846 2138
+L 3846 1414
+L 2490 1414
+L 2490 2138
+z
+M 2490 2528
+L 2490 3238
+L 3846 3238
+L 3846 2528
+L 2490 2528
+z
+M 2490 1024
+L 3846 1024
+L 3846 275
+L 2490 275
+L 2490 1024
+z
+M 371 4954
+L 371 4493
+L 2842 4493
+C 2797 4230 2726 3930 2662 3686
+L 666 3686
+L 666 -512
+L 1126 -512
+L 1126 -173
+L 5248 -173
+L 5248 -512
+L 5734 -512
+L 5734 3686
+L 3155 3686
+L 3405 4493
+L 6048 4493
+L 6048 4954
+L 371 4954
+z
+M 1126 275
+L 1126 3238
+L 2048 3238
+L 2048 275
+L 1126 275
+z
+M 5248 275
+L 4288 275
+L 4288 3238
+L 5248 3238
+L 5248 275
+z
+" transform="scale(0.015625)"/>
+     </defs>
+     <use xlink:href="#NotoSansCJKtc-Regular-2518"/>
+     <use xlink:href="#NotoSansCJKtc-Regular-2eb1" transform="translate(100 0)"/>
+     <use xlink:href="#NotoSansCJKtc-Regular-41d6" transform="translate(200 0)"/>
+     <use xlink:href="#NotoSansCJKtc-Regular-aaab" transform="translate(300 0)"/>
+    </g>
+   </g>
+   <g id="text_5">
     <!-- 歪斜：方向不平行且聯立無解 -->
     <g style="fill: #222831" transform="translate(424.710351 290.076836) scale(0.11 -0.11)">
      <defs>
@@ -1202,7 +1257,7 @@ z
     </g>
    </g>
   </g>
-  <g id="text_5">
+  <g id="text_6">
    <!-- 方向向量先分流，再由參數聯立判斷共同點 -->
    <g style="fill: #222831" transform="translate(180.550351 20.4) scale(0.15 -0.15)">
     <defs>

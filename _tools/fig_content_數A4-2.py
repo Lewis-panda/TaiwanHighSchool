@@ -41,21 +41,66 @@ def _save(fig, filename):
     stem, extension = os.path.splitext(filename)
     if extension != ".svg" or not stem.startswith("數A4-2-"):
         raise AssertionError("輸出檔名必須是數A4-2章內 SVG")
+    if any(getattr(ax, "name", "") == "3d" for ax in fig.axes):
+        with plt.rc_context({"savefig.bbox": None}):
+            return F.save_to(fig, CHAPTER, stem, output_subdir="assets", write_pdf=False)
     return F.save_to(fig, CHAPTER, stem, output_subdir="assets", write_pdf=False)
 
 
-def _style_3d(ax, limits=(-1.0, 4.5), aspect=(1, 1, 0.85)):
+def _view_direction(elev, azim):
+    elev_rad = np.deg2rad(elev)
+    azim_rad = np.deg2rad(azim)
+    return np.array([
+        np.cos(elev_rad) * np.cos(azim_rad),
+        np.cos(elev_rad) * np.sin(azim_rad),
+        np.sin(elev_rad),
+    ])
+
+
+def _assert_plane_projection(normal, elev, azim, min_facing=0.25, max_facing=0.92):
+    """確保平面在正交投影中有足夠面積，同時保留法向量的可見長度。"""
+    unit_normal = np.asarray(normal, dtype=float)
+    unit_normal /= np.linalg.norm(unit_normal)
+    facing = abs(unit_normal @ _view_direction(elev, azim))
+    assert min_facing <= facing <= max_facing, (
+        f"平面投影退化：facing={facing:.3f}, elev={elev}, azim={azim}"
+    )
+
+
+def _style_3d(
+    ax,
+    limits=(-1.0, 4.5),
+    aspect=(1, 1, 0.85),
+    *,
+    elev=24,
+    azim=-57,
+    plane_normals=(),
+):
+    for normal in plane_normals:
+        _assert_plane_projection(normal, elev, azim)
     ax.set_xlim(*limits)
     ax.set_ylim(*limits)
     ax.set_zlim(*limits)
     ax.set_box_aspect(aspect)
-    ax.view_init(elev=24, azim=-57)
-    ax.grid(False)
-    ax.set_xticks([])
-    ax.set_yticks([])
-    ax.set_zticks([])
-    for axis in (ax.xaxis, ax.yaxis, ax.zaxis):
-        axis.pane.set_alpha(0)
+    ax.set_proj_type("ortho")
+    ax.view_init(elev=elev, azim=azim)
+    ax.computed_zorder = False
+    ax.set_axis_off()
+
+
+def _right_angle_3d(ax, vertex, direction_a, direction_b, size=0.30):
+    a = np.asarray(direction_a, dtype=float)
+    b = np.asarray(direction_b, dtype=float)
+    a /= np.linalg.norm(a)
+    b /= np.linalg.norm(b)
+    assert np.isclose(a @ b, 0, atol=1e-10)
+    vertex = np.asarray(vertex, dtype=float)
+    marker = np.array([
+        vertex + size * a,
+        vertex + size * (a + b),
+        vertex + size * b,
+    ])
+    ax.plot(*marker.T, color=F.INK, lw=1.5)
 
 
 def _arrow2(ax, start, end, color=F.BLUE, lw=2.3):
@@ -70,7 +115,7 @@ def fig_plane_normal():
     n = np.array([1.0, 2.0, 2.0])
     u = np.array([2.0, -1.0, 0.0])
     v = np.array([2.0, 0.0, -1.0])
-    B = A + 0.75 * u - 0.25 * v
+    B = A + 0.75 * v
     assert np.isclose(n @ (B - A), 0)
     assert np.isclose(n @ A, 6)
     vertices = [A - 0.8*u - 0.8*v, A + 0.8*u - 0.8*v,
@@ -79,14 +124,18 @@ def fig_plane_normal():
     ax = fig.add_subplot(111, projection="3d")
     ax.add_collection3d(Poly3DCollection([vertices], facecolors="#e5f0ff",
                                          edgecolors="#6f98c5", alpha=0.72))
-    ax.scatter(*A, color=F.INK, s=65)
-    ax.text(*(A + np.array([0.1, 0.1, 0.1])), "A", fontsize=12)
-    ax.plot(*np.array([A, B]).T, color=F.GREEN, lw=2.4)
+    label_box = {"facecolor": "white", "edgecolor": "none", "alpha": 0.84, "pad": 0.8}
+    ax.scatter(*A, color=F.INK, s=65, depthshade=False)
+    ax.scatter(*B, color=F.GREEN, s=52, depthshade=False)
+    ax.text(*(A + np.array([0.10, 0.18, 0.18])), "A", fontsize=12, bbox=label_box)
+    ax.text(*(B + np.array([0.10, 0.10, -0.18])), "X", color=F.GREEN, fontsize=12, bbox=label_box)
+    ax.quiver(*A, *(B - A), color=F.GREEN, arrow_length_ratio=0.14, lw=2.5)
     ax.quiver(*A, *n, color=F.RED, arrow_length_ratio=0.09, lw=2.7)
-    ax.text(*(A + 0.62*n), r"法向量 $\vec n=(a,b,c)$", color=F.RED, fontsize=11)
-    ax.text(*(A + 0.55*(B-A) + np.array([0, 0, 0.12])), r"$\overrightarrow{AX}$", color=F.GREEN, fontsize=11)
-    ax.text(-0.5, 3.8, 0.0, r"$\vec n\cdot\overrightarrow{AX}=0$", fontsize=13)
-    _style_3d(ax, (-1.2, 4.8))
+    ax.text(*(A + 0.68*n), r"法向量 $\vec n=(a,b,c)$", color=F.RED, fontsize=11, bbox=label_box)
+    ax.text(*(A + 0.52*(B-A) + np.array([0, 0.18, -0.10])), r"$\overrightarrow{AX}$", color=F.GREEN, fontsize=11, bbox=label_box)
+    _right_angle_3d(ax, A, B - A, n, size=0.34)
+    ax.text2D(0.06, 0.78, r"$\vec n\cdot\overrightarrow{AX}=0$", transform=ax.transAxes, fontsize=14)
+    _style_3d(ax, (-1.3, 5.4), elev=24, azim=0, plane_normals=(n,))
     ax.set_title("平面內位移都垂直法向量，形成點法式", fontsize=15)
     fig.tight_layout()
     return _save(fig, "數A4-2-點法式與法向量.svg")
@@ -111,11 +160,16 @@ def fig_intercept_plane():
                               (np.array([0,0,4.2]), F.RED, "z")):
         ax.quiver(*O, *end, color=color, arrow_length_ratio=0.08, lw=2.0)
         ax.text(*(1.04*end), label, color=color, fontsize=12)
-    for point, label in ((X, "(3,0,0)"), (Y, "(0,4,0)"), (Z, "(0,0,2)")):
-        ax.scatter(*point, color=F.AMBER, s=55)
-        ax.text(*(point + np.array([0.08,0.08,0.12])), label, fontsize=10)
-    ax.text(0.2, 3.7, 3.8, r"$\dfrac{x}{3}+\dfrac{y}{4}+\dfrac{z}{2}=1$", fontsize=14)
-    _style_3d(ax, (0, 4.5))
+    label_box = {"facecolor": "white", "edgecolor": "none", "alpha": 0.84, "pad": 0.7}
+    for point, label, offset in (
+        (X, "(3,0,0)", np.array([0.12, -0.18, 0.18])),
+        (Y, "(0,4,0)", np.array([-0.25, 0.08, 0.18])),
+        (Z, "(0,0,2)", np.array([0.12, 0.12, 0.18])),
+    ):
+        ax.scatter(*point, color=F.AMBER, s=55, depthshade=False)
+        ax.text(*(point + offset), label, fontsize=10, bbox=label_box)
+    ax.text2D(0.08, 0.78, r"$\dfrac{x}{3}+\dfrac{y}{4}+\dfrac{z}{2}=1$", transform=ax.transAxes, fontsize=14)
+    _style_3d(ax, (0, 4.5), plane_normals=((1/3, 1/4, 1/2),))
     ax.set_title("截距式直接標出平面與三條坐標軸的交點", fontsize=15)
     fig.tight_layout()
     return _save(fig, "數A4-2-截距式.svg")
@@ -150,10 +204,37 @@ def fig_plane_angle():
             bbox=label_box)
     ax.text(0.1, 1.0, 1.6, r"$\vec n_2$（三角）", color=F.INK, fontsize=12,
             bbox=label_box)
-    ax.text(-1.7, -2.4, 2.6, r"$\cos\theta=\dfrac{|\vec n_1\cdot\vec n_2|}{|\vec n_1||\vec n_2|}$", fontsize=13)
-    _style_3d(ax, (-2.8, 3.0))
+    arc_angle = np.linspace(0, theta, 60)
+    arc = 0.82 * np.column_stack((
+        np.zeros_like(arc_angle),
+        np.cos(arc_angle),
+        np.sin(arc_angle),
+    ))
+    ax.plot(*arc.T, color=F.AMBER, lw=2.1)
+    ax.text(*(arc[len(arc)//2] + np.array([0.04, 0.04, 0.04])), r"$\theta$", color=F.AMBER, fontsize=12)
+    ax.text2D(
+        0.03, 0.77,
+        r"$\cos\theta=\dfrac{|\vec n_1\cdot\vec n_2|}{|\vec n_1||\vec n_2|}$",
+        transform=ax.transAxes,
+        fontsize=13,
+    )
+    _style_3d(ax, (-2.8, 3.0), elev=25, azim=35, plane_normals=(n1, n2))
     ax.set_title("兩平面的銳夾角等於兩法向量的銳夾角", fontsize=15)
-    fig.tight_layout()
+    inset = fig.add_axes([0.71, 0.11, 0.23, 0.25])
+    origin2 = np.array([0.0, 0.0])
+    tip1_2d = np.array([1.0, 0.0])
+    tip2_2d = np.array([np.cos(theta), np.sin(theta)])
+    assert np.isclose(tip1_2d @ tip2_2d, np.cos(theta))
+    _arrow2(inset, origin2, tip1_2d, color=F.BLUE, lw=2.1)
+    _arrow2(inset, origin2, tip2_2d, color=F.RED, lw=2.1)
+    inset.add_patch(Arc(origin2, 0.86, 0.86, theta1=0, theta2=np.degrees(theta), color=F.AMBER, lw=1.8))
+    inset.text(0.62, -0.17, r"$\vec n_1$", color=F.BLUE, fontsize=10)
+    inset.text(0.30, 0.72, r"$\vec n_2$", color=F.RED, fontsize=10)
+    inset.text(0.45, 0.18, r"$\theta$", color=F.AMBER, fontsize=10)
+    inset.set_title("法向量剖面", fontsize=10)
+    inset.set_xlim(-0.12, 1.18); inset.set_ylim(-0.22, 1.10)
+    inset.set_aspect("equal"); inset.axis("off")
+    fig.subplots_adjust(left=0.03, right=0.97, bottom=0.04, top=0.90)
     return _save(fig, "數A4-2-兩平面夾角.svg")
 
 
@@ -166,13 +247,19 @@ def fig_point_plane_distance():
     ax = fig.add_subplot(111, projection="3d")
     ax.add_collection3d(Poly3DCollection(plane, facecolors="#e5f0ff", edgecolors="#6f98c5", alpha=0.72))
     ax.plot(*np.array([P,Q]).T, color=F.RED, lw=2.7)
-    ax.scatter(*P, color=F.AMBER, s=65)
-    ax.scatter(*Q, color=F.INK, s=55)
+    ax.scatter(*P, color=F.AMBER, s=65, depthshade=False)
+    ax.scatter(*Q, color=F.INK, s=55, depthshade=False)
     ax.text(*(P + np.array([0.1,0.1,0.12])), "P", fontsize=12)
     ax.text(*(Q + np.array([0.12,0.12,0.12])), "Q", fontsize=12)
-    ax.text(2.65, 2.0, 1.6, "最短距離", color=F.RED, fontsize=11)
-    ax.text(0.1, 3.7, 3.8, r"$d=\dfrac{|ax_0+by_0+cz_0+d_0|}{\sqrt{a^2+b^2+c^2}}$", fontsize=13)
-    _style_3d(ax, (0, 4.6))
+    ax.text(2.65, 2.0, 1.6, "法向距離", color=F.RED, fontsize=11)
+    _right_angle_3d(ax, Q, (1, 0, 0), (0, 0, 1), size=0.30)
+    ax.text2D(
+        0.04, 0.78,
+        r"$d=\dfrac{|ax_0+by_0+cz_0+d_0|}{\sqrt{a^2+b^2+c^2}}$",
+        transform=ax.transAxes,
+        fontsize=13,
+    )
+    _style_3d(ax, (0, 4.6), plane_normals=((0, 0, 1),))
     ax.set_title("點到平面的最短路徑沿法向量", fontsize=15)
     fig.tight_layout()
     return _save(fig, "數A4-2-點到平面距離.svg")
@@ -187,12 +274,15 @@ def fig_parallel_planes():
     ax.add_collection3d(Poly3DCollection(upper, facecolors="#e2f3e7", edgecolors=F.GREEN, alpha=0.55))
     A = np.array([2.0,2.0,1.0]); B = np.array([2.0,2.0,3.0])
     ax.plot(*np.array([A,B]).T, color=F.RED, lw=2.7)
-    ax.scatter(*A, color=F.INK, s=40); ax.scatter(*B, color=F.INK, s=40)
-    ax.text(2.2,2.1,2.0,"共同法向距離", color=F.RED, fontsize=11)
-    ax.text(0.2,3.8,1.05,r"$E_1:ax+by+cz+d_1=0$", fontsize=11)
-    ax.text(0.2,3.8,3.05,r"$E_2:ax+by+cz+d_2=0$", fontsize=11)
+    ax.scatter(*A, color=F.INK, s=40, depthshade=False); ax.scatter(*B, color=F.INK, s=40, depthshade=False)
+    label_box = {"facecolor": "white", "edgecolor": "none", "alpha": 0.88, "pad": 0.8}
+    ax.text(2.45,1.25,2.05,"共同法向距離", color=F.RED, fontsize=11, bbox=label_box)
+    ax.text(0.15,0.15,0.78,r"$E_1:ax+by+cz+d_1=0$", fontsize=11, bbox=label_box)
+    ax.text(0.2,3.8,3.18,r"$E_2:ax+by+cz+d_2=0$", fontsize=11, bbox=label_box)
     assert np.isclose(np.linalg.norm(B-A), 2.0)
-    _style_3d(ax, (0,4.5))
+    _right_angle_3d(ax, A, (1, 0, 0), (0, 0, 1), size=0.26)
+    _right_angle_3d(ax, B, (1, 0, 0), (0, 0, -1), size=0.26)
+    _style_3d(ax, (0,4.5), plane_normals=((0, 0, 1), (0, 0, 1)))
     ax.set_title("平行平面的距離沿共同法向量量測", fontsize=15)
     fig.tight_layout()
     return _save(fig, "數A4-2-平行平面距離.svg")
@@ -209,11 +299,16 @@ def fig_parametric_line():
     line = A + grid[:,None]*d
     ax.plot(*line.T, color=F.BLUE, lw=2.7)
     colors = [F.PURPLE,F.GREEN,F.AMBER,F.RED]
+    label_box = {"facecolor": "white", "edgecolor": "none", "alpha": 0.82, "pad": 0.6}
     for t,p,c in zip(ts,pts,colors):
-        ax.scatter(*p,color=c,s=55)
-        ax.text(*(p+np.array([0.08,0.08,0.1])),rf"$t={t:g}$",color=c,fontsize=10)
-    ax.quiver(*A,*d,color=F.GREEN,arrow_length_ratio=0.1,lw=2.4)
-    ax.text(-0.7,3.7,4.0,r"$X=A+t\vec d$",fontsize=15)
+        ax.scatter(*p,color=c,s=55,depthshade=False)
+        label = r"$A\;(t=0)$" if np.isclose(t, 0) else rf"$t={t:g}$"
+        ax.text(*(p+np.array([0.08,0.08,0.1])),label,color=c,fontsize=10,bbox=label_box)
+    direction_start = A + 0.12*d
+    direction = 0.62*d
+    ax.quiver(*direction_start,*direction,color=F.GREEN,arrow_length_ratio=0.16,lw=2.5)
+    ax.text(*(direction_start + 0.58*direction + np.array([0.05, 0.05, 0.10])), r"$\vec d$", color=F.GREEN, fontsize=12, bbox=label_box)
+    ax.text2D(0.08,0.78,r"$X=A+t\vec d$",transform=ax.transAxes,fontsize=15)
     _style_3d(ax, (-1.0,5.0))
     ax.set_title("參數 $t$ 改變時，點沿固定方向向量在直線上移動", fontsize=15)
     fig.tight_layout()
@@ -229,10 +324,17 @@ def fig_two_plane_line():
     ax.add_collection3d(Poly3DCollection(plane1,facecolors="#dfeeff",edgecolors=F.BLUE,alpha=0.55))
     ax.add_collection3d(Poly3DCollection(plane2,facecolors="#e2f3e7",edgecolors=F.GREEN,alpha=0.55))
     ax.plot([-2.5,2.5],[0,0],[0,0],color=F.RED,lw=3.0)
-    ax.text(1.1,0.15,0.15,r"交線方向 $\vec n_1\times\vec n_2$",color=F.RED,fontsize=11)
+    ax.quiver(2.3,0,0,-4.6,0,0,color=F.RED,arrow_length_ratio=0.08,lw=2.8)
+    origin = np.zeros(3)
+    ax.quiver(*origin,*n1,color=F.BLUE,arrow_length_ratio=0.16,lw=2.4)
+    ax.quiver(*origin,*n2,color=F.GREEN,arrow_length_ratio=0.16,lw=2.4)
+    label_box = {"facecolor": "white", "edgecolor": "none", "alpha": 0.84, "pad": 0.8}
+    ax.text(1.1,0.15,0.15,r"交線方向 $\vec n_1\times\vec n_2$",color=F.RED,fontsize=11,bbox=label_box)
+    ax.text(0.08,0.08,0.72,r"$\vec n_1$",color=F.BLUE,fontsize=11,bbox=label_box)
+    ax.text(0.08,0.72,0.08,r"$\vec n_2$",color=F.GREEN,fontsize=11,bbox=label_box)
     ax.text(-1.9,1.6,0.1,r"$E_1$",color=F.BLUE,fontsize=12)
     ax.text(-1.9,0.1,1.7,r"$E_2$",color=F.GREEN,fontsize=12)
-    _style_3d(ax,(-2.8,3.0))
+    _style_3d(ax,(-2.8,3.0),elev=28,azim=-35,plane_normals=(n1,n2))
     ax.set_title("兩相交平面的公共點形成直線，方向垂直兩個法向量",fontsize=15)
     fig.tight_layout()
     return _save(fig,"數A4-2-兩面交線.svg")
@@ -266,11 +368,21 @@ def fig_plane_reflection():
     fig=plt.figure(figsize=(9.0,6.5)); ax=fig.add_subplot(111,projection="3d")
     ax.add_collection3d(Poly3DCollection(plane,facecolors="#e5f0ff",edgecolors="#6f98c5",alpha=0.65))
     ax.plot(*np.array([P,R]).T,color=F.RED,lw=2.4,ls="--")
-    for point,label,color in ((P,"P",F.AMBER),(Q,"Q",F.INK),(R,"P'",F.PURPLE)):
-        ax.scatter(*point,color=color,s=60); ax.text(*(point+np.array([0.1,0.1,0.1])),label,color=color,fontsize=12)
-    ax.text(2.2,2.1,1.2,"PQ",color=F.RED,fontsize=11)
-    ax.text(2.2,2.1,-1.4,"QP'",color=F.RED,fontsize=11)
-    _style_3d(ax,(-3.0,4.5))
+    label_box = {"facecolor": "white", "edgecolor": "none", "alpha": 0.84, "pad": 0.7}
+    point_labels = (
+        (P,"P",F.AMBER,np.array([0.18,0.12,0.18])),
+        (Q,"Q",F.INK,np.array([0.35,0.18,0.08])),
+        (R,"P'",F.PURPLE,np.array([0.22,0.14,-0.14])),
+    )
+    for point,label,color,offset in point_labels:
+        ax.scatter(*point,color=color,s=60,depthshade=False)
+        ax.text(*(point+offset),label,color=color,fontsize=12,bbox=label_box)
+    ax.text(2.35,2.12,1.35,"PQ",color=F.RED,fontsize=11)
+    ax.text(2.35,2.12,-1.35,"QP'",color=F.RED,fontsize=11)
+    for z in (1.3, -1.3):
+        ax.plot([1.84,2.16],[2.0,2.0],[z,z],color=F.RED,lw=2.0)
+    _right_angle_3d(ax, Q, (1, 0, 0), (0, 0, 1), size=0.28)
+    _style_3d(ax,(-3.0,4.5),plane_normals=((0,0,1),))
     ax.set_title("投影點是原點與平面對稱點的中點",fontsize=15)
     fig.tight_layout()
     return _save(fig,"數A4-2-平面投影與對稱.svg")
@@ -286,10 +398,29 @@ def fig_line_plane_angle():
     O=np.array([0.4,0.4,0.0]); ax.quiver(*O,*d,color=F.BLUE,arrow_length_ratio=0.09,lw=2.6)
     ax.quiver(*O,*proj,color=F.GREEN,arrow_length_ratio=0.09,lw=2.3)
     ax.plot(*np.array([O+d,O+proj]).T,color=F.RED,lw=1.8,ls="--")
+    normal_base=np.array([0.9,2.0,0.0]); normal=np.array([0.0,0.0,1.7])
+    ax.quiver(*normal_base,*normal,color=F.RED,arrow_length_ratio=0.13,lw=2.3)
     ax.text(2.2,0.55,1.55,r"直線方向 $\vec d$",color=F.BLUE,fontsize=11)
     ax.text(2.0,0.1,0.15,"平面投影",color=F.GREEN,fontsize=11)
-    ax.text(0.1,2.5,4.0,r"$\sin\theta=\dfrac{|\vec d\cdot\vec n|}{|\vec d||\vec n|}$",fontsize=13)
-    _style_3d(ax,(0,4.8))
+    ax.text(4.15,0.15,1.15,"法向分量",color=F.RED,fontsize=11)
+    ax.text(*(normal_base+0.72*normal+np.array([0.08,0.05,0.0])),r"法向量 $\vec n$",color=F.RED,fontsize=11)
+    _right_angle_3d(ax,normal_base,(1,0,0),normal,size=0.26)
+    angle_values = np.linspace(0, theta, 50)
+    arc = O + 0.85*np.column_stack((
+        np.cos(angle_values),
+        np.zeros_like(angle_values),
+        np.sin(angle_values),
+    ))
+    ax.plot(*arc.T,color=F.AMBER,lw=2.2)
+    ax.text(*(arc[len(arc)//2] + np.array([0.05,0.04,0.05])),r"$\theta$",color=F.AMBER,fontsize=12)
+    _right_angle_3d(ax, O+proj, (-1,0,0), (0,0,1), size=0.28)
+    ax.text2D(
+        0.04,0.78,
+        r"$\sin\theta=\dfrac{|\vec d\cdot\vec n|}{|\vec d||\vec n|}$",
+        transform=ax.transAxes,
+        fontsize=13,
+    )
+    _style_3d(ax,(0,4.8),plane_normals=((0,0,1),))
     ax.set_title("線面角由直線方向在法向量上的分量決定",fontsize=15)
     fig.tight_layout()
     return _save(fig,"數A4-2-直線與平面夾角.svg")
@@ -307,15 +438,23 @@ def fig_line_relations():
             ax.plot([0.8,4.8],[1.0,2.1],color=F.BLUE,lw=2.5)
             ax.plot([1.1,5.1],[2.2,3.3],color=F.GREEN,lw=2.5)
         elif kind=="intersect":
-            ax.plot([0.8,5.0],[0.9,3.4],color=F.BLUE,lw=2.5)
-            ax.plot([0.9,4.9],[3.3,1.0],color=F.RED,lw=2.5)
-            ax.scatter([2.95],[2.18],color=F.AMBER,s=50,zorder=4)
+            p1=np.array([0.8,0.9]); p2=np.array([5.0,3.4])
+            q1=np.array([0.9,3.3]); q2=np.array([4.9,1.0])
+            parameters=np.linalg.solve(
+                np.column_stack((p2-p1,-(q2-q1))),
+                q1-p1,
+            )
+            intersection=p1+parameters[0]*(p2-p1)
+            assert np.allclose(intersection,q1+parameters[1]*(q2-q1))
+            ax.plot([p1[0],p2[0]],[p1[1],p2[1]],color=F.BLUE,lw=2.5)
+            ax.plot([q1[0],q2[0]],[q1[1],q2[1]],color=F.RED,lw=2.5)
+            ax.scatter([intersection[0]],[intersection[1]],color=F.AMBER,s=50,zorder=4)
         else:
             plane=np.array([[0.6,0.6],[4.4,0.6],[5.1,2.0],[1.3,2.0]])
             ax.add_patch(Polygon(plane,closed=True,facecolor="#eef4fa",edgecolor="#9bb0c5"))
             ax.plot([0.9,4.7],[0.9,1.65],color=F.BLUE,lw=2.5)
             ax.plot([1.8,4.8],[3.5,2.65],color=F.RED,lw=2.5)
-            ax.plot([1.8,1.8],[3.5,1.3],color=F.RED,lw=1.2,ls="--")
+            ax.text(4.85,3.38,"不同平面",color=F.RED,fontsize=10,ha="right")
         ax.set_title(title,fontsize=11)
         ax.set_xlim(0.3,5.5); ax.set_ylim(0.3,3.8); ax.set_aspect("equal"); ax.axis("off")
     fig.suptitle("方向向量先分流，再由參數聯立判斷共同點",fontsize=15)
@@ -329,9 +468,13 @@ def fig_point_line_distance():
     assert np.isclose((P-H)@d,0)
     fig,ax=plt.subplots(figsize=(8.8,5.2))
     line=np.array([A-0.15*d,A+1.15*d]); ax.plot(line[:,0],line[:,1],color=F.BLUE,lw=2.6)
+    direction_start=A+0.12*d; direction_end=A+0.48*d
+    _arrow2(ax,direction_start,direction_end,color=F.GREEN,lw=2.2)
     ax.plot([P[0],H[0]],[P[1],H[1]],color=F.RED,lw=2.4,ls="--")
     ax.scatter([P[0],H[0],A[0]],[P[1],H[1],A[1]],color=[F.AMBER,F.INK,F.GREEN],s=60)
     ax.text(P[0]+0.1,P[1]+0.1,"P",fontsize=12); ax.text(H[0]+0.1,H[1]-0.35,"H",fontsize=12)
+    ax.text(A[0]-0.25,A[1]-0.35,"A",color=F.GREEN,fontsize=12)
+    ax.text(*(direction_start+0.54*(direction_end-direction_start)+np.array([0.0,0.25])),r"$\vec d$",color=F.GREEN,fontsize=12)
     ax.text(2.7,2.5,r"$\overrightarrow{PH}\perp\vec d$",color=F.RED,fontsize=12)
     ax.text(3.0,4.55,r"$H=A+\dfrac{\overrightarrow{AP}\cdot\vec d}{|\vec d|^2}\vec d$",ha="center",fontsize=13)
     ax.set_xlim(0,6); ax.set_ylim(0,5); ax.set_aspect("equal"); ax.axis("off")
@@ -349,12 +492,19 @@ def fig_skew_distance():
     ax.plot(*np.array([p1,p1+d1]).T,color=F.BLUE,lw=2.8)
     ax.plot(*np.array([p2,p2+d2]).T,color=F.GREEN,lw=2.8)
     ax.plot(*np.array([A,B]).T,color=F.RED,lw=2.6,ls="--")
-    ax.scatter(*A,color=F.INK,s=50); ax.scatter(*B,color=F.INK,s=50)
+    ax.scatter(*A,color=F.INK,s=50,depthshade=False); ax.scatter(*B,color=F.INK,s=50,depthshade=False)
     ax.text(*(A+np.array([0.1,0.1,0.1])),"A",fontsize=11); ax.text(*(B+np.array([0.1,0.1,0.1])),"B",fontsize=11)
     ax.text(2.0,0.1,0.1,r"$L_1$",color=F.BLUE,fontsize=12)
     ax.text(1.1,2.2,2.25,r"$L_2$",color=F.GREEN,fontsize=12)
     ax.text(1.15,0.1,1.1,"公垂線段",color=F.RED,fontsize=11)
-    ax.text(-1.2,3.5,3.8,r"$d=\dfrac{|\overrightarrow{P_1P_2}\cdot(\vec d_1\times\vec d_2)|}{|\vec d_1\times\vec d_2|}$",fontsize=12)
+    _right_angle_3d(ax,A,(1,0,0),(0,0,1),size=0.25)
+    _right_angle_3d(ax,B,(0,1,0),(0,0,-1),size=0.25)
+    ax.text2D(
+        0.03,0.78,
+        r"$d=\dfrac{|\overrightarrow{AB}\cdot(\vec d_1\times\vec d_2)|}{|\vec d_1\times\vec d_2|}$",
+        transform=ax.transAxes,
+        fontsize=12,
+    )
     _style_3d(ax,(-2.0,4.2))
     ax.set_title("歪斜線的最短連線同時垂直兩條直線",fontsize=15)
     fig.tight_layout()

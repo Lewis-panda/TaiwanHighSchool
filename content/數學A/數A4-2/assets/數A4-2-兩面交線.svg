@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="437.28pt" height="456.48pt" viewBox="0 0 437.28 456.48" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="648pt" height="468pt" viewBox="0 0 648 468" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -20,91 +20,97 @@
  </defs>
  <g id="figure_1">
   <g id="patch_1">
-   <path d="M 0 456.48
-L 437.28 456.48
-L 437.28 0
+   <path d="M 0 468
+L 648 468
+L 648 0
 L 0 0
 z
 " style="fill: #ffffff"/>
   </g>
   <g id="patch_2">
-   <path d="M 7.2 449.28
-L 430.08 449.28
-L 430.08 26.4
-L 7.2 26.4
+   <path d="M 112.56 455.04
+L 535.44 455.04
+L 535.44 32.16
+L 112.56 32.16
 z
 " style="fill: #ffffff"/>
   </g>
-  <g id="pane3d_1">
-   <g id="patch_3">
-    <path d="M 42.563003 349.889877
-L 188.842136 257.95625
-L 187.495506 64.251975
-L 35.03704 142.220345
-" style="fill: none; opacity: 0"/>
-   </g>
-  </g>
-  <g id="pane3d_2">
-   <g id="patch_4">
-    <path d="M 188.842136 257.95625
-L 400.699578 315.869918
-L 407.772557 113.307372
-L 187.495506 64.251975
-" style="fill: none; opacity: 0"/>
-   </g>
-  </g>
-  <g id="pane3d_3">
-   <g id="patch_5">
-    <path d="M 42.563003 349.889877
-L 265.340422 418.793922
-L 400.699578 315.869918
-L 188.842136 257.95625
-" style="fill: none; opacity: 0"/>
-   </g>
-  </g>
-  <g id="axis3d_1">
-   <g id="line2d_1">
-    <path d="M 42.563003 349.889877
-L 265.340422 418.793922
-" style="fill: none; stroke: #222831; stroke-width: 1.1; stroke-linecap: square"/>
-   </g>
-  </g>
-  <g id="axis3d_2">
-   <g id="line2d_2">
-    <path d="M 400.699578 315.869918
-L 265.340422 418.793922
-" style="fill: none; stroke: #222831; stroke-width: 1.1; stroke-linecap: square"/>
-   </g>
-  </g>
-  <g id="axis3d_3">
-   <g id="line2d_3">
-    <path d="M 400.699578 315.869918
-L 407.772557 113.307372
-" style="fill: none; stroke: #222831; stroke-width: 1.1; stroke-linecap: square"/>
-   </g>
-  </g>
   <g id="axes_1">
-   <g id="line2d_4">
-    <path d="M 125.094709 211.509576
-L 315.74484 262.152041
-" clip-path="url(#p8ca5de305f)" style="fill: none; stroke: #d1242f; stroke-width: 3; stroke-linecap: square"/>
-   </g>
    <g id="Poly3DCollection_1">
     <defs>
-     <path id="mbf3ca50572" d="M 144.405611 -171.53344
-L 294.823017 -128.854841
-L 296.830698 -272.406417
-L 142.217539 -310.598963
+     <path id="med1cf63af6" d="M 196.585836 -237.718886
+L 301.018756 -167.699237
+L 450.164424 -216.727523
+L 345.731503 -286.747173
+z
+" style="stroke: #1f6feb"/>
+    </defs>
+    <g clip-path="url(#p10d3ced68f)">
+     <use xlink:href="#med1cf63af6" x="0" y="468" style="fill: #dfeeff; fill-opacity: 0.55; stroke: #1f6feb"/>
+    </g>
+   </g>
+   <g id="Poly3DCollection_2">
+    <defs>
+     <path id="m52b0928c72" d="M 271.15867 -193.909549
+L 375.59159 -123.8899
+L 375.59159 -260.53686
+L 271.15867 -330.55651
 z
 " style="stroke: #1a7f37"/>
     </defs>
-    <g clip-path="url(#p8ca5de305f)">
-     <use xlink:href="#mbf3ca50572" x="0" y="456.48" style="fill: #e2f3e7; fill-opacity: 0.55; stroke: #1a7f37"/>
+    <g clip-path="url(#p10d3ced68f)">
+     <use xlink:href="#m52b0928c72" x="0" y="468" style="fill: #e2f3e7; fill-opacity: 0.55; stroke: #1a7f37"/>
     </g>
    </g>
+   <g id="line2d_1">
+    <path d="M 258.104554 197.014514
+L 388.645705 284.539076
+" clip-path="url(#p10d3ced68f)" style="fill: none; stroke: #d1242f; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="Line3DCollection_1">
+    <path d="M 263.3262 200.515497
+L 383.424059 281.038094
+" clip-path="url(#p10d3ced68f)" style="fill: none; stroke: #d1242f; stroke-width: 2.8"/>
+    <path d="M 263.3262 200.515497
+L 272.60665 209.991554
+" clip-path="url(#p10d3ced68f)" style="fill: none; stroke: #d1242f; stroke-width: 2.8"/>
+    <path d="M 263.3262 200.515497
+L 272.60665 203.484056
+" clip-path="url(#p10d3ced68f)" style="fill: none; stroke: #d1242f; stroke-width: 2.8"/>
+   </g>
+   <g id="Line3DCollection_2">
+    <path d="M 323.37513 206.615055
+L 323.37513 240.776795
+" clip-path="url(#p10d3ced68f)" style="fill: none; stroke: #1f6feb; stroke-width: 2.4"/>
+    <path d="M 323.37513 206.615055
+L 322.293961 211.169792
+" clip-path="url(#p10d3ced68f)" style="fill: none; stroke: #1f6feb; stroke-width: 2.4"/>
+    <path d="M 323.37513 206.615055
+L 324.456299 212.619585
+" clip-path="url(#p10d3ced68f)" style="fill: none; stroke: #1f6feb; stroke-width: 2.4"/>
+   </g>
+   <g id="Line3DCollection_3">
+    <path d="M 360.661547 228.519724
+L 323.37513 240.776795
+" clip-path="url(#p10d3ced68f)" style="fill: none; stroke: #1a7f37; stroke-width: 2.4"/>
+    <path d="M 360.661547 228.519724
+L 354.899001 231.828705
+" clip-path="url(#p10d3ced68f)" style="fill: none; stroke: #1a7f37; stroke-width: 2.4"/>
+    <path d="M 360.661547 228.519724
+L 354.899001 228.999358
+" clip-path="url(#p10d3ced68f)" style="fill: none; stroke: #1a7f37; stroke-width: 2.4"/>
+   </g>
    <g id="text_1">
+    <g id="patch_3">
+     <path d="M 356.917146 255.489377
+L 440.957146 255.489377
+L 440.957146 242.619377
+L 356.917146 242.619377
+z
+" style="fill: #ffffff; opacity: 0.84"/>
+    </g>
     <!-- 交線方向 $\vec n_1\times\vec n_2$ -->
-    <g style="fill: #d1242f" transform="translate(264.14661 239.73743) scale(0.11 -0.11)">
+    <g style="fill: #d1242f" transform="translate(357.687146 253.069377) scale(0.11 -0.11)">
      <defs>
       <path id="NotoSansCJKtc-Regular-25ec" d="M 2035 3821
 C 1651 3334 1018 2829 448 2509
@@ -468,8 +474,40 @@ z
     </g>
    </g>
    <g id="text_2">
+    <g id="patch_4">
+     <path d="M 327.676702 219.02017
+L 340.766702 219.02017
+L 340.766702 206.15017
+L 327.676702 206.15017
+z
+" style="fill: #ffffff; opacity: 0.84"/>
+    </g>
+    <!-- $\vec n_1$ -->
+    <g style="fill: #1f6feb" transform="translate(328.446702 216.60017) scale(0.11 -0.11)">
+     <use xlink:href="#Cmmi10-6e" transform="translate(-6.535156 5.609375)"/>
+     <use xlink:href="#Cmmi10-7a" transform="translate(0 0.53125)"/>
+     <use xlink:href="#Cmr10-64" transform="translate(64.014056 -14.468712) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="text_3">
+    <g id="patch_5">
+     <path d="M 351.540008 233.039158
+L 364.630008 233.039158
+L 364.630008 220.169158
+L 351.540008 220.169158
+z
+" style="fill: #ffffff; opacity: 0.84"/>
+    </g>
+    <!-- $\vec n_2$ -->
+    <g style="fill: #1a7f37" transform="translate(352.310008 230.619158) scale(0.11 -0.11)">
+     <use xlink:href="#Cmmi10-6e" transform="translate(-6.535156 5.609375)"/>
+     <use xlink:href="#Cmmi10-7a" transform="translate(0 0.53125)"/>
+     <use xlink:href="#Cmr10-31" transform="translate(64.014056 -14.468712) scale(0.7)"/>
+    </g>
+   </g>
+   <g id="text_4">
     <!-- $E_1$ -->
-    <g style="fill: #1f6feb" transform="translate(186.795249 190.447553) scale(0.12 -0.12)">
+    <g style="fill: #1f6feb" transform="translate(333.42776 184.489973) scale(0.12 -0.12)">
      <defs>
       <path id="Cmmi10-6f" d="M 300 0
 Q 238 0 238 84
@@ -541,16 +579,16 @@ z
      <use xlink:href="#Cmr10-64" transform="translate(73.779297 -14.312462) scale(0.7)"/>
     </g>
    </g>
-   <g id="text_3">
+   <g id="text_5">
     <!-- $E_2$ -->
-    <g style="fill: #1a7f37" transform="translate(148.670914 156.07489) scale(0.12 -0.12)">
+    <g style="fill: #1a7f37" transform="translate(277.498134 148.216796) scale(0.12 -0.12)">
      <use xlink:href="#Cmmi10-6f" transform="translate(0 0.6875)"/>
      <use xlink:href="#Cmr10-31" transform="translate(73.779297 -14.312462) scale(0.7)"/>
     </g>
    </g>
-   <g id="text_4">
+   <g id="text_6">
     <!-- 兩相交平面的公共點形成直線，方向垂直兩個法向量 -->
-    <g style="fill: #222831" transform="translate(46.14 20.4) scale(0.15 -0.15)">
+    <g style="fill: #222831" transform="translate(151.5 26.16) scale(0.15 -0.15)">
      <defs>
       <path id="NotoSansCJKtc-Regular-2a94" d="M 1568 2784
 L 1568 2445
@@ -1350,24 +1388,11 @@ z
      <use xlink:href="#NotoSansCJKtc-Regular-a108" transform="translate(2200 0)"/>
     </g>
    </g>
-   <g id="Poly3DCollection_2">
-    <defs>
-     <path id="me8b3c70df8" d="M 90.717065 -209.228798
-L 245.907049 -166.133283
-L 342.705564 -231.089958
-L 192.879325 -269.231258
-z
-" style="stroke: #1f6feb"/>
-    </defs>
-    <g clip-path="url(#p8ca5de305f)">
-     <use xlink:href="#me8b3c70df8" x="0" y="456.48" style="fill: #dfeeff; fill-opacity: 0.55; stroke: #1f6feb"/>
-    </g>
-   </g>
   </g>
  </g>
  <defs>
-  <clipPath id="p8ca5de305f">
-   <rect x="7.2" y="26.4" width="422.88" height="422.88"/>
+  <clipPath id="p10d3ced68f">
+   <rect x="112.56" y="32.16" width="422.88" height="422.88"/>
   </clipPath>
  </defs>
 </svg>

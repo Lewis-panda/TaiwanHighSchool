@@ -1313,54 +1313,54 @@
       "inputs": [
         {
           "path": "_tools/fig_content_數A4-2.py",
-          "sha256": "e345aef35dad866b2675efb21e52927f112e7656654641c057be45a4a1aba760"
+          "sha256": "50b51108fcbfdd0b57f4bd4a23afacf07ca55b2b379837a6ea6757cabf449126"
         }
       ],
       "outputs": [
         {
           "entrypoint": "fig_plane_angle",
           "path": "content/數學A/數A4-2/assets/數A4-2-兩平面夾角.svg",
-          "sha256": "b890b55e79a40e5ad1196d68b2caeedd579de32437e7f5a26a64471309a00983"
+          "sha256": "f1770729c1ec750c9669ff4e063896d0c2c948ed54a2a182e90aa3c051c96762"
         },
         {
           "entrypoint": "fig_line_relations",
           "path": "content/數學A/數A4-2/assets/數A4-2-兩直線判別.svg",
-          "sha256": "0bde93b341d5aed524f3430ee9f6f14ad3268a373f70602831fbc264e41645b3"
+          "sha256": "3300b3aa8ba833740f2934539d94607a199dc09a63540fdee9ae3cf93d937ab2"
         },
         {
           "entrypoint": "fig_two_plane_line",
           "path": "content/數學A/數A4-2/assets/數A4-2-兩面交線.svg",
-          "sha256": "d0e35ed50657d054136404af691c2692e84ee5d8a38924316dfa06fff255abfe"
+          "sha256": "80cae940923bf3f45676089cb1a2d7369f2b160a82f5783967ed50c34b51e5c4"
         },
         {
           "entrypoint": "fig_parallel_planes",
           "path": "content/數學A/數A4-2/assets/數A4-2-平行平面距離.svg",
-          "sha256": "6423b5e514d49a9ba09e2c51311eb042bd14ff32768cedf7b2e550c9ad319fe6"
+          "sha256": "8a84c6ac549ede0f8ca8a3f6de312752a2cdc51f4b4096f5be24d2bb7b6e99a0"
         },
         {
           "entrypoint": "fig_plane_reflection",
           "path": "content/數學A/數A4-2/assets/數A4-2-平面投影與對稱.svg",
-          "sha256": "61cf0d0c20e14ed9a9ee7bddcb9f267fad719a3717e24ffe141e7770d2e90455"
+          "sha256": "50425df29913b1344a603b975cfd090b775f27e55f5495de305ca406bf74f48f"
         },
         {
           "entrypoint": "fig_intercept_plane",
           "path": "content/數學A/數A4-2/assets/數A4-2-截距式.svg",
-          "sha256": "9f614d24eda41c3f7537c0713522e1b44a8e8b9b46806c84734462cf3e9076f5"
+          "sha256": "2e68e43443015a7bee2f77825985d95d7ebadb5b3850fd72003fa95e818a1b65"
         },
         {
           "entrypoint": "fig_skew_distance",
           "path": "content/數學A/數A4-2/assets/數A4-2-歪斜線距離.svg",
-          "sha256": "bce9ff7a8e9a1a97bee8690b8cac471664a3d7d22ea25ad9cca58f60ae36dffe"
+          "sha256": "58d02fb4c84d1d0f43a9d6089a6f8f6fca15c8f041210350e3c35715b78dc2eb"
         },
         {
           "entrypoint": "fig_parametric_line",
           "path": "content/數學A/數A4-2/assets/數A4-2-直線參數式.svg",
-          "sha256": "e71782d613e9cb3fcd04060ad211736b5a0b1055d80eedb0352ed1f8cfe4a902"
+          "sha256": "4246aa2a7d150a678815d2c976aac5b8dd637438f26b78f75ed72938e81c4aff"
         },
         {
           "entrypoint": "fig_line_plane_angle",
           "path": "content/數學A/數A4-2/assets/數A4-2-直線與平面夾角.svg",
-          "sha256": "bd832580a0d3e622a36511a95c4d7ecf0511310bb4f3c8007c90e9f245003909"
+          "sha256": "edce5f6b244372e137407460cb958b4c31086a51be39b72b3c3aae2ac8153e2b"
         },
         {
           "entrypoint": "fig_line_plane_relations",
@@ -1370,17 +1370,17 @@
         {
           "entrypoint": "fig_point_plane_distance",
           "path": "content/數學A/數A4-2/assets/數A4-2-點到平面距離.svg",
-          "sha256": "9b657e7012d14f938f34f465a66531efa7428fcc82ddbae222e4dc9d341433ce"
+          "sha256": "6e0eca5c407a32bded734802bd2ab206f687c33481989e8d249f764110bb3a87"
         },
         {
           "entrypoint": "fig_point_line_distance",
           "path": "content/數學A/數A4-2/assets/數A4-2-點到直線距離.svg",
-          "sha256": "249d241b612b9491727d089f968eca1fdd270f799219d779cc3d1bbf204b4a90"
+          "sha256": "d45479e9c99ef084945044d02ac5513c0c2669368aac041663a2aaad35facf77"
         },
         {
           "entrypoint": "fig_plane_normal",
           "path": "content/數學A/數A4-2/assets/數A4-2-點法式與法向量.svg",
-          "sha256": "6d7b8ce0dfd37aa4e8130e87e6820bb0f49431d3c45f338e2aae8d57741e88af"
+          "sha256": "133126330b2c599eca3f5a8b9b9b31d482924d1e9e6e3e57dcae6e3e68d283ed"
         }
       ]
     },
@@ -2168,19 +2168,19 @@
       "inputs": [
         {
           "path": "_tools/fig_content_數A4-1.py",
-          "sha256": "812105f2870a5bb473e8e64d77e316058b34188677fa27a0d2ef0a74a9be7040"
+          "sha256": "58884a3f78ed9cd752574b9aa4fa3e8ab1b0a0ccc049982ea8b397cf7010499b"
         }
       ],
       "outputs": [
         {
           "entrypoint": "fig_three_perpendiculars",
           "path": "content/數學A/數A4-1/assets/數A4-1-三垂線定理.svg",
-          "sha256": "de889d01671db97893cb23dcb80fcc3c9c98cd766fb0d1db281ae211e96fc523"
+          "sha256": "b703ff9116fd45c2f381aa3c923feca0766fa4a5b3dd785f9ecb5ec9ba12bca6"
         },
         {
           "entrypoint": "fig_triple_product",
           "path": "content/數學A/數A4-1/assets/數A4-1-三重積與體積.svg",
-          "sha256": "2f68e16abca8659bf1deac98ba1b87323a5bb129215f4c15536ce688e93463a3"
+          "sha256": "37fe6c777a537785fc1e1d68712c33c6106ce6daefc8144d3beec6cbf3244114"
         },
         {
           "entrypoint": "fig_determinant",
@@ -2205,7 +2205,7 @@
         {
           "entrypoint": "fig_cross_product",
           "path": "content/數學A/數A4-1/assets/數A4-1-外積方向與面積.svg",
-          "sha256": "6b06c210de9b01857ac256976b41e80401e0ce324ad81a283d5e5e453a25b9b9"
+          "sha256": "3a8b84837aa69bd7fc60bafdf21f3fc0e144a63f010b81357d22d8b50658cd2a"
         },
         {
           "entrypoint": "fig_cauchy",
@@ -2225,7 +2225,7 @@
         {
           "entrypoint": "fig_coordinate_projections",
           "path": "content/數學A/數A4-1/assets/數A4-1-空間坐標與投影.svg",
-          "sha256": "20dae567f37e9c029dbfdd78670fcb88382085de0f257ad6cae9d0de807c7cda"
+          "sha256": "83166b23b610251076d39b5549d344ea72a0435f8e2b1a567913053f58d9ca76"
         }
       ]
     },
