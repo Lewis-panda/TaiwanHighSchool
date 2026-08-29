@@ -407,9 +407,14 @@ def fig_line_plane_relations():
     for ax,(title,kind) in zip(axes,cases):
         ax.add_patch(Polygon(plane,closed=True,facecolor="#e5f0ff",edgecolor="#6f98c5",lw=1.5))
         if kind=="intersect":
-            ax.plot([2.8,2.8],[0.1,3.9],color=F.RED,lw=2.5)
-            ax.scatter([2.8],[1.9],color=F.AMBER,s=55,zorder=4)
-            ax.text(3.0,1.75,"交點",fontsize=10)
+            intersection_x, intersection_y = 2.8, 1.9
+            lower_x, upper_x = 2.17, 3.50
+            ax.plot([lower_x,intersection_x],[0.1,intersection_y],
+                    color=F.RED,lw=2.5,ls=(0,(4,3)),dash_capstyle="round",zorder=3)
+            ax.plot([intersection_x,upper_x],[intersection_y,3.9],
+                    color=F.RED,lw=2.5,solid_capstyle="round",zorder=3)
+            ax.scatter([intersection_x],[intersection_y],color=F.AMBER,s=55,zorder=4)
+            ax.text(intersection_x+0.18,intersection_y+0.08,"交點",fontsize=10,zorder=5)
         elif kind=="parallel":
             ax.plot([1.0,4.8],[3.35,3.35],color=F.GREEN,lw=2.5)
         else:

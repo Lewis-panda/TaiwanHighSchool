@@ -1313,7 +1313,7 @@
       "inputs": [
         {
           "path": "_tools/fig_content_數A4-2.py",
-          "sha256": "3a575ad8e97750d867749a019493f61c7b76ff8b4498907619a7b13e27c10684"
+          "sha256": "026efacd1bb75934348f4b1727b968420355023110e5192183cd477656b54c00"
         }
       ],
       "outputs": [
@@ -1365,7 +1365,7 @@
         {
           "entrypoint": "fig_line_plane_relations",
           "path": "content/數學A/數A4-2/assets/數A4-2-直線與平面關係.svg",
-          "sha256": "3fa0a0b73995aca008c7265ab2eb712f4b26cfa81262e1a2c069af041d2b829a"
+          "sha256": "57844f3f22a415cdb4c1d46b25fbe08f16ecf9b090d04349080142502a8533c9"
         },
         {
           "entrypoint": "fig_point_plane_distance",
