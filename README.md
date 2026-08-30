@@ -1,10 +1,16 @@
 # 高一／高二數學、物理與化學學生講義
 
-本倉庫收錄依本機 114 學年度課本、講義與習作範圍重新撰寫的 48 份學生自學講義，涵蓋高一、高二現有數學、物理與化學教材。內容以現行課綱主線為骨架，定義、推理、例題、練習、完整解析、實際用途與模型限制都放在同一份學生講義中。
+這裡提供 48 份高中數學、物理與化學 PDF 講義，範圍列在下方目錄。點選章節名稱即可在瀏覽器開啟或下載 PDF。
 
-目前版本標示為 `review`，供逐冊審稿；它不是出版社教材或官方課綱文件。本機參考教材、逐頁來源紀錄與舊版筆記樹不在公開倉庫中。
+講義提供給想理解定義、推導與實際用途的學生，也可供教師備課時參考。內容包括概念說明、公式或方法的推導、例題、練習與解答；部分主題另有應用情境與模型限制。
 
-## PDF
+## 範圍與版本
+
+- 章節範圍依現行課綱整理，並與 114 學年度使用的課本、講義及習作核對；實際收錄內容以下方目錄為準。
+- 目前 48 份講義都仍在審稿，內容可能繼續修訂。
+- 這些講義由本專案重新編寫，不是出版社教材或官方課綱文件。
+
+## 講義目錄
 
 ### 高一必修數學
 
@@ -87,18 +93,21 @@
 - [選化V-1 有機化學](pdf/選化V-1-有機化學-學生講義.pdf)
 - [選化V-2 環境化學](pdf/選化V-2-環境化學-學生講義.pdf)
 
-## 製作來源
+## 原始檔與 PDF
 
-實際產線是 Markdown 內文與 LaTeX 公式，配合 Python／Matplotlib 產生的章內 SVG，再由 HTML／CSS 輸出 PDF。倉庫保留的是能真正重建 PDF 的來源，而不是另做一份與成品分離的 `.tex` 鏡像。
+一般閱讀只需使用 `pdf/` 內的成品。原始內容位於 `content/`，由 Markdown 內文、LaTeX 公式與 Python／Matplotlib 產生的 SVG 組成，再經 HTML／CSS 輸出 PDF；因此本專案沒有另一套獨立的 `.tex` 版本。
 
 - `content/`：48 份學生講義 Markdown 與章內 SVG
 - `_tools/`：SVG 生成器與共用繪圖程式
 - `templates/`、`styles/`、`assets/`：HTML／PDF 模板、版面與字型
-- `publishing/`：48 份公開白名單、課程清單與圖版雜湊
-- `tools/`：lint、建置、檢查、release 與隔離驗證工具
-- `pdf/`：本機通過驗收後的 48 份 PDF
+- `publishing/`：講義清單、課程資料與圖檔雜湊
+- `tools/`：建置與檢查工具
+- `pdf/`：48 份 PDF 成品
 
-## 重建與驗證
+<details>
+<summary>自行建置與驗證</summary>
+
+### 所需工具
 
 需要 Node.js 20+、Python 3、Pandoc、Poppler 與 Chromium。首次安裝：
 
@@ -113,9 +122,11 @@ python3 -m venv .venv
 
 ```sh
 npm test
-npm run preflight -- --set review-2026-08-29-complete
-npm run release -- --set review-2026-08-29-complete
-npm run verify -- --set review-2026-08-29-complete
+npm run preflight
+npm run release
+npm run verify
 ```
 
-`release` 產物仍須逐頁檢查彩色、灰階、公式、圖片、跨頁、裁切與文字層，才可由 `review` 轉入其他發布狀態。
+建置完成後仍需逐頁檢查彩色與灰階版面、公式、圖片、跨頁、裁切及文字層。
+
+</details>
