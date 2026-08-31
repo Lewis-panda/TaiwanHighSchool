@@ -1,0 +1,26 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{數B4-3-矩陣圖樣式.tex}
+
+\begin{document}
+\begin{tikzpicture}[figure]
+  \node[font=\bfseries\Large,align=center,text width=22cm] at (11,6.05)
+    {矩陣連乘逐步核對相鄰內側階數，兩種括號位置得到同一外側階數};
+
+  \node[panel,minimum width=15.8cm,minimum height=1.65cm,font=\Large] (start) at (11,4.65)
+    {$A_{4\times3}\;B_{3\times2}\;C_{2\times5}$};
+
+  \node[panel,minimum width=8.7cm,minimum height=2.0cm,align=center] (left) at (5.55,2.35)
+    {先算 $A_{4\times3}B_{3\times2}$\\[5pt]
+     $(AB)_{4\times2}C_{2\times5}\;\longrightarrow\;4\times5$};
+  \node[panel,minimum width=8.7cm,minimum height=2.0cm,align=center] (right) at (16.45,2.35)
+    {先算 $B_{3\times2}C_{2\times5}$\\[5pt]
+     $A_{4\times3}(BC)_{3\times5}\;\longrightarrow\;4\times5$};
+
+  \draw[flow] (start.south west) ++(3.1,0) -- (left.north)
+    node[midway,left,font=\small] {先配對內側 $3$};
+  \draw[flow] (start.south east) ++(-3.1,0) -- (right.north)
+    node[midway,right,font=\small] {先配對內側 $2$};
+
+  \node[font=\bfseries\large] at (11,0.45) {$(AB)C=A(BC)$，兩邊都是 $4\times5$ 階矩陣};
+\end{tikzpicture}
+\end{document}

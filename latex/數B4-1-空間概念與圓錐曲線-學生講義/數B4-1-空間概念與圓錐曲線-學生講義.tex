@@ -1,0 +1,2068 @@
+\documentclass[11pt,a4paper]{article}
+
+% Image mode: pdf.
+% Image paths stay relative. In PDF mode, place same-basename PDF conversions
+% of the chapter SVG files in the assets/ directory beside this source.
+
+\usepackage{iftex}
+\ifPDFTeX
+  \PackageError{handout}{This template requires XeTeX or Tectonic}{Compile with xelatex or tectonic.}
+\fi
+
+\usepackage[a4paper,top=18mm,bottom=20mm,left=20mm,right=20mm,headsep=6mm]{geometry}
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\usepackage{amsmath}
+\usepackage{unicode-math}
+
+% Font settings are intentionally visible in the generated .tex file.
+% These defaults target the macOS machine used for the released PDF.
+% Change the family names when compiling on another system.
+\setmainfont{Songti TC}
+\setsansfont{Heiti TC}
+\setmonofont{Menlo}
+\setCJKmainfont{Songti TC}
+\setCJKsansfont{Heiti TC}
+\setCJKmonofont{Heiti TC}
+\setmathfont{STIX Two Math}
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip=0pt plus 1pt
+
+\usepackage{xcolor}
+\definecolor{HandoutBlue}{HTML}{215A91}
+\definecolor{HandoutBlueLight}{HTML}{EEF5FC}
+\definecolor{HandoutGreen}{HTML}{39715A}
+\definecolor{HandoutGreenLight}{HTML}{EFF8F3}
+\definecolor{HandoutGold}{HTML}{8A641C}
+\definecolor{HandoutGoldLight}{HTML}{FFF8E8}
+\definecolor{HandoutInk}{HTML}{253142}
+\definecolor{HandoutMuted}{HTML}{667085}
+
+\usepackage{graphicx}
+\makeatletter
+% Pandoc 3 emits an accessibility `alt` key for raster/PDF images. Older
+% graphicx releases do not know that key, so accept it without changing layout.
+\@ifundefined{KV@Gin@alt}{\define@key{Gin}{alt}{}}{}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{%
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi
+}
+\makeatother
+\usepackage{float}
+\floatplacement{figure}{H}
+% Pandoc uses LTcaptype=none for uncaptioned longtables. The caption package
+% expects that name to exist as a counter even though it is never displayed.
+\newcounter{none}
+\usepackage{caption}
+\captionsetup[figure]{labelformat=empty,labelsep=none,font=small}
+
+\usepackage{booktabs,longtable,array,calc}
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{breakable,skins}
+\newtcolorbox{HandoutLearningMap}{
+  enhanced,breakable,colback=HandoutBlueLight,colframe=HandoutBlue,
+  boxrule=0.8pt,arc=1.5mm,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  before skip=8pt,after skip=10pt
+}
+\newtcolorbox{HandoutWorkedExample}{
+  enhanced,breakable,colback=HandoutGreenLight,colframe=HandoutGreen,
+  boxrule=0.65pt,arc=1.5mm,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  before skip=8pt,after skip=10pt
+}
+\newtcolorbox{HandoutSelfCheck}{
+  enhanced,breakable,colback=HandoutGoldLight,colframe=HandoutGold,
+  boxrule=0.65pt,arc=1.5mm,left=3mm,right=3mm,top=2mm,bottom=2mm,
+  before skip=8pt,after skip=10pt
+}
+
+\usepackage{titlesec}
+\titleformat{\section}{\sffamily\bfseries\Large\color{HandoutBlue}}{}{0pt}{}
+\titleformat{\subsection}{\sffamily\bfseries\large\color{HandoutInk}}{}{0pt}{}
+\titleformat{\subsubsection}{\sffamily\bfseries\normalsize\color{HandoutInk}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.55em}
+\titlespacing*{\subsection}{0pt}{1.15em}{0.45em}
+\titlespacing*{\subsubsection}{0pt}{0.9em}{0.35em}
+\setcounter{secnumdepth}{-\maxdimen}
+
+\usepackage{hyperref}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{}
+\urlstyle{same}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=HandoutBlue,
+  urlcolor=HandoutBlue,
+  citecolor=HandoutBlue,
+  pdftitle={數B4-1 空間概念與圓錐曲線},
+  pdfsubject={數學},
+  pdfcreator={Pandoc with the HighSchooContent LaTeX template}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em plus 0.15em minus 0.1em}
+\setlength{\emergencystretch}{3em}
+\setlength{\LTpre}{0.5em}
+\setlength{\LTpost}{0.5em}
+\renewcommand{\arraystretch}{1.18}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\pagestyle{plain}
+
+
+\begin{document}
+
+\begin{tcolorbox}[
+  enhanced,colback=white,colframe=HandoutBlue,boxrule=1.1pt,arc=2mm,
+  borderline west={3pt}{0pt}{HandoutBlue},left=5mm,right=4mm,top=4mm,bottom=4mm
+]
+{\sffamily\small\bfseries\color{HandoutBlue}學生講義}\par
+{\sffamily\bfseries\LARGE\color{HandoutInk}數B4-1 空間概念與圓錐曲線}\par
+\vspace{0.35em}{\large 從線面關係、展開與截面建立空間模型，再以坐標、球面與圓錐截痕處理位置、距離及形狀}\par
+\vspace{0.45em}{\small\color{HandoutMuted}%
+科目：數學
+\quad 課程：普通高中數學B 第四冊
+\quad 版本：學生版｜核心＋理解
+\quad 校訂：2026-08-29
+}\par
+\vspace{0.25em}{\small\color{HandoutMuted}範圍：114 學年度數學B第四冊第 1 章；空間中線與面、兩面角、表面距離、展開圖、截面、空間坐標、球面經緯度與圓錐曲線的視覺認識及應用}\par
+\end{tcolorbox}
+
+
+\begin{HandoutLearningMap}
+
+\subsection{本章問題與能力}\label{ux672cux7ae0ux554fux984cux8207ux80fdux529b}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  空間中兩條線、直線與平面、兩個平面有哪些位置關係？
+\item
+  如何量兩面角，並把立體表面的最短路徑攤成平面問題？
+\item
+  展開圖的邊如何接合，截面多邊形的頂點與邊如何決定？
+\item
+  空間坐標如何表示投影、中點、對稱與距離？
+\item
+  平面截球所得圓的半徑如何計算，經緯度如何換成坐標與弧長？
+\item
+  截平面角度如何決定圓、橢圓、拋物線或雙曲線，這些形狀的幾何性質如何進入光學、導航與設計？
+\end{enumerate}
+
+本章路徑：線面關係 → 兩面角 → 展開與截面 → 空間坐標 → 球面與經緯度 → 圓錐截痕與應用。
+
+\end{HandoutLearningMap}
+
+\section{0. 本章用途與模型範圍}\label{ux672cux7ae0ux7528ux9014ux8207ux6a21ux578bux7bc4ux570d}
+
+建築圖、機械零件、包裝與導航都把三維物體轉成可計算的資訊。線面關係描述結構中的方向，展開圖把表面路徑與材料面積轉成平面幾何，截面則呈現切割後真正出現的邊界。
+
+空間坐標用三個互相垂直的方向記錄位置。投影提供點到軸、點到平面的距離；球面模型再把經度、緯度轉成坐標與弧長。地球略呈扁球體，實際航線也受風場、禁航區與高度影響；本章以球體和大圓處理核心幾何。
+
+圓錐曲線在本冊以截痕與應用為主。方程圖用來核對形狀，重點是比較截平面與圓錐軸、母線的角度，並理解反射、軌道及結構中的幾何機制。
+
+\section{1. 空間中兩直線的關係}\label{ux7a7aux9593ux4e2dux5169ux76f4ux7ddaux7684ux95dcux4fc2}
+
+\subsection{1.1 決定直線與平面的基本事實}\label{ux6c7aux5b9aux76f4ux7ddaux8207ux5e73ux9762ux7684ux57faux672cux4e8bux5be6}
+
+點、直線、平面是空間幾何的基本物件。下列條件各自決定唯一物件：
+
+\begin{itemize}
+\tightlist
+\item
+  兩個相異點決定唯一一條直線。
+\item
+  三個不共線的相異點決定唯一一個平面。
+\item
+  一條直線與線外一點決定唯一一個平面。
+\item
+  兩條相交直線決定唯一一個平面。
+\item
+  兩條相異平行直線決定唯一一個平面。
+\end{itemize}
+
+若一條直線上有兩個相異點位於平面 \(E\)，整條直線都位於 \(E\)。這條性質使我們能用兩個點判定一條線是否落在某平面內。
+
+\subsection{1.2 四種位置關係}\label{ux56dbux7a2eux4f4dux7f6eux95dcux4fc2}
+
+空間中兩直線可能重合、恰交於一點、平行或歪斜。兩相異直線\textbf{平行}的條件是共平面且沒有交點；兩直線\textbf{歪斜}的條件是不共平面。
+
+\begin{figure}
+\centering
+\includegraphics[width=0.96\linewidth,height=\textheight,keepaspectratio,alt={空間中兩直線的位置關係}]{assets/數B4-1-空間兩直線關係.pdf}
+\caption{空間中兩直線的位置關係}
+\end{figure}
+
+判斷流程由「是否共平面」開始。已知共平面時，沒有交點的兩相異直線平行；無法放進同一平面的兩直線歪斜。圖中的 \(AB\) 與 \(CG\) 沒有交點且方向不同，兩者也不共平面，因此為歪斜線。
+
+\subsection{示範 1｜在長方體中分類兩直線}\label{ux793aux7bc4-1ux5728ux9577ux65b9ux9ad4ux4e2dux5206ux985eux5169ux76f4ux7dda}
+
+長方體 \(ABCD-EFGH\) 中，\(E,F,G,H\) 分別位於 \(A,B,C,D\) 正上方。判斷 \(AB\) 與 \(EF\)、\(AB\) 與 \(BC\)、\(AB\) 與 \(CG\) 的關係。
+
+\textbf{解。}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(AB\) 與 \(EF\) 同在平面 \(ABFE\)，方向相同且沒有交點，所以 \(AB\parallel EF\)。
+\item
+  \(AB\) 與 \(BC\) 交於 \(B\)。長方形 \(ABCD\) 的相鄰邊互相垂直，所以 \(AB\perp BC\)。
+\item
+  \(AB\) 位於底面，\(CG\) 為鉛直稜。兩線沒有交點，方向也不同；包含 \(AB\) 的前後延伸平面無法同時包含 \(CG\)，所以兩線歪斜。
+\end{enumerate}
+
+\subsection{示範 2｜由兩直線決定平面}\label{ux793aux7bc4-2ux7531ux5169ux76f4ux7ddaux6c7aux5b9aux5e73ux9762}
+
+空間中兩相異直線 \(L_1,L_2\) 都通過點 \(P\)，另有點 \(Q\) 不在 \(L_1\) 上。已知 \(Q\) 在 \(L_2\) 上。通過 \(L_1,L_2\) 的平面有幾個？
+
+\textbf{解。} \(P,Q\) 是 \(L_2\) 上兩個相異點，而 \(Q\) 不在 \(L_1\) 上，所以 \(L_1\) 與 \(L_2\) 是相交直線。兩相交直線決定唯一平面，因此恰有一個平面同時包含 \(L_1,L_2\)。
+
+空間線路、鋼梁與管線配置會區分相交、平行與歪斜。歪斜管線即使俯視圖相交，實際上仍可能位於不同高度；三維模型能保留這項資訊。
+
+\subsection{1.3 分節練習}\label{ux5206ux7bc0ux7df4ux7fd2}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  正立方體 \(ABCD-EFGH\) 中，列出與 \(AB\) 平行的三條稜。
+\item
+  同一正立方體中，判斷 \(AD\) 與 \(FG\)、\(AC\) 與 \(EG\) 的關係。
+\item
+  空間中兩相異直線沒有交點。寫出兩種可能的位置關係及其區別條件。
+\item
+  直線 \(L\) 與線外點 \(P\) 已知。說明通過 \(L\) 與 \(P\) 的平面為何唯一。
+\end{enumerate}
+
+\subsection{1.4 分節練習解析}\label{ux5206ux7bc0ux7df4ux7fd2ux89e3ux6790}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(EF\)、\(DC\)、\(HG\) 都與 \(AB\) 同方向，且各自與 \(AB\) 共平面，所以皆平行於 \(AB\)。
+\item
+  \(AD\) 與 \(FG\) 方向相同，且同在平面 \(ADGF\)，所以平行。\(AC\) 在底面，\(EG\) 在頂面，兩線方向相同，所以平行。
+\item
+  共平面且沒有交點時為平行；不共平面時為歪斜。
+\item
+  在 \(L\) 上取相異點 \(A,B\)。\(A,B,P\) 不共線，三個不共線點決定唯一平面；該平面包含 \(A,B\)，因此也包含整條 \(L\)。
+\end{enumerate}
+
+\section{2. 直線與平面的關係}\label{ux76f4ux7ddaux8207ux5e73ux9762ux7684ux95dcux4fc2}
+
+\subsection{2.1 位置關係與垂直判定}\label{ux4f4dux7f6eux95dcux4fc2ux8207ux5782ux76f4ux5224ux5b9a}
+
+直線 \(L\) 與平面 \(E\) 有三種位置關係：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  沒有交點，記為 \(L\parallel E\)。
+\item
+  恰交於一點。
+\item
+  \(L\) 落在 \(E\) 上，有無限多個公共點。
+\end{enumerate}
+
+若 \(L\) 與 \(E\) 交於 \(P\)，且 \(L\) 與 \(E\) 上每一條通過 \(P\) 的直線都垂直，稱 \(L\) \textbf{垂直平面} \(E\)，記為 \(L\perp E\)；\(P\) 稱為垂足。
+
+實際判定使用兩條方向：若平面 \(E\) 內兩條相交直線 \(m,n\) 交於 \(P\)，且 \(L\perp m\)、\(L\perp n\)，則 \(L\perp E\)。
+
+\begin{figure}
+\centering
+\includegraphics[width=0.86\linewidth,height=\textheight,keepaspectratio,alt={平面內相交且不平行的兩方向 m,n 都與 L 垂直，因此 L\textbackslash perp E；直角記號由實際空間方向投影。}]{assets/數B4-1-直線與平面垂直.pdf}
+\caption{平面內相交且不平行的兩方向 \(m,n\) 都與 \(L\) 垂直，因此 \(L\perp E\)；直角記號由實際空間方向投影。}
+\end{figure}
+
+平面內任一方向都可由兩個不平行方向組合。\(L\) 同時垂直 \(m,n\)，便與平面內所有方向垂直；這是兩線判定法成立的原因。
+
+\subsection{示範 1｜由兩條稜證明線面垂直}\label{ux793aux7bc4-1ux7531ux5169ux689dux7a1cux8b49ux660eux7ddaux9762ux5782ux76f4}
+
+正方體 \(ABCD-EFGH\) 中，證明 \(AE\perp\) 平面 \(ABCD\)。
+
+\textbf{解。} \(AB,AD\) 位於平面 \(ABCD\)，且交於 \(A\)。正方體相鄰稜互相垂直，因此
+
+\[
+AE\perp AB,\; AE\perp AD.
+\]
+
+由兩線判定法，\(AE\perp\) 平面 \(ABCD\)。
+
+\subsection{示範 2｜點到平面的距離}\label{ux793aux7bc4-2ux9edeux5230ux5e73ux9762ux7684ux8dddux96e2}
+
+一根長 \(5\text{ m}\) 的支柱 \(AP\) 垂直水平地面 \(E\)，鋼索由頂端 \(P\) 接到地面上點 \(B\)，且 \(AB=12\text{ m}\)。求鋼索長與 \(P\) 到地面的距離。
+
+\textbf{解。} \(AP\perp E\)，而 \(AB\) 位於 \(E\) 且通過垂足 \(A\)，所以 \(AP\perp AB\)。在直角三角形 \(PAB\) 中，
+
+\[
+PB=\sqrt{AP^2+AB^2}=\sqrt{5^2+12^2}=13\text{ m}.
+\]
+
+\(P\) 到平面 \(E\) 的距離是垂線段 \(AP\) 的長，為 \(5\text{ m}\)。
+
+雷射測距、建築放樣與相機標定都需要正射影。距離以垂線段定義，因為它是點到平面上所有線段中最短的一條。
+
+\subsection{2.2 分節練習}\label{ux5206ux7bc0ux7df4ux7fd2-1}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  長方體 \(ABCD-EFGH\) 中，寫出兩條垂直平面 \(EFGH\) 的稜。
+\item
+  直線 \(L\perp E\)，點 \(P=L\cap E\)。平面 \(E\) 上通過 \(P\) 的直線 \(m\) 與 \(L\) 的夾角是多少？
+\item
+  旗桿 \(PO\) 垂直地面，\(PO=8\text{ m}\)。地面點 \(A\) 與 \(O\) 相距 \(15\text{ m}\)，求 \(PA\)。
+\item
+  平面 \(E\) 內相交直線 \(m,n\) 交於 \(P\)。直線 \(L\) 通過 \(P\) 且 \(L\perp m,L\perp n\)。寫出 \(L\) 與 \(E\) 的關係，並說明判定所用條件。
+\end{enumerate}
+
+\subsection{2.3 分節練習解析}\label{ux5206ux7bc0ux7df4ux7fd2ux89e3ux6790-1}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(AE,BF,CG,DH\) 都垂直平面 \(EFGH\)；任寫兩條即可。
+\item
+  依線面垂直定義，\(L\) 與 \(E\) 上所有通過 \(P\) 的直線垂直，因此夾角為 \(90^\circ\)。
+\item
+  \(PO\perp OA\)，所以 \(PA=\sqrt{8^2+15^2}=17\text{ m}\)。
+\item
+  \(L\perp E\)。條件包含：\(m,n\) 位於 \(E\)、兩線相交、\(L\) 同時垂直兩線，故可用兩線判定法。
+\end{enumerate}
+
+\section{3. 平面與平面、兩面角}\label{ux5e73ux9762ux8207ux5e73ux9762ux5169ux9762ux89d2}
+
+\subsection{3.1 兩平面的位置與角度}\label{ux5169ux5e73ux9762ux7684ux4f4dux7f6eux8207ux89d2ux5ea6}
+
+兩平面可能平行、相交於一直線或重合。兩相交平面 \(E_1,E_2\) 的交線記為 \(L\)。選定交線兩側的半平面後，兩個半平面與共同邊界 \(L\) 組成一個\textbf{兩面角}。
+
+量兩面角時，在 \(L\) 上取點 \(P\)，分別在 \(E_1,E_2\) 內作射線 \(PA,PB\)，使
+
+\[
+PA\perp L,\; PB\perp L.
+\]
+
+則 \(\angle APB\) 就是該兩面角的大小。
+
+\begin{figure}
+\centering
+\includegraphics[width=0.82\linewidth,height=\textheight,keepaspectratio,alt={左圖建立兩平面與交線；右圖在垂直交線的截面 \textbackslash Sigma 中量得 \textbackslash angle APB，即為兩面角。}]{assets/數B4-1-兩面角量測.pdf}
+\caption{左圖建立兩平面與交線；右圖在垂直交線的截面 \(\Sigma\) 中量得 \(\angle APB\)，即為兩面角。}
+\end{figure}
+
+兩個平面相交會形成四個兩面角，相鄰兩角互補、對頂兩角相等。若其中一個兩面角為 \(90^\circ\)，兩平面互相垂直。
+
+\subsection{示範 1｜正方體中的兩面角}\label{ux793aux7bc4-1ux6b63ux65b9ux9ad4ux4e2dux7684ux5169ux9762ux89d2}
+
+正方體 \(ABCD-EFGH\) 中，求平面 \(ABCD\) 與平面 \(ABFE\) 沿交線 \(AB\) 形成的兩面角。
+
+\textbf{解。} 在交線 \(AB\) 上取點 \(A\)。底面內 \(AD\perp AB\)，側面內 \(AE\perp AB\)，所以兩面角等於 \(\angle DAE\)。正方體相鄰稜垂直，故
+
+\[
+\angle DAE=90^\circ.
+\]
+
+\subsection{示範 2｜正四角錐側面與底面的夾角}\label{ux793aux7bc4-2ux6b63ux56dbux89d2ux9310ux5074ux9762ux8207ux5e95ux9762ux7684ux593eux89d2}
+
+正四角錐 \(P-ABCD\) 的底面為邊長 \(6\) 的正方形，\(O\) 為底面中心，\(PO\perp\) 底面且 \(PO=4\)。求側面 \(PAB\) 與底面沿 \(AB\) 形成的銳兩面角 \(\theta\)。
+
+\textbf{解。} 設 \(M\) 為 \(AB\) 中點。等腰三角形 \(PAB\) 中 \(PM\perp AB\)；正方形中 \(OM\perp AB\)。因此 \(\angle PMO=\theta\)。
+
+底面中心到邊中點的距離為 \(OM=3\)，且 \(PO\perp OM\)。在直角三角形 \(POM\) 中，
+
+\[
+\tan\theta=\frac{PO}{OM}=\frac43,
+\]
+
+所以
+
+\[
+\sin\theta=\frac45,\; \cos\theta=\frac35,
+\; \theta\approx53.1^\circ.
+\]
+
+屋頂坡度、折板結構與門片開啟角都以兩面角描述。量角所用的兩條射線要同時垂直交線，才能排除沿交線方向造成的偏斜。
+
+\subsection{3.2 分節練習}\label{ux5206ux7bc0ux7df4ux7fd2-2}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  兩相異平面都平行同一平面。寫出這兩平面的關係。
+\item
+  正方體中，求平面 \(ABCD\) 與平面 \(BCGF\) 的兩面角。
+\item
+  正四角錐的底邊長為 \(10\)，高為 \(12\)。求側面與底面沿一條底邊形成的銳兩面角之正切值。
+\item
+  兩面角的交線為 \(L\)。射線 \(PA\) 位於第一個半平面且 \(PA\perp L\)；射線 \(PB\) 位於第二個半平面且 \(PB\perp L\)。若 \(\angle APB=128^\circ\)，相鄰兩面角是多少度？
+\end{enumerate}
+
+\subsection{3.3 分節練習解析}\label{ux5206ux7bc0ux7df4ux7fd2ux89e3ux6790-2}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  兩相異平面平行。
+\item
+  沿 \(BC\) 取垂直線 \(BA\) 與 \(BF\)，\(\angle ABF=90^\circ\)，所以兩面角為 \(90^\circ\)。
+\item
+  底面中心到邊中點距離為 \(5\)，所以 \(\tan\theta=12/5\)。
+\item
+  相鄰兩面角互補，大小為 \(180^\circ-128^\circ=52^\circ\)。
+\end{enumerate}
+
+\section{4. 長方體表面上的最短路徑}\label{ux9577ux65b9ux9ad4ux8868ux9762ux4e0aux7684ux6700ux77edux8defux5f91}
+
+\subsection{4.1 展開成直線距離}\label{ux5c55ux958bux6210ux76f4ux7ddaux8dddux96e2}
+
+物體表面上的路徑沿著各面移動。把路徑經過的面沿稜攤平，原路徑長度保持不變；在平面中，兩點間最短路徑是線段。因此，表面最短路徑可用下列步驟求得：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  列出能連接兩點的不同展開方式。
+\item
+  在每個展開圖中連接兩點，使用畢氏定理求長。
+\item
+  比較所有可行長度。
+\end{enumerate}
+
+長、寬、高為 \(a,b,c\) 的長方體，其一對相對頂點有三類展開長度：
+
+\[
+\sqrt{(a+b)^2+c^2},\;
+\sqrt{(a+c)^2+b^2},\;
+\sqrt{(b+c)^2+a^2}.
+\]
+
+\begin{figure}
+\centering
+\includegraphics[width=0.96\linewidth,height=\textheight,keepaspectratio,alt={長方體相對頂點的三類表面路徑}]{assets/數B4-1-長方體表面路徑.pdf}
+\caption{長方體相對頂點的三類表面路徑}
+\end{figure}
+
+\subsection{示範 1｜相對頂點的表面最短路徑}\label{ux793aux7bc4-1ux76f8ux5c0dux9802ux9edeux7684ux8868ux9762ux6700ux77edux8defux5f91}
+
+長方體三邊長為 \(6,4,3\)。求一對相對頂點沿表面的最短距離。
+
+\textbf{解。} 三類展開長度平方為
+
+\[
+(6+4)^2+3^2=109,
+\]
+
+\[
+(6+3)^2+4^2=97,
+\]
+
+\[
+(4+3)^2+6^2=85.
+\]
+
+最小值是 \(85\)，所以表面最短距離為 \(\sqrt{85}\)。
+
+\subsection{示範 2｜指定經過一條稜}\label{ux793aux7bc4-2ux6307ux5b9aux7d93ux904eux4e00ux689dux7a1c}
+
+長方體 \(ABCD-EFGH\) 中，\(AB=6,AD=4,AE=3\)。一隻螞蟻由 \(A\) 沿表面到 \(G\)，且路徑經過稜 \(EF\)。求最短距離。
+
+\textbf{解。} 路徑先在前面 \(ABFE\)，再跨過 \(EF\) 到頂面 \(EFGH\)。把兩面沿 \(EF\) 攤平，得到長、寬分別為 \(6\) 與 \(3+4=7\) 的矩形，\(A,G\) 成為相對頂點。因此
+
+\[
+AG_{\text{表面}}=\sqrt{6^2+7^2}=\sqrt{85}.
+\]
+
+指定經過 \(EF\) 已固定展開方式，無須再比較其他兩類展開。
+
+包裝上的電路、管線、貼紙與切割線都沿表面配置。展開圖把立體上的路徑限制轉成平面上「必須跨過哪一條稜」的條件。
+
+\subsection{4.2 分節練習}\label{ux5206ux7bc0ux7df4ux7fd2-3}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  三邊長為 \(8,5,2\) 的長方體，求相對頂點的表面最短距離。
+\item
+  正方體邊長為 \(6\)，求相對頂點的表面最短距離。
+\item
+  長方體中 \(AB=5,AD=4,AE=3\)。由 \(A\) 到 \(G\) 且路徑經過稜 \(BF\)，求最短距離。
+\item
+  說明長方體相對頂點的空間直線距離與表面最短距離為何採用不同展開或公式。
+\end{enumerate}
+
+\subsection{4.3 分節練習解析}\label{ux5206ux7bc0ux7df4ux7fd2ux89e3ux6790-3}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  三類平方為 \((8+5)^2+2^2=173\)、\((8+2)^2+5^2=125\)、\((5+2)^2+8^2=113\)，所以最短距離為 \(\sqrt{113}\)。
+\item
+  每一類都是 \(\sqrt{(6+6)^2+6^2}=6\sqrt5\)。
+\item
+  沿 \(BF\) 攤開前面與右面，矩形兩邊為 \(5+4=9\) 與 \(3\)，所以長度為 \(\sqrt{9^2+3^2}=3\sqrt{10}\)。
+\item
+  空間直線可穿過立體內部，長度為 \(\sqrt{a^2+b^2+c^2}\)；表面路徑只能留在各面上，攤開後跨越兩個面長，故出現 \((a+b)\) 等和。
+\end{enumerate}
+
+\section{5. 立體圖形的展開圖}\label{ux7acbux9ad4ux5716ux5f62ux7684ux5c55ux958bux5716}
+
+\subsection{5.1 邊的接合與面積守恆}\label{ux908aux7684ux63a5ux5408ux8207ux9762ux7a4dux5b88ux6046}
+
+展開圖把立體各面沿稜剪開並攤到平面。折回立體時，每一條被剪開的稜要與另一條等長邊接合；面積在展開與折疊過程中保持不變。
+
+直角柱的側面展開為一排矩形，矩形總寬等於底面周長。角錐的每個側面是以底面一邊為底的三角形。直圓錐的側面展開為扇形：扇形半徑等於圓錐母線長 \(R\)，扇形弧長等於底面圓周 \(2\pi r\)。
+
+令扇形圓心角為 \(\theta\) 弳，則
+
+\[
+R\theta=2\pi r.
+\]
+
+側面積為
+
+\[
+\frac12R^2\theta
+=\frac12R(2\pi r)
+=\pi Rr.
+\]
+
+直圓錐臺可視為大圓錐去掉相似的小圓錐。若上、下底半徑為 \(r_1,r_2\)，母線長為 \(s\)，側面積化簡為
+
+\[
+\pi(r_1+r_2)s.
+\]
+
+\begin{figure}
+\centering
+\includegraphics[width=0.94\linewidth,height=\textheight,keepaspectratio,alt={直圓錐側面展成扇形，弧長接回底面圓周；直圓錐臺側面展成同心環形扇形，內外弧分別接回上下底圓周。}]{assets/數B4-1-圓錐與圓錐臺展開.pdf}
+\caption{直圓錐側面展成扇形，弧長接回底面圓周；直圓錐臺側面展成同心環形扇形，內外弧分別接回上下底圓周。}
+\end{figure}
+
+\subsection{示範 1｜直圓錐的表面積與扇形角}\label{ux793aux7bc4-1ux76f4ux5713ux9310ux7684ux8868ux9762ux7a4dux8207ux6247ux5f62ux89d2}
+
+直圓錐底面半徑為 \(3\)，母線長為 \(5\)。求側面積、總表面積與展開扇形圓心角。
+
+\textbf{解。}
+
+\[
+A_{\text{側}}=\pi Rr=\pi(5)(3)=15\pi.
+\]
+
+底面積為 \(9\pi\)，所以總表面積為 \(24\pi\)。由弧長接合條件
+
+\[
+5\theta=2\pi(3),
+\]
+
+得
+
+\[
+\theta=\frac{6\pi}{5}\text{ 弳}=216^\circ.
+\]
+
+\subsection{示範 2｜直圓錐臺的材料面積}\label{ux793aux7bc4-2ux76f4ux5713ux9310ux81faux7684ux6750ux6599ux9762ux7a4d}
+
+燈罩呈直圓錐臺，上、下底半徑為 \(2\text{ cm},5\text{ cm}\)，母線長為 \(6\text{ cm}\)。求不含上下底的材料面積；若兩底都封住，再求總表面積。
+
+\textbf{解。} 側面積為
+
+\[
+\pi(2+5)(6)=42\pi\text{ cm}^2.
+\]
+
+兩底面積和為
+
+\[
+\pi(2^2+5^2)=29\pi\text{ cm}^2.
+\]
+
+封閉時總表面積為 \(71\pi\text{ cm}^2\)。
+
+包裝打樣會在平面材料上先排展開圖，再加黏貼邊與裁切間距。幾何面積提供理想材料量；實際用料還需加入接縫與加工損耗。
+
+\subsection{5.2 分節練習}\label{ux5206ux7bc0ux7df4ux7fd2-4}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  直圓柱底面半徑為 \(4\)、高為 \(7\)。寫出側面展開矩形的長與寬，並求側面積。
+\item
+  直圓錐底面半徑為 \(4\)、母線長為 \(10\)。求側面積與展開扇形圓心角。
+\item
+  直圓錐臺上下底半徑為 \(3,8\)，母線長為 \(5\)。求側面積。
+\item
+  一個正四角錐底邊長為 \(6\)，四個側面都是底 \(6\)、高 \(5\) 的等腰三角形。求總表面積。
+\end{enumerate}
+
+\subsection{5.3 分節練習解析}\label{ux5206ux7bc0ux7df4ux7fd2ux89e3ux6790-4}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  矩形長等於底面周長 \(8\pi\)，寬為柱高 \(7\)；側面積為 \(56\pi\)。
+\item
+  側面積 \(=\pi(10)(4)=40\pi\)。\(10\theta=8\pi\)，所以 \(\theta=4\pi/5\) 弳 \(=144^\circ\)。
+\item
+  側面積 \(=\pi(3+8)(5)=55\pi\)。
+\item
+  底面積 \(6^2=36\)；四個側面積共 \(4\cdot(1/2)(6)(5)=60\)，總表面積為 \(96\)。
+\end{enumerate}
+
+\section{6. 平面與立體的截痕}\label{ux5e73ux9762ux8207ux7acbux9ad4ux7684ux622aux75d5}
+
+\subsection{6.1 截痕、截面與追蹤方法}\label{ux622aux75d5ux622aux9762ux8207ux8ffdux8e64ux65b9ux6cd5}
+
+平面與立體表面相交的線段或曲線稱為\textbf{截痕}，截痕圍成的平面圖形稱為\textbf{截面}。多面體的截面可依下列規則追蹤：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  截面頂點落在多面體的稜上。
+\item
+  同一個面上的兩個截點以線段相連。
+\item
+  一條截痕到達某稜後，從共享該稜的相鄰面繼續。
+\item
+  所有線段位於同一截平面並形成封閉多邊形。
+\end{enumerate}
+
+正立方體的平面截面最多與六個面相交，因此最多有六邊。靠近一個頂點切割可得到三角形；穿過六條稜可得到六邊形。
+
+\begin{figure}
+\centering
+\includegraphics[width=0.88\linewidth,height=\textheight,keepaspectratio,alt={正立方體的三角形與六邊形截面}]{assets/數B4-1-正立方體截面.pdf}
+\caption{正立方體的三角形與六邊形截面}
+\end{figure}
+
+\subsection{示範 1｜以坐標核對正立方體截面}\label{ux793aux7bc4-1ux4ee5ux5750ux6a19ux6838ux5c0dux6b63ux7acbux65b9ux9ad4ux622aux9762}
+
+單位正立方體為 \(0\le x,y,z\le1\)。平面 \(x+y+z=1\) 與三條坐標軸分別交於哪些點？截面是什麼圖形？
+
+\textbf{解。}
+
+\begin{itemize}
+\tightlist
+\item
+  在 \(x\) 軸上，\(y=z=0\)，得 \((1,0,0)\)。
+\item
+  在 \(y\) 軸上，\(x=z=0\)，得 \((0,1,0)\)。
+\item
+  在 \(z\) 軸上，\(x=y=0\)，得 \((0,0,1)\)。
+\end{itemize}
+
+三點都在正立方體的稜上。任兩點距離都是 \(\sqrt2\)，所以截面為正三角形。
+
+\subsection{示範 2｜由中點截角得到多面體}\label{ux793aux7bc4-2ux7531ux4e2dux9edeux622aux89d2ux5f97ux5230ux591aux9762ux9ad4}
+
+正立方體每個頂點都以通過三條鄰稜中點的平面截去。求新立體的面數、頂點數與稜數。
+
+\textbf{解。} 每個原頂點產生一個正三角形，共 \(8\) 個三角形；每個原正方形留下由四個邊中點構成的正方形，共 \(6\) 個正方形。因此
+
+\[
+F=8+6=14.
+\]
+
+新頂點是原正立方體的 \(12\) 條稜中點，所以 \(V=12\)。由凸多面體的尤拉關係
+
+\[
+V-E+F=2,
+\]
+
+得
+
+\[
+E=V+F-2=12+14-2=24.
+\]
+
+醫學影像與工業斷層掃描以一連串平行截面重建立體內部。每一張影像記錄特定高度的截痕，再由相鄰切片推回三維形狀。
+
+\subsection{6.2 分節練習}\label{ux5206ux7bc0ux7df4ux7fd2-5}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  平面切過正方體一個頂點附近的三條鄰稜，截面有幾個頂點？
+\item
+  單位正立方體中，平面 \(x+y+z=3/2\) 會通過哪些稜的中點？截面有幾邊？
+\item
+  正八面體有 \(8\) 個三角形面、\(6\) 個頂點。利用尤拉關係求稜數。
+\item
+  一個凸多面體有 \(F=12,E=30\)。求頂點數。
+\end{enumerate}
+
+\subsection{6.3 分節練習解析}\label{ux5206ux7bc0ux7df4ux7fd2ux89e3ux6790-5}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  平面分別與三條鄰稜相交，三個交點依序相連，所以截面有 \(3\) 個頂點。
+\item
+  例如 \(z=0\) 的底面上，\(x+y=3/2\) 通過 \((1,1/2,0)\)、\((1/2,1,0)\)；其餘四點由坐標輪換得到。共有六個稜中點，截面為六邊形。
+\item
+  \(6-E+8=2\)，所以 \(E=12\)。
+\item
+  \(V-30+12=2\)，所以 \(V=20\)。
+\end{enumerate}
+
+\section{7. 空間坐標與正射影}\label{ux7a7aux9593ux5750ux6a19ux8207ux6b63ux5c04ux5f71}
+
+\subsection{7.1 右手坐標系}\label{ux53f3ux624bux5750ux6a19ux7cfb}
+
+在空間中取原點 \(O\)，作三條兩兩垂直的坐標軸 \(x,y,z\)。正向依右手規則排列：右手四指由 \(x\) 軸正向轉向 \(y\) 軸正向，大拇指指向 \(z\) 軸正向。
+
+\(x,y\) 軸決定 \(xy\) 平面，\(y,z\) 軸決定 \(yz\) 平面，\(x,z\) 軸決定 \(xz\) 平面。三個坐標平面把空間分成八個卦限；三個坐標皆為正的區域是第一卦限。
+
+點 \(P(a,b,c)\) 投影到坐標軸與坐標平面時，保留平行於投影目標的坐標，將垂直方向的坐標改成 \(0\)：
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+投影目標 & 投影點坐標 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(x\) 軸 & \((a,0,0)\) \\
+\(y\) 軸 & \((0,b,0)\) \\
+\(z\) 軸 & \((0,0,c)\) \\
+\(xy\) 平面 & \((a,b,0)\) \\
+\(yz\) 平面 & \((0,b,c)\) \\
+\(xz\) 平面 & \((a,0,c)\) \\
+\end{longtable}
+}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.86\linewidth,height=\textheight,keepaspectratio,alt={空間坐標與三個坐標平面投影}]{assets/數B4-1-空間坐標與投影.pdf}
+\caption{空間坐標與三個坐標平面投影}
+\end{figure}
+
+\subsection{7.2 點到軸與坐標平面的距離}\label{ux9edeux5230ux8ef8ux8207ux5750ux6a19ux5e73ux9762ux7684ux8dddux96e2}
+
+由投影點坐標可直接得到距離：
+
+\[
+d(P,x\text{ 軸})=\sqrt{b^2+c^2},\quad
+d(P,y\text{ 軸})=\sqrt{a^2+c^2},\quad
+d(P,z\text{ 軸})=\sqrt{a^2+b^2},
+\]
+
+\[
+d(P,xy)=|c|,\; d(P,yz)=|a|,\; d(P,xz)=|b|.
+\]
+
+絕對值反映距離為非負量；坐標正負則記錄點位於平面的哪一側。
+
+\subsection{示範 1｜投影點與距離表}\label{ux793aux7bc4-1ux6295ux5f71ux9edeux8207ux8dddux96e2ux8868}
+
+已知 \(P(3,-2,5)\)，求 \(P\) 在 \(x\) 軸、\(yz\) 平面的投影點，以及到這兩個目標的距離。
+
+\textbf{解。} 投到 \(x\) 軸只保留 \(x\) 坐標，投影點為 \((3,0,0)\)，距離
+
+\[
+\sqrt{(-2)^2+5^2}=\sqrt{29}.
+\]
+
+投到 \(yz\) 平面令 \(x=0\)，投影點為 \((0,-2,5)\)，距離為 \(|3|=3\)。
+
+\subsection{示範 2｜由投影資訊還原坐標}\label{ux793aux7bc4-2ux7531ux6295ux5f71ux8cc7ux8a0aux9084ux539fux5750ux6a19}
+
+點 \(Q\) 位於第一卦限。已知它在 \(xy\) 平面的投影為 \((4,3,0)\)，且 \(Q\) 到 \(xy\) 平面的距離為 \(12\)。求 \(Q\) 坐標與 \(QO\)。
+
+\textbf{解。} 投影給出 \(x=4,y=3\)。到 \(xy\) 平面的距離為 \(|z|=12\)；第一卦限使 \(z>0\)，所以
+
+\[
+Q=(4,3,12).
+\]
+
+\[
+QO=\sqrt{4^2+3^2+12^2}=13.
+\]
+
+機械手臂與無人機的定位系統都需要明確指定坐標軸正向。右手規則確保不同元件使用同一種方向約定，投影則把三維位置轉成俯視、前視與側視資料。
+
+\subsection{7.3 分節練習}\label{ux5206ux7bc0ux7df4ux7fd2-6}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  點 \(A(-4,2,7)\) 投影到三個坐標平面的坐標各為何？
+\item
+  求 \(A(-4,2,7)\) 到三個坐標平面的距離。
+\item
+  點 \(B\) 在 \(xz\) 平面的投影為 \((5,0,-2)\)，到 \(xz\) 平面的距離為 \(3\)。寫出 \(B\) 的兩個可能坐標。
+\item
+  點 \(C\) 位於第一卦限，到 \(yz,xz,xy\) 平面的距離分別為 \(2,4,6\)。求 \(C\) 坐標。
+\end{enumerate}
+
+\subsection{7.4 分節練習解析}\label{ux5206ux7bc0ux7df4ux7fd2ux89e3ux6790-6}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  投到 \(xy,yz,xz\) 平面分別為 \((-4,2,0)\)、\((0,2,7)\)、\((-4,0,7)\)。
+\item
+  距離分別為 \(|7|=7\)、\(|-4|=4\)、\(|2|=2\)。
+\item
+  \(x=5,z=-2\) 且 \(|y|=3\)，所以 \(B=(5,3,-2)\) 或 \((5,-3,-2)\)。
+\item
+  三個距離依序給出 \(|x|=2,|y|=4,|z|=6\)；第一卦限取正，故 \(C=(2,4,6)\)。
+\end{enumerate}
+
+\section{8. 空間距離、中點與對稱}\label{ux7a7aux9593ux8dddux96e2ux4e2dux9edeux8207ux5c0dux7a31}
+
+\subsection{8.1 距離公式的推導}\label{ux8dddux96e2ux516cux5f0fux7684ux63a8ux5c0e}
+
+設 \(P(x_1,y_1,z_1)\)、\(Q(x_2,y_2,z_2)\)。由 \(P\) 到 \(Q\) 的三個坐標差為
+
+\[
+\Delta x=x_2-x_1,\quad
+\Delta y=y_2-y_1,\quad
+\Delta z=z_2-z_1.
+\]
+
+三個方向兩兩垂直，連續使用畢氏定理得到
+
+\[
+PQ=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2+(z_2-z_1)^2}.
+\]
+
+\begin{figure}
+\centering
+\includegraphics[width=0.86\linewidth,height=\textheight,keepaspectratio,alt={空間距離的三個互相垂直分量}]{assets/數B4-1-空間距離分解.pdf}
+\caption{空間距離的三個互相垂直分量}
+\end{figure}
+
+線段中點每一個坐標都取兩端平均：
+
+\[
+M\left(\frac{x_1+x_2}{2},\frac{y_1+y_2}{2},\frac{z_1+z_2}{2}\right).
+\]
+
+對坐標平面反射時，垂直於該平面的坐標變號。例如
+
+\[
+(a,b,c)\xrightarrow{\text{對 }yz\text{ 平面反射}}(-a,b,c).
+\]
+
+對 \(z\) 軸反射相當於繞 \(z\) 軸旋轉 \(180^\circ\)，結果為 \((-a,-b,c)\)。
+
+\subsection{示範 1｜距離、中點與中線}\label{ux793aux7bc4-1ux8dddux96e2ux4e2dux9edeux8207ux4e2dux7dda}
+
+已知 \(A(1,-2,3)\)、\(B(5,4,-1)\)。求 \(AB\) 與其中點 \(M\)。
+
+\textbf{解。}
+
+\[
+AB=\sqrt{(5-1)^2+(4-(-2))^2+(-1-3)^2}
+=\sqrt{16+36+16}=2\sqrt{17}.
+\]
+
+\[
+M=\left(\frac{1+5}{2},\frac{-2+4}{2},\frac{3+(-1)}{2}\right)
+=(3,1,1).
+\]
+
+\subsection{示範 2｜坐標軸上的等距點}\label{ux793aux7bc4-2ux5750ux6a19ux8ef8ux4e0aux7684ux7b49ux8dddux9ede}
+
+已知 \(A(1,2,3)\)、\(B(3,4,5)\)，點 \(P\) 在 \(x\) 軸上且 \(PA=PB\)。求 \(P\)。
+
+\textbf{解。} 設 \(P=(t,0,0)\)。比較距離平方：
+
+\[
+(t-1)^2+2^2+3^2=(t-3)^2+4^2+5^2.
+\]
+
+展開並消去 \(t^2\)：
+
+\[
+-2t+14=-6t+50,
+\]
+
+所以 \(4t=36,t=9\)，故 \(P=(9,0,0)\)。代回可得兩邊距離平方皆為 \(77\)。
+
+三維掃描常以兩個端點的中點估算構件中心，以距離公式比對量測誤差。反射公式則描述鏡射零件、對稱建模與影像翻轉。
+
+\subsection{8.2 分節練習}\label{ux5206ux7bc0ux7df4ux7fd2-7}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  求 \(P(-2,0,3)\)、\(Q(1,-4,-1)\) 的距離與中點。
+\item
+  已知線段 \(AB\) 中點為 \((2,3,4)\)，且 \(A=(-1,5,2)\)，求 \(B\)。
+\item
+  寫出點 \((3,-2,5)\) 對 \(xy\) 平面、\(y\) 軸的對稱點。
+\item
+  點 \(R=(t,0,0)\) 在 \(x\) 軸上，且到 \(A(0,3,0)\) 的距離為 \(5\)。求 \(R\)。
+\end{enumerate}
+
+\subsection{8.3 分節練習解析}\label{ux5206ux7bc0ux7df4ux7fd2ux89e3ux6790-7}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  坐標差為 \((3,-4,-4)\)，所以距離 \(=\sqrt{9+16+16}=\sqrt{41}\)；中點為 \((-1/2,-2,1)\)。
+\item
+  由 \((A+B)/2=M\)，得 \(B=2M-A=(5,1,6)\)。
+\item
+  對 \(xy\) 平面反射為 \((3,-2,-5)\)；對 \(y\) 軸反射為 \((-3,-2,-5)\)。
+\item
+  \(t^2+3^2=25\)，所以 \(t=\pm4\)，得 \(R=(4,0,0)\) 或 \((-4,0,0)\)。
+\end{enumerate}
+
+\section{9. 球面與平面的截痕}\label{ux7403ux9762ux8207ux5e73ux9762ux7684ux622aux75d5}
+
+\subsection{9.1 交集由球心距離決定}\label{ux4ea4ux96c6ux7531ux7403ux5fc3ux8dddux96e2ux6c7aux5b9a}
+
+空間中與定點 \(O\) 的距離固定為 \(R\) 的所有點組成\textbf{球面}；\(O\) 是球心，\(R\) 是球半徑。設平面 \(E\) 到球心的垂直距離為 \(d\)：
+
+\begin{itemize}
+\tightlist
+\item
+  \(d>R\) 時，平面與球面沒有交點。
+\item
+  \(d=R\) 時，平面與球面相切於一點。
+\item
+  \(0\le d<R\) 時，截痕為圓。
+\end{itemize}
+
+當截痕為圓時，令 \(A\) 為球心 \(O\) 在平面 \(E\) 的投影，\(P\) 為截圓上一點。\(OA\perp E\)，而 \(AP\) 位於 \(E\)，所以三角形 \(OAP\) 在 \(A\) 為直角：
+
+\[
+OP^2=OA^2+AP^2.
+\]
+
+代入 \(OP=R,OA=d\)，截圓半徑為
+
+\[
+r=AP=\sqrt{R^2-d^2}.
+\]
+
+\begin{figure}
+\centering
+\includegraphics[width=0.94\linewidth,height=\textheight,keepaspectratio,alt={球面與平面的三種相交情形；相交成圓時，OH=d、HA=r、OA=R 構成直角三角形。}]{assets/數B4-1-球面與平面截痕.pdf}
+\caption{球面與平面的三種相交情形；相交成圓時，\(OH=d\)、\(HA=r\)、\(OA=R\) 構成直角三角形。}
+\end{figure}
+
+若平面通過球心，\(d=0\) 且 \(r=R\)，截圓稱為\textbf{大圓}。其餘截圓半徑小於 \(R\)，稱為\textbf{小圓}。
+
+\subsection{示範 1｜由球心距離求截圓}\label{ux793aux7bc4-1ux7531ux7403ux5fc3ux8dddux96e2ux6c42ux622aux5713}
+
+半徑為 \(5\) 的球面被一平面截出一圓，球心到平面的距離為 \(3\)。求截圓半徑與面積。
+
+\textbf{解。}
+
+\[
+r=\sqrt{5^2-3^2}=4.
+\]
+
+因此截圓面積為
+
+\[
+\pi r^2=16\pi.
+\]
+
+\(d<R\)，所以這是小圓。
+
+\subsection{示範 2｜同時與兩點保持固定距離的軌跡}\label{ux793aux7bc4-2ux540cux6642ux8207ux5169ux9edeux4fddux6301ux56faux5b9aux8dddux96e2ux7684ux8eccux8de1}
+
+相異點 \(A,B\) 滿足 \(AB=5\)。求所有同時滿足 \(PA=3,PB=4\) 的空間點 \(P\) 所成圖形，並求其半徑。
+
+\textbf{解。} 以 \(A,B\) 為球心、半徑 \(3,4\) 的兩球面相交。兩球面的交集位於一個垂直 \(AB\) 的平面上，且形成圓。
+
+設截圓圓心為 \(H\)，令 \(AH=x\)，則 \(BH=5-x\)。由兩個直角三角形：
+
+\[
+PH^2+x^2=3^2,
+\]
+
+\[
+PH^2+(5-x)^2=4^2.
+\]
+
+兩式相減得 \((5-x)^2-x^2=7\)，所以 \(25-10x=7\)，\(x=9/5\)。因此
+
+\[
+PH=\sqrt{9-\left(\frac95\right)^2}=\frac{12}{5}.
+\]
+
+所成圖形是半徑 \(12/5\) 的圓。
+
+斷層掃描以平面切過近似球形器官；截圓半徑隨切面離中心的距離改變。知道球半徑與截圓半徑，也能反推切面位置。
+
+\subsection{9.2 分節練習}\label{ux5206ux7bc0ux7df4ux7fd2-8}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  半徑 \(10\) 的球面被距球心 \(6\) 的平面所截。求截圓半徑與周長。
+\item
+  球面半徑為 \(7\)。截圓半徑為 \(7\) 時，截平面與球心的關係為何？
+\item
+  半徑為 \(13\) 的球面截出半徑 \(5\) 的小圓。求球心到截平面的距離。
+\item
+  相異點 \(A,B\) 距離為 \(6\)。所有滿足 \(PA=PB=5\) 的點 \(P\) 形成什麼圖形？求其圓心位置與半徑。
+\end{enumerate}
+
+\subsection{9.3 分節練習解析}\label{ux5206ux7bc0ux7df4ux7fd2ux89e3ux6790-8}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(r=\sqrt{10^2-6^2}=8\)，周長為 \(16\pi\)。
+\item
+  \(r=R\) 只在 \(d=0\) 成立，所以截平面通過球心，截痕為大圓。
+\item
+  \(d=\sqrt{13^2-5^2}=12\)。
+\item
+  圓心為 \(AB\) 中點 \(H\)，因 \(PA=PB\) 的點位於 \(AB\) 的中垂平面。\(AH=3\)，故半徑 \(PH=\sqrt{5^2-3^2}=4\)；軌跡是以 \(H\) 為圓心、半徑 \(4\)，位於 \(AB\) 中垂平面上的圓。
+\end{enumerate}
+
+\section{10. 經緯度、球面坐標與弧長}\label{ux7d93ux7defux5ea6ux7403ux9762ux5750ux6a19ux8207ux5f27ux9577}
+
+\subsection{10.1 經線與緯線}\label{ux7d93ux7ddaux8207ux7defux7dda}
+
+地球模型的南、北極記為 \(S,N\)。通過 \(S,N\) 的半個大圓稱為\textbf{經線}。經度量的是該經線半平面與 \(0^\circ\) 經線半平面的兩面角，分為東經與西經，範圍皆為 \(0^\circ\) 到 \(180^\circ\)。
+
+垂直地軸 \(NS\) 的平面與球面所截的圓稱為\textbf{緯線}。通過球心的緯線是赤道，也是唯一的大圓緯線。緯度 \(\varphi\) 是球心到該點的半徑與赤道平面的夾角，分為北緯與南緯。
+
+設球半徑為 \(R\)，東經取 \(\theta>0\)、西經取 \(\theta<0\)；北緯取 \(\varphi>0\)、南緯取 \(\varphi<0\)。令赤道為 \(xy\) 平面，\(0^\circ\) 經線與赤道交於 \(x\) 軸正向，則球面點坐標為
+
+\[
+P=(R\cos\varphi\cos\theta,
+R\cos\varphi\sin\theta,
+R\sin\varphi).
+\]
+
+推導分成兩步。\(P\) 投影到赤道面的點記為 \(Q\)，則
+
+\[
+OQ=R\cos\varphi,\; PQ=R\sin\varphi.
+\]
+
+再於 \(xy\) 平面依經度分解 \(OQ\)，便得到 \(x,y\) 坐標。
+
+\begin{figure}
+\centering
+\includegraphics[width=0.84\linewidth,height=\textheight,keepaspectratio,alt={赤道面俯視圖用經度分解 x,y；子午截面用緯度分解 OQ=R\textbackslash cos\textbackslash varphi 與 PQ=R\textbackslash sin\textbackslash varphi。}]{assets/數B4-1-經緯度與空間坐標.pdf}
+\caption{赤道面俯視圖用經度分解 \(x,y\)；子午截面用緯度分解 \(OQ=R\cos\varphi\) 與 \(PQ=R\sin\varphi\)。}
+\end{figure}
+
+\subsection{10.2 緯線、經線與大圓距離}\label{ux7defux7ddaux7d93ux7ddaux8207ux5927ux5713ux8dddux96e2}
+
+緯度為 \(\varphi\) 的緯線半徑為
+
+\[
+r=R\cos\varphi.
+\]
+
+沿同一緯線跨越經度角 \(\Delta\theta\) 弳，路程為
+
+\[
+s_{\text{緯線}}=R\cos\varphi\,|\Delta\theta|.
+\]
+
+沿同一經線跨越緯度角 \(\Delta\varphi\) 弳，路程為
+
+\[
+s_{\text{經線}}=R|\Delta\varphi|.
+\]
+
+球面上兩點的最短路徑沿通過兩點與球心的大圓劣弧。若中心角為 \(\gamma\)，弧長為 \(R\gamma\)；球內直線段是弦，長度為 \(2R\sin(\gamma/2)\)。
+
+\begin{figure}
+\centering
+\includegraphics[width=0.78\linewidth,height=\textheight,keepaspectratio,alt={球內弦長與球面大圓弧長}]{assets/數B4-1-弦長與大圓弧長.pdf}
+\caption{球內弦長與球面大圓弧長}
+\end{figure}
+
+\subsection{示範 1｜經緯度換成坐標}\label{ux793aux7bc4-1ux7d93ux7defux5ea6ux63dbux6210ux5750ux6a19}
+
+半徑為 \(4\) 的球面上，點 \(P\) 位於北緯 \(30^\circ\)、東經 \(120^\circ\)。求 \(P\) 坐標。
+
+\textbf{解。}
+
+\[
+x=4\cos30^\circ\cos120^\circ
+=4\cdot\frac{\sqrt3}{2}\cdot\left(-\frac12\right)
+=-\sqrt3,
+\]
+
+\[
+y=4\cos30^\circ\sin120^\circ
+=4\cdot\frac{\sqrt3}{2}\cdot\frac{\sqrt3}{2}=3,
+\]
+
+\[
+z=4\sin30^\circ=2.
+\]
+
+因此 \(P=(-\sqrt3,3,2)\)。檢查 \(OP^2=3+9+4=16=R^2\)。
+
+\subsection{示範 2｜同速航行造成的經度差}\label{ux793aux7bc4-2ux540cux901fux822aux884cux9020ux6210ux7684ux7d93ux5ea6ux5dee}
+
+甲沿赤道、乙沿北緯 \(60^\circ\) 緯線，同時由 \(0^\circ\) 經線向東以相同速率航行。甲到東經 \(30^\circ\) 時，乙到哪一條經線？
+
+\textbf{解。} 北緯 \(60^\circ\) 緯線半徑為 \(R\cos60^\circ=R/2\)。設乙跨越經度 \(x^\circ\)。同速同時使路程相等：
+
+\[
+R\cdot\frac{30\pi}{180}
+=\frac R2\cdot\frac{x\pi}{180}.
+\]
+
+約去共同因子得 \(x=60\)，所以乙位於東經 \(60^\circ\)。
+
+\subsection{示範 3｜弦長與大圓弧長}\label{ux793aux7bc4-3ux5f26ux9577ux8207ux5927ux5713ux5f27ux9577}
+
+半徑為 \(4\) 的球面上，兩點的中心角為 \(120^\circ\)。求球內直線距離與球面最短距離。
+
+\textbf{解。} 弦長為
+
+\[
+2R\sin\frac{120^\circ}{2}
+=8\sin60^\circ=4\sqrt3.
+\]
+
+大圓劣弧長為
+
+\[
+R\gamma=4\cdot\frac{2\pi}{3}=\frac{8\pi}{3}.
+\]
+
+球面路徑受表面限制，因此 \(8\pi/3>4\sqrt3\)。
+
+經緯度適合表達全球位置，空間坐標適合進行距離與方向運算。地理資訊系統會在兩種表示間轉換，再依地球模型修正尺度。
+
+\subsection{10.3 分節練習}\label{ux5206ux7bc0ux7df4ux7fd2-9}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  半徑為 \(2\) 的球面上，北緯 \(60^\circ\)、東經 \(90^\circ\) 的點坐標為何？
+\item
+  地球半徑取 \(6400\text{ km}\)。沿北緯 \(60^\circ\) 由東經 \(60^\circ\) 到東經 \(150^\circ\)，求路程。
+\item
+  半徑為 \(24\text{ cm}\) 的地球儀上，沿同一經線由赤道到北緯 \(60^\circ\)，求弧長。
+\item
+  球面上一點為北緯 \(25^\circ\)、東經 \(121^\circ\)。寫出其對蹠點的經緯度。
+\end{enumerate}
+
+\subsection{10.4 分節練習解析}\label{ux5206ux7bc0ux7df4ux7fd2ux89e3ux6790-9}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(x=2\cos60^\circ\cos90^\circ=0\)，\(y=2\cos60^\circ\sin90^\circ=1\)，\(z=2\sin60^\circ=\sqrt3\)，所以坐標為 \((0,1,\sqrt3)\)。
+\item
+  緯線半徑 \(=6400\cos60^\circ=3200\)。經度差 \(90^\circ=\pi/2\) 弳，所以路程 \(=3200(\pi/2)=1600\pi\text{ km}\)。
+\item
+  緯度差 \(60^\circ=\pi/3\) 弳，路程 \(=24(\pi/3)=8\pi\text{ cm}\)。
+\item
+  對蹠點緯度變號，經度相差 \(180^\circ\)。\(121^\circ\)E 加 \(180^\circ\) 等同 \(59^\circ\)W，所以為南緯 \(25^\circ\)、西經 \(59^\circ\)。
+\end{enumerate}
+
+\section{11. 生活中的圓錐曲線}\label{ux751fux6d3bux4e2dux7684ux5713ux9310ux66f2ux7dda}
+
+\subsection{11.1 三類形狀與辨識線索}\label{ux4e09ux985eux5f62ux72c0ux8207ux8fa8ux8b58ux7ddaux7d22}
+
+圓錐曲線包含橢圓（圓為特殊情形）、拋物線與雙曲線。高中數學B本節以形狀、截痕與應用辨識為主；下列方程提供可計算的代表圖：
+
+\begin{itemize}
+\tightlist
+\item
+  拋物線 \(y=ax^2\)（\(a\ne0\)）有一個頂點與一條對稱軸，向單一方向開口。
+\item
+  橢圓 \(x^2/a^2+y^2/b^2=1\) 為封閉曲線；\(a=b\) 時是圓。
+\item
+  雙曲線 \(x^2/a^2-y^2/b^2=1\) 有兩支；反比例 \(xy=k\)（\(k\ne0\)）也形成雙曲線。
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.96\linewidth,height=\textheight,keepaspectratio,alt={由方程生成的拋物線、橢圓與雙曲線}]{assets/數B4-1-圓錐曲線方程圖.pdf}
+\caption{由方程生成的拋物線、橢圓與雙曲線}
+\end{figure}
+
+物體在均勻重力下的拋射軌跡可寫成
+
+\[
+y=y_0+x\tan\theta-\frac{g}{2v_0^2\cos^2\theta}x^2,
+\]
+
+所以理想軌跡是拋物線。此模型忽略空氣阻力、自旋與地面高低差。
+
+斜切直圓柱得到橢圓；行星在理想二體重力模型下沿橢圓運行；兩量成反比時的資料圖呈雙曲線。實物外觀常只顯示曲線的一部分，辨識時仍依其延伸後的整體類型判斷。
+
+\subsection{示範 1｜由機制辨識曲線}\label{ux793aux7bc4-1ux7531ux6a5fux5236ux8fa8ux8b58ux66f2ux7dda}
+
+判斷下列形狀所屬類型：理想籃球軌跡、斜切圓柱的封閉邊界、關係 \(xy=12\) 的圖。
+
+\textbf{解。}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  理想拋射運動的高度是水平位置的二次函數，所以為拋物線。
+\item
+  平面斜切直圓柱且形成封閉截痕，邊界為橢圓。
+\item
+  \(xy=12\) 可寫成 \(y=12/x\)，正、負 \(x\) 各形成一支，為雙曲線。
+\end{enumerate}
+
+\subsection{示範 2｜由資料建立拋物線模型}\label{ux793aux7bc4-2ux7531ux8cc7ux6599ux5efaux7acbux62cbux7269ux7ddaux6a21ux578b}
+
+噴水口位於原點，水柱在水平距離 \(2\text{ m}\) 時高 \(3\text{ m}\)，並在水平距離 \(6\text{ m}\) 落地。設軌跡為 \(y=ax^2+bx\)，求方程與最高點。
+
+\textbf{解。} 代入 \((2,3)\) 與 \((6,0)\)：
+
+\[
+4a+2b=3,
+\]
+
+\[
+36a+6b=0.
+\]
+
+第二式除以 \(6\) 得 \(6a+b=0\)。聯立可得 \(a=-3/8,b=9/4\)，所以
+
+\[
+y=-\frac38x^2+\frac94x.
+\]
+
+頂點橫坐標
+
+\[
+x=-\frac{b}{2a}=3,
+\]
+
+代回得最高點 \((3,27/8)\)，高度為 \(3.375\text{ m}\)。
+
+圓錐曲線辨識能把照片或場景轉成模型。模型成立後，便可估算水柱最高點、光斑邊界、軌道範圍或反比例設備曲線。
+
+\subsection{11.2 分節練習}\label{ux5206ux7bc0ux7df4ux7fd2-10}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  將下列形狀分類：\(y=-2x^2+3\)、\(x^2/9+y^2/4=1\)、\(xy=-5\)。
+\item
+  一顆球的理想軌跡為 \(y=-x^2+6x+2\)。求最高點。
+\item
+  一個圓柱杯斜放時，水平液面與圓柱側面的完整交線是哪類曲線？
+\item
+  反比例模型 \(xy=24\) 中，當 \(x=3,6,8\) 時求 \(y\)，並說明 \(x\) 增加時 \(y\) 的變化。
+\end{enumerate}
+
+\subsection{11.3 分節練習解析}\label{ux5206ux7bc0ux7df4ux7fd2ux89e3ux6790-10}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  依序為拋物線、橢圓、雙曲線。
+\item
+  \(x=-6/(2\cdot-1)=3\)，\(y(3)=11\)，最高點為 \((3,11)\)。
+\item
+  斜切直圓柱所得完整封閉截痕為橢圓。
+\item
+  \(y=24/x\)，依序為 \(8,4,3\)；在 \(x>0\) 的範圍，\(x\) 增加時 \(y\) 減少。
+\end{enumerate}
+
+\section{12. 直圓錐面與截痕分類}\label{ux76f4ux5713ux9310ux9762ux8207ux622aux75d5ux5206ux985e}
+
+\subsection{12.1 軸、母線與半頂角}\label{ux8ef8ux6bcdux7ddaux8207ux534aux9802ux89d2}
+
+兩直線 \(L,M\) 交於頂點 \(K\)，銳夾角為 \(\alpha\)。固定 \(L\)，使 \(M\) 繞 \(L\) 旋轉一周，\(M\) 掃出的曲面稱為\textbf{直圓錐面}。\(L\) 是軸，\(M\) 是母線，\(2\alpha\) 是頂角，\(\alpha\) 是半頂角。
+
+設截平面 \(E\) 不通過 \(K\)，\(\beta\) 為平面 \(E\) 與軸 \(L\) 的銳夾角：
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+角度條件 & 截痕 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(\beta=90^\circ\) & 圓 \\
+\(\alpha<\beta<90^\circ\) & 橢圓 \\
+\(\beta=\alpha\) & 拋物線 \\
+\(0\le\beta<\alpha\) & 雙曲線 \\
+\end{longtable}
+}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.98\linewidth,height=\textheight,keepaspectratio,alt={截平面角度決定圓錐截痕}]{assets/數B4-1-圓錐截痕分類.pdf}
+\caption{截平面角度決定圓錐截痕}
+\end{figure}
+
+\(\beta>\alpha\) 時，平面只切到圓錐面的一半並形成封閉曲線；\(\beta=\alpha\) 時，平面平行一條母線，截痕恰好開口；\(\beta<\alpha\) 時，平面切到上下兩半，形成雙曲線兩支。
+
+若題目給的是截平面法線與軸的銳夾角 \(\gamma\)，則
+
+\[
+\beta=90^\circ-\gamma.
+\]
+
+先換成平面與軸的角，再與 \(\alpha\) 比較。
+
+\subsection{12.2 通過頂點的退化情形}\label{ux901aux904eux9802ux9edeux7684ux9000ux5316ux60c5ux5f62}
+
+截平面通過頂點 \(K\) 時，截痕可為一點、一直線或兩相交直線，統稱\textbf{退化圓錐曲線}。
+
+\begin{figure}
+\centering
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio,alt={截平面通過頂點時，\textbackslash beta\textgreater\textbackslash alpha、\textbackslash beta=\textbackslash alpha、\textbackslash beta\textless\textbackslash alpha 依序得到一點、一直線與兩相交直線。}]{assets/數B4-1-退化圓錐截痕.pdf}
+\caption{截平面通過頂點時，\(\beta>\alpha\)、\(\beta=\alpha\)、\(\beta<\alpha\) 依序得到一點、一直線與兩相交直線。}
+\end{figure}
+
+\subsection{示範 1｜由法線角分類三個截痕}\label{ux793aux7bc4-1ux7531ux6cd5ux7ddaux89d2ux5206ux985eux4e09ux500bux622aux75d5}
+
+直圓錐面的半頂角 \(\alpha=30^\circ\)。三個截平面都不通過頂點，平面法線與軸的夾角依序為 \(0^\circ,60^\circ,80^\circ\)。分類三個截痕。
+
+\textbf{解。} 轉成平面與軸的夾角 \(\beta=90^\circ-\gamma\)：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(\gamma=0^\circ\)，\(\beta=90^\circ\)，截痕為圓。
+\item
+  \(\gamma=60^\circ\)，\(\beta=30^\circ=\alpha\)，截痕為拋物線。
+\item
+  \(\gamma=80^\circ\)，\(\beta=10^\circ<\alpha\)，截痕為雙曲線。
+\end{enumerate}
+
+\subsection{示範 2｜同角度下比較一般與退化截痕}\label{ux793aux7bc4-2ux540cux89d2ux5ea6ux4e0bux6bd4ux8f03ux4e00ux822cux8207ux9000ux5316ux622aux75d5}
+
+直圓錐面的半頂角為 \(25^\circ\)。平面與軸夾角為 \(40^\circ\)。當平面不通過頂點與通過頂點時，截痕分別為何？
+
+\textbf{解。} \(40^\circ>25^\circ\)。平面不通過頂點時，只切到一半圓錐面且形成封閉曲線，所以為橢圓。
+
+平面通過頂點時，除了頂點外不再與圓錐面相交，截痕退化為一點。
+
+聚光燈的光線邊界近似圓錐面，牆面或地面就是截平面。調整燈具角度會依序改變光斑的封閉性，這使截痕分類能直接預測照明範圍。
+
+\subsection{12.3 分節練習}\label{ux5206ux7bc0ux7df4ux7fd2-11}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  直圓錐面半頂角為 \(35^\circ\)。截平面不過頂點且與軸夾角為 \(70^\circ\)，截痕為何？
+\item
+  同一圓錐面中，截平面法線與軸夾角為 \(55^\circ\)，且平面不過頂點。截痕為何？
+\item
+  半頂角為 \(40^\circ\)，截平面與軸平行且不過頂點。截痕為何？
+\item
+  列出平面通過直圓錐面頂點時的三種退化截痕。
+\end{enumerate}
+
+\subsection{12.4 分節練習解析}\label{ux5206ux7bc0ux7df4ux7fd2ux89e3ux6790-11}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(70^\circ>35^\circ\) 且小於 \(90^\circ\)，所以為橢圓。
+\item
+  \(\beta=90^\circ-55^\circ=35^\circ=\alpha\)，所以為拋物線。
+\item
+  平面與軸夾角 \(\beta=0^\circ<40^\circ\)，所以為雙曲線。
+\item
+  一點、一直線、兩相交直線。
+\end{enumerate}
+
+\section{13. 圓錐曲線的幾何機制與應用}\label{ux5713ux9310ux66f2ux7ddaux7684ux5e7eux4f55ux6a5fux5236ux8207ux61c9ux7528}
+
+\subsection{13.1 拋物線的焦點與準線}\label{ux62cbux7269ux7ddaux7684ux7126ux9edeux8207ux6e96ux7dda}
+
+給定一點 \(F\) 與一條不通過 \(F\) 的直線 \(L\)。到 \(F\) 的距離等於到 \(L\) 的距離之所有點形成拋物線；\(F\) 稱為焦點，\(L\) 稱為準線。
+
+標準拋物線 \(y=x^2/(4f)\) 的焦點是 \((0,f)\)，準線是 \(y=-f\)。對曲線上一點 \(P(x,x^2/(4f))\)：
+
+\[
+PF^2=x^2+\left(\frac{x^2}{4f}-f\right)^2
+=\left(\frac{x^2}{4f}+f\right)^2,
+\]
+
+因此
+
+\[
+PF=\frac{x^2}{4f}+f,
+\]
+
+恰等於 \(P\) 到準線 \(y=-f\) 的垂直距離。
+
+拋物線切線使「平行於對稱軸的方向」與「指向焦點的方向」形成相等反射角，因此平行訊號會集中到焦點；反向使用時，焦點發出的訊號反射後近似平行。
+
+\begin{figure}
+\centering
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio,alt={同一邊界點 P 同時呈現 PF=PH 的焦點---準線定義，以及切線處入射角等於反射角。}]{assets/數B4-1-拋物線反射.pdf}
+\caption{同一邊界點 \(P\) 同時呈現 \(PF=PH\) 的焦點---準線定義，以及切線處入射角等於反射角。}
+\end{figure}
+
+\subsection{13.2 橢圓的雙焦點性質}\label{ux6a62ux5713ux7684ux96d9ux7126ux9edeux6027ux8cea}
+
+給定兩點 \(F_1,F_2\)。到兩焦點距離和為定值 \(2a\) 的點形成橢圓：
+
+\[
+PF_1+PF_2=2a.
+\]
+
+橢圓在任一邊界點的切線，使連向兩焦點的兩條線形成相等反射角。因此從一個焦點發出的理想射線，經橢圓邊界反射後會通過另一焦點。
+
+\begin{figure}
+\centering
+\includegraphics[width=0.84\linewidth,height=\textheight,keepaspectratio,alt={橢圓上 PF\_1+PF\_2=2a；在邊界點 P，兩條焦半徑與切線形成相等銳角。}]{assets/數B4-1-橢圓焦點反射.pdf}
+\caption{橢圓上 \(PF_1+PF_2=2a\)；在邊界點 \(P\)，兩條焦半徑與切線形成相等銳角。}
+\end{figure}
+
+\subsection{示範 1｜核對拋物線的焦點定義}\label{ux793aux7bc4-1ux6838ux5c0dux62cbux7269ux7ddaux7684ux7126ux9edeux5b9aux7fa9}
+
+拋物線 \(y=x^2/4\) 的焦點為 \(F(0,1)\)，準線為 \(y=-1\)。核對點 \(P(2,1)\) 位於拋物線，並比較 \(PF\) 與 \(P\) 到準線的距離。
+
+\textbf{解。} 代入 \(x=2\) 得 \(y=2^2/4=1\)，所以 \(P\) 在曲線上。
+
+\[
+PF=\sqrt{(2-0)^2+(1-1)^2}=2.
+\]
+
+\(P\) 到 \(y=-1\) 的垂直距離是 \(|1-(-1)|=2\)。兩距離相等，符合拋物線定義。
+
+\subsection{示範 2｜核對橢圓的距離和}\label{ux793aux7bc4-2ux6838ux5c0dux6a62ux5713ux7684ux8dddux96e2ux548c}
+
+橢圓 \(x^2/25+y^2/9=1\) 的兩焦點為 \(F_1(-4,0),F_2(4,0)\)。核對頂點 \(P(0,3)\) 的雙焦點距離和。
+
+\textbf{解。} 此橢圓 \(a=5,b=3\)，焦距參數
+
+\[
+c=\sqrt{a^2-b^2}=\sqrt{25-9}=4.
+\]
+
+所以兩焦點如題。又
+
+\[
+PF_1=PF_2=\sqrt{4^2+3^2}=5,
+\]
+
+故
+
+\[
+PF_1+PF_2=10=2a.
+\]
+
+拋物面天線、車燈反射罩與太陽爐利用拋物線聚焦或準直；橢圓形反射裝置能把一焦點的聲音或能量導向另一焦點。理想反射假設邊界光滑、反射遵守入射角等於反射角；材料吸收、表面誤差與三維形狀會影響實際效果。
+
+天體在單一重力源的理想模型下，其軌道屬於圓錐曲線。橢圓軌道封閉，拋物線與雙曲線軌道不封閉。建築中的雙曲拋物面呈馬鞍形，沿兩組方向切割可見不同曲率，薄殼結構藉幾何形狀分散受力；完整結構安全仍需材料與載重分析。
+
+\subsection{13.3 分節練習}\label{ux5206ux7bc0ux7df4ux7fd2-12}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  拋物線 \(y=x^2/8\) 的焦點與準線為何？
+\item
+  對拋物線 \(y=x^2/8\) 上點 \(P(4,2)\)，求 \(P\) 到焦點與準線的距離。
+\item
+  橢圓兩焦點為 \(F_1,F_2\)，且曲線上每點滿足 \(PF_1+PF_2=18\)。求長軸長。
+\item
+  分別寫出拋物線反射罩與橢圓反射室中，訊號的起始方向與反射後去向。
+\end{enumerate}
+
+\subsection{13.4 分節練習解析}\label{ux5206ux7bc0ux7df4ux7fd2ux89e3ux6790-12}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(4f=8\)，所以 \(f=2\)；焦點為 \((0,2)\)，準線為 \(y=-2\)。
+\item
+  焦點 \((0,2)\)，所以 \(PF=4\)；點到準線距離 \(|2-(-2)|=4\)。
+\item
+  定值 \(18=2a\) 就是長軸長，因此長軸長為 \(18\)。
+\item
+  拋物線中，平行於對稱軸的入射訊號反射到焦點；橢圓中，由一焦點發出的訊號反射後通過另一焦點。
+\end{enumerate}
+
+\section{14. 代表題與章末分層練習}\label{ux4ee3ux8868ux984cux8207ux7ae0ux672bux5206ux5c64ux7df4ux7fd2}
+
+\subsection{基礎題}\label{ux57faux790eux984c}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  正方體 \(ABCD-EFGH\) 中，判斷下列直線關係：
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    \(AB\) 與 \(HG\)；
+  \item
+    \(AB\) 與 \(CG\)；
+  \item
+    \(AC\) 與 \(BD\)。
+  \end{enumerate}
+\item
+  長方體中，說明 \(BF\) 為何垂直平面 \(ABCD\)，並寫出 \(F\) 到平面 \(ABCD\) 的距離。
+\item
+  正四角錐底邊長為 \(8\)、高為 \(3\)。求一個側面與底面的銳兩面角 \(\theta\) 之 \(\tan\theta\)。
+\item
+  長、寬、高為 \(9,4,3\) 的長方體，求相對頂點沿表面的最短距離。
+\item
+  直圓錐底面半徑為 \(6\)、母線長為 \(10\)。求側面積、總表面積與展開扇形圓心角。
+\item
+  一個凸多面體有 \(V=10,F=7\)。利用尤拉關係求稜數。
+\end{enumerate}
+
+\subsection{核心計算題}\label{ux6838ux5fc3ux8a08ux7b97ux984c}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\item
+  點 \(P(-3,4,-12)\)：
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    求在 \(xy\) 平面與 \(z\) 軸的投影點；
+  \item
+    求到 \(xy\) 平面與 \(z\) 軸的距離。
+  \end{enumerate}
+\item
+  已知 \(A(-2,1,5)\)、\(B(4,-3,-1)\)：
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    求 \(AB\)；
+  \item
+    求中點 \(M\)；
+  \item
+    求 \(M\) 對 \(yz\) 平面的對稱點。
+  \end{enumerate}
+\item
+  半徑為 \(17\) 的球面被平面截出半徑為 \(8\) 的圓。求球心到平面的距離，並判斷截圓是否為大圓。
+\item
+  半徑為 \(6\) 的球面上，點 \(P\) 位於南緯 \(30^\circ\)、東經 \(150^\circ\)。求 \(P\) 的空間坐標。
+\item
+  地球半徑取 \(6300\text{ km}\)。沿北緯 \(60^\circ\) 緯線跨越 \(40^\circ\) 經度，求路程；沿經線跨越 \(40^\circ\) 緯度時，再求路程。
+\item
+  直圓錐面半頂角為 \(28^\circ\)，截平面都不通過頂點。依下列「平面與軸的夾角」分類截痕：\(90^\circ,45^\circ,28^\circ,12^\circ\)。
+\end{enumerate}
+
+\subsection{跨節整合題}\label{ux8de8ux7bc0ux6574ux5408ux984c}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{12}
+\tightlist
+\item
+  長方體 \(ABCD-EFGH\) 建立坐標：
+\end{enumerate}
+
+\[
+A(0,0,0),\quad B(6,0,0),\quad D(0,4,0),\quad E(0,0,3).
+\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  求 \(G\) 坐標與空間對角線 \(AG\)。
+\item
+  求 \(G\) 在 \(xy\) 平面的投影與到該平面的距離。
+\item
+  求 \(A\) 到 \(G\) 沿長方體表面的最短距離。
+\item
+  求平面 \(ABCD\) 與平面 \(ABFE\) 的兩面角。
+\item
+  半徑為 \(4\) 的球面以赤道為 \(xy\) 平面。\(P\) 位於北緯 \(30^\circ\)、東經 \(120^\circ\)；\(Q\) 位於北緯 \(30^\circ\)、西經 \(60^\circ\)。
+\item
+  求 \(P,Q\) 坐標。
+\item
+  求球內弦長 \(PQ\)。
+\item
+  求 \(P,Q\) 的中心角與球面最短距離。
+\item
+  比較弦長與球面最短距離，說明差異來源。
+\item
+  一盞聚光燈的光線邊界為半頂角 \(30^\circ\) 的直圓錐面。
+\item
+  牆面垂直圓錐軸，且燈源頂點到牆面沿軸距離為 \(6\text{ m}\)。求光斑類型、半徑與面積。
+\item
+  保持牆面不通過燈源，調整圓錐軸，使牆面與軸的夾角依序為 \(50^\circ,30^\circ,15^\circ\)。分類三個光斑邊界。
+\item
+  當牆面通過燈源，且與軸夾角為 \(30^\circ\)，截痕為何？
+\item
+  衛星接收碟的軸截面以拋物線
+\end{enumerate}
+
+\[
+y=\frac{x^2}{16}
+\]
+
+建模，頂點位於原點，開口向上。碟口所在水平線為 \(y=9\)。
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  求焦點與準線。
+\item
+  求軸截面碟口寬度。
+\item
+  核對碟口右端點到焦點與準線的距離相等。
+\item
+  說明接收器應放在哪裡，以及平行於軸的入射訊號為何能集中於該處。
+\end{enumerate}
+
+\section{15. 章末練習完整詳解}\label{ux7ae0ux672bux7df4ux7fd2ux5b8cux6574ux8a73ux89e3}
+
+\subsection{第 1 題}\label{ux7b2c-1-ux984c}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(AB\) 與 \(HG\) 同方向且共平面，所以平行。
+\item
+  \(AB\) 與 \(CG\) 沒有交點、不平行且不共平面，所以歪斜。
+\item
+  \(AC,BD\) 都在正方形 \(ABCD\) 中，交於中心且互相垂直。
+\end{enumerate}
+
+\subsection{第 2 題}\label{ux7b2c-2-ux984c}
+
+\(BA,BC\) 都位於平面 \(ABCD\) 且交於 \(B\)。長方體中
+
+\[
+BF\perp BA,\; BF\perp BC.
+\]
+
+由兩線判定法，\(BF\perp\) 平面 \(ABCD\)。垂足為 \(B\)，所以 \(F\) 到平面 \(ABCD\) 的距離為 \(BF\)。
+
+\subsection{第 3 題}\label{ux7b2c-3-ux984c}
+
+設底面中心為 \(O\)，題目所取底邊中點為 \(M\)。正方形邊長 \(8\)，所以 \(OM=4\)；角錐高為 \(PO=3\)。\(PM,OM\) 都垂直同一底邊，故 \(\angle PMO=\theta\)。在直角三角形 \(POM\) 中，
+
+\[
+\tan\theta=\frac{PO}{OM}=\frac34.
+\]
+
+\subsection{第 4 題}\label{ux7b2c-4-ux984c}
+
+三類展開路徑的長度平方為
+
+\[
+(9+4)^2+3^2=178,
+\]
+
+\[
+(9+3)^2+4^2=160,
+\]
+
+\[
+(4+3)^2+9^2=130.
+\]
+
+最小值為 \(130\)，所以表面最短距離為 \(\sqrt{130}\)。
+
+\subsection{第 5 題}\label{ux7b2c-5-ux984c}
+
+側面積
+
+\[
+A_{\text{側}}=\pi Rr=\pi(10)(6)=60\pi.
+\]
+
+底面積 \(=36\pi\)，所以總表面積為 \(96\pi\)。展開扇形滿足
+
+\[
+10\theta=2\pi(6),
+\]
+
+故
+
+\[
+\theta=\frac{6\pi}{5}\text{ 弳}=216^\circ.
+\]
+
+\subsection{第 6 題}\label{ux7b2c-6-ux984c}
+
+凸多面體滿足
+
+\[
+V-E+F=2.
+\]
+
+代入 \(V=10,F=7\)：
+
+\[
+10-E+7=2,
+\]
+
+所以 \(E=15\)。
+
+\subsection{第 7 題}\label{ux7b2c-7-ux984c}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  投到 \(xy\) 平面把 \(z\) 坐標改為 \(0\)，得 \((-3,4,0)\)；投到 \(z\) 軸把 \(x,y\) 改為 \(0\)，得 \((0,0,-12)\)。
+\item
+  到 \(xy\) 平面的距離為 \(|-12|=12\)；到 \(z\) 軸的距離為
+  \[
+  \sqrt{(-3)^2+4^2}=5.
+  \]
+\end{enumerate}
+
+\subsection{第 8 題}\label{ux7b2c-8-ux984c}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  坐標差為 \((6,-4,-6)\)，所以
+  \[
+  AB=\sqrt{6^2+(-4)^2+(-6)^2}
+  =\sqrt{88}=2\sqrt{22}.
+  \]
+\item
+  中點
+  \[
+  M=\left(\frac{-2+4}{2},\frac{1+(-3)}2,\frac{5+(-1)}2\right)
+  =(1,-1,2).
+  \]
+\item
+  對 \(yz\) 平面反射使 \(x\) 坐標變號，得 \((-1,-1,2)\)。
+\end{enumerate}
+
+\subsection{第 9 題}\label{ux7b2c-9-ux984c}
+
+由截圓直角三角形：
+
+\[
+d=\sqrt{R^2-r^2}=\sqrt{17^2-8^2}=\sqrt{225}=15.
+\]
+
+\(d>0\) 且 \(r<R\)，所以截圓是小圓。
+
+\subsection{第 10 題}\label{ux7b2c-10-ux984c}
+
+取東經為正、南緯為負：\(R=6,\theta=150^\circ,\varphi=-30^\circ\)。
+
+\[
+x=6\cos(-30^\circ)\cos150^\circ
+=6\cdot\frac{\sqrt3}{2}\cdot\left(-\frac{\sqrt3}{2}\right)
+=-\frac92,
+\]
+
+\[
+y=6\cos(-30^\circ)\sin150^\circ
+=6\cdot\frac{\sqrt3}{2}\cdot\frac12
+=\frac{3\sqrt3}{2},
+\]
+
+\[
+z=6\sin(-30^\circ)=-3.
+\]
+
+所以
+
+\[
+P=\left(-\frac92,\frac{3\sqrt3}{2},-3\right).
+\]
+
+檢查三坐標平方和為 \(81/4+27/4+9=36=R^2\)。
+
+\subsection{第 11 題}\label{ux7b2c-11-ux984c}
+
+北緯 \(60^\circ\) 的緯線半徑為
+
+\[
+r=6300\cos60^\circ=3150\text{ km}.
+\]
+
+\(40^\circ=2\pi/9\) 弳，所以沿緯線路程
+
+\[
+s_1=3150\cdot\frac{2\pi}{9}=700\pi\text{ km}.
+\]
+
+經線是半徑 \(6300\) 的大圓，故
+
+\[
+s_2=6300\cdot\frac{2\pi}{9}=1400\pi\text{ km}.
+\]
+
+同樣角度下，北緯 \(60^\circ\) 緯線半徑只有地球半徑的一半，因此路程也為一半。
+
+\subsection{第 12 題}\label{ux7b2c-12-ux984c}
+
+與半頂角 \(28^\circ\) 比較：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(90^\circ\)：圓。
+\item
+  \(45^\circ>28^\circ\)：橢圓。
+\item
+  \(28^\circ=28^\circ\)：拋物線。
+\item
+  \(12^\circ<28^\circ\)：雙曲線。
+\end{enumerate}
+
+\subsection{第 13 題｜長方體、坐標、表面路徑與兩面角}\label{ux7b2c-13-ux984cux9577ux65b9ux9ad4ux5750ux6a19ux8868ux9762ux8defux5f91ux8207ux5169ux9762ux89d2}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(G\) 位於 \(C\) 正上方，三個邊長分別沿 \(x,y,z\) 軸，所以
+  \[
+  G=(6,4,3).
+  \]
+  空間對角線
+  \[
+  AG=\sqrt{6^2+4^2+3^2}=\sqrt{61}.
+  \]
+\item
+  投到 \(xy\) 平面得 \((6,4,0)\)，距離為 \(|3|=3\)。
+\item
+  三類表面路徑平方為
+  \[
+  (6+4)^2+3^2=109,
+  \]
+  \[
+  (6+3)^2+4^2=97,
+  \]
+  \[
+  (4+3)^2+6^2=85.
+  \]
+  所以表面最短距離為 \(\sqrt{85}\)。它大於穿過立體內部的 \(\sqrt{61}\)，符合路徑限制。
+\item
+  交線為 \(AB\)。底面內 \(AD\perp AB\)，側面內 \(AE\perp AB\)，而 \(AD\perp AE\)，所以兩面角為 \(90^\circ\)。
+\end{enumerate}
+
+\subsection{第 14 題｜經緯度、空間距離與大圓路徑}\label{ux7b2c-14-ux984cux7d93ux7defux5ea6ux7a7aux9593ux8dddux96e2ux8207ux5927ux5713ux8defux5f91}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  對 \(P\)，\(\theta=120^\circ,\varphi=30^\circ\)：
+  \[
+  P=(-\sqrt3,3,2).
+  \]
+  對 \(Q\)，\(\theta=-60^\circ,\varphi=30^\circ\)：
+  \[
+  Q=(\sqrt3,-3,2).
+  \]
+\item
+  坐標差為 \((2\sqrt3,-6,0)\)，所以
+  \[
+  PQ=\sqrt{12+36}=4\sqrt3.
+  \]
+\item
+  設中心角為 \(\gamma\)。弦長公式給出
+  \[
+  4\sqrt3=2(4)\sin\frac\gamma2,
+  \]
+  所以 \(\sin(\gamma/2)=\sqrt3/2\)。劣弧對應 \(\gamma/2=60^\circ\)，故 \(\gamma=120^\circ=2\pi/3\) 弳。球面最短距離為
+  \[
+  4\cdot\frac{2\pi}{3}=\frac{8\pi}{3}.
+  \]
+\item
+  \(4\sqrt3\approx6.93\)，\(8\pi/3\approx8.38\)。弦穿過球內，球面路徑沿大圓弧，所以弧長較長。
+\end{enumerate}
+
+\subsection{第 15 題｜光錐的尺度、一般截痕與退化截痕}\label{ux7b2c-15-ux984cux5149ux9310ux7684ux5c3aux5ea6ux4e00ux822cux622aux75d5ux8207ux9000ux5316ux622aux75d5}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  牆面與軸垂直，截痕為圓。在含軸的截面中形成直角三角形，圓半徑
+  \[
+  r=6\tan30^\circ=2\sqrt3\text{ m}.
+  \]
+  面積
+  \[
+  A=\pi r^2=12\pi\text{ m}^2.
+  \]
+\item
+  半頂角 \(\alpha=30^\circ\)。牆面與軸的夾角 \(50^\circ>\alpha\)，為橢圓；\(30^\circ=\alpha\)，為拋物線；\(15^\circ<\alpha\)，為雙曲線。
+\item
+  截平面通過頂點，且與軸夾角等於半頂角，所以平面包含一條母線；截痕退化為一直線。
+\end{enumerate}
+
+\subsection{第 16 題｜拋物線尺度、焦點與接收機制}\label{ux7b2c-16-ux984cux62cbux7269ux7ddaux5c3aux5ea6ux7126ux9edeux8207ux63a5ux6536ux6a5fux5236}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(y=x^2/(4f)\) 與 \(y=x^2/16\) 比較，得 \(4f=16\)、\(f=4\)。焦點為 \((0,4)\)，準線為 \(y=-4\)。
+\item
+  碟口在 \(y=9\)：
+  \[
+  9=\frac{x^2}{16}
+  \Rightarrow x^2=144
+  \Rightarrow x=\pm12.
+  \]
+  左右端點為 \((-12,9),(12,9)\)，碟口寬度為 \(24\)。
+\item
+  取右端點 \(P=(12,9)\)：
+  \[
+  PF=\sqrt{(12-0)^2+(9-4)^2}=\sqrt{144+25}=13.
+  \]
+  \(P\) 到準線 \(y=-4\) 的距離為 \(|9-(-4)|=13\)，兩者相等。
+\item
+  接收器放在焦點 \((0,4)\)。平行於對稱軸的入射訊號到達拋物線邊界後，依切線兩側等反射角的性質轉向焦點；旋轉此截面得到的拋物面會把平行訊號集中到同一焦點。
+\end{enumerate}
+
+\section{16. 核心整理}\label{ux6838ux5fc3ux6574ux7406}
+
+\subsection{空間線面、展開與截面}\label{ux7a7aux9593ux7ddaux9762ux5c55ux958bux8207ux622aux9762}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+問題 & 核心條件或公式 & 幾何意義 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+兩直線平行 & 共平面且沒有交點 & 「共平面」排除歪斜 \\
+兩直線歪斜 & 不共平面 & 俯視圖相交仍可能歪斜 \\
+線面垂直 & \(L\) 垂直平面內兩條相交直線 & 兩個不平行方向鎖定平面 \\
+兩面角 & 在兩面內各作垂直交線的射線 & 將立體角轉成平面角 \\
+長方體表面距離 & 展開後連直線並比較 & 表面限制使兩個面長相加 \\
+圓錐側面積 & \(\pi Rr\) & 扇形弧長接回底面圓周 \\
+圓錐臺側面積 & \(\pi(r_1+r_2)s\) & 大、小相似圓錐側面積相減 \\
+凸多面體 & \(V-E+F=2\) & 頂點、稜、面數的整體關係 \\
+\end{longtable}
+}
+
+\subsection{空間坐標與球面}\label{ux7a7aux9593ux5750ux6a19ux8207ux7403ux9762}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+問題
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+公式
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+條件與用途
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+空間距離 & \(PQ=\sqrt{(\Delta x)^2+(\Delta y)^2+(\Delta z)^2}\) & 三個互相垂直方向的畢氏定理 \\
+中點 & \(M=((x_1+x_2)/2,(y_1+y_2)/2,(z_1+z_2)/2)\) & 各坐標分別取平均 \\
+點到 \(xy\) 平面 & \(|z|\) & 投影點為 \((x,y,0)\) \\
+點到 \(z\) 軸 & \(\sqrt{x^2+y^2}\) & 投影點為 \((0,0,z)\) \\
+球面截圓 & \(r=\sqrt{R^2-d^2}\) & \(d\) 是球心到截平面距離 \\
+經緯度坐標 & \(\begin{aligned}x&=R\cos\varphi\cos\theta\\y&=R\cos\varphi\sin\theta\\z&=R\sin\varphi\end{aligned}\) & 先投到赤道面，再依經度分解 \\
+緯線半徑 & \(R\cos\varphi\) & 同經度角在高緯度路程較短 \\
+大圓弧長 & \(R\gamma\) & \(\gamma\) 用弳；取劣弧為球面最短路徑 \\
+球內弦長 & \(2R\sin(\gamma/2)\) & 可由坐標距離或中心角計算 \\
+\end{longtable}
+}
+
+\subsection{圓錐曲線}\label{ux5713ux9310ux66f2ux7dda}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+截平面條件 & 一般截痕 & 通過頂點時 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(\beta=90^\circ\) & 圓 & 一點 \\
+\(\alpha<\beta<90^\circ\) & 橢圓 & 一點 \\
+\(\beta=\alpha\) & 拋物線 & 一直線 \\
+\(0\le\beta<\alpha\) & 雙曲線 & 兩相交直線 \\
+\end{longtable}
+}
+
+其中 \(\alpha\) 是半頂角，\(\beta\) 是截平面與軸的銳夾角。若題目給法線與軸夾角 \(\gamma\)，先換成 \(\beta=90^\circ-\gamma\)。
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+曲線
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+幾何機制
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+直接用途
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+拋物線 & 點到焦點與準線等距；平行軸訊號反射至焦點 & 天線、車燈、太陽爐、理想拋射軌跡 \\
+橢圓 & 到兩焦點距離和固定；一焦點訊號反射至另一焦點 & 橢圓反射室、理想封閉軌道 \\
+雙曲線 & 兩支開放曲線；平面切到圓錐上下兩半 & 反比例資料圖、部分定位與結構曲線 \\
+\end{longtable}
+}
+
+空間題先標出物體、交線、投影與垂直方向，再選公式。展開題列出所有可行攤法；球面題區分球內弦與球面弧；圓錐截痕題先確認平面是否通過頂點，再比較 \(\alpha\) 與 \(\beta\)。
+
+
+\end{document}

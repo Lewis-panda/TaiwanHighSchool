@@ -1,0 +1,31 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{數B4-3-矩陣圖樣式.tex}
+
+\begin{document}
+\begin{tikzpicture}[figure]
+  \node[font=\bfseries\Large,align=center,text width=19cm] at (9.5,5.45)
+    {矩陣以水平列、直行與元素位置保存資料結構};
+
+  \node[panel,minimum width=10.4cm,minimum height=3.65cm] (matrix) at (6.0,2.8) {%
+    \begin{minipage}{9.6cm}\centering
+      \Large
+      $A=\begin{bmatrix}
+        12&8&\ColumnCell{5}&9\\
+        \RowCell{7}&\RowCell{11}&\FocusCell{6}&\RowCell{4}\\
+        10&3&\ColumnCell{8}&13
+      \end{bmatrix}$
+    \end{minipage}
+  };
+
+  \node[font=\bfseries\large] at (14.55,3.72) {$A=[a_{ij}]_{3\times4}$};
+  \node[align=left,text width=6.3cm] at (15.40,2.65)
+    {淺灰是第 2 列；中灰是第 3 行。\\[5pt]
+     交會格是第 $(2,3)$ 元。};
+  \node[font=\bfseries\Large] at (14.55,1.25) {$a_{23}=6$};
+
+  \draw[flow] (2.0,1.2) -- (2.0,2.45)
+    node[midway,left,font=\small] {先讀列索引 $i=2$};
+  \draw[flow] (7.0,4.82) -- (7.0,3.72)
+    node[midway,right,font=\small] {再讀行索引 $j=3$};
+\end{tikzpicture}
+\end{document}

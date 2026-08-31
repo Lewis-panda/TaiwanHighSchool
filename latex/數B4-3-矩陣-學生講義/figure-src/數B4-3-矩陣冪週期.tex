@@ -1,0 +1,46 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{數B4-3-矩陣圖樣式.tex}
+
+\begin{document}
+\begin{tikzpicture}[figure,scale=1.05]
+  \node[font=\bfseries\Large,align=center,text width=16cm] at (7.5,8.65)
+    {每次左乘 $R$ 都使向量逆時針旋轉 $90^\circ$};
+  \node[panel,minimum width=10.0cm,minimum height=1.45cm] at (7.5,7.55) {%
+    \large$R=\begin{bmatrix}0&-1\\1&0\end{bmatrix}$，
+    $R^2=-I_2$，$R^4=I_2$
+  };
+
+  \begin{scope}[shift={(7.5,3.75)}]
+    \draw[-{Stealth},FigureInk,line width=0.75pt] (-3.35,0) -- (3.45,0) node[right] {$x$};
+    \draw[-{Stealth},FigureInk,line width=0.75pt] (0,-3.15) -- (0,3.25) node[above] {$y$};
+    \draw[GuideShade,densely dotted,line width=0.9pt] (0,0) circle[radius=2.236];
+
+    \draw[FigureInk,line width=1.1pt] (0,0) -- (2,1);
+    \draw[FigureInk,dashed,line width=1.1pt] (0,0) -- (-1,2);
+    \draw[FigureInk,dash dot,line width=1.1pt] (0,0) -- (-2,-1);
+    \draw[FigureInk,dotted,line width=1.4pt] (0,0) -- (1,-2);
+
+    \draw[flow,line width=1.55pt] (2,1)
+      arc[start angle=26.565,end angle=116.565,radius=2.236];
+    \draw[flow,dashed,line width=1.55pt] (-1,2)
+      arc[start angle=116.565,end angle=206.565,radius=2.236];
+    \draw[flow,dash dot,line width=1.55pt] (-2,-1)
+      arc[start angle=206.565,end angle=296.565,radius=2.236];
+    \draw[flow,dotted,line width=1.75pt] (1,-2)
+      arc[start angle=296.565,end angle=386.565,radius=2.236];
+
+    \filldraw[fill=white,draw=FigureInk,line width=1.1pt] (2,1) circle[radius=2.3pt];
+    \filldraw[fill=white,draw=FigureInk,line width=1.1pt] (-1,2) rectangle ++(0.10,0.10);
+    \filldraw[fill=white,draw=FigureInk,line width=1.1pt] (-2,-1) -- ++(0.10,0.18) -- ++(0.10,-0.18) -- cycle;
+    \filldraw[fill=white,draw=FigureInk,line width=1.1pt] (1,-2) ++(0,0.10) -- ++(0.10,-0.10) -- ++(-0.10,-0.10) -- ++(-0.10,0.10) -- cycle;
+
+    \node[right=4pt] at (2,1) {$v=R^4v=(2,1)$};
+    \node[above left=2pt] at (-1,2) {$Rv=(-1,2)$};
+    \node[below left=2pt] at (-2,-1) {$R^2v=(-2,-1)$};
+    \node[below right=2pt] at (1,-2) {$R^3v=(1,-2)$};
+  \end{scope}
+
+  \node[font=\small] at (7.5,0.0)
+    {四個四分之一圓弧各代表再左乘一次 $R$；第四次回到原向量。};
+\end{tikzpicture}
+\end{document}

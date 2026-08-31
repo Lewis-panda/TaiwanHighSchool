@@ -1,0 +1,49 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{數B4-3-矩陣圖樣式.tex}
+
+\begin{document}
+\begin{tikzpicture}[figure]
+  \node[font=\bfseries\Large,align=center,text width=24cm] at (12,6.05)
+    {共同的品項索引在乘法中被加總，結果保留學生與商店索引};
+  \node[font=\small] at (12,5.2)
+    {第一位學生在甲店的總價：$3\cdot40+2\cdot30+1\cdot25=205$};
+
+  \node[panel,minimum width=6.5cm,minimum height=3.65cm] (Q) at (3.35,3.0) {%
+    \begin{minipage}{5.9cm}\centering
+      \textbf{數量 $Q$：學生 $\times$ 品項}\\[5pt]
+      \scriptsize 行依序為三種品項\\[6pt]
+      \Large$\begin{bmatrix}
+        \RowCell{3}&\RowCell{2}&\RowCell{1}\\
+        1&4&2
+      \end{bmatrix}$
+    \end{minipage}
+  };
+  \node[font=\Large] at (7.15,3.0) {$\times$};
+  \node[panel,minimum width=6.5cm,minimum height=3.65cm] (P) at (10.95,3.0) {%
+    \begin{minipage}{5.9cm}\centering
+      \textbf{單價 $P$：品項 $\times$ 商店}\\[5pt]
+      \scriptsize 列依序為三種品項\\[6pt]
+      \Large$\begin{bmatrix}
+        \ColumnCell{40}&45\\
+        \ColumnCell{30}&32\\
+        \ColumnCell{25}&28
+      \end{bmatrix}$
+    \end{minipage}
+  };
+  \node[font=\Large] at (14.75,3.0) {$=$};
+  \node[panel,minimum width=6.5cm,minimum height=3.65cm] (QP) at (18.55,3.0) {%
+    \begin{minipage}{5.9cm}\centering
+      \textbf{總價 $QP$：學生 $\times$ 商店}\\[5pt]
+      \scriptsize 每格是一位學生在一家商店的總價\\[6pt]
+      \Large$\begin{bmatrix}
+        \ResultCell{205}&227\\
+        210&229
+      \end{bmatrix}$
+    \end{minipage}
+  };
+
+  \node[draw=FigureInk,rounded corners=1mm,fill=white,inner xsep=8pt,inner ysep=4pt,
+        font=\scriptsize] at (10.95,0.45)
+    {三個配對位置依序都是餐點 1、2、3；相乘後只留下學生與商店兩個外側索引。};
+\end{tikzpicture}
+\end{document}

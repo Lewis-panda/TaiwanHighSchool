@@ -1,0 +1,41 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{數B4-3-矩陣圖樣式.tex}
+
+\begin{document}
+\begin{tikzpicture}[figure]
+  \node[font=\bfseries\Large,align=center,text width=25cm] at (12.5,5.9)
+    {同一索引的庫存逐項執行「期初＋進貨－銷售＝期末」};
+
+  \node[panel,minimum width=5.0cm,minimum height=3.45cm] (S) at (2.5,3.0) {%
+    \begin{minipage}{4.4cm}\centering
+      \textbf{期初 $S$}\\[8pt]
+      \Large$\begin{bmatrix}42&30\\\FocusCell{35}&28\end{bmatrix}$
+    \end{minipage}
+  };
+  \node[font=\Large] at (5.35,3.0) {$+$};
+  \node[panel,minimum width=5.0cm,minimum height=3.45cm] (P) at (8.2,3.0) {%
+    \begin{minipage}{4.4cm}\centering
+      \textbf{進貨 $P$}\\[8pt]
+      \Large$\begin{bmatrix}12&8\\\FocusCell{10}&9\end{bmatrix}$
+    \end{minipage}
+  };
+  \node[font=\Large] at (11.05,3.0) {$-$};
+  \node[panel,minimum width=5.0cm,minimum height=3.45cm] (Q) at (13.9,3.0) {%
+    \begin{minipage}{4.4cm}\centering
+      \textbf{銷售 $Q$}\\[8pt]
+      \Large$\begin{bmatrix}18&11\\\FocusCell{13}&12\end{bmatrix}$
+    \end{minipage}
+  };
+  \node[font=\Large] at (16.75,3.0) {$=$};
+  \node[panel,minimum width=5.0cm,minimum height=3.45cm] (C) at (19.6,3.0) {%
+    \begin{minipage}{4.4cm}\centering
+      \textbf{期末 $S+P-Q$}\\[8pt]
+      \Large$\begin{bmatrix}36&27\\\ResultCell{32}&25\end{bmatrix}$
+    \end{minipage}
+  };
+
+  \node[draw=FigureInk,rounded corners=1mm,fill=white,inner xsep=9pt,inner ysep=5pt,
+        font=\small] at (11.05,0.6)
+    {第 $(2,1)$ 元：$35+10-13=32$；每個位置都使用同一條更新規則。};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,28 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{數B4-3-矩陣圖樣式.tex}
+
+\begin{document}
+\begin{tikzpicture}[figure]
+  \node[font=\bfseries\Large,align=center,text width=22cm] at (11,6.0)
+    {交換矩陣的乘法順序會改變每一次列乘行的配對};
+
+  \node[panel,minimum width=20.0cm,minimum height=2.0cm] at (11,4.2) {%
+    \Large
+    $\begin{bmatrix}1&2\\0&1\end{bmatrix}
+     \begin{bmatrix}2&0\\1&1\end{bmatrix}
+     =\begin{bmatrix}4&2\\1&1\end{bmatrix}$
+    \hspace{8mm}\normalsize$AB$
+  };
+
+  \node[panel,minimum width=20.0cm,minimum height=2.0cm] at (11,1.85) {%
+    \Large
+    $\begin{bmatrix}2&0\\1&1\end{bmatrix}
+     \begin{bmatrix}1&2\\0&1\end{bmatrix}
+     =\begin{bmatrix}2&4\\1&3\end{bmatrix}$
+    \hspace{8mm}\normalsize$BA$
+  };
+
+  \node[font=\bfseries\large] at (11,0.25)
+    {$AB\ne BA$；例如兩個乘積的第 $(1,1)$ 元分別是 $4$ 與 $2$};
+\end{tikzpicture}
+\end{document}

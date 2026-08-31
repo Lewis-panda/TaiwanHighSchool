@@ -1,0 +1,39 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{數B4-3-矩陣圖樣式.tex}
+
+\begin{document}
+\begin{tikzpicture}[figure]
+  \node[font=\bfseries\Large,align=center,text width=23cm] at (11.5,6.05)
+    {資料表的列、行標籤決定矩陣中每個元素的意義};
+
+  \node[panel,minimum width=10.6cm,minimum height=4.35cm] (table) at (5.45,3.15) {%
+    \begin{minipage}{9.9cm}\centering
+      \textbf{通勤方式資料表}\\[8pt]
+      \renewcommand{\arraystretch}{1.35}
+      \begin{tabular}{c|ccc|c}
+        & 公車 & 步行 & 單車 & 班級合計\\ \hline
+        甲班 & 28 & 16 & 12 & 56\\
+        乙班 & 25 & 20 & \textbf{15} & 60\\
+        丙班 & 31 & 18 & 14 & 63\\ \hline
+        方式合計 & 84 & 54 & 41 & 179
+      \end{tabular}
+    \end{minipage}
+  };
+
+  \draw[flow] (table.east) -- ++(1.25,0);
+  \node[panel,minimum width=8.8cm,minimum height=4.35cm] (matrix) at (18.0,3.15) {%
+    \begin{minipage}{8.1cm}\centering
+      \textbf{固定標籤順序後的矩陣}\\[10pt]
+      \Large$A=\begin{bmatrix}
+        28&16&12\\
+        25&20&\FocusCell{15}\\
+        31&18&14
+      \end{bmatrix}$\\[10pt]
+      \normalsize$a_{23}=15$：乙班使用單車的人數
+    \end{minipage}
+  };
+
+  \node[font=\small,align=center,text width=22cm] at (11.5,0.35)
+    {轉成矩陣後，列依序仍是甲、乙、丙班；行依序仍是公車、步行、單車。};
+\end{tikzpicture}
+\end{document}

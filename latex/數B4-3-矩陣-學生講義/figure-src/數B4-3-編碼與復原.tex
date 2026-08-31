@@ -1,0 +1,29 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{數B4-3-矩陣圖樣式.tex}
+
+\begin{document}
+\begin{tikzpicture}[figure]
+  \node[font=\bfseries\Large,align=center,text width=26cm] at (13,7.0)
+    {每個資料直行先左乘可逆矩陣 $K$，再左乘 $K^{-1}$ 復原};
+
+  \node[panel,minimum width=25.0cm,minimum height=2.55cm] at (13,5.05) {%
+    \large
+    $\underbrace{\begin{bmatrix}2&1\\1&1\end{bmatrix}}_{K}
+     \underbrace{\begin{bmatrix}3&1&20\\1&20&0\end{bmatrix}}_{X}
+     =\underbrace{\begin{bmatrix}7&22&40\\4&21&20\end{bmatrix}}_{Y}$
+  };
+
+  \draw[flow] (13,3.55) -- (13,3.0)
+    node[midway,right,font=\small] {接收端左乘 $K^{-1}$};
+
+  \node[panel,minimum width=25.0cm,minimum height=2.55cm] at (13,1.7) {%
+    \large
+    $\underbrace{\begin{bmatrix}1&-1\\-1&2\end{bmatrix}}_{K^{-1}}
+     \underbrace{\begin{bmatrix}7&22&40\\4&21&20\end{bmatrix}}_{Y}
+     =\underbrace{\begin{bmatrix}3&1&20\\1&20&0\end{bmatrix}}_{X}$
+  };
+
+  \node[font=\small] at (13,0.0)
+    {第一筆資料：$(3,1)^T\mapsto(7,4)^T\mapsto(3,1)^T$；其餘直行使用同一規則。};
+\end{tikzpicture}
+\end{document}

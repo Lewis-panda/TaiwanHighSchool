@@ -1,0 +1,46 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{數B4-3-矩陣圖樣式.tex}
+
+\begin{document}
+\begin{tikzpicture}[figure]
+  \node[font=\bfseries\Large,align=center,text width=23cm] at (11.5,5.85)
+    {乘積的第 $(i,j)$ 元由左矩陣第 $i$ 列與右矩陣第 $j$ 行配對加總};
+  \node[font=\small] at (11.5,5.0)
+    {$c_{12}=2\cdot35+1\cdot45+3\cdot25=190$};
+
+  \node[panel,minimum width=6.1cm,minimum height=3.35cm] (A) at (3.15,2.95) {%
+    \begin{minipage}{5.5cm}\centering
+      \textbf{$A$：取第 1 列}\\[7pt]
+      \Large$\begin{bmatrix}
+        \RowCell{2}&\RowCell{1}&\RowCell{3}\\
+        4&0&2
+      \end{bmatrix}$
+    \end{minipage}
+  };
+  \node[font=\Large] at (6.8,2.95) {$\times$};
+  \node[panel,minimum width=6.1cm,minimum height=3.35cm] (B) at (10.45,2.95) {%
+    \begin{minipage}{5.5cm}\centering
+      \textbf{$B$：配對第 2 行}\\[7pt]
+      \Large$\begin{bmatrix}
+        30&\ColumnCell{35}\\
+        50&\ColumnCell{45}\\
+        20&\ColumnCell{25}
+      \end{bmatrix}$
+    \end{minipage}
+  };
+  \node[font=\Large] at (14.1,2.95) {$=$};
+  \node[panel,minimum width=6.1cm,minimum height=3.35cm] (C) at (17.75,2.95) {%
+    \begin{minipage}{5.5cm}\centering
+      \textbf{$C=AB$：得到 $(1,2)$ 元}\\[7pt]
+      \Large$\begin{bmatrix}
+        170&\ResultCell{190}\\
+        160&190
+      \end{bmatrix}$
+    \end{minipage}
+  };
+
+  \node[draw=FigureInk,rounded corners=1mm,fill=white,inner xsep=8pt,inner ysep=4pt,
+        font=\scriptsize] at (11.5,0.55)
+    {淺灰列與中灰行共享三個品項位置；深灰結果格保存三項乘積的總和。};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,23 @@
+\documentclass[tikz,border=7pt]{standalone}
+\input{數B4-3-矩陣圖樣式.tex}
+
+\begin{document}
+\begin{tikzpicture}[figure]
+  \node[font=\bfseries\Large,align=center,text width=25cm] at (12.5,5.75)
+    {交換主對角線、令另兩項變號，乘積會化成 $(ad-bc)I_2$};
+
+  \node[panel,minimum width=24.0cm,minimum height=2.7cm] at (12.5,3.45) {%
+    \LARGE
+    $\begin{bmatrix}a&b\\c&d\end{bmatrix}
+     \begin{bmatrix}d&-b\\-c&a\end{bmatrix}
+     =\begin{bmatrix}ad-bc&0\\0&ad-bc\end{bmatrix}
+     =(ad-bc)I_2$
+  };
+
+  \node[align=center,text width=22cm] at (12.5,1.35)
+    {兩個非對角元素分別為 $-ab+ab=0$ 與 $cd-dc=0$；\\[4pt]
+     當 $ad-bc\ne0$ 時，兩邊同乘 $\dfrac{1}{ad-bc}$，得到反方陣。};
+  \node[font=\bfseries\large] at (12.5,0.25)
+    {$A^{-1}=\dfrac{1}{ad-bc}\begin{bmatrix}d&-b\\-c&a\end{bmatrix}$};
+\end{tikzpicture}
+\end{document}
